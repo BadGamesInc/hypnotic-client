@@ -290,7 +290,8 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         }
         else
         {
-            TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)this.mapRegisteredSprites.get(location);
+            @SuppressWarnings("unlikely-arg-type")
+			TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)this.mapRegisteredSprites.get(location);
 
             if (textureatlassprite == null)
             {
