@@ -22,12 +22,8 @@ public class Hypnotic {
 	public HUD hud;
 	public CommandManager commandManager;
 	public static FontManager fm;
-<<<<<<< Updated upstream
 	public SaveLoad saveload;
-	public static final String clientName = "Hypnotic", clientVersion = "b1", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.reset + ": " + ColorUtils.gray;
-=======
 	public static final String clientName = "Hypnotic", clientVersion = "b1", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
->>>>>>> Stashed changes
 	
 	public void startup() {
 		setmgr = new SettingsManager();

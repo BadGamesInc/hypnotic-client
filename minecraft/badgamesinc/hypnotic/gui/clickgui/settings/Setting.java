@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.gui.clickgui.settings;
 
 import java.util.ArrayList;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Mod;
 
 /**
@@ -67,6 +68,9 @@ public class Setting {
 	
 	public void setValString(String in){
 		this.sval = in;
+		if(Hypnotic.instance.saveload != null) {
+			Hypnotic.instance.saveload.save();
+		}
 	}
 	
 	public ArrayList<String> getOptions(){
@@ -79,6 +83,9 @@ public class Setting {
 	
 	public void setValBoolean(boolean in){
 		this.bval = in;
+		if(Hypnotic.instance.saveload != null) {
+			Hypnotic.instance.saveload.save();
+		}
 	}
 	
 	public double getValDouble(){
@@ -90,6 +97,9 @@ public class Setting {
 
 	public void setValDouble(double in){
 		this.dval = in;
+		if(Hypnotic.instance.saveload != null) {
+			Hypnotic.instance.saveload.save();
+		}
 	}
 	
 	public double getMin(){

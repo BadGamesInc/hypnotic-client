@@ -36,6 +36,9 @@ public class Mod {
 		} else {
 			onDisable();
 		}
+		if(Hypnotic.instance.saveload != null) {
+			Hypnotic.instance.saveload.save();
+		}
 	}
 	
 	public void onUpdate() {}
@@ -49,6 +52,9 @@ public class Mod {
 
 	public void setKey(int key) {
 		this.key = key;
+		if(Hypnotic.instance.saveload != null) {
+			Hypnotic.instance.saveload.save();
+		}
 	}
 
 	public boolean isEnabled() {
@@ -56,8 +62,11 @@ public class Mod {
 	}
 
 	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 		
+		this.enabled = enabled;
+		if(Hypnotic.instance.saveload != null) {
+			Hypnotic.instance.saveload.save();
+		}
 	}
 
 	public String getName() {

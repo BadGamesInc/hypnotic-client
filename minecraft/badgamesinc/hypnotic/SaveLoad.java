@@ -42,7 +42,7 @@ public class SaveLoad {
 		
 		for(Setting set : Hypnotic.instance.setmgr.getSettings()) {
 			if(set.isCheck()) {
-				toSave.add("SET:" + set.getName() + ":" + set.getParentMod() + ":" + set.getValBoolean());
+				toSave.add("SET:" + set.getName() + ":" + set.getParentMod() + ":" + set.getValDouble());
 			}
 			if(set.isCombo()) {
 				toSave.add("SET:" + set.getName() + ":" + set.getParentMod() + ":" + set.getValString());
