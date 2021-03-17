@@ -33,7 +33,9 @@ public class ModuleManager {
 		modules.add(new KillAura());
 		
 		//Misc
-		
+		modules.add(new ChatSpammer());
+
+		//World
 	}
 	
 	public CopyOnWriteArrayList<Mod> getModules() {

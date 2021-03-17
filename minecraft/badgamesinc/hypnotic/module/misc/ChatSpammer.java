@@ -1,0 +1,45 @@
+package badgamesinc.hypnotic.module.misc;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.module.Category;
+import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.utils.TimerUtils;
+
+public class ChatSpammer extends Mod {
+
+	ArrayList<String> messages;
+	TimerUtils timer;
+	
+	public ChatSpammer() {
+		super("ChatSpammer", 0, Category.MISC);
+		
+		messages = new ArrayList<String>();
+		timer = new TimerUtils();
+		messages.add("Imagine not using " + Client.instance.client_full_name);
+		messages.add("L");
+		messages.add("Bad server");
+		messages.add("307-324-7706 Pizza Hut WY");
+		messages.add("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+		messages.add("E FOR POWERMAC E FOR JUSTICE");
+		messages.add("FUELPUMPS ON TOP");
+		messages.add("E");
+		messages.add("when the impostor is sus");
+		messages.add("Hello. This is Mr. Hood from the Sherwood Law Group. We've been suing the rich and giving to the poor since 1944. Wee can solve all of your merry little problems! See what we're about below! https://youtube.com/watch?v=cOOG3bRujoM");
+		messages.add("bro its a pc pinger, dont download it");
+	}
+	
+	public void onUpdate() {
+		if(timer.delay(4000)) {
+			Random r = new Random();
+			int index = r.nextInt(messages.size());
+			String message = messages.get(index);
+			
+			mc.thePlayer.sendChatMessage(message);
+			
+			timer.reset();
+		}
+	}
+}
