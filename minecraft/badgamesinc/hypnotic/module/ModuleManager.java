@@ -25,6 +25,8 @@ public class ModuleManager {
 		modules.add(new LadderLauncher());
 		modules.add(new Fast());
 		modules.add(new Speed());
+		modules.add(new AirJump());
+		modules.add(new Spider());
 		
 		//Render
 		modules.add(new HUDModule());
@@ -37,18 +39,19 @@ public class ModuleManager {
 		
 		//Combat
 		modules.add(new KillAura());
+		modules.add(new AntiKnockback());
 		
 		//Misc
 		modules.add(new ChatSpammer());
 		modules.add(new PizzaHutWY());
 		modules.add(new RetardTalk());
 		modules.add(new Disabler());
+		modules.add(new PCPinger());
 
 		//World
 		modules.add(new FastBreak());
 		modules.add(new FastPlace());
 		modules.add(new Timer());
-		modules.add(new Disabler());
 		
 	}
 	

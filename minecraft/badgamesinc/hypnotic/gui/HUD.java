@@ -6,6 +6,7 @@ import java.util.Comparator;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -14,7 +15,7 @@ import net.minecraft.client.gui.ScaledResolution;
 public class HUD {
 
 	public Minecraft mc = Minecraft.getMinecraft();
-	
+	private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Consolas", 18, false, false, false);
 	
 	public static class ModuleComparator implements Comparator<Mod> {
 
@@ -51,6 +52,11 @@ public class HUD {
 			Hypnotic.fm.getFont("SFB 8").drawStringWithShadow(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(2, 0.5f, 0.5f, count * 100));
              count++;
 		}
+		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) {
+			while(true) {
+				fontRenderer.drawString("PINGING PC", 2.8f, 3, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
+			}
+        }
 	}
 	
 	public void renderArrayList(ScaledResolution sr) {
