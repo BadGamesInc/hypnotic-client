@@ -95,7 +95,7 @@ public class ModuleButton {
 		/*
 		 * Den Namen des Modules in die Mitte (x und y) rendern
 		 */
-		FontUtil.drawTotalCenteredStringWithShadow(mod.getName(), x + width / 2, y + 1 + height / 2, textcolor);
+		Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(mod.getName(), x + width / 2, y + 1 + height / 2, textcolor);
 	}
 
 	/*

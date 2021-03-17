@@ -48,7 +48,7 @@ public class HUD {
 	    Collections.sort(Hypnotic.instance.moduleManager.modules, new ModuleComparator());
 	    	
 		for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {		
-			Hypnotic.fm.getFont("SFB 8").drawStringWithShadow(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(2, 0.5f, 0.5f, count * 100));
+			Hypnotic.fm.getFont("SFB 8").drawStringWithShadow(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(4, 0.5f, 0.5f, count * 100));
              count++;
 		}
 	}

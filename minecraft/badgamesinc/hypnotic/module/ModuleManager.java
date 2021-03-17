@@ -9,7 +9,10 @@ import badgamesinc.hypnotic.module.movement.*;
 import badgamesinc.hypnotic.module.player.*;
 import badgamesinc.hypnotic.module.render.*;
 import badgamesinc.hypnotic.module.misc.*;
+<<<<<<< Updated upstream
 import badgamesinc.hypnotic.module.world.*;
+=======
+>>>>>>> Stashed changes
 
 public class ModuleManager {
 
@@ -22,8 +25,12 @@ public class ModuleManager {
 		//Movement
 		modules.add(new Flight());
 		modules.add(new Sprint());
+<<<<<<< Updated upstream
 		modules.add(new LadderLauncher());
 		modules.add(new Fast());
+=======
+		modules.add(new Speed());
+>>>>>>> Stashed changes
 		
 		//Render
 		modules.add(new HUDModule());
@@ -38,6 +45,7 @@ public class ModuleManager {
 		modules.add(new KillAura());
 		
 		//Misc
+<<<<<<< Updated upstream
 		modules.add(new ChatSpammer());
 		modules.add(new PizzaHutWY());
 		modules.add(new RetardTalk());
@@ -46,6 +54,10 @@ public class ModuleManager {
 		modules.add(new FastBreak());
 		modules.add(new FastPlace());
 		modules.add(new Timer());
+=======
+		modules.add(new Disabler());
+		
+>>>>>>> Stashed changes
 	}
 	
 	public CopyOnWriteArrayList<Mod> getModules() {

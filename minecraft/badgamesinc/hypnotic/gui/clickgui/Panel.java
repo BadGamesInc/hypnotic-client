@@ -69,11 +69,11 @@ public class Panel {
 		Gui.drawRect(x, y, x + width, y + height, 0xff121212);
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 			Gui.drawRect(x - 2, y, x, y + height, outlineColor);
-			FontUtil.drawStringWithShadow(title, x + 2, y + height / 2 - FontUtil.getFontHeight()/2, 0xffefefef);
+			Hypnotic.fm.getFont("SFB 8").drawStringWithShadow(title, x + 2, y + height / 2 - FontUtil.getFontHeight()/2, 0xffefefef);
 		}else if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
-			FontUtil.drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);
+			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);
 		}
 		
 		if (this.extended && !Elements.isEmpty()) {

@@ -12,6 +12,8 @@ public class CommandManager {
 	public CommandManager() {
 		commands.add(new Toggle());
 		commands.add(new VClip());
+		commands.add(new Say());
+		commands.add(new Bind());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {

@@ -180,7 +180,7 @@ public abstract class EntityLivingBase extends Entity
      * A factor used to determine how far this entity will move each tick if it is walking on land. Adjusted by speed,
      * and slipperiness of the current block.
      */
-    private float landMovementFactor;
+    public float landMovementFactor;
 
     /** Number of ticks since last jump */
     private int jumpTicks;

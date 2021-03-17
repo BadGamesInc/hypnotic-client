@@ -40,7 +40,7 @@ public class ElementComboBox extends Element {
 		 */
 		Gui.drawRect(x, y, x + width, y + height, 0xff1a1a1a);
 
-		FontUtil.drawTotalCenteredString(setstrg, x + width / 2, y + 15/2, 0xffffffff);
+		Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(setstrg, x + width / 2, y + 15/2, 0xffffffff);
 		int clr1 = color;
 		int clr2 = temp.getRGB();
 
@@ -50,7 +50,7 @@ public class ElementComboBox extends Element {
 			double ay = y + 15;
 			for (String sld : set.getOptions()) {
 				String elementtitle = sld.substring(0, 1).toUpperCase() + sld.substring(1, sld.length());
-				FontUtil.drawCenteredString(elementtitle, x + width / 2, ay + 2, 0xffffffff);
+				Hypnotic.fm.getFont("SFB 8").drawCenteredString(elementtitle, x + width / 2, ay + 2, 0xffffffff);
 				
 				/*
 				 * Ist das Element ausgewählt, wenn ja dann markiere

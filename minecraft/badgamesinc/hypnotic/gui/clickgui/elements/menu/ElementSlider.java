@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.gui.clickgui.elements.menu;
 
 import java.awt.Color;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.elements.Element;
 import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
@@ -52,8 +53,8 @@ public class ElementSlider extends Element {
 		/*
 		 * Den Text rendern
 		 */
-		FontUtil.drawString(setstrg, x + 1, y + 2, 0xffffffff);
-		FontUtil.drawString(displayval, x + width - FontUtil.getStringWidth(displayval), y + 2, 0xffffffff);
+		Hypnotic.fm.getFont("SFB 8").drawString(setstrg, x + 1, y + 2, 0xffffffff);
+		Hypnotic.fm.getFont("SFB 8").drawString(displayval, x + width - FontUtil.getStringWidth(displayval), y + 2, 0xffffffff);
 
 		/*
 		 * Den Slider rendern

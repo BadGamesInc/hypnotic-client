@@ -1,5 +1,6 @@
 package badgamesinc.hypnotic.util.font;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.BufferUtils;
@@ -239,12 +240,12 @@ public class FontUtils {
      * Renders the given string.
      *
      * @param text  The text to be rendered.
-     * @param x     The x position of the text.
-     * @param y     The y position of the text.
+     * @param d     The x position of the text.
+     * @param e     The y position of the text.
      * @param color The color of the text.
      */
-    public int drawString(String text, float x, float y, int color) {
-        return renderString(text, x, y, color, false);
+    public int drawString(String text, double d, double e, int color) {
+        return renderString(text, d, e, color, false);
     }
 
     public void drawCenteredString(String text, float x, float y, int color) {
@@ -256,27 +257,27 @@ public class FontUtils {
      * Renders the given string.
      *
      * @param text  The text to be rendered.
-     * @param x     The x position of the text.
-     * @param y     The y position of the text.
+     * @param d     The x position of the text.
+     * @param e     The y position of the text.
      * @param color The color of the text.
      */
-    public void drawStringWithShadow(String text, float x, float y, int color) {
+    public void drawStringWithShadow(String text, double d, double e, int color) {
         GL11.glTranslated(0.5, 0.5, 0);
-        renderString(text, x, y, color, true);
+        renderString(text, d, e, color, true);
         GL11.glTranslated(-0.5, -0.5, 0);
-        renderString(text, x, y, color, false);
+        renderString(text, d, e, color, false);
     }
 
     /**
      * Renders the given string.
      *
      * @param text   The text to be rendered.
-     * @param x      The x position of the text.
-     * @param y      The y position of the text.
+     * @param d      The x position of the text.
+     * @param e      The y position of the text.
      * @param shadow If the text should be rendered with the shadow color.
      * @param color  The color of the text.
      */
-    private int renderString(String text, float x, float y, int color, boolean shadow) {
+    private int renderString(String text, double d, double e, int color, boolean shadow) {
         // Returns if the text is empty.
         if (text == "" || text.length() == 0) return 0;
 
@@ -293,16 +294,16 @@ public class FontUtils {
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         // Removes half the margin to render in the right spot.
-        x -= MARGIN / 2;
-        y -= MARGIN / 2;
+        d -= MARGIN / 2;
+        e -= MARGIN / 2;
 
         // Adds 0.5 to x and y.
-        x += 0.5f;
-        y += 0.5f;
+        d += 0.5f;
+        e += 0.5f;
 
         // Doubles the position because of the scaling.
-        x *= 2;
-        y *= 2;
+        d *= 2;
+        e *= 2;
 
         // The character texture set to be used. (Regular by default)
         CharacterData[] characterData = regularData;
@@ -394,7 +395,7 @@ public class FontUtils {
                     character = (char) (((int) character) + RANDOM_OFFSET);
 
                 // Draws the character.
-                drawChar(character, characterData, x, y);
+                drawChar(character, characterData, d, e);
 
                 // The character data for the given character.
                 CharacterData charData = characterData[character];
@@ -408,7 +409,7 @@ public class FontUtils {
                     drawLine(new Vector2f(0, charData.height - 15), new Vector2f(charData.width, charData.height - 15), 3);
 
                 // Adds to the offset.
-                x += charData.width - (2 * MARGIN);
+                d += charData.width - (2 * MARGIN);
             }
         }
 
@@ -418,7 +419,7 @@ public class FontUtils {
         GlStateManager.bindTexture(0);
         // Sets the color back to white so no odd rendering problems happen.
         GL11.glColor4d(1, 1, 1, 1);
-        return (int) x;
+        return (int) d;
     }
 
     /**
@@ -545,7 +546,7 @@ public class FontUtils {
      * @param character     The character to be drawn.
      * @param characterData The character texture set to be used.
      */
-    private void drawChar(char character, CharacterData[] characterData, float x, float y) {
+    private void drawChar(char character, CharacterData[] characterData, double d, double e) {
         // The char data that stores the character data.
         CharacterData charData = characterData[character];
 
@@ -557,13 +558,13 @@ public class FontUtils {
         {
             // Maps out where the texture should be drawn.
             GL11.glTexCoord2f(0, 0);
-            GL11.glVertex2d(x, y);
+            GL11.glVertex2d(d, e);
             GL11.glTexCoord2f(0, 1);
-            GL11.glVertex2d(x, y + charData.height);
+            GL11.glVertex2d(d, e + charData.height);
             GL11.glTexCoord2f(1, 1);
-            GL11.glVertex2d(x + charData.width, y + charData.height);
+            GL11.glVertex2d(d + charData.width, e + charData.height);
             GL11.glTexCoord2f(1, 0);
-            GL11.glVertex2d(x + charData.width, y);
+            GL11.glVertex2d(d + charData.width, e);
         }
         // Ends the quad.
         GL11.glEnd();
@@ -670,5 +671,17 @@ public class FontUtils {
         }
 
     }
+    
+    public int drawTotalCenteredString(String text, double x, double y, int color) {
+		return renderString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2, color, false);
+	}
+    
+    public int drawCenteredString(String text, double x, double y, int color) {
+		return renderString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y, color, false);
+	}
+    
+    public int drawTotalCenteredStringWithShadow(String text, double x, double y, int color) {
+		return renderString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2F, color, false);
+	}
 
 }

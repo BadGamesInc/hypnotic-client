@@ -3,6 +3,9 @@ package net.minecraft.client.renderer;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
+
+import badgamesinc.hypnotic.event.events.Event3D;
+
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -1474,6 +1477,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.mc.mcProfiler.endStartSection("aboveClouds");
             this.renderCloudsCheck(renderglobal, partialTicks, pass);
         }
+        
+        Event3D event3D = new Event3D(partialTicks);
+        event3D.call();
 
         this.mc.mcProfiler.endStartSection("hand");
 

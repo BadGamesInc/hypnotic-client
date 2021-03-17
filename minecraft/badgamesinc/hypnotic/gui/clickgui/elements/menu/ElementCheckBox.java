@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.gui.clickgui.elements.menu;
 
 import java.awt.Color;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.elements.Element;
 import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
@@ -41,7 +42,7 @@ public class ElementCheckBox extends Element {
 		/*
 		 * Titel und Checkbox rendern.
 		 */
-		FontUtil.drawString(setstrg, x + width - FontUtil.getStringWidth(setstrg), y + FontUtil.getFontHeight() / 2 - 0.5, 0xffffffff);
+		Hypnotic.fm.getFont("SFB 8").drawString(setstrg, x + width - FontUtil.getStringWidth(setstrg), y + FontUtil.getFontHeight() / 2 - 0.5, 0xffffffff);
 		Gui.drawRect(x + 1, y + 2, x + 12, y + 13, set.getValBoolean() ? color : 0xff000000);
 		if (isCheckHovered(mouseX, mouseY))
 			Gui.drawRect(x + 1, y + 2, x + 12, y + 13, 0x55111111);
