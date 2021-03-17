@@ -9,6 +9,7 @@ import badgamesinc.hypnotic.module.movement.*;
 import badgamesinc.hypnotic.module.player.*;
 import badgamesinc.hypnotic.module.render.*;
 import badgamesinc.hypnotic.module.misc.*;
+import badgamesinc.hypnotic.module.world.*;
 
 public class ModuleManager {
 
@@ -21,6 +22,8 @@ public class ModuleManager {
 		//Movement
 		modules.add(new Flight());
 		modules.add(new Sprint());
+		modules.add(new LadderLauncher());
+		modules.add(new Fast());
 		
 		//Render
 		modules.add(new HUDModule());
@@ -29,14 +32,20 @@ public class ModuleManager {
 		
 		//Player
 		modules.add(new NoFall());
+		modules.add(new Jesus());
 		
 		//Combat
 		modules.add(new KillAura());
 		
 		//Misc
 		modules.add(new ChatSpammer());
+		modules.add(new PizzaHutWY());
+		modules.add(new RetardTalk());
 
 		//World
+		modules.add(new FastBreak());
+		modules.add(new FastPlace());
+		modules.add(new Timer());
 	}
 	
 	public CopyOnWriteArrayList<Mod> getModules() {
