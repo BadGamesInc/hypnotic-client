@@ -4,8 +4,8 @@
 we dont give a shit if you get banned from any server  
 use at your own risk i guess  
 ## requirements  
-idfk what you need to use this  
-probably mcp-918  
+mcp-918
+uh i think you need to import the io.netty files from a stock jar once you make one  
 figure it out yourself  
 ## authors  
 BadGamesInc - actual knowledge  
