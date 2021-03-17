@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.module.combat.*;
 import badgamesinc.hypnotic.module.movement.*;
 import badgamesinc.hypnotic.module.player.*;
 import badgamesinc.hypnotic.module.render.*;
+import badgamesinc.hypnotic.module.misc.*;
 
 public class ModuleManager {
 
