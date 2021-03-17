@@ -6,19 +6,19 @@ import java.util.Random;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.utils.TimerUtils;
+import badgamesinc.hypnotic.util.TimerUtils;
 
 public class ChatSpammer extends Mod {
 
 	ArrayList<String> messages;
-	TimerUtils timer;
+	public TimerUtils timer = new TimerUtils();
 	
 	public ChatSpammer() {
 		super("ChatSpammer", 0, Category.MISC);
 		
 		messages = new ArrayList<String>();
 		timer = new TimerUtils();
-		messages.add("Imagine not using " + Client.instance.client_full_name);
+		messages.add("Imagine not using " + Hypnotic.clientName);
 		messages.add("L");
 		messages.add("Bad server");
 		messages.add("307-324-7706 Pizza Hut WY");
@@ -32,7 +32,7 @@ public class ChatSpammer extends Mod {
 	}
 	
 	public void onUpdate() {
-		if(timer.delay(4000)) {
+		if(timer.hasTimeElapsed(4000, true)) {
 			Random r = new Random();
 			int index = r.nextInt(messages.size());
 			String message = messages.get(index);
