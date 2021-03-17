@@ -22,6 +22,7 @@ public class Hypnotic {
 	public HUD hud;
 	public CommandManager commandManager;
 	public static FontManager fm;
+	public SaveLoad saveload;
 	public static final String clientName = "Hypnotic", clientVersion = "b1", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.reset + ": " + ColorUtils.gray;
 	
 	public void startup() {
@@ -31,7 +32,8 @@ public class Hypnotic {
 		clickgui = new ClickGUI();
 		hud = new HUD();
 		fm = new FontManager();
-		commandManager = new CommandManager();	
+		commandManager = new CommandManager();
+		saveload = new SaveLoad();
 		Display.setTitle(clientName + " - " + clientVersion);
 	}
 	
