@@ -171,7 +171,8 @@ public class GuiScreenRealmsProxy extends GuiScreen
         return list;
     }
 
-    public void func_154328_b(RealmsButton p_154328_1_)
+    @SuppressWarnings("unlikely-arg-type")
+	public void func_154328_b(RealmsButton p_154328_1_)
     {
         super.buttonList.remove(p_154328_1_);
     }

@@ -42,6 +42,7 @@ public class ModuleManager {
 		modules.add(new ChatSpammer());
 		modules.add(new PizzaHutWY());
 		modules.add(new RetardTalk());
+		modules.add(new Disabler());
 
 		//World
 		modules.add(new FastBreak());
