@@ -12,6 +12,7 @@ public class CommandManager {
 	public CommandManager() {
 		commands.add(new Toggle());
 		commands.add(new VClip());
+		commands.add(new Make32k());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {
