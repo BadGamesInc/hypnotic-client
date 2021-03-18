@@ -32,8 +32,8 @@ public class GUI extends Mod{
     	Hypnotic.instance.setmgr.rSetting(new Setting("Design", this, "New", options));
     	Hypnotic.instance.setmgr.rSetting(new Setting("Sound", this, false));
     	Hypnotic.instance.setmgr.rSetting(new Setting("GuiRed", this, 255, 0, 255, true));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiGreen", this, 26, 0, 255, true));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiBlue", this, 42, 0, 255, true));
+    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiGreen", this, 147, 0, 255, true));
+    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiBlue", this, 255, 0, 255, true));
     }
     
     @Override

@@ -1,5 +1,7 @@
 package net.minecraft.client.multiplayer;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.module.combat.Reach;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -339,7 +341,10 @@ public class PlayerControllerMP
      */
     public float getBlockReachDistance()
     {
-        return this.currentGameType.isCreative() ? 5.0F : 4.5F;
+    	if(Hypnotic.instance.moduleManager.getModuleByName("Reach").isEnabled())
+    		return (float) Reach.getReach();
+    	else
+    		return this.currentGameType.isCreative() ? 5.0F : 4.5F;
     }
 
     public void updateController()

@@ -34,6 +34,7 @@ public class KillAura extends Mod {
         Hypnotic.instance.setmgr.rSetting(new Setting("Crack Size", this, 0, 0, 15, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("Existed", this, 30, 0, 500, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("FOV", this, 360, 0, 360, true));
+        Hypnotic.instance.setmgr.rSetting(new Setting("Range", this, 4, 4, 6, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("AutoBlock", this, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("Invisibles", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Players", this, true));
@@ -45,7 +46,7 @@ public class KillAura extends Mod {
 
     @EventTarget
     public void onPre(EventPreMotionUpdate event) {
-        target = getClosest(mc.playerController.getBlockReachDistance());
+        target = getClosest(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble());
         if(target == null)
             return;
         updateTime();
@@ -120,7 +121,7 @@ public class KillAura extends Mod {
             return false;
         if(!isInFOV(player, Hypnotic.instance.setmgr.getSettingByName("FOV").getValDouble()))
             return false;
-        return player != mc.thePlayer && player.isEntityAlive() && mc.thePlayer.getDistanceToEntity(player) <= mc.playerController.getBlockReachDistance() && player.ticksExisted > Hypnotic.instance.setmgr.getSettingByName("Existed").getValDouble();
+        return player != mc.thePlayer && player.isEntityAlive() && mc.thePlayer.getDistanceToEntity(player) <= Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble() && player.ticksExisted > Hypnotic.instance.setmgr.getSettingByName("Existed").getValDouble();
     }
 
     private boolean isInFOV(EntityLivingBase entity, double angle) {

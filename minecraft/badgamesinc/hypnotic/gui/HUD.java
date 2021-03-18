@@ -49,13 +49,20 @@ public class HUD {
 	    Collections.sort(Hypnotic.instance.moduleManager.modules, new ModuleComparator());
 	    	
 		for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {		
-			Hypnotic.fm.getFont("SFB 8").drawString(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(2, 0.5f, 0.5f, count * 100));
-             count++;
+			
+			double offset = count * (Hypnotic.fm.getFont("SFB 8").getHeight(m.getDisplayName()) + 6);
+			
+			//Hypnotic.fm.getFont("SFB 8").drawString(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(2, 0.5f, 0.5f, count * 100));
+             
+			Gui.drawRect(width, offset, width - 3, 6 + Hypnotic.fm.getFont("SFB 8").getHeight(m.getDisplayName()) + offset, ColorUtils.rainbow(2.0f, 0.5f, 0.5f, count * 30));
+            Gui.drawRect(width - Hypnotic.fm.getFont("SFB 8").getWidth(m.getDisplayName()) - 8, offset, sr.getScaledWidth() - 3, 6 + Hypnotic.fm.getFont("SFB 8").getHeight(m.getDisplayName()) + offset, -1879048192);
+            Hypnotic.fm.getFont("SFB 8").drawStringWithShadow(m.getDisplayName(), (float)(width - Hypnotic.fm.getFont("SFB 8").getWidth(m.getDisplayName()) - 6), (float)(2 + count * (Hypnotic.fm.getFont("SFB 8").getHeight(m.getDisplayName()) + 6)), ColorUtils.rainbow(2.0f, 0.5f, 0.5f, count * 30));
+        
+			count++;
 		}
 		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) {
-			while(true) {
 				fontRenderer.drawString("PINGING PC", 2.8f, 3, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
-			}
+			
         }
 	}
 	
