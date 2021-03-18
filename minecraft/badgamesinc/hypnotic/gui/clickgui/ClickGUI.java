@@ -65,7 +65,7 @@ public class ClickGUI extends GuiScreen {
 		 */
 		for (Category c : Category.values()) {
 			String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
-			ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
+			ClickGUI.panels.add(new Panel(title, px, py, pwidth + 40, pheight + 5, false, this) {
 						@Override
 						public void setup() {
 							for (Mod m : Hypnotic.instance.moduleManager.modules) {
@@ -148,7 +148,7 @@ public class ClickGUI extends GuiScreen {
 							e.offset = off;
 							e.update();
 							if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-								Gui.drawRect(e.x, e.y, e.x + e.width + 2, e.y + e.height, outlineColor);
+								Gui.drawRect(e.x, e.y, e.x + e.width + 0, e.y + e.height, outlineColor);
 							}
 							e.drawScreen(mouseX, mouseY, partialTicks);
 							off += e.height;

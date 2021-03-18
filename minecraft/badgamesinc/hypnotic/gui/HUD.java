@@ -38,8 +38,8 @@ public class HUD {
 		ScaledResolution sr = new ScaledResolution(mc);
 		Collections.sort(Hypnotic.instance.moduleManager.modules, new ModuleComparator());
 		
-		Hypnotic.fm.getFont("SFB 8").drawStringWithShadow("H", 3, 4, ColorUtils.rainbow(2, 0.5f, 0.5f));
-		Hypnotic.fm.getFont("SFB 8").drawStringWithShadow("ypnotic", 10, 4, -1);
+		Hypnotic.fm.getFont("SFB 8").drawString("H", 3, 4, ColorUtils.rainbow(2, 0.5f, 0.5f));
+		Hypnotic.fm.getFont("SFB 8").drawString("ypnotic", 10, 4, -1);
 		
 		final int height = sr.getScaledHeight();
 	    final int width = sr.getScaledWidth();
@@ -49,7 +49,7 @@ public class HUD {
 	    Collections.sort(Hypnotic.instance.moduleManager.modules, new ModuleComparator());
 	    	
 		for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {		
-			Hypnotic.fm.getFont("SFB 8").drawStringWithShadow(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(2, 0.5f, 0.5f, count * 100));
+			Hypnotic.fm.getFont("SFB 8").drawString(m.getDisplayName(), width - fr.getStringWidth(m.getDisplayName()) - 4, count * (fr.FONT_HEIGHT + 6) + 4, ColorUtils.rainbow(2, 0.5f, 0.5f, count * 100));
              count++;
 		}
 		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) {

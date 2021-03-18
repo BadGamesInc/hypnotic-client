@@ -81,8 +81,8 @@ public class ModuleButton {
 		 */
 		int textcolor = 0xffafafaf;
 		if (mod.isEnabled()) {
-			Gui.drawRect(x - 2, y, x + width + 2, y + height + 1, color);
-			textcolor = 0xffefefef;
+			//Gui.drawRect(x - 2, y, x + width + 2, y + height + 10, color);
+			textcolor = (int) (color);
 		}
 		
 		/*
@@ -95,7 +95,7 @@ public class ModuleButton {
 		/*
 		 * Den Namen des Modules in die Mitte (x und y) rendern
 		 */
-		Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(mod.getName(), x + width / 2, y + 1 + height / 2, textcolor);
+		Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
 	}
 
 	/*

@@ -39,6 +39,7 @@ public class ModuleManager {
 		
 		//Combat
 		modules.add(new KillAura());
+		modules.add(new Velocity());
 		
 		//Misc
 		modules.add(new ChatSpammer());

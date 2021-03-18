@@ -1,7 +1,9 @@
 package badgamesinc.hypnotic.module;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.Event;
 import net.minecraft.client.Minecraft;
 
 public class Mod {

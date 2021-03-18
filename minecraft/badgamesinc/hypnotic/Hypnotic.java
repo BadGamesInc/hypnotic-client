@@ -23,7 +23,7 @@ public class Hypnotic {
 	public CommandManager commandManager;
 	public static FontManager fm;
 	public SaveLoad saveload;
-	public static final String clientName = "Hypnotic", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "b1", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
 	public void startup() {
 		setmgr = new SettingsManager();
@@ -35,10 +35,12 @@ public class Hypnotic {
 		commandManager = new CommandManager();
 		saveload = new SaveLoad();
 		Display.setTitle(clientName + " - 1.8.8");
+		saveload = new SaveLoad();
+		Display.setTitle(clientName + " - " + clientVersion);
 	}
 	
 	public void shutdown() {
-
+		saveload.save();
 	}
 	
 	public void onKeyPress(int key) {
