@@ -36,6 +36,7 @@ public class ModuleManager {
 		//Player
 		modules.add(new NoFall());
 		modules.add(new Jesus());
+		modules.add(new NoSlow());
 		
 		//Combat
 		modules.add(new KillAura());

@@ -35,6 +35,7 @@ public class KillAura extends Mod {
         Hypnotic.instance.setmgr.rSetting(new Setting("Existed", this, 30, 0, 500, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("FOV", this, 360, 0, 360, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("Range", this, 4, 4, 6, false));
+        Hypnotic.instance.setmgr.rSetting(new Setting("APS", this, 8, 0, 20, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("AutoBlock", this, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("Invisibles", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Players", this, true));
@@ -55,7 +56,7 @@ public class KillAura extends Mod {
         boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
         if(block && target.getDistanceToEntity(mc.thePlayer) < 8F)
             mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
-        if(current - last > 1000 / delay) {
+        if(current - last > 1000 / Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble()) {
             attack(target);
             resetTime();
         }

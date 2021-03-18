@@ -1,6 +1,10 @@
 package badgamesinc.hypnotic.module.misc;
 
+import java.util.ArrayList;
+
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.EventUpdate;
+import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -14,6 +18,14 @@ public class Disabler extends Mod {
 	public Disabler() {
 		super("Disabler", 0, Category.MISC);
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public void setup() {
+		ArrayList<String> options = new ArrayList<>();
+    	options.add("Test");
+    	options.add("Test1");
+    	Hypnotic.instance.setmgr.rSetting(new Setting("Test", this, "Test", options));
 	}
 	
 	public void eventUpdate(EventUpdate event) {

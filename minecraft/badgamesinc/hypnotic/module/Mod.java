@@ -41,11 +41,19 @@ public class Mod {
 		if(Hypnotic.instance.saveload != null) {
 			Hypnotic.instance.saveload.save();
 		}
+		
+		if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
+			mc.thePlayer.playSound("random.click", 10.5f, 100.5f);
+		}
 	}
 	
 	public void onUpdate() {}
-	public void onEnable() {Hypnotic.instance.eventManager.register(this);}
-	public void onDisable() {Hypnotic.instance.eventManager.unregister(this);}
+	public void onEnable() {
+		Hypnotic.instance.eventManager.register(this);
+	}
+	public void onDisable() {
+		Hypnotic.instance.eventManager.unregister(this);
+	}
 	public void setup() {}
 	
 	public int getKey() {

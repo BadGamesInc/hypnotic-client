@@ -66,7 +66,7 @@ public class Panel {
 		Color temp = ColorUtil.getClickGUIColor().darker();
 		int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
 		
-		Gui.drawRect(x, y, x + width, y + height, 0xff121212);
+		Gui.drawRect(x, y, x + width, y + height, (outlineColor));
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 			Gui.drawRect(x - 2, y, x, y + height, 0);
 			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);

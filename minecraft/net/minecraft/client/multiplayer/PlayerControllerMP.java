@@ -341,10 +341,7 @@ public class PlayerControllerMP
      */
     public float getBlockReachDistance()
     {
-    	if(Hypnotic.instance.moduleManager.getModuleByName("Reach").isEnabled())
     		return (float) Reach.getReach();
-    	else
-    		return this.currentGameType.isCreative() ? 5.0F : 4.5F;
     }
 
     public void updateController()

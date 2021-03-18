@@ -47,7 +47,7 @@ public class Gui
     /**
      * Draws a solid color rectangle with the specified coordinates and color (ARGB format). Args: x1, y1, x2, y2, color
      */
-    public static void drawRect(double d, double e, double g, double h, int color)
+    public static void drawRect(double d, double e, double g, double h, int k)
     {
         if (d < g)
         {
@@ -63,10 +63,10 @@ public class Gui
             h = j;
         }
 
-        float f3 = (float)(color >> 24 & 255) / 255.0F;
-        float f = (float)(color >> 16 & 255) / 255.0F;
-        float f1 = (float)(color >> 8 & 255) / 255.0F;
-        float f2 = (float)(color & 255) / 255.0F;
+        float f3 = (float)(k >> 24 & 255) / 255.0F;
+        float f = (float)(k >> 16 & 255) / 255.0F;
+        float f1 = (float)(k >> 8 & 255) / 255.0F;
+        float f2 = (float)(k & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.enableBlend();

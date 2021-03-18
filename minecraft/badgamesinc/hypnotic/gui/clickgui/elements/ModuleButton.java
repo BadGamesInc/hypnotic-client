@@ -95,7 +95,10 @@ public class ModuleButton {
 		/*
 		 * Den Namen des Modules in die Mitte (x und y) rendern
 		 */
-		Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
+		if(mod.isEnabled())
+			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredStringWithShadow(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
+		else
+			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
 	}
 
 	/*
@@ -125,7 +128,11 @@ public class ModuleButton {
 				this.extended = b;
 				
 				if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean())
-				if(extended)Minecraft.getMinecraft().thePlayer.playSound("tile.piston.out", 1f, 1f);else Minecraft.getMinecraft().thePlayer.playSound("tile.piston.in", 1f, 1f);
+					if(extended)Minecraft.getMinecraft().thePlayer.playSound("tile.piston.out", 1f, 1f);else Minecraft.getMinecraft().thePlayer.playSound("tile.piston.in", 1f, 1f);
+				
+				if(extended) {
+					
+				}
 			}
 		} else if (mouseButton == 2) {
 			/*
