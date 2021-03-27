@@ -23,7 +23,7 @@ public class Hypnotic {
 	public CommandManager commandManager;
 	public static FontManager fm;
 	public SaveLoad saveload;
-	public static final String clientName = "Hypnotic", clientVersion = "r1002", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "r1003", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
 	public void startup() {
 		setmgr = new SettingsManager();
@@ -34,7 +34,7 @@ public class Hypnotic {
 		fm = new FontManager();
 		commandManager = new CommandManager();
 		saveload = new SaveLoad();
-		Display.setTitle(clientName + " " + clientVersion + " - dev");
+		Display.setTitle(clientName + " " + clientVersion);
 	}
 	
 	public void shutdown() {
