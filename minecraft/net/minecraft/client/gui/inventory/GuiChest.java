@@ -1,9 +1,11 @@
 package net.minecraft.client.gui.inventory;
 
+import badgamesinc.hypnotic.Hypnotic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiChest extends GuiContainer
@@ -50,5 +52,30 @@ public class GuiChest extends GuiContainer
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
         this.drawTexturedModalRect(i, j + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
+    }
+    
+    @Override
+    public void initGui() {
+        super.initGui();
+        if (Hypnotic.instance.moduleManager.getModuleByName("ChestStealer").isEnabled()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        for (int i = 0; i < GuiChest.this.inventoryRows * 9; ++i) {
+                            final Slot slot = GuiChest.this.inventorySlots.inventorySlots.get(i);
+                            if (slot.getStack() != null) {
+                                Thread.sleep(100L);
+                                GuiChest.this.handleMouseClick(slot, slot.slotNumber, 0, 1);
+                                GuiChest.this.handleMouseClick(slot, slot.slotNumber, 0, 6);
+                            }
+                        }
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 }

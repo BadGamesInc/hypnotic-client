@@ -27,6 +27,7 @@ public class ModuleManager {
 		modules.add(new Speed());
 		modules.add(new AirJump());
 		modules.add(new Spider());
+		modules.add(new InventoryMove());
 		
 		//Render
 		modules.add(new HUDModule());
@@ -40,6 +41,7 @@ public class ModuleManager {
 		modules.add(new NoFall());
 		modules.add(new Jesus());
 		modules.add(new NoSlow());
+		modules.add(new InventoryManager());
 		
 		//Combat
 		modules.add(new KillAura());
@@ -52,6 +54,7 @@ public class ModuleManager {
 		modules.add(new RetardTalk());
 		modules.add(new Disabler());
 		modules.add(new PCPinger());
+		modules.add(new ChestStealer());
 
 		//World
 		modules.add(new FastBreak());
