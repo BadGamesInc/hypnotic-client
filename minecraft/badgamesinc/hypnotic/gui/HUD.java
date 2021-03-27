@@ -30,21 +30,19 @@ public class HUD {
 	public int height;
 	public int width;
 	
-	public static class ModuleComparator implements Comparator<Mod> {
-
-		@Override
-		public int compare(Mod arg0, Mod arg1) {
-			if(Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg0.getDisplayName()) > Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg1.getDisplayName())) {
-				return -1;
-			}
-			
-			if(Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg0.getDisplayName()) > Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg1.getDisplayName())) {
-				return 1;
-			}
-			return 0;
-		}
-		
-	}
+	public static class ModuleComparator implements Comparator<Mod>
+    {
+        @Override
+        public int compare(final Mod arg0, final Mod arg1) {
+            if (Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg0.getDisplayName()) > Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg1.getDisplayName())) {
+                return -1;
+            }
+            if (Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg0.getDisplayName()) < Minecraft.getMinecraft().fontRendererObj.getStringWidth(arg1.getDisplayName())) {
+                return 1;
+            }
+            return 0;
+        }
+    }
 	
 	public void draw() {
 		FontRenderer fr = mc.fontRendererObj;
@@ -61,7 +59,6 @@ public class HUD {
 	    
 	    int count = 0;
 	    
-	    Collections.sort(Hypnotic.instance.moduleManager.modules, new ModuleComparator());
 	    	
 		for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {		
 			

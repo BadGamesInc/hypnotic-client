@@ -12,7 +12,7 @@ import net.minecraft.client.settings.KeyBinding;
 public class InventoryMove extends Mod{
 
 	public InventoryMove() {
-        super("InventoryMove", 0, Category.MOVEMENT, "Allows you to walk in GUIs");
+        super("InvMove", 0, Category.MOVEMENT, "Allows you to walk in GUIs");
     }
     
     @Override

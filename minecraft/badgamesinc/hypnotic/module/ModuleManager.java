@@ -42,6 +42,7 @@ public class ModuleManager {
 		modules.add(new Jesus());
 		modules.add(new NoSlow());
 		modules.add(new InventoryManager());
+		modules.add(new AutoArmor());
 		
 		//Combat
 		modules.add(new KillAura());
@@ -55,6 +56,8 @@ public class ModuleManager {
 		modules.add(new Disabler());
 		modules.add(new PCPinger());
 		modules.add(new ChestStealer());
+		modules.add(new FastEat());
+		modules.add(new AutoGapple());
 
 		//World
 		modules.add(new FastBreak());

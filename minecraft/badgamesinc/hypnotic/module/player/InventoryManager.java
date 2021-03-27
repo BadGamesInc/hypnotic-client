@@ -31,7 +31,7 @@ public class InventoryManager extends Mod{
 private TimerUtils timer;
     
     public InventoryManager() {
-        super("InventoryManager", 0, Category.PLAYER, "Manage your inventory");
+        super("InvManager", 0, Category.PLAYER, "Manage your inventory");
         this.timer = new TimerUtils();
     }
     
@@ -195,6 +195,34 @@ private TimerUtils timer;
     }
     
     private boolean isBad(final Item i) {
-        return i.getUnlocalizedName().contains("tnt") || i.getUnlocalizedName().contains("stick") || i.getUnlocalizedName().contains("egg") || i.getUnlocalizedName().contains("string") || i.getUnlocalizedName().contains("flint") || i.getUnlocalizedName().contains("bow") || i.getUnlocalizedName().contains("arrow") || i.getUnlocalizedName().contains("bucket") || i.getUnlocalizedName().contains("feather") || i.getUnlocalizedName().contains("snow") || i.getUnlocalizedName().contains("piston") || i instanceof ItemGlassBottle || i.getUnlocalizedName().contains("web") || i.getUnlocalizedName().contains("slime") || i.getUnlocalizedName().contains("trip") || i.getUnlocalizedName().contains("wire") || i.getUnlocalizedName().contains("sugar") || i.getUnlocalizedName().contains("note") || i.getUnlocalizedName().contains("record") || i.getUnlocalizedName().contains("flower") || i.getUnlocalizedName().contains("wheat") || i.getUnlocalizedName().contains("fishing") || i.getUnlocalizedName().contains("boat") || i.getUnlocalizedName().contains("leather") || i.getUnlocalizedName().contains("seeds") || i.getUnlocalizedName().contains("skull") || i.getUnlocalizedName().contains("torch") || i.getUnlocalizedName().contains("anvil") || i.getUnlocalizedName().contains("enchant") || i.getUnlocalizedName().contains("exp") || i.getUnlocalizedName().contains("shears");
+        return i.getUnlocalizedName().contains("tnt") 
+        		|| i.getUnlocalizedName().contains("stick")
+        		|| i.getUnlocalizedName().contains("egg")
+        		|| i.getUnlocalizedName().contains("string")
+        		|| i.getUnlocalizedName().contains("flint")
+        		|| i.getUnlocalizedName().contains("bucket")
+        		|| i.getUnlocalizedName().contains("feather")
+        		|| i.getUnlocalizedName().contains("snow")
+        		|| i.getUnlocalizedName().contains("piston")
+        		|| i instanceof ItemGlassBottle ||
+        		i.getUnlocalizedName().contains("web")
+        		|| i.getUnlocalizedName().contains("slime")
+        		|| i.getUnlocalizedName().contains("trip")
+        		|| i.getUnlocalizedName().contains("wire")
+        		|| i.getUnlocalizedName().contains("sugar")
+        		|| i.getUnlocalizedName().contains("note")
+        		|| i.getUnlocalizedName().contains("record")
+        		|| i.getUnlocalizedName().contains("flower")
+        		|| i.getUnlocalizedName().contains("wheat")
+        		|| i.getUnlocalizedName().contains("fishing")
+        		|| i.getUnlocalizedName().contains("boat")
+        		|| i.getUnlocalizedName().contains("leather")
+        		|| i.getUnlocalizedName().contains("seeds")
+        		|| i.getUnlocalizedName().contains("skull") 
+        		|| i.getUnlocalizedName().contains("torch") 
+        		|| i.getUnlocalizedName().contains("anvil") 
+        		|| i.getUnlocalizedName().contains("enchant") 
+        		|| i.getUnlocalizedName().contains("exp") 
+        		|| i.getUnlocalizedName().contains("shears");
     }
 }
