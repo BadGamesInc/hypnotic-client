@@ -8,7 +8,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class Spider extends Mod {
 
 	public Spider() {
-		super("Spider", 0, Category.MOVEMENT);
+		super("Spider", 0, Category.MOVEMENT, "Climb walls like a spider");
 
 	}
 	

@@ -13,7 +13,7 @@ public class Speed extends Mod
     ArrayList<String> options;
     
     public Speed() {
-        super("Speed", 36, Category.MOVEMENT);
+        super("Speed", 36, Category.MOVEMENT, "Zoom around those noobs");
     }
     
     @Override
@@ -21,6 +21,7 @@ public class Speed extends Mod
         final ArrayList<String> options = new ArrayList<String>();
         options.add("OnGround");
         options.add("Bhop");
+        options.add("Strafe");
         Hypnotic.instance.setmgr.rSetting(new Setting("SpeedMode", this, "Bhop", options));
         Hypnotic.instance.setmgr.rSetting(new Setting("GroundSpeed", this, 1.1, 1.1, 1.7, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("BhopSpeed", this, 0.05, 0.05, 0.5, false));
@@ -92,6 +93,9 @@ public class Speed extends Mod
                 mc.thePlayer.landMovementFactor = (float)this.getBhopSpeedValue();
                 mc.thePlayer.jumpMovementFactor = (float)this.getBhopSpeedValue();
             }
+        }
+        if(getMode().equalsIgnoreCase("Strafe")) {
+        	mc.thePlayer.moveStrafing *= 5f;
         }
         final String mode = Hypnotic.instance.setmgr.getSettingByName("SpeedMode").getValString();
         this.setDisplayName("Speed §7" + mode);

@@ -8,7 +8,7 @@ import net.minecraft.potion.PotionEffect;
 public class FastBreak extends Mod {
 
 	public FastBreak() {
-		super("FastBreak", 0, Category.WORLD);
+		super("FastBreak", 0, Category.WORLD, "Break blocks faster");
 
 	}
 	

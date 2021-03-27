@@ -20,6 +20,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
@@ -265,7 +266,10 @@ public class ItemRenderer
      */
     private void transformFirstPersonItem(float equipProgress, float swingProgress)
     {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+    	float itemSize = (float) ((float) Hypnotic.instance.setmgr.getSettingByName("Item Size").getValDouble() * .01);
+        float xValue = (float) (((float) Hypnotic.instance.setmgr.getSettingByName("Item X").getValDouble()) * .01);
+        float yValue = (float) (((float) Hypnotic.instance.setmgr.getSettingByName("Item Y").getValDouble()) * .01);
+        GlStateManager.translate(xValue, -yValue, -0.71999997F);
         GlStateManager.translate(0.0F, equipProgress * -0.6F, 0.0F);
         GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
         float f = MathHelper.sin(swingProgress * swingProgress * (float)Math.PI);
@@ -273,7 +277,7 @@ public class ItemRenderer
         GlStateManager.rotate(f * -20.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(f1 * -20.0F, 0.0F, 0.0F, 1.0F);
         GlStateManager.rotate(f1 * -80.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(0.4F, 0.4F, 0.4F);
+        GlStateManager.scale(itemSize, itemSize, itemSize);
     }
 
     private void func_178098_a(float p_178098_1_, AbstractClientPlayer clientPlayer)
@@ -315,7 +319,8 @@ public class ItemRenderer
      * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
      */
     public void renderItemInFirstPerson(float partialTicks)
-    { 	
+    {
+    	String mode = Hypnotic.instance.setmgr.getSettingByName("Block mode").getValString();
         float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
         AbstractClientPlayer abstractclientplayer = this.mc.thePlayer;
         float f1 = abstractclientplayer.getSwingProgress(partialTicks);
@@ -330,7 +335,7 @@ public class ItemRenderer
         float animationVals2;
         
 	        if(Hypnotic.instance.moduleManager.getModuleByName("BlockAnimations").isEnabled() && Hypnotic.instance.moduleManager != null) {
-	        	animationVals1 = f - 0.5f;
+	        	animationVals1 = f - 0.2f;
 	            animationVals2 = f1 -1f;
 	        } else {
 	        	animationVals1 = f;
@@ -339,6 +344,16 @@ public class ItemRenderer
 
         if (this.itemToRender != null)
         {
+        	 int random1 = 0;
+             int random2 = 0;
+             int random3 = 0;
+             int random4 = 0;
+             float random5 = 0;
+             int random6 = 0;
+             int random7 = 0;
+             float random8 = 0;
+             int random10 = 0;
+             
             if (this.itemToRender.getItem() == Items.filled_map)
             {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
@@ -358,15 +373,67 @@ public class ItemRenderer
                         this.func_178104_a(abstractclientplayer, partialTicks);
                         this.transformFirstPersonItem(f, 0.0F);
                         break;
-
+                        
                     case BLOCK:
-                        this.transformFirstPersonItem(animationVals1, animationVals2);
-                        this.func_178103_d();
-                        break;
-
+                    	float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                    	
+                    	if(mode.equalsIgnoreCase("Slap")) {
+	                    	this.transformFirstPersonItem(f - 0.2f, f1 -1f);
+	                        this.func_178103_d();
+                    	} else if(mode.equalsIgnoreCase("1.8")) {
+                    		this.transformFirstPersonItem(f, 0.0f);
+	                        this.func_178103_d();
+                    	} else if(mode.equalsIgnoreCase("1.7") || mode.equalsIgnoreCase("Stab")) {
+                    		this.transformFirstPersonItem(0.1f, f1);
+	                        this.func_178103_d();
+                    	} else if(mode.equalsIgnoreCase("Exhibition")) {
+                    		/*if (itemToRender.getItem() instanceof ItemSword) {
+                    			this.transformFirstPersonItem(f / 2.0F, 0.0F);
+                                GL11.glRotatef(-var9 * 40.0F / 2.0F, var9 / 2.0F, -0.0F, 9.0F);
+                                GL11.glRotatef(-var9 * 30.0F, 1.0F, var9 / 2.0F, -0.0F);
+                                this.func_178103_d();
+                            }*/
+                    		
+							GL11.glTranslated(-0.1D, 0.15D, 0.0D);
+							
+							float var10 = MathHelper.sin(MathHelper.sqrt_float(f1) * 4.5895123F);
+							this.transformFirstPersonItem(f / 2f, 0.0F);
+		                     GL11.glRotatef(-var9 * 40.0F / 2.0F, var9 / 2.0F, -0.0F, 9.0F);
+		                     GL11.glRotatef(-var9 * 30.0F, 1.0F, var9 / 2.0F, -0.0F);
+		                     this.func_178103_d();
+                    	} else if(mode.equalsIgnoreCase("Spin")) {
+                    		random1 = (int) (System.currentTimeMillis() / 2 % 360);
+                            random2 = 1;
+                            random5 = 1;
+                            random4 = -59;
+                            random6 = -1;
+                            random7 = 0;
+                            random10 = 3;
+                    	} else if(mode.equalsIgnoreCase("Astolfo")) {               	
+	                    	GlStateManager.rotate((float)(System.currentTimeMillis() / Hypnotic.instance.setmgr.getSettingByName("Hand speed").getValDouble() % 360), 0.0f, 0.0f, -0.1f);
+	                        this.transformFirstPersonItem(f / 1.6f, 0.0f);
+	                        this.func_178103_d();
+                    	}
+                    	break;
+					                   
+                    	
                     case BOW:
                         this.transformFirstPersonItem(f, 0.0F);
                         this.func_178098_a(partialTicks, abstractclientplayer);
+                }
+                
+                if(mode.equalsIgnoreCase("Spin")) {
+	                GlStateManager.translate(random8, 0.0f, -random5 - 1);
+	                GlStateManager.rotate(random4 - 30, random6, random7, random10);
+	                GlStateManager.rotate(-random1 - 10, random2, random3, 0.0F);
+	                GlStateManager.rotate(63.0F, 0.0F, 1.0F, 0.0F);
+                }
+                
+                if(mode.equalsIgnoreCase("Stab")) {
+	                GlStateManager.translate(random8 - 1.3f, 0.0f, -random5 + 1.1f);
+	                GlStateManager.rotate(random4 - 30, random6, random7, random10 + 50);
+	                GlStateManager.rotate(-random1 - 10, random2, random3, 0.0F);
+	                GlStateManager.rotate(63.0F, 0.0F, 1.0F, 0.0F);
                 }
             }
             else

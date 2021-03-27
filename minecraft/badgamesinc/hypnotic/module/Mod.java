@@ -11,16 +11,25 @@ public class Mod {
 	protected Minecraft mc = Minecraft.getMinecraft();
 	private int key;
 	private boolean enabled;
-	private String name, displayName;
+	private String name, displayName, description;
 	private Category category;
 	
-	public Mod(String name, int key, Category category) {
+	public Mod(String name, int key, Category category, String description) {
 		this.name = name;
 		this.key = key;
 		this.category = category;
+		this.description = description;
 		enabled = false;
 		displayName = name;
 		setup();
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getDisplayName() {

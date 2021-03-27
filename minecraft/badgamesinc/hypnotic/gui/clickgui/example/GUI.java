@@ -20,7 +20,7 @@ public class GUI extends Mod{
 
     public GUI()
     {
-        super("ClickGUI", Keyboard.KEY_RSHIFT, Category.RENDER);
+        super("Theme", Keyboard.KEY_RSHIFT, Category.RENDER, "Change the color and style of the client!");
     }
 
     //Setup is called in the Module con

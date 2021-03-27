@@ -6,7 +6,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class FastPlace extends Mod {
 
 	public FastPlace() {
-		super("FastPlace", 0, Category.WORLD);
+		super("FastPlace", 0, Category.WORLD, "Place blocks faster");
 		
 	}
 	

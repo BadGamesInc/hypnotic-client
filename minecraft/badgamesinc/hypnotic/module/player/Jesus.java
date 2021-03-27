@@ -13,7 +13,7 @@ import net.minecraft.util.BlockPos;
 public class Jesus extends Mod implements UpdateListener
 {
 	public Jesus() {
-		super("Jesus", 0, Category.PLAYER);
+		super("Jesus", 0, Category.PLAYER, "Walk on water, like jesus");
 	}
 
 	private int ticksOutOfWater = 10;

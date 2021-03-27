@@ -3,8 +3,13 @@ package net.minecraft.util;
 import java.util.Random;
 import java.util.UUID;
 
+import badgamesinc.hypnotic.util.MathUtils;
+
 public class MathHelper
 {
+	public static final float PI = MathUtils.roundToFloat(Math.PI);
+    public static final float PI2 = MathUtils.roundToFloat((Math.PI * 2D));
+    public static final float PId2 = MathUtils.roundToFloat((Math.PI / 2D));
     public static final float SQRT_2 = sqrt_float(2.0F);
 
     /**

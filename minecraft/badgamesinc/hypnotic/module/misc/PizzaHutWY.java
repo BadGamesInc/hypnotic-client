@@ -7,7 +7,7 @@ public class PizzaHutWY extends Mod
 {
 	public PizzaHutWY() 
 	{
-		super("Pizza Hut WY", 0, Category.MISC);
+		super("Pizza Hut WY", 0, Category.MISC, "No one out pizzas the hut");
 	}
 	
 	@Override

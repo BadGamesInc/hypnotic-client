@@ -24,6 +24,10 @@ public class TextureAtlasSprite
     protected int originY;
     protected int width;
     protected int height;
+    public float baseU;
+    public float baseV;
+    public int sheetWidth;
+    public int sheetHeight;
     private float minU;
     private float maxU;
     private float minV;
@@ -32,6 +36,7 @@ public class TextureAtlasSprite
     protected int tickCounter;
     private static String locationNameClock = "builtin/clock";
     private static String locationNameCompass = "builtin/compass";
+    private int animationIndex = -1;
 
     protected TextureAtlasSprite(String spriteName)
     {
@@ -79,6 +84,22 @@ public class TextureAtlasSprite
         this.minV = atlasSpirit.minV;
         this.maxV = atlasSpirit.maxV;
     }
+    
+    public float toSingleU(float p_toSingleU_1_)
+    {
+        p_toSingleU_1_ = p_toSingleU_1_ - this.baseU;
+        float f = (float)this.sheetWidth / (float)this.width;
+        p_toSingleU_1_ = p_toSingleU_1_ * f;
+        return p_toSingleU_1_;
+    }
+
+    public float toSingleV(float p_toSingleV_1_)
+    {
+        p_toSingleV_1_ = p_toSingleV_1_ - this.baseV;
+        float f = (float)this.sheetHeight / (float)this.height;
+        p_toSingleV_1_ = p_toSingleV_1_ * f;
+        return p_toSingleV_1_;
+    }
 
     /**
      * Returns the X position of this icon on its texture sheet, in pixels.
@@ -102,6 +123,11 @@ public class TextureAtlasSprite
     public int getIconWidth()
     {
         return this.width;
+    }
+    
+    public int getAnimationIndex()
+    {
+        return this.animationIndex;
     }
 
     /**

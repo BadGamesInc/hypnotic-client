@@ -8,7 +8,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class RetardTalk extends Mod {
 
 	public RetardTalk() {
-		super("RetardTalk", 0, Category.MISC);
+		super("RetardTalk", 0, Category.MISC, "Make every message you send retarded");
 	}
 	
 	@EventTarget

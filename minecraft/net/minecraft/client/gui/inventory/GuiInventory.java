@@ -93,7 +93,7 @@ public class GuiInventory extends InventoryEffectRenderer
     /**
      * Draws the entity to the screen. Args: xPos, yPos, scale, mouseX, mouseY, entityLiving
      */
-    public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseX, float mouseY, EntityLivingBase ent)
+    public static void drawEntityOnScreen(float posX, float posY, float scale, float mouseX, float mouseY, EntityLivingBase ent)
     {
         GlStateManager.enableColorMaterial();
         GlStateManager.pushMatrix();

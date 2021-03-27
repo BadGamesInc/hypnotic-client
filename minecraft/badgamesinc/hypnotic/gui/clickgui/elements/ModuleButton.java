@@ -19,6 +19,8 @@ import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 
 /**
  *  Made by HeroCode
@@ -88,8 +90,12 @@ public class ModuleButton {
 		/*
 		 * Ist die Maus über dem Element, wenn ja dann soll der Button sich anders färben
 		 */
-		if (isHovered(mouseX, mouseY)) {
-			Gui.drawRect(x - 2, y, x + width + 2, y + height + 1, 0x55111111);
+		if (isHovered(mouseX, mouseY)) {	
+			Minecraft mc = Minecraft.getMinecraft();
+			ScaledResolution sr = new ScaledResolution(mc);
+			Gui.drawRect(0, sr.getScaledHeight(), 8 + Hypnotic.instance.fm.getFont("").getWidth(mod.getDescription()), sr.getScaledHeight() - 14, 0xff212020);
+			Gui.drawRect(x - 2, y, x + width + 2, y + height + 1, 0x55111111);	
+			Hypnotic.fm.getFont("SFB 8").drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1);
 		}
 		
 		/*

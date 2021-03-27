@@ -3,6 +3,9 @@ package net.minecraft.entity;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
+
+import badgamesinc.hypnotic.Hypnotic;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -142,7 +145,7 @@ public abstract class EntityLivingBase extends Entity
     protected float lastDamage;
 
     /** used to check whether entity is jumping. */
-    protected boolean isJumping;
+    public boolean isJumping;
     public float moveStrafing;
     public float moveForward;
     protected float randomYawVelocity;
@@ -1322,7 +1325,8 @@ public abstract class EntityLivingBase extends Entity
      */
     private int getArmSwingAnimationEnd()
     {
-        return this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) * 1 : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
+    	float speed = (float) Hypnotic.instance.setmgr.getSettingByName("Hand Speed").getValDouble();
+        return (int) (this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) * 1 : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6) * (speed));
     }
 
     /**

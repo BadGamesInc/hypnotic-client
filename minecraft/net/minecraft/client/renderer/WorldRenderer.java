@@ -9,6 +9,8 @@ import java.nio.ShortBuffer;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Comparator;
+
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.MathHelper;
@@ -32,6 +34,11 @@ public class WorldRenderer
     private double zOffset;
     private VertexFormat vertexFormat;
     private boolean isDrawing;
+    private TextureAtlasSprite[] quadSprites = null;
+    private TextureAtlasSprite[] quadSpritesPrev = null;
+    private TextureAtlasSprite quadSprite = null;
+    public BitSet animatedSprites = null;
+    public BitSet animatedSpritesCached = new BitSet();
 
     public WorldRenderer(int bufferSizeIn)
     {
@@ -192,6 +199,48 @@ public class WorldRenderer
             this.needsUpdate = false;
             this.byteBuffer.limit(this.byteBuffer.capacity());
         }
+    }
+    
+    
+    
+    public WorldRenderer func_181673_a(double p_181673_1_, double p_181673_3_)
+    {
+        if (this.quadSprite != null && this.quadSprites != null)
+        {
+            p_181673_1_ = this.quadSprite.toSingleU((float)p_181673_1_);
+            p_181673_3_ = this.quadSprite.toSingleV((float)p_181673_3_);
+            this.quadSprites[this.vertexCount / 4] = this.quadSprite;
+        }
+
+        int i = this.vertexCount * this.vertexFormat.getNextOffset() + this.vertexFormat.func_181720_d(this.field_181678_g);
+
+        switch (this.field_181677_f.getType())
+        {
+            case FLOAT:
+                this.byteBuffer.putFloat(i, (float)p_181673_1_);
+                this.byteBuffer.putFloat(i + 4, (float)p_181673_3_);
+                break;
+
+            case UINT:
+            case INT:
+                this.byteBuffer.putInt(i, (int)p_181673_1_);
+                this.byteBuffer.putInt(i + 4, (int)p_181673_3_);
+                break;
+
+            case USHORT:
+            case SHORT:
+                this.byteBuffer.putShort(i, (short)((int)p_181673_3_));
+                this.byteBuffer.putShort(i + 2, (short)((int)p_181673_1_));
+                break;
+
+            case UBYTE:
+            case BYTE:
+                this.byteBuffer.put(i, (byte)((int)p_181673_3_));
+                this.byteBuffer.put(i + 1, (byte)((int)p_181673_1_));
+        }
+
+        this.func_181667_k();
+        return this;
     }
 
     public WorldRenderer tex(double p_181673_1_, double p_181673_3_)
@@ -594,6 +643,19 @@ public class WorldRenderer
         for (int i = 0; i < 4; ++i)
         {
             this.putColorRGB_F(red, green, blue, i + 1);
+        }
+    }
+    
+    public void setSprite(TextureAtlasSprite p_setSprite_1_)
+    {
+        if (this.animatedSprites != null && p_setSprite_1_ != null && p_setSprite_1_.getAnimationIndex() >= 0)
+        {
+            this.animatedSprites.set(p_setSprite_1_.getAnimationIndex());
+        }
+
+        if (this.quadSprites != null)
+        {
+            this.quadSprite = p_setSprite_1_;
         }
     }
 

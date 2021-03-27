@@ -16,16 +16,8 @@ public class Disabler extends Mod {
 	private Packet packet;
 
 	public Disabler() {
-		super("Disabler", 0, Category.MISC);
+		super("Disabler", 0, Category.MISC, "Attempts to cancel the client sending packets to the server");
 		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-	public void setup() {
-		ArrayList<String> options = new ArrayList<>();
-    	options.add("Test");
-    	options.add("Test1");
-    	Hypnotic.instance.setmgr.rSetting(new Setting("Test", this, "Test", options));
 	}
 	
 	public void eventUpdate(EventUpdate event) {

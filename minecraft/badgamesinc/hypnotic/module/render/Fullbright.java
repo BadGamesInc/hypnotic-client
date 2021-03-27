@@ -6,7 +6,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class Fullbright extends Mod {
 
 	public Fullbright() {
-		super("Fullbright", 0, Category.RENDER);
+		super("Fullbright", 0, Category.RENDER, "Modifies your gama");
 	}
 	
 	@Override

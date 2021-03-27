@@ -16,26 +16,29 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public class KillAura extends Mod {
-    private EntityLivingBase target;
+    public static EntityLivingBase target;
     private long current, last;
-    private int delay = 8;
+    private double delay = Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble();
     private float yaw, pitch;
     private boolean others;
+    public boolean blocking;
 
     public KillAura() {
-        super("KillAura", Keyboard.KEY_R, Category.COMBAT);
+        super("KillAura", Keyboard.KEY_R, Category.COMBAT, "Attacks targets withing a specified range");
     }
 
     @Override
     public void setup() {
+    	Hypnotic.instance.setmgr.rSetting(new Setting("Range", this, 4.3, 0, 6, false));
+    	Hypnotic.instance.setmgr.rSetting(new Setting("APS", this, 8, 0, 20, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Crack Size", this, 0, 0, 15, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("Existed", this, 30, 0, 500, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("FOV", this, 360, 0, 360, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Range", this, 4, 4, 6, false));
-        Hypnotic.instance.setmgr.rSetting(new Setting("APS", this, 8, 0, 20, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("AutoBlock", this, true));
         Hypnotic.instance.setmgr.rSetting(new Setting("Invisibles", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Players", this, true));
@@ -60,6 +63,7 @@ public class KillAura extends Mod {
             attack(target);
             resetTime();
         }
+        
     }
 
     @EventTarget
@@ -68,6 +72,8 @@ public class KillAura extends Mod {
             return;
         mc.thePlayer.rotationYaw = yaw;
         mc.thePlayer.rotationPitch = pitch;
+        
+        
     }
 
     private void attack(Entity entity) {
@@ -147,5 +153,25 @@ public class KillAura extends Mod {
         float pitch = (float)-(Math.atan2(diffY, dist) * 180D / Math.PI);
 
         return new float[] { yaw, pitch };
+    }
+    
+    private void block() {
+        if (Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() &&
+                !mc.gameSettings.keyBindUseItem.isPressed() &&
+                !blocking) {
+            mc.getNetHandler().getNetworkManager().sendPacket(
+                    new C08PacketPlayerBlockPlacement(
+                            new BlockPos(-1, -1, -1),
+                            255,
+                            mc.thePlayer.getCurrentEquippedItem(),
+                            0,
+                            0,
+                            0));
+            blocking = true;
+        }
+    }
+    
+    private boolean isHoldingSword() {
+        return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
     }
 }

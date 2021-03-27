@@ -1,11 +1,16 @@
 package net.minecraft.entity.player;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.Lists;
-import com.mojang.authlib.GameProfile;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import com.google.common.base.Charsets;
+import com.google.common.collect.Lists;
+import com.mojang.authlib.GameProfile;
+
+import badgamesinc.hypnotic.EventSigma.Event;
+import badgamesinc.hypnotic.EventSigma.EventSystem;
+import badgamesinc.hypnotic.EventSigma.impl.EventDeath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
@@ -159,7 +164,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     /**
      * This field starts off equal to getMaxItemUseDuration and is decremented on each tick
      */
-    private int itemInUseCount;
+    public int itemInUseCount;
     protected float speedOnGround = 0.1F;
     protected float speedInAir = 0.02F;
     private int lastXPSound;
@@ -712,6 +717,11 @@ public abstract class EntityPlayer extends EntityLivingBase
      */
     public void onDeath(DamageSource cause)
     {
+    	Event event = EventSystem.getInstance(EventDeath.class);
+        event.fire();
+        if (event.isCancelled()) {
+            return;
+        }
         super.onDeath(cause);
         this.setSize(0.2F, 0.2F);
         this.setPosition(this.posX, this.posY, this.posZ);

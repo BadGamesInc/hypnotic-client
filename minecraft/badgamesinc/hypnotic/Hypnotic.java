@@ -34,7 +34,7 @@ public class Hypnotic {
 		fm = new FontManager();
 		commandManager = new CommandManager();
 		saveload = new SaveLoad();
-		Display.setTitle(clientName + " - " + clientVersion);
+		Display.setTitle(clientName + " " + clientVersion + " - dev");
 	}
 	
 	public void shutdown() {

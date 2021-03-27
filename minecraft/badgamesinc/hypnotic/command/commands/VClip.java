@@ -29,8 +29,7 @@ public class VClip extends Command {
 		if(args[0] == null) {
 			Wrapper.tellPlayer("Usage: " + getSyntax());
 		} else {
-			mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY
-					+ Integer.valueOf(args[0]), mc.thePlayer.posZ);
+			mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + Integer.valueOf(args[0]), mc.thePlayer.posZ);
 			Wrapper.tellPlayer("Clipped " + args[0] + " blocks vertically");
 		}
 		

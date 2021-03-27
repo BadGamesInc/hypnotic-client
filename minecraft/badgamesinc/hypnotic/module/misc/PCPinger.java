@@ -9,7 +9,7 @@ public class PCPinger extends Mod
 {
 	public PCPinger() 
 	{
-		super("PC Pinger", 0, Category.MISC);
+		super("PC Pinger", 0, Category.MISC, "DON'T ENABLE ITS A PCPINGER");
 	}
 	
 	@Override

@@ -6,7 +6,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class Fast extends Mod {
 
 	public Fast() {
-		super("Fast", 0, Category.MOVEMENT);
+		super("Fast", 0, Category.MOVEMENT, "go faster than sonic");
 
 	}
 	

@@ -9,7 +9,7 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 public class Timer extends Mod {
 
 	public Timer() {
-		super("Timer", 0, Category.WORLD);
+		super("Timer", 0, Category.WORLD, "Modify the minecraft timer speed");
 
 	}
 	

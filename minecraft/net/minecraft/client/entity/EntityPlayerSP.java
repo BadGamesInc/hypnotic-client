@@ -1,6 +1,8 @@
 package net.minecraft.client.entity;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.EventSigma.EventSystem;
+import badgamesinc.hypnotic.EventSigma.impl.EventChat;
 import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
@@ -32,7 +34,9 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
@@ -71,7 +75,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
      * The last Y position which was transmitted to the server, used to determine when the Y position changes and needs
      * to be re-transmitted
      */
-    private double lastReportedPosY;
+    public double lastReportedPosY;
 
     /**
      * The last Z position which was transmitted to the server, used to determine when the Z position changes and needs
@@ -306,6 +310,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
+    	EventChat ec = (EventChat) EventSystem.getInstance(EventChat.class);
+        ec.fire(message);
+        if (ec.isCancelled()) {
+            return;
+        }
     	if(message.startsWith(".")) {
     		Hypnotic.instance.onSendChatMessage(message);
     	} else {
@@ -800,11 +809,26 @@ public class EntityPlayerSP extends AbstractClientPlayer
         boolean flag2 = this.movementInput.moveForward >= f;
         this.movementInput.updatePlayerMoveState();
 
-        if (this.isUsingItem() && !this.isRiding())
+        if (this.isUsingItem() && !this.isRiding() && !Hypnotic.instance.moduleManager.getModuleByName("NoSlow").isEnabled())
         {
-            this.movementInput.moveStrafe *= 0.2F;
-            this.movementInput.moveForward *= 0.2F;
-            this.sprintToggleTimer = 0;
+        	if(!Hypnotic.instance.moduleManager.getModuleByName("NoSlow").isEnabled()) {
+	            this.movementInput.moveStrafe *= 0.2F;
+	            this.movementInput.moveForward *= 0.2F;
+	            this.sprintToggleTimer = 0;
+        	} else if(mc.thePlayer.inventory.getCurrentItem() != null && (!(mc.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemSword))){
+        		if(!(mc.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemBow)){
+        		double slow = (71-mc.thePlayer.itemInUseCount) * 0.008;
+        		
+        	
+        		this.movementInput.moveStrafe *= slow;
+        		this.movementInput.moveForward *= slow;
+        		this.sprintToggleTimer = 0;
+        		}else{
+        			this.movementInput.moveStrafe *= 0.5f;
+            		this.movementInput.moveForward *= 0.5f;
+            		this.sprintToggleTimer = 0;
+        		}
+        	}
         }
 
         this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double)this.width * 0.35D);

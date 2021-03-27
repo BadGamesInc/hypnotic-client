@@ -7,7 +7,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 public class NoFall extends Mod {
 
 	public NoFall() {
-		super("NoFall", 0, Category.PLAYER);
+		super("NoFall", 0, Category.PLAYER, "Prevents fall damage");
 	}
 	
 	public void onUpdate() {

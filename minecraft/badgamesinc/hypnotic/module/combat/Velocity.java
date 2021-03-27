@@ -8,7 +8,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class Velocity extends Mod {
 
 	public Velocity() {
-		super("Velocity", 0, Category.COMBAT);
+		super("Velocity", 0, Category.COMBAT, "Modify your horizontal and vertical velocity");
 	}
 	
 	@Override

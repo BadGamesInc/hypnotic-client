@@ -14,7 +14,7 @@ public class ChatSpammer extends Mod {
 	public TimerUtils timer = new TimerUtils();
 	
 	public ChatSpammer() {
-		super("ChatSpammer", 0, Category.MISC);
+		super("ChatSpammer", 0, Category.MISC, "Spam that chat");
 		
 		messages = new ArrayList<String>();
 		timer = new TimerUtils();
@@ -27,7 +27,7 @@ public class ChatSpammer extends Mod {
 		messages.add("FUELPUMPS ON TOP");
 		messages.add("E");
 		messages.add("when the impostor is sus");
-		messages.add("Hello. This is Mr. Hood from the Sherwood Law Group. We've been suing the rich and giving to the poor since 1944. Wee can solve all of your merry little problems! See what we're about below! https://youtube.com/watch?v=cOOG3bRujoM");
+		messages.add("This is Mr. Hood from the Sherwood Law Group. We've been suing the rich and giving to the poor since 1944. We can solve all of your merry little problems! See what we're about below! https://youtube.com/watch?v=cOOG3bRujoM");
 		messages.add("bro its a pc pinger, dont download it");
 	}
 	

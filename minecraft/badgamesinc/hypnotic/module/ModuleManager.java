@@ -32,6 +32,9 @@ public class ModuleManager {
 		modules.add(new HUDModule());
 		modules.add(new Fullbright());
 		modules.add(new BlockAnimations());
+		modules.add(new ItemCustomization());
+		modules.add(new TargetHUD());
+		modules.add(new ESP());
 		
 		//Player
 		modules.add(new NoFall());

@@ -8,7 +8,7 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 public class LadderLauncher extends Mod {
 
 	public LadderLauncher() {
-		super("LadderLauncher", 0, Category.MOVEMENT);
+		super("LadderLauncher", 0, Category.MOVEMENT, "Basically fast ladder but infinitely better");
 		
 	}
 	

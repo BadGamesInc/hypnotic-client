@@ -12,7 +12,7 @@ public class Reach extends Mod
     public static int reach;
     
     public Reach() {
-        super("Reach", 0, Category.COMBAT);
+        super("Reach", 0, Category.COMBAT, "Give yourself extended reach");
     }
     
     @Override
