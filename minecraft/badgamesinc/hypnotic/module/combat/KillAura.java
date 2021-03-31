@@ -9,6 +9,8 @@ import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.MathUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -16,6 +18,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -46,6 +49,11 @@ public class KillAura extends Mod {
         Hypnotic.instance.setmgr.rSetting(new Setting("Monsters", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Villagers", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Teams", this, false));
+    }
+    
+    @Override
+    public void onUpdate() {
+    	this.setDisplayName("KillAura" + ColorUtils.gray + " R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " " + "APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2));
     }
 
     @EventTarget
@@ -81,7 +89,7 @@ public class KillAura extends Mod {
             mc.thePlayer.onCriticalHit(entity);
 
         mc.thePlayer.swingItem();
-        mc.playerController.attackEntity(mc.thePlayer, entity);
+        mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
     }
 
     private void updateTime() {

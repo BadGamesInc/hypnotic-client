@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.module.render;
+package badgamesinc.hypnotic.module.gui;
 
 import java.util.ArrayList;
 

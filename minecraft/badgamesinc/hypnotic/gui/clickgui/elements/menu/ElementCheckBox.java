@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 
 /**
@@ -18,6 +19,8 @@ import net.minecraft.client.gui.Gui;
  *  @author HeroCode
  */
 public class ElementCheckBox extends Element {
+	
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 18, 0, 1, 1);
 	/*
 	 * Konstrukor
 	 */
@@ -42,7 +45,7 @@ public class ElementCheckBox extends Element {
 		/*
 		 * Titel und Checkbox rendern.
 		 */
-		Hypnotic.fm.getFont("SFB 8").drawString(setstrg, x + width - FontUtil.getStringWidth(setstrg), y + FontUtil.getFontHeight() / 2 - 0.5, 0xffffffff);
+		ufr.drawString(setstrg, x + width - ufr.getStringWidth(setstrg) - 8, y + ufr.FONT_HEIGHT / 2 - 0.5, 0xffffffff);
 		Gui.drawRect(x + 1, y + 2, x + 12, y + 13, set.getValBoolean() ? color : 0xff000000);
 		if (isCheckHovered(mouseX, mouseY))
 			Gui.drawRect(x + 1, y + 2, x + 12, y + 13, 0x55111111);

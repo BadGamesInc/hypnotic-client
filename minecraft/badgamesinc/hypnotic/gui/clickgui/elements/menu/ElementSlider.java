@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.MathHelper;
 
@@ -20,6 +21,7 @@ import net.minecraft.util.MathHelper;
  */
 public class ElementSlider extends Element {
 	public boolean dragging;
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 18, 0, 1, 1);
 
 	/*
 	 * Konstrukor
@@ -53,8 +55,8 @@ public class ElementSlider extends Element {
 		/*
 		 * Den Text rendern
 		 */
-		Hypnotic.fm.getFont("SFB 8").drawString(setstrg, x + 1, y + 2, 0xffffffff);
-		Hypnotic.fm.getFont("SFB 8").drawString(displayval, x + width - FontUtil.getStringWidth(displayval), y + 2, 0xffffffff);
+		ufr.drawString(setstrg, x + 1, y + 2, 0xffffffff);
+		ufr.drawString(displayval, x + width - FontUtil.getStringWidth(displayval), y + 2, 0xffffffff);
 
 		/*
 		 * Den Slider rendern

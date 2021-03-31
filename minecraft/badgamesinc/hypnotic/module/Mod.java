@@ -11,8 +11,13 @@ public class Mod {
 	protected Minecraft mc = Minecraft.getMinecraft();
 	private int key;
 	private boolean enabled;
-	private String name, displayName, description;
+	private String name;
+	public String displayName;
+	private String description;
 	private Category category;
+	
+	private long currentMS = 0L;
+	protected long lastMS = -1L;
 	
 	public Mod(String name, int key, Category category, String description) {
 		this.name = name;
@@ -102,6 +107,26 @@ public class Mod {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	public final void updateMS()
+	{
+		currentMS = System.currentTimeMillis();
+	}
+	
+	public final void updateLastMS()
+	{
+		lastMS = System.currentTimeMillis();
+	}
+	
+	public final boolean hasTimePassedM(long MS)
+	{
+		return currentMS >= lastMS + MS;
+	}
+	
+	public final boolean hasTimePassedS(float speed)
+	{
+		return currentMS >= lastMS + (long)(1000 / speed);
 	}
 
 }

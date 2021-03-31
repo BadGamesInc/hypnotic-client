@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -19,6 +20,7 @@ import net.minecraft.client.gui.Gui;
  *  @author HeroCode
  */
 public class ElementComboBox extends Element {
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 18, 0, 1, 1);
 	/*
 	 * Konstrukor
 	 */
@@ -40,7 +42,7 @@ public class ElementComboBox extends Element {
 		 */
 		Gui.drawRect(x, y, x + width, y + height, 0xff1a1a1a);
 
-		Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(setstrg, x + width / 2, y + 15/2, 0xffffffff);
+		ufr.drawTotalCenteredString(setstrg, x + width / 2, y + 15/2, 0xffffffff);
 		int clr1 = color;
 		int clr2 = temp.getRGB();
 
@@ -50,7 +52,7 @@ public class ElementComboBox extends Element {
 			double ay = y + 15;
 			for (String sld : set.getOptions()) {
 				String elementtitle = sld.substring(0, 1).toUpperCase() + sld.substring(1, sld.length());
-				Hypnotic.fm.getFont("SFB 8").drawCenteredString(elementtitle, x + width / 2, ay + 2, 0xffffffff);
+				ufr.drawCenteredString(elementtitle, x + width / 2, ay + 2, 0xffffffff);
 				
 				/*
 				 * Ist das Element ausgewählt, wenn ja dann markiere

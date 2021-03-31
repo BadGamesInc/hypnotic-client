@@ -179,6 +179,15 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         logger.debug("Set listener of {} to {}", new Object[] {this, handler});
         this.packetListener = handler;
     }
+    
+    public void sendPacketNoEvent(Packet packet) {
+        if (channel != null && channel.isOpen()) {
+            flushOutboundQueue();
+            dispatchPacket(packet, null);
+        } else {
+            outboundPacketsQueue.add(new NetworkManager.InboundHandlerTuplePacketListener(packet, (GenericFutureListener[]) null));
+        }
+    }
 
     public void sendPacket(Packet packetIn)
     {

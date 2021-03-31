@@ -3,6 +3,7 @@ package badgamesinc.hypnotic.gui.clickgui.elements;
 import badgamesinc.hypnotic.gui.clickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 
 /**
  *  Made by HeroCode
@@ -20,6 +21,8 @@ public class Element {
 	public double y;
 	public double width;
 	public double height;
+	
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
 	
 	public String setstrg;
 	

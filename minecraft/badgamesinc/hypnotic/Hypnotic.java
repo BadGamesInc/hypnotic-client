@@ -25,14 +25,14 @@ public class Hypnotic {
 	public SaveLoad saveload;
 	public static final String clientName = "Hypnotic", clientVersion = "r1003", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
-	public void startup() {
+	public void startup() {	
 		setmgr = new SettingsManager();
 		moduleManager = new ModuleManager();
 		eventManager = new EventManager();
-		clickgui = new ClickGUI();
-		hud = new HUD();
+		clickgui = new ClickGUI();	
 		fm = new FontManager();
 		commandManager = new CommandManager();
+		hud = new HUD();
 		saveload = new SaveLoad();
 		Display.setTitle(clientName + " " + clientVersion);
 	}

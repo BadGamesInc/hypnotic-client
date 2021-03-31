@@ -7,6 +7,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 
 /**
@@ -29,6 +30,7 @@ public class Panel {
 	public boolean visible;
 	public ArrayList<ModuleButton> Elements = new ArrayList<>();
 	public ClickGUI clickgui;
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
 
 	/*
 	 * Konstrukor
@@ -69,11 +71,11 @@ public class Panel {
 		Gui.drawRect(x, y, x + width, y + height, (outlineColor));
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 			Gui.drawRect(x - 2, y, x, y + height, 0);
-			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);
+			ufr.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef);
 		}else if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
-			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);
+			ufr.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef);
 		}
 		
 		if (this.extended && !Elements.isEmpty()) {

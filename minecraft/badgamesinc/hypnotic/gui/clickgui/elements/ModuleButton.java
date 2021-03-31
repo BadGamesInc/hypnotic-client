@@ -17,6 +17,7 @@ import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -39,13 +40,14 @@ public class ModuleButton {
 	public double height;
 	public boolean extended = false;
 	public boolean listening = false;
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
 
 	/*
 	 * Konstrukor
 	 */
 	public ModuleButton(Mod imod, Panel pl) {
 		mod = imod;
-		height = Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT + 2;
+		height = ufr.FONT_HEIGHT + 2;
 		parent = pl;
 		menuelements = new ArrayList<>();
 		/*
@@ -93,18 +95,18 @@ public class ModuleButton {
 		if (isHovered(mouseX, mouseY)) {	
 			Minecraft mc = Minecraft.getMinecraft();
 			ScaledResolution sr = new ScaledResolution(mc);
-			Gui.drawRect(0, sr.getScaledHeight(), 8 + Hypnotic.instance.fm.getFont("").getWidth(mod.getDescription()), sr.getScaledHeight() - 14, 0xff212020);
+			Gui.drawRect(0, sr.getScaledHeight(), 8 + ufr.getStringWidth(mod.getDescription()) + 10, sr.getScaledHeight() - 14, 0xff212020);
 			Gui.drawRect(x - 2, y, x + width + 2, y + height + 1, 0x55111111);	
-			Hypnotic.fm.getFont("SFB 8").drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1);
+			ufr.drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1);
 		}
 		
 		/*
 		 * Den Namen des Modules in die Mitte (x und y) rendern
 		 */
 		if(mod.isEnabled())
-			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredStringWithShadow(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
+			ufr.drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
 		else
-			Hypnotic.fm.getFont("SFB 8").drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
+			ufr.drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
 	}
 
 	/*

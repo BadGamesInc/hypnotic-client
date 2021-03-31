@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.EventSigma.EventSystem;
 import badgamesinc.hypnotic.EventSigma.impl.EventStep;
 import net.minecraft.block.Block;
@@ -617,7 +618,7 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
+            boolean flag = this.onGround && (this.isSneaking() || Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) || Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled() && this instanceof EntityPlayer;
 
             if (flag)
             {

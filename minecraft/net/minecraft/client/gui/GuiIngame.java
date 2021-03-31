@@ -116,6 +116,7 @@ public class GuiIngame extends Gui
 
     public void renderGameOverlay(float partialTicks)
     {
+    	
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int i = scaledresolution.getScaledWidth();
         int j = scaledresolution.getScaledHeight();
@@ -137,6 +138,8 @@ public class GuiIngame extends Gui
         {
             this.renderPumpkinOverlay(scaledresolution);
         }
+        
+        Hypnotic.instance.hud.draw();
 
         if (!this.mc.thePlayer.isPotionActive(Potion.confusion))
         {
@@ -348,7 +351,7 @@ public class GuiIngame extends Gui
             this.overlayPlayerList.updatePlayerList(true);
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
         }
-        Hypnotic.instance.hud.draw();
+        
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();

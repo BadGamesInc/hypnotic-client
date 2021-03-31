@@ -5,6 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.example.GUI;
 import badgamesinc.hypnotic.module.combat.*;
+import badgamesinc.hypnotic.module.gui.*;
 import badgamesinc.hypnotic.module.movement.*;
 import badgamesinc.hypnotic.module.player.*;
 import badgamesinc.hypnotic.module.render.*;
@@ -14,6 +15,25 @@ import badgamesinc.hypnotic.module.world.*;
 public class ModuleManager {
 
 	public CopyOnWriteArrayList<Mod> modules = new CopyOnWriteArrayList<>();
+	
+	public CopyOnWriteArrayList<Mod> getEnabledModules() {
+		CopyOnWriteArrayList<Mod> enabledModules = new CopyOnWriteArrayList<>();
+		for(Mod m : getModules()) {
+			if(m.isEnabled()) {
+				enabledModules.add(m);
+			}
+		}
+		return enabledModules;
+	}
+	
+	public static Mod getModuleByName(String moduleName) {
+		for(Mod mod : Hypnotic.instance.moduleManager.getModules()) {
+			if ((mod.getName().trim().equalsIgnoreCase(moduleName)) || (mod.toString().trim().equalsIgnoreCase(moduleName.trim()))) {
+				return mod;
+			}
+		}
+		return null;
+	}	
 	
 	public ModuleManager() {
 		//ClickGUI
@@ -36,6 +56,7 @@ public class ModuleManager {
 		modules.add(new ItemCustomization());
 		modules.add(new TargetHUD());
 		modules.add(new ESP());
+		modules.add(new Cape());
 		
 		//Player
 		modules.add(new NoFall());
@@ -43,6 +64,8 @@ public class ModuleManager {
 		modules.add(new NoSlow());
 		modules.add(new InventoryManager());
 		modules.add(new AutoArmor());
+		modules.add(new SafeWalk());
+		modules.add(new Scaffold());
 		
 		//Combat
 		modules.add(new KillAura());
@@ -64,6 +87,9 @@ public class ModuleManager {
 		modules.add(new FastPlace());
 		modules.add(new Timer());
 		
+		//GUI
+		modules.add(new ArrayListModule());
+		
 	}
 	
 	public CopyOnWriteArrayList<Mod> getModules() {
@@ -74,22 +100,5 @@ public class ModuleManager {
 		modules.add(m);
 	}
 	
-	public CopyOnWriteArrayList<Mod> getEnabledModules() {
-		CopyOnWriteArrayList<Mod> enabledModules = new CopyOnWriteArrayList<>();
-		for(Mod m : getModules()) {
-			if(m.isEnabled()) {
-				enabledModules.add(m);
-			}
-		}
-		return enabledModules;
-	}
 	
-	public static Mod getModuleByName(String moduleName) {
-		for(Mod mod : Hypnotic.instance.moduleManager.getModules()) {
-			if ((mod.getName().trim().equalsIgnoreCase(moduleName)) || (mod.toString().trim().equalsIgnoreCase(moduleName.trim()))) {
-				return mod;
-			}
-		}
-		return null;
-	}	
 }
