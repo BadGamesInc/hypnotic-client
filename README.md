@@ -15,7 +15,7 @@ Whoever else we stole code from
 Open the jar file with a program like 7zip (or winrar) and go to assets/minecraft/hypnotic/textures/capes/
 and replace cape.png with a cape file of your choice (make sure it has the same name)
 ## how to import into eclipse
-download the source and mcp 918 from https://modcoderpack.com and extract all the mcp files
+download the hypnotic source and mcp 918 from https://modcoderpack.com and extract all the mcp files
 to a new folder and run decompile.bat. Once it has finished go into the src file in the directory
 you ran decompile.bat and delete the minecraft folder and replace it with the minecraft folder from
 the hypnotic source zip. Once you have done all that run eclipse and make a new workspace, the 
