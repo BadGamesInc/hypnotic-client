@@ -11,5 +11,5 @@ BadGamesInc - actual knowledge
 KawaiiZenbo - knows next to nothing, has to keep editing the readme  
 Whoever else we stole code from  
 ## how to upload a custom cape
-Open the jar file with a program like 7zip (or winrar) and replace the template 
-cape with a cape file of your choice (make sure it has the same name)
+Open the jar file with a program like 7zip (or winrar) and go to assets/minecraft/hypnotic/textures/capes/
+and replace cape.png with a cape file of your choice (make sure it has the same name)
