@@ -6,6 +6,7 @@ use at your own risk i guess
 ## requirements  
 you need to import the io.netty files and pack.png from a stock jar 
 if you are exporting the client from a development environment
+
 java 11 is REQUIRED - you will crash on startup if you do not have it  
 ## authors  
 BadGamesInc - actual knowledge  
