@@ -96,6 +96,7 @@ public class HUD {
 					}
 				}
 				String mods = m.getDisplayName();
+				float modeOffset = 0;
 				Boolean background = Hypnotic.instance.setmgr.getSettingByName("Background").getValBoolean();
 				if(Hypnotic.instance.setmgr != null && Hypnotic.instance.setmgr.getSettingByName("Rainbow") != null) {
 					if(Hypnotic.instance.setmgr.getSettingByName("Rainbow").getValBoolean()) {
@@ -105,38 +106,42 @@ public class HUD {
 					}
 				}
 				
+				if(mods.contains("§7")) {
+					modeOffset = ufr.getStringWidth("§7");
+				}
+				
 				double offset = count * (ufr.FONT_HEIGHT + 4);      
 				
 				if(!mods.equalsIgnoreCase("Array List")) {
 					//Chill
-					if(theme.equalsIgnoreCase("Chill")) {
-						Gui.drawRect(width, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);               
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 8), (1 + offset), color);
+					if(theme.equalsIgnoreCase("Chill") && !background) {
+						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);               
+						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Chill") && background) {
-						Gui.drawRect(width, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);        
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 11, offset, sr.getScaledWidth() - 3, 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 8), (1 + offset), color);
+						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);        
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 11 + modeOffset, offset, sr.getScaledWidth() - 3, 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
+						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
 					}
 					
 					//Accent
-					if(theme.equalsIgnoreCase("Accent")) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10, 4 + ufr.FONT_HEIGHT + offset, color);                
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5), (1 + offset), color);
+					if(theme.equalsIgnoreCase("Accent") && !background) {
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);                
+						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Accent") && background) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10, 4 + ufr.FONT_HEIGHT + offset, color);        
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5), (1 + offset), color);
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);        
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
+						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					
 					//Normal
-					if(theme.equalsIgnoreCase("Normal")) {
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5), (1 + offset), color);
+					if(theme.equalsIgnoreCase("Normal") && !background) {
+						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Normal") && background) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5), (1 + offset), color);
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);
+						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 				count++;
 			}

@@ -1,6 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
 import com.google.common.collect.Lists;
+
+import badgamesinc.hypnotic.util.RenderUtils;
+
 import java.nio.FloatBuffer;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -129,8 +132,18 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             }
 
             float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+            float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+            
+            if (RenderUtils.SetCustomPitch && entity == Minecraft.getMinecraft().thePlayer) {
+                f8 = RenderUtils.getCustomPitch();
+            }
+            
+            if (RenderUtils.SetCustomYaw && entity == Minecraft.getMinecraft().thePlayer) {
+                Minecraft.getMinecraft().thePlayer.renderYawOffset = RenderUtils.getCustomYaw();
+                Minecraft.getMinecraft().thePlayer.prevRenderYawOffset = RenderUtils.getCustomYaw();
+            }
             this.renderLivingAt(entity, x, y, z);
-            float f8 = this.handleRotationFloat(entity, partialTicks);
+            
             this.rotateCorpse(entity, f8, f, partialTicks);
             GlStateManager.enableRescaleNormal();
             GlStateManager.scale(-1.0F, -1.0F, 1.0F);

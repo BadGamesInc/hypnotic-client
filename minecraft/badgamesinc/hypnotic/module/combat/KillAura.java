@@ -11,6 +11,8 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
+import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.RotationUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -54,6 +56,10 @@ public class KillAura extends Mod {
     @Override
     public void onUpdate() {
     	this.setDisplayName("KillAura" + ColorUtils.gray + " R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " " + "APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2));
+    	if(target == null) {
+     	   RenderUtils.resetPlayerPitch();
+           RenderUtils.resetPlayerYaw();
+        }
     }
 
     @EventTarget
@@ -62,8 +68,20 @@ public class KillAura extends Mod {
         if(target == null)
             return;
         updateTime();
+        
         yaw = mc.thePlayer.rotationYaw;
         pitch = mc.thePlayer.rotationPitch;
+
+      // mc.thePlayer.setRotationYawHead(yaw);
+       event.setPitch(pitch);
+       event.setYaw(yaw);
+       
+       
+       
+       RenderUtils.resetPlayerPitch();
+       RenderUtils.resetPlayerYaw();
+        
+       
         boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
         if(block && target.getDistanceToEntity(mc.thePlayer) < 8F)
             mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
@@ -78,10 +96,15 @@ public class KillAura extends Mod {
     public void onPost(EventPostMotionUpdate event) {
         if(target == null)
             return;
-        mc.thePlayer.rotationYaw = yaw;
-        mc.thePlayer.rotationPitch = pitch;
         
         
+        pitch = RotationUtils.getRotations(target)[1];
+        yaw = RotationUtils.getRotations(target)[0];
+        
+        
+        
+        RenderUtils.setCustomPitch(pitch);
+        RenderUtils.setCustomYaw(yaw);
     }
 
     private void attack(Entity entity) {

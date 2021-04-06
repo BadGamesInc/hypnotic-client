@@ -10,6 +10,7 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.BlockUtils;
+import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.BlockAir;
 import net.minecraft.init.Blocks;
@@ -61,8 +62,12 @@ public class Scaffold extends Mod{
 				float pitch = Math.min(90, facing[1] + 9);
 				
 				rotated = true;
-				mc.thePlayer.setRotationYawHead(yaw);
 				e.setPitch(pitch);
+				e.setYaw(yaw);
+				
+				RenderUtils.setCustomPitch(pitch);
+		        RenderUtils.setCustomYaw(yaw);
+		        
 				if(Hypnotic.instance.setmgr.getSettingByName("Fast Tower").getValBoolean() && mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock && mc.thePlayer.moveForward == 0 && mc.thePlayer.moveStrafing == 0) {
 					mc.thePlayer.motionY = 0.44f;
 				}

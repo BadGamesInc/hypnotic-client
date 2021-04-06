@@ -11,6 +11,7 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.FontManager;
+import net.minecraft.client.Minecraft;
 
 public class Hypnotic {
 
