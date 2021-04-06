@@ -47,7 +47,7 @@ public class Scaffold extends Mod{
 	
 	@EventTarget
 	public void onPreMotion(EventPreMotionUpdate e) {
-		rotated = false;
+		rotated = true;
 		currentPos = null;
 		currentFacing = null;
 		
