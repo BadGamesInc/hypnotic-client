@@ -4,11 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 
 public class Mod {
 
-	protected Minecraft mc = Minecraft.getMinecraft();
+	protected static Minecraft mc = Minecraft.getMinecraft();
 	private int key;
 	private boolean enabled;
 	private String name;
@@ -67,6 +68,8 @@ public class Mod {
 	}
 	public void onDisable() {
 		Hypnotic.instance.eventManager.unregister(this);
+		RenderUtils.resetPlayerPitch();
+		RenderUtils.resetPlayerYaw();
 	}
 	public void setup() {}
 	

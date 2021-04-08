@@ -57,6 +57,7 @@ public class ModuleManager {
 		modules.add(new TargetHUD());
 		modules.add(new ESP());
 		modules.add(new Cape());
+		modules.add(new Chams());
 		
 		//Player
 		modules.add(new NoFall());
@@ -71,6 +72,10 @@ public class ModuleManager {
 		modules.add(new KillAura());
 		modules.add(new Velocity());
 		modules.add(new Reach());
+		modules.add(new AutoPot());
+		//TODO: Fix these
+		//modules.add(new TargetStrafe());
+		//modules.add(new BowAimbot());
 		
 		//Misc
 		modules.add(new ChatSpammer());
@@ -81,11 +86,14 @@ public class ModuleManager {
 		modules.add(new ChestStealer());
 		modules.add(new FastEat());
 		modules.add(new AutoGapple());
+		modules.add(new AutoL());
 
 		//World
 		modules.add(new FastBreak());
 		modules.add(new FastPlace());
 		modules.add(new Timer());
+		//TODO: find out what the hell the minecraft song names are
+		//modules.add(new MusicPlayer());
 		
 		//GUI
 		modules.add(new ArrayListModule());

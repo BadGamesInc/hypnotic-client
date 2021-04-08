@@ -2,10 +2,17 @@ package net.minecraft.client.renderer.entity;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventRenderNametag;
+import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.OutlineUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 
+import java.awt.Color;
 import java.nio.FloatBuffer;
 import java.util.List;
+import java.util.Objects;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -133,15 +140,16 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
             float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
             float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-            
+            //Thank you lavaflowglow https://github.com/NathanKassab/SpicyClient
             if (RenderUtils.SetCustomPitch && entity == Minecraft.getMinecraft().thePlayer) {
-                f8 = RenderUtils.getCustomPitch();
+                f7 = RenderUtils.getCustomPitch();
             }
             
             if (RenderUtils.SetCustomYaw && entity == Minecraft.getMinecraft().thePlayer) {
                 Minecraft.getMinecraft().thePlayer.renderYawOffset = RenderUtils.getCustomYaw();
                 Minecraft.getMinecraft().thePlayer.prevRenderYawOffset = RenderUtils.getCustomYaw();
             }
+
             this.renderLivingAt(entity, x, y, z);
             
             this.rotateCorpse(entity, f8, f, partialTicks);
@@ -261,9 +269,13 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
      */
     protected void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_)
     {
+    	boolean flag2 = Hypnotic.instance.moduleManager.getModuleByName("Chams").isEnabled() && entitylivingbaseIn instanceof EntityPlayer;
+    	
         boolean flag = !entitylivingbaseIn.isInvisible();
         boolean flag1 = !flag && !entitylivingbaseIn.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer);
 
+        Color may = new Color(10, 10, 10);
+        
         if (flag || flag1)
         {
             if (!this.bindEntityTexture(entitylivingbaseIn))
@@ -280,9 +292,57 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.alphaFunc(516, 0.003921569F);
             }
+            
+            if (Hypnotic.instance.moduleManager.getModuleByName("ESP").isEnabled()) {
+                if (entitylivingbaseIn instanceof EntityPlayer && entitylivingbaseIn != Minecraft.getMinecraft().thePlayer) {
+                    OutlineUtils.setColor(may);
+                    mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+                    OutlineUtils.renderOne();
+                    mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+                    OutlineUtils.renderTwo();
+                    mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+                    OutlineUtils.renderThree();
+                    OutlineUtils.renderFour();
+                    OutlineUtils.setColor(Objects.requireNonNull(Color.WHITE));
+                    mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+                    OutlineUtils.renderFive();
+                    OutlineUtils.setColor(Color.WHITE);
+                }
+            }
+            
+            final int blend = 3042;
+            final int depth = 2929;
+            final int srcAlpha = 770;
+            final int srcAlphaPlus1 = srcAlpha + 1;
+            final int polygonOffsetLine = 10754;
+            final int texture2D = 3553;
+            final int lighting = 2896;
+            
+            if (flag2) {
+                Color chamsColor = Color.WHITE;
+                
+                GL11.glPushMatrix();
+                GL11. glEnable(polygonOffsetLine);
+                GL11.glPolygonOffset(1.0F, 1000000.0F);
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
+
+                GL11.glDisable(depth);
+                GL11.glDepthMask(false);
+            }
 
             this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
+            if (flag2) {
+            	GL11.glEnable(depth);
+                GL11.glDepthMask(true);
+
+                this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+
+                GL11.glPolygonOffset(1.0f, -1000000.0f);
+                GL11.glDisable(polygonOffsetLine);
+                GL11.glPopMatrix();
+            }
+            
             if (flag1)
             {
                 GlStateManager.disableBlend();
@@ -509,6 +569,13 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
     public void renderName(T entity, double x, double y, double z)
     {
+    	if(entity instanceof EntityPlayer) {
+        	EventRenderNametag event = new EventRenderNametag();
+        	event.call();
+        	if(event.isCancelled())
+        		return;
+        	}
+    	
         if (this.canRenderName(entity))
         {
             double d0 = entity.getDistanceSqToEntity(this.renderManager.livingPlayer);

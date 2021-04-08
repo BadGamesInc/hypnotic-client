@@ -18,8 +18,9 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 
-import badgamesinc.hypnotic.EventSigma.EventSystem;
-import badgamesinc.hypnotic.EventSigma.impl.EventRender3D;
+import badgamesinc.hypnotic.event.EventType;
+import badgamesinc.hypnotic.event.events.EventRender3D;
+import badgamesinc.hypnotic.event.events.EventRenderWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
@@ -1480,7 +1481,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.renderCloudsCheck(renderglobal, partialTicks, pass);
         }
         
-        ((EventRender3D) EventSystem.getInstance(EventRender3D.class)).fire(partialTicks, 0, 0, 0);
+       EventRenderWorld e = new EventRenderWorld();
+       e.call();
 
         this.mc.mcProfiler.endStartSection("hand");
 
@@ -1491,6 +1493,30 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.renderWorldDirections(partialTicks);
         }
     }
+    
+    public void fireRenderer(float renderPartialTicks, int position) {
+		boolean extras = true;
+		GlStateManager.pushMatrix();
+		if (extras) {
+			GlStateManager.disableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GlStateManager.disableTexture2D();
+			GlStateManager.disableDepth();
+		}
+		//((EventRender3D) EventSystem.getInstance(EventRender3D.class)).fire(renderPartialTicks, 0, 0, 0);
+		EventRender3D event = new EventRender3D(renderPartialTicks, 0, 0, 0);
+		event.setType(EventType.PRE);
+		event.call();
+		if (extras) {
+			GlStateManager.enableTexture2D();
+			GlStateManager.enableDepth();
+			GlStateManager.disableBlend();
+			GlStateManager.enableAlpha();
+			GlStateManager.cullFace(GL11.GL_BACK);
+		}
+		GlStateManager.popMatrix();
+	}
 
     private void renderCloudsCheck(RenderGlobal renderGlobalIn, float partialTicks, int pass)
     {

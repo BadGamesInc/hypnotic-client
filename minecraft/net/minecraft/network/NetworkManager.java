@@ -19,6 +19,9 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import badgamesinc.hypnotic.EventSigma.EventSystem;
 import badgamesinc.hypnotic.EventSigma.impl.EventPacket;
+import badgamesinc.hypnotic.event.EventDirection;
+import badgamesinc.hypnotic.event.EventType;
+import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;
@@ -160,6 +163,8 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         {
             try
             {
+            	EventReceivePacket event = new EventReceivePacket(EventType.PRE, EventDirection.INCOMING, p_channelRead0_2_);
+            	event.call();
                 p_channelRead0_2_.processPacket(this.packetListener);
             }
             catch (ThreadQuickExitException var4)

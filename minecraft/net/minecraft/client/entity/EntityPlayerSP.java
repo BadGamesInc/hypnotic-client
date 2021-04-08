@@ -2,10 +2,13 @@ package net.minecraft.client.entity;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.EventSigma.EventSystem;
-import badgamesinc.hypnotic.EventSigma.impl.EventChat;
+import badgamesinc.hypnotic.event.EventType;
+import badgamesinc.hypnotic.event.events.EventChat;
+import badgamesinc.hypnotic.event.events.EventMove;
 import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -169,6 +172,25 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.mc.getSoundHandler().playSound(new MovingSoundMinecartRiding(this, (EntityMinecart)entityIn));
         }
     }
+    
+    /*@Override
+   	public void moveEntity(double x, double y, double z) {
+       	EventMove event = new EventMove(z, y, z);
+       	event.setType(EventType.PRE);
+       	event.setX(x);
+       	event.setY(y);
+       	event.setZ(z);
+       	event.call();
+       	
+       	if (Hypnotic.instance.moduleManager.getModuleByName("TargetStrafe").isEnabled()) {
+       		TargetStrafe targetStrafe = new TargetStrafe();
+       		targetStrafe.onEvent(event);
+       	}
+       	
+   		super.moveEntity(event.x, event.y, event.z);
+   		event.setType(EventType.POST);
+   		event.call();
+   	}*/
 
     /**
      * Called to update the entity's position/logic.
@@ -310,15 +332,19 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
-    	EventChat ec = (EventChat) EventSystem.getInstance(EventChat.class);
+    	/*EventChat ec = (EventChat) EventSystem.getInstance(EventChat.class);
         ec.fire(message);
         if (ec.isCancelled()) {
             return;
-        }
-    	if(message.startsWith(".")) {
-    		Hypnotic.instance.onSendChatMessage(message);
+        }*/
+        
+        EventChat event = new EventChat(message);
+        event.call();
+        
+        if(message.startsWith(".")) {
+    		Hypnotic.instance.onSendChatMessage(event.getMessage());
     	} else {
-    		this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
+    		this.sendQueue.addToSendQueue(new C01PacketChatMessage(event.getMessage()));
     	}
     }
 

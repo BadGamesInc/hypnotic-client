@@ -1,5 +1,7 @@
 package badgamesinc.hypnotic.module.combat;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
@@ -39,6 +41,11 @@ public class KillAura extends Mod {
 
     @Override
     public void setup() {
+    	ArrayList<String> options = new ArrayList<String>();
+    	options.add("Silent");
+    	options.add("Lock view");
+    	options.add("None");
+    	Hypnotic.instance.setmgr.rSetting(new Setting("Rotation Mode", this, "Silent", options));
     	Hypnotic.instance.setmgr.rSetting(new Setting("Range", this, 4.3, 0, 6, false));
     	Hypnotic.instance.setmgr.rSetting(new Setting("APS", this, 8, 0, 20, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Crack Size", this, 0, 0, 15, true));
@@ -55,7 +62,7 @@ public class KillAura extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("KillAura" + ColorUtils.gray + " R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " " + "APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2));
+    	this.setDisplayName("KillAura" + ColorUtils.gray + " - R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " - " + "APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + " ");
     	if(target == null) {
      	   RenderUtils.resetPlayerPitch();
            RenderUtils.resetPlayerYaw();
@@ -73,13 +80,16 @@ public class KillAura extends Mod {
         pitch = mc.thePlayer.rotationPitch;
 
       // mc.thePlayer.setRotationYawHead(yaw);
-       event.setPitch(pitch);
-       event.setYaw(yaw);
        
-       
-       
-       RenderUtils.resetPlayerPitch();
-       RenderUtils.resetPlayerYaw();
+       if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
+	       event.setPitch(pitch);
+	       event.setYaw(yaw);
+	
+	       RenderUtils.resetPlayerPitch();
+	       RenderUtils.resetPlayerYaw();
+       } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("None")) {
+    	   
+       } 
         
        
         boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
@@ -102,9 +112,13 @@ public class KillAura extends Mod {
         yaw = RotationUtils.getRotations(target)[0];
         
         
-        
-        RenderUtils.setCustomPitch(pitch);
-        RenderUtils.setCustomYaw(yaw);
+        if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
+	        RenderUtils.setCustomPitch(pitch);
+	        RenderUtils.setCustomYaw(yaw);
+        } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
+     	   mc.thePlayer.rotationPitch = pitch;
+     	   mc.thePlayer.rotationYaw = yaw;
+        }
     }
 
     private void attack(Entity entity) {

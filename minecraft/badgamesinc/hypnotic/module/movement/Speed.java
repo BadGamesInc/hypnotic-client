@@ -87,7 +87,7 @@ public class Speed extends Mod
                 final EntityPlayerSP thePlayer8 = mc.thePlayer;
                 thePlayer8.motionX *= 1.0;
                 final EntityPlayerSP thePlayer9 = mc.thePlayer;
-                thePlayer9.motionY *= 1.0;
+                thePlayer9.motionY *= 1.05;
                 final EntityPlayerSP thePlayer10 = mc.thePlayer;
                 thePlayer10.moveStrafing *= 5.0f;
                 mc.thePlayer.landMovementFactor = (float)this.getBhopSpeedValue();
@@ -98,7 +98,7 @@ public class Speed extends Mod
         	mc.thePlayer.moveStrafing *= 5f;
         }
         final String mode = Hypnotic.instance.setmgr.getSettingByName("SpeedMode").getValString();
-        this.setDisplayName("Speed §7" + mode);
+        this.setDisplayName("Speed §7- " + mode);
     }
     
     @Override

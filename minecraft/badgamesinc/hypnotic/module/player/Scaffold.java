@@ -13,8 +13,16 @@ import badgamesinc.hypnotic.util.BlockUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.BlockAir;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
@@ -42,12 +50,22 @@ public class Scaffold extends Mod{
 	
 	@Override
 	public void onUpdate() {
-		
+		/*final NetHandlerPlayClient sendQueue = mc.thePlayer.sendQueue;
+		final int blockInHotbar = this.findBlock(36, 45);
+		if(blockInHotbar == -1) {
+            return;
+        }
+		if (blockInHotbar != -1) {
+			final int oldSlot = mc.thePlayer.inventory.currentItem;
+			 sendQueue.addToSendQueue(new C09PacketHeldItemChange(blockInHotbar - 36));
+             mc.playerController.updateController();
+             sendQueue.addToSendQueue(new C09PacketHeldItemChange(oldSlot));
+		}*/
 	}
 	
 	@EventTarget
 	public void onPreMotion(EventPreMotionUpdate e) {
-		rotated = false;
+		rotated = true;
 		currentPos = null;
 		currentFacing = null;
 		
@@ -59,10 +77,10 @@ public class Scaffold extends Mod{
 				float facing[] = BlockUtils.getDirectionToBlock(currentPos.getX(), currentPos.getY(), currentPos.getZ(), currentFacing);
 				
 				float yaw = facing[0];
-				float pitch = Math.min(90, facing[1] + 9);
+				float pitch = 70;
 				
 				rotated = true;
-				e.setPitch(pitch);
+				e.setPitch(79);
 				e.setYaw(yaw);
 				
 				RenderUtils.setCustomPitch(pitch);
@@ -81,9 +99,12 @@ public class Scaffold extends Mod{
 			if(mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
 				if(mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX(), currentPos.getY(), currentPos.getZ()))) {
 					mc.thePlayer.swingItem();
+					
 				}
 			}
 		}
+		
+		
 	}
 	
 	private void setBlockAndFacing(BlockPos var1) {
@@ -107,4 +128,14 @@ public class Scaffold extends Mod{
 			currentFacing = null;
 		}
 	}
+	
+	private int findBlock(final int startSlot, final int endSlot) {
+        for (int i = startSlot; i < endSlot; ++i) {
+            final ItemStack stack = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
+            if (stack != null && stack.getItem() instanceof ItemBlock) {
+            	return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -93,6 +93,14 @@ public class C03PacketPlayer implements Packet<INetHandlerPlayServer>
     {
         this.moving = isMoving;
     }
+    
+    public void setYaw(float yaw) {
+		this.yaw = yaw;
+	}
+
+	public void setPitch(float pitch) {
+		this.pitch = pitch;
+	}
 
     public static class C04PacketPlayerPosition extends C03PacketPlayer
     {

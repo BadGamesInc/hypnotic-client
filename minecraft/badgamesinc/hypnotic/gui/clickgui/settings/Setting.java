@@ -135,4 +135,11 @@ public class Setting {
         return this.onlyint;
     }
 
+	public boolean is(String string) {
+		if(getValString().equalsIgnoreCase(string)) {
+			return true;
+		}
+			return false;
+	}
+
 }
