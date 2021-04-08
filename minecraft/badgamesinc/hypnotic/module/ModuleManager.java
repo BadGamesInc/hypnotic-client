@@ -50,7 +50,6 @@ public class ModuleManager {
 		modules.add(new InventoryMove());
 		
 		//Render
-		modules.add(new HUDModule());
 		modules.add(new Fullbright());
 		modules.add(new BlockAnimations());
 		modules.add(new ItemCustomization());
@@ -97,6 +96,7 @@ public class ModuleManager {
 		
 		//GUI
 		modules.add(new ArrayListModule());
+		modules.add(new HUDModule());
 		
 	}
 	
