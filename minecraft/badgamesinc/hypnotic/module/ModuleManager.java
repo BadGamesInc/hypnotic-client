@@ -86,13 +86,12 @@ public class ModuleManager {
 		modules.add(new FastEat());
 		modules.add(new AutoGapple());
 		modules.add(new AutoL());
+		modules.add(new MusicPlayer());
 
 		//World
 		modules.add(new FastBreak());
 		modules.add(new FastPlace());
 		modules.add(new Timer());
-		//TODO: find out what the hell the minecraft song names are
-		//modules.add(new MusicPlayer());
 		
 		//GUI
 		modules.add(new ArrayListModule());

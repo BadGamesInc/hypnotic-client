@@ -23,13 +23,13 @@ public class MusicPlayer extends Mod {
 	public Setting mode;
 	
 	public MusicPlayer(){
-	  super("MusicPlayer",Keyboard.KEY_NONE,Category.WORLD, "Play minecraft songs");
+	  super("MusicPlayer",Keyboard.KEY_NONE,Category.MISC, "Play minecraft songs");
 	}
 	
 	@Override
 	public void onEnable() {
 		BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
-		mc.thePlayer.worldObj.playRecord(pos, "item.record." + "cat" + ".desc");
+		mc.thePlayer.worldObj.playRecord(pos, "records." + "cat");
 	}
 
 }
