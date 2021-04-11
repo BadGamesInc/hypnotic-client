@@ -8,7 +8,7 @@ import javax.naming.directory.InitialDirContext;
 
 public class ServerAddress
 {
-    private final String ipAddress;
+    private static String ipAddress;
     private final int serverPort;
 
     private ServerAddress(String p_i1192_1_, int p_i1192_2_)
@@ -17,9 +17,9 @@ public class ServerAddress
         this.serverPort = p_i1192_2_;
     }
 
-    public String getIP()
+    public static String getIP()
     {
-        return IDN.toASCII(this.ipAddress);
+        return IDN.toASCII(ipAddress);
     }
 
     public int getPort()
