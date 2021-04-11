@@ -92,6 +92,7 @@ public class ModuleManager {
 		modules.add(new FastBreak());
 		modules.add(new FastPlace());
 		modules.add(new Timer());
+		modules.add(new Nuker());
 		
 		//GUI
 		modules.add(new ArrayListModule());
