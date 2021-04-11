@@ -32,6 +32,7 @@ public class Server extends Command {
 		if(!mc.isSingleplayer()) 
 		{
 			Wrapper.tellPlayer("IP: " + ServerAddress.getIP());
+			Wrapper.tellPlayer("Port: " + ServerAddress.getPort());
 		}
 		else 
 		{

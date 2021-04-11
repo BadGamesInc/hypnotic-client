@@ -9,7 +9,7 @@ import javax.naming.directory.InitialDirContext;
 public class ServerAddress
 {
     private static String ipAddress;
-    private final int serverPort;
+    private static int serverPort;
 
     private ServerAddress(String p_i1192_1_, int p_i1192_2_)
     {
@@ -22,9 +22,9 @@ public class ServerAddress
         return IDN.toASCII(ipAddress);
     }
 
-    public int getPort()
+    public static int getPort()
     {
-        return this.serverPort;
+        return serverPort;
     }
 
     public static ServerAddress func_78860_a(String p_78860_0_)
