@@ -37,7 +37,7 @@ public class Setting {
         this.options = options;
         this.mode = "Combo";
 	if (Hypnotic.instance.saveload != null) {
-            sval = this.getValString
+            sval = this.getValString();
         }
 	    //probably doesnt work, will fix when i get home
     }
@@ -48,7 +48,7 @@ public class Setting {
         this.bval = bval;
         this.mode = "Check";
 	    if (Hypnotic.instance.saveload != null) {
-            bval = this.getValBoolean
+            bval = this.getValBoolean();
         }
 	    //probably doesnt work, will fix when i get home
     }
@@ -62,7 +62,7 @@ public class Setting {
         this.onlyint = onlyint;
         this.mode = "Slider";
 	    if (Hypnotic.instance.saveload != null) {
-            dval = this.getValDouble
+            dval = this.getValDouble();
         }
 	    //probably doesnt work, will fix when i get home
     }
