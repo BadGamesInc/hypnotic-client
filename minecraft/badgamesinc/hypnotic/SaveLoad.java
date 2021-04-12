@@ -12,6 +12,7 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Mod;
 import net.minecraft.client.Minecraft;
 
+//Probably also doesnt work
 public class SaveLoad {
     public File dir;
     public File configs;
@@ -100,12 +101,15 @@ public class SaveLoad {
                     if (set != null) {
                         if (set.isCheck()) {
                             set.setValBoolean(Boolean.parseBoolean(args[3]));
+                            set.bval = (Boolean.parseBoolean(args[3]));
                         }
                         if (set.isCombo()) {
                             set.setValString(args[3]);
+                            set.sval = (args[3]);
                         }
                         if (set.isSlider()) {
                             set.setValDouble(Double.parseDouble(args[3]));
+                            set.dval = (Double.parseDouble(args[3]));
                         }
                     }
                 }
