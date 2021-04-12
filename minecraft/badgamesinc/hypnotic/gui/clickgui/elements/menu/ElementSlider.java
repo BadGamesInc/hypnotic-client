@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.MathHelper;
@@ -21,7 +22,7 @@ import net.minecraft.util.MathHelper;
  */
 public class ElementSlider extends Element {
 	public boolean dragging;
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 18, 0, 1, 1);
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 18, 0, 1, 1);
 
 	/*
 	 * Konstrukor
@@ -43,6 +44,11 @@ public class ElementSlider extends Element {
 		Color temp = ColorUtil.getClickGUIColor();
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), hoveredORdragged ? 250 : 200).getRGB();
 		int color2 = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), hoveredORdragged ? 255 : 230).getRGB();
+		
+		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
+			color = ColorUtils.rainbow(2, 0.5f, 1);
+			color2 = ColorUtils.rainbow(2, 0.7f, 1.4f);
+		}
 		
 		//selected = iset.getValDouble() / iset.getMax();
 		double percentBar = (set.getValDouble() - set.getMin())/(set.getMax() - set.getMin());

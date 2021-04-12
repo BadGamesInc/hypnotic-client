@@ -1,14 +1,11 @@
 package net.minecraft.client.entity;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.EventSigma.EventSystem;
-import badgamesinc.hypnotic.event.EventType;
+import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.events.EventChat;
-import badgamesinc.hypnotic.event.events.EventMove;
-import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
+import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -212,8 +209,8 @@ public class EntityPlayerSP extends AbstractClientPlayer
             else
             {
                 this.onUpdateWalkingPlayer();
-                EventPostMotionUpdate eventPost = new EventPostMotionUpdate();
-                eventPost.call();
+                EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.POST);
+                eventMotionUpdate.call();
             }
         }
     }
@@ -223,8 +220,8 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdateWalkingPlayer()
     {
-    	EventPreMotionUpdate eventPre = new EventPreMotionUpdate(this.rotationYaw, this.rotationPitch, this.onGround, this.posX, this.posY, this.posZ);
-    	eventPre.call();
+    	EventMotionUpdate eventPre = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.PRE);
+        eventPre.call();
         boolean flag = this.isSprinting();
 
         if (flag != this.serverSprintState)

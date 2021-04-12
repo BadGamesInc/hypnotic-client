@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 
@@ -20,7 +21,7 @@ import net.minecraft.client.gui.Gui;
  */
 public class ElementCheckBox extends Element {
 	
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 18, 0, 1, 1);
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 18, 0, 1, 1);
 	/*
 	 * Konstrukor
 	 */
@@ -36,6 +37,10 @@ public class ElementCheckBox extends Element {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		Color temp = ColorUtil.getClickGUIColor();
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 200).getRGB();
+		
+		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
+			color = ColorUtils.rainbow(2, 0.5f, 1);
+		}
 		
 		/*
 		 * Die Box und Umrandung rendern

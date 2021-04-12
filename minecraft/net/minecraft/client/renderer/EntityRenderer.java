@@ -19,6 +19,7 @@ import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 
 import badgamesinc.hypnotic.event.EventType;
+import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventRender3D;
 import badgamesinc.hypnotic.event.events.EventRenderWorld;
 import net.minecraft.block.Block;
@@ -1483,6 +1484,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
         
        EventRenderWorld e = new EventRenderWorld();
        e.call();
+       
+       Event3D event = new Event3D(partialTicks);
+	   event.call();
 
         this.mc.mcProfiler.endStartSection("hand");
 
@@ -1504,10 +1508,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
 			GlStateManager.disableTexture2D();
 			GlStateManager.disableDepth();
 		}
-		//((EventRender3D) EventSystem.getInstance(EventRender3D.class)).fire(renderPartialTicks, 0, 0, 0);
-		EventRender3D event = new EventRender3D(renderPartialTicks, 0, 0, 0);
-		event.setType(EventType.PRE);
-		event.call();
+		
+		
 		if (extras) {
 			GlStateManager.enableTexture2D();
 			GlStateManager.enableDepth();

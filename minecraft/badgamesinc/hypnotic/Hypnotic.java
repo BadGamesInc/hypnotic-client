@@ -32,7 +32,7 @@ public class Hypnotic {
 	public SaveLoad saveload;
 	private DiscordRP discordRP = new DiscordRP();
 	private Random r = new Random();
-	public static final String clientName = "Hypnotic", clientVersion = "r1004", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "r1005", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
 	public void startup() {	
 		setmgr = new SettingsManager();
@@ -61,7 +61,7 @@ public class Hypnotic {
 		}
 	}
 	
-	public boolean onSendChatMessage(String s){//EntityPlayerSP
+	public boolean onSendChatMessage(String s){
 			if(s.startsWith(".")){
 				commandManager.callCommand(s.substring(1));
 			}

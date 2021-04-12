@@ -40,7 +40,7 @@ public class ModuleButton {
 	public double height;
 	public boolean extended = false;
 	public boolean listening = false;
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
 
 	/*
 	 * Konstrukor
@@ -78,6 +78,10 @@ public class ModuleButton {
 		Color temp = ColorUtil.getClickGUIColor();
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 150).getRGB();
 		
+		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
+			color = ColorUtils.rainbow(2, 0.4f, 1);
+		}
+		
 		/*
 		 * Ist das Module an, wenn ja dann soll
 		 *  #ein neues Rechteck in Größe des Buttons den Knopf als Toggled kennzeichnen
@@ -96,7 +100,7 @@ public class ModuleButton {
 			Minecraft mc = Minecraft.getMinecraft();
 			ScaledResolution sr = new ScaledResolution(mc);
 			Gui.drawRect(0, sr.getScaledHeight(), 8 + ufr.getStringWidth(mod.getDescription()) + 10, sr.getScaledHeight() - 14, 0xff212020);
-			Gui.drawRect(x - 2, y, x + width + 2, y + height + 1, 0x55111111);	
+			Gui.drawRect(x + 8, y, x + width - 8, y + height + 1, 0x55111111);	
 			ufr.drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1);
 		}
 		
@@ -104,9 +108,9 @@ public class ModuleButton {
 		 * Den Namen des Modules in die Mitte (x und y) rendern
 		 */
 		if(mod.isEnabled())
-			ufr.drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
+			ufr.drawTotalCenteredString(mod.getName(), x + width / 2, y + 0 + height / 2 - 1, textcolor);
 		else
-			ufr.drawTotalCenteredString(mod.getName(), x + width / 1.95, y + 0 + height / 2, textcolor);
+			ufr.drawTotalCenteredString(mod.getName(), x + width / 2, y + 0 + height / 2 - 1, textcolor);
 	}
 
 	/*

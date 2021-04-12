@@ -23,7 +23,7 @@ public class TargetStrafe extends Mod{
 		Hypnotic.instance.setmgr.rSetting(new Setting("Speed", this, 1.90f, 1.0f, 6.0f, false));
 	}
 	
-	public static transient boolean direction = false, forward = false, left = false, right = false, back = false;
+	/*public static transient boolean direction = false, forward = false, left = false, right = false, back = false;
 	
 	@Override
 	public void onEnable() {
@@ -119,5 +119,5 @@ public class TargetStrafe extends Mod{
 
 	public void onEventWhenDisabled(Event e) {
 		
-	}
+	}*/
 }

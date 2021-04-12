@@ -219,9 +219,9 @@ public class UnicodeFontRenderer {
         return (int) e / 2;
     }
 
-    public int drawStringWithShadow(String text, float x, float y, int color) {
-        drawString(StringUtils.stripControlCodes(text), x + 0.5F, y + 0.5F, 0x000000);
-        return drawString(text, x, y, color);
+    public int drawStringWithShadow(String text, double d, double e, int color) {
+        drawString(StringUtils.stripControlCodes(text), d + 0.5F, e + 0.5F, 0x000000);
+        return drawString(text, d, e, color);
     }
 
     public void drawCenteredString(String text, double d, double e, int color) {
@@ -230,6 +230,10 @@ public class UnicodeFontRenderer {
     
     public void drawTotalCenteredString(String text, double x, double y, int color) {
 		drawString(text, x - this.getStringWidth(text) / 2, y - this.FONT_HEIGHT / 2, color);
+	}
+    
+    public void drawTotalCenteredStringWithShadow(String text, double x, double y, int color) {
+    	drawStringWithShadow(text, x - this.getStringWidth(text) / 2, y - this.FONT_HEIGHT / 2, color);
 	}
 
 

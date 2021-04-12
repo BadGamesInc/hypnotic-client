@@ -58,7 +58,7 @@ public class Mod {
 		}
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
-			mc.thePlayer.playSound("random.click", 10.5f, 100.5f);
+			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, 0.5f);
 		}
 	}
 	

@@ -28,12 +28,14 @@ public class HUD {
 	public Minecraft mc = Minecraft.getMinecraft();
 	public FontRenderer fr = mc.fontRendererObj;
 	public ScaledResolution sr = new ScaledResolution(mc);
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
     public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Magneto-Bold", 20, 0, 1, 1);;
 	private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Consolas", 18, false, false, false);
 	
 	public int height;
 	public int width;
+	
+	public static int count = 0;
 	
 	public static class ModuleComparator implements Comparator<Mod>
     {
@@ -116,32 +118,32 @@ public class HUD {
 					//Chill
 					if(theme.equalsIgnoreCase("Chill") && !background) {
 						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);               
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
+						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Chill") && background) {
 						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);        
 						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 11 + modeOffset, offset, sr.getScaledWidth() - 3, 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
+						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
 					}
 					
 					//Accent
 					if(theme.equalsIgnoreCase("Accent") && !background) {
 						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);                
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Accent") && background) {
 						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);        
 						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					
 					//Normal
 					if(theme.equalsIgnoreCase("Normal") && !background) {
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Normal") && background) {
 						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);
-						ufr.drawString(m.getDisplayName().toLowerCase(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 				count++;
 			}

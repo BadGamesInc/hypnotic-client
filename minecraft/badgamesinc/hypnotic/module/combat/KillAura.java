@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
+import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
@@ -36,7 +38,7 @@ public class KillAura extends Mod {
     public boolean blocking;
 
     public KillAura() {
-        super("KillAura", Keyboard.KEY_R, Category.COMBAT, "Attacks targets withing a specified range");
+        super("KillAura", Keyboard.KEY_R, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
     }
 
     @Override
@@ -63,6 +65,12 @@ public class KillAura extends Mod {
     @Override
     public void onUpdate() {
     	this.setDisplayName("KillAura" + ColorUtils.gray + " - R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " - " + "APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + " ");
+    	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
+    		target = null;
+    		RenderUtils.resetPlayerPitch();
+            RenderUtils.resetPlayerYaw();
+    		return;
+    	}
     	if(target == null) {
      	   RenderUtils.resetPlayerPitch();
            RenderUtils.resetPlayerYaw();
@@ -70,55 +78,56 @@ public class KillAura extends Mod {
     }
 
     @EventTarget
-    public void onPre(EventPreMotionUpdate event) {
-        target = getClosest(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble());
-        if(target == null)
-            return;
-        updateTime();
-        
-        yaw = mc.thePlayer.rotationYaw;
-        pitch = mc.thePlayer.rotationPitch;
-
-      // mc.thePlayer.setRotationYawHead(yaw);
-       
-       if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
-	       event.setPitch(pitch);
-	       event.setYaw(yaw);
+    public void onPre(EventMotionUpdate event) {
+    	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
+    		return;
+    	}
+    	if (event.getState() == Event.State.PRE) {
+	        target = getClosest(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble());
+	        if(target == null)
+	            return;
+	        updateTime();
+	        
+	        yaw = mc.thePlayer.rotationYaw;
+	        pitch = mc.thePlayer.rotationPitch;
 	
-	       RenderUtils.resetPlayerPitch();
-	       RenderUtils.resetPlayerYaw();
-       } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("None")) {
-    	   
-       } 
-        
-       
-        boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
-        if(block && target.getDistanceToEntity(mc.thePlayer) < 8F)
-            mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
-        if(current - last > 1000 / Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble()) {
-            attack(target);
-            resetTime();
-        }
-        
-    }
-
-    @EventTarget
-    public void onPost(EventPostMotionUpdate event) {
-        if(target == null)
-            return;
-        
-        
-        pitch = RotationUtils.getRotations(target)[1];
-        yaw = RotationUtils.getRotations(target)[0];
-        
-        
-        if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
-	        RenderUtils.setCustomPitch(pitch);
-	        RenderUtils.setCustomYaw(yaw);
-        } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
-     	   mc.thePlayer.rotationPitch = pitch;
-     	   mc.thePlayer.rotationYaw = yaw;
-        }
+	      // mc.thePlayer.setRotationYawHead(yaw);
+	       
+	       if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
+		       event.setPitch(pitch);
+		       event.setYaw(yaw);
+		
+		       RenderUtils.resetPlayerPitch();
+		       RenderUtils.resetPlayerYaw();
+	       } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("None")) {
+	    	   
+	       } 
+	        
+	       
+	        boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
+	        if(block && target.getDistanceToEntity(mc.thePlayer) < 8F)
+	            mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
+	        if(current - last > 1000 / Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble()) {
+	            attack(target);
+	            resetTime();
+	        }
+    	} else {
+    		if(target == null)
+                return;
+            
+            
+            pitch = RotationUtils.getRotations(target)[1];
+            yaw = RotationUtils.getRotations(target)[0];
+            
+            
+            if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
+    	        RenderUtils.setCustomPitch(pitch);
+    	        RenderUtils.setCustomYaw(yaw);
+            } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
+         	   mc.thePlayer.rotationPitch = pitch;
+         	   mc.thePlayer.rotationYaw = yaw;
+            }
+    	}
     }
 
     private void attack(Entity entity) {

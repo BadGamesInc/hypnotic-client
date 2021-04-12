@@ -618,7 +618,7 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && (this.isSneaking() || Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) || Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled() && this instanceof EntityPlayer;
+            boolean flag = this.onGround && this.isSneaking()  || Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled() && Hypnotic.instance.setmgr.getSettingByName("SafeWalk").getValBoolean() && this.onGround || this.onGround && Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled() && this instanceof EntityPlayer;
 
             if (flag)
             {

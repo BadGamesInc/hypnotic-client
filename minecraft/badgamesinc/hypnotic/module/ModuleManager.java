@@ -57,6 +57,7 @@ public class ModuleManager {
 		modules.add(new ESP());
 		modules.add(new Cape());
 		modules.add(new Chams());
+		modules.add(new NameTags());
 		
 		//Player
 		modules.add(new NoFall());
@@ -86,7 +87,6 @@ public class ModuleManager {
 		modules.add(new FastEat());
 		modules.add(new AutoGapple());
 		modules.add(new AutoL());
-		modules.add(new MusicPlayer());
 
 		//World
 		modules.add(new FastBreak());

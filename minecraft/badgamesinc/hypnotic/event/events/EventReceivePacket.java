@@ -11,8 +11,6 @@ public class EventReceivePacket extends Event {
 	
 	public EventReceivePacket(EventType type, EventDirection dir, Packet packet) {
 		
-		this.setType(type);
-		this.setDirection(dir);
 		this.packet = packet;
 		
 	}

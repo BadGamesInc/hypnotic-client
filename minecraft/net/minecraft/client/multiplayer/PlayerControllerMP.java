@@ -28,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
+import net.minecraft.util.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 
@@ -385,12 +386,12 @@ public class PlayerControllerMP
         }
     }
 
-    public boolean onPlayerRightClick(EntityPlayerSP player, WorldClient worldIn, ItemStack heldStack, BlockPos hitPos, EnumFacing side, Vec3 hitVec)
+    public boolean onPlayerRightClick(EntityPlayerSP player, WorldClient worldIn, ItemStack heldStack, BlockPos hitPos, EnumFacing side, Vec3 vec3)
     {
         this.syncCurrentPlayItem();
-        float f = (float)(hitVec.xCoord - (double)hitPos.getX());
-        float f1 = (float)(hitVec.yCoord - (double)hitPos.getY());
-        float f2 = (float)(hitVec.zCoord - (double)hitPos.getZ());
+        float f = (float)(vec3.xCoord - (double)hitPos.getX());
+        float f1 = (float)(vec3.yCoord - (double)hitPos.getY());
+        float f2 = (float)(vec3.zCoord - (double)hitPos.getZ());
         boolean flag = false;
 
         if (!this.mc.theWorld.getWorldBorder().contains(hitPos))
@@ -447,6 +448,11 @@ public class PlayerControllerMP
             }
         }
     }
+    
+    public void onPlayerRightClick(EntityPlayerSP thePlayer, WorldClient theWorld, ItemStack stack, BlockPos position,
+            EnumFacing face, Vec3d vec3d) {
+this.onPlayerRightClick(thePlayer, theWorld, stack, position, face, new Vec3(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord));
+}
 
     /**
      * Notifies the server of things like consuming food, etc...

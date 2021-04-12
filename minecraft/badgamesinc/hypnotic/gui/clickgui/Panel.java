@@ -7,6 +7,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 
@@ -30,7 +31,8 @@ public class Panel {
 	public boolean visible;
 	public ArrayList<ModuleButton> Elements = new ArrayList<>();
 	public ClickGUI clickgui;
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
+	public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 25, 0, 1, 1);
 
 	/*
 	 * Konstrukor
@@ -67,11 +69,21 @@ public class Panel {
 		
 		Color temp = ColorUtil.getClickGUIColor().darker();
 		int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+		int textColor = -1;
 		
-		Gui.drawRect(x, y, x + width, y + height, (outlineColor));
+		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
+			outlineColor = 0xff212020;
+			textColor = ColorUtils.rainbow(2.0f, 0.5f, 1f);
+		}
+		
+		Gui.drawRect(x + 10, y + 4, x + width - 10, y + height, (textColor));
+		Gui.drawRect(x + 12, y + 6, x + width - 12, y + height - 2, (outlineColor));
+		
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-			Gui.drawRect(x - 2, y, x, y + height, 0);
-			ufr.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef);
+			ufr2.drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2 - 1.5, textColor);
+			//if(title.equalsIgnoreCase("combat")) {
+				//Gui.drawRect(outlineColor, mouseX, mouseY, partialTicks, -1);
+			//}
 		}else if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
@@ -83,9 +95,9 @@ public class Panel {
 			int epanelcolor = Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New") ? 0xbb151515 : Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike") ? 0xbb151515 : 0;;
 			for (ModuleButton et : Elements) {
 				if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-					Gui.drawRect(x, startY, x + width, startY, -1);
+					Gui.drawRect(x, startY, x + width, startY, ColorUtils.rainbow(2, 0.5f, 1));
 				}
-				Gui.drawRect(x, 	startY, x + width, startY + et.height + 1, epanelcolor);
+				Gui.drawRect(x + 10, 	startY, x + width - 10, startY + et.height + 1, epanelcolor);
 				et.x = x + 2;
 				et.y = startY;
 				et.width = width - 4;

@@ -1,7 +1,9 @@
 package badgamesinc.hypnotic.module.player;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
+import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
@@ -44,62 +46,64 @@ private TimerUtils timer;
     }
     
     @EventTarget
-    public void onPreMotionUpdate(final EventPreMotionUpdate e) {
-        final double delay = Math.max(20.0, Hypnotic.instance.setmgr.getSettingByName("Delay").getValDouble() + ThreadLocalRandom.current().nextDouble(-20.0, 20.0));
-        if (mc.currentScreen != null) {
-            this.timer.reset();
-            return;
-        }
-        if (this.timer.hasTimeElapsed((long)delay, true)) {
-            final int bestSword = this.getBestSword();
-            final int bestPick = this.getBestPickaxe();
-            final int bestAxe = this.getBestAxe();
-            final int bestShovel = this.getBestShovel();
-            for (int k = 0; k < mc.thePlayer.inventory.mainInventory.length; ++k) {
-                final ItemStack is = mc.thePlayer.inventory.mainInventory[k];
-                if (is != null && !(is.getItem() instanceof ItemArmor)) {
-                    final boolean clean = Hypnotic.instance.setmgr.getSettingByName("Clean").getValBoolean();
-                    if (clean) {
-                        if (is.getItem() instanceof ItemSword && bestSword != -1 && bestSword != k) {
-                            this.drop(k, is);
-                            this.timer.reset();
-                            return;
-                        }
-                        if (is.getItem() instanceof ItemPickaxe && bestPick != -1 && bestPick != k) {
-                            this.drop(k, is);
-                            this.timer.reset();
-                            return;
-                        }
-                        if (is.getItem() instanceof ItemAxe && bestAxe != -1 && bestAxe != k) {
-                            this.drop(k, is);
-                            this.timer.reset();
-                            return;
-                        }
-                        if (this.isShovel(is.getItem()) && bestShovel != -1 && bestShovel != k) {
-                            this.drop(k, is);
-                            this.timer.reset();
-                            return;
-                        }
-                    }
-                    final int swordSlot = (int)(Hypnotic.instance.setmgr.getSettingByName("SwordSlot").getValDouble() - 1.0);
-                    if (bestSword != -1 && bestSword != swordSlot) {
-                        for (int i = 0; i < mc.thePlayer.inventoryContainer.inventorySlots.size(); ++i) {
-                            final Slot s = mc.thePlayer.inventoryContainer.inventorySlots.get(i);
-                            if (s.getHasStack() && s.getStack() == mc.thePlayer.inventory.mainInventory[bestSword]) {
-                                mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, s.slotNumber, swordSlot, 2, mc.thePlayer);
-                                this.timer.reset();
-                                return;
-                            }
-                        }
-                    }
-                    if (Hypnotic.instance.setmgr.getSettingByName("CleanBadItems").getValBoolean() && this.isBad(is.getItem())) {
-                        this.drop(k, is);
-                        this.timer.reset();
-                        return;
-                    }
-                }
-            }
-        }
+    public void onPreMotionUpdate(EventMotionUpdate e) {
+    	if(e.getState() == Event.State.PRE) {
+	        final double delay = Math.max(20.0, Hypnotic.instance.setmgr.getSettingByName("Delay").getValDouble() + ThreadLocalRandom.current().nextDouble(-20.0, 20.0));
+	        if (mc.currentScreen != null) {
+	            this.timer.reset();
+	            return;
+	        }
+	        if (this.timer.hasTimeElapsed((long)delay, true)) {
+	            final int bestSword = this.getBestSword();
+	            final int bestPick = this.getBestPickaxe();
+	            final int bestAxe = this.getBestAxe();
+	            final int bestShovel = this.getBestShovel();
+	            for (int k = 0; k < mc.thePlayer.inventory.mainInventory.length; ++k) {
+	                final ItemStack is = mc.thePlayer.inventory.mainInventory[k];
+	                if (is != null && !(is.getItem() instanceof ItemArmor)) {
+	                    final boolean clean = Hypnotic.instance.setmgr.getSettingByName("Clean").getValBoolean();
+	                    if (clean) {
+	                        if (is.getItem() instanceof ItemSword && bestSword != -1 && bestSword != k) {
+	                            this.drop(k, is);
+	                            this.timer.reset();
+	                            return;
+	                        }
+	                        if (is.getItem() instanceof ItemPickaxe && bestPick != -1 && bestPick != k) {
+	                            this.drop(k, is);
+	                            this.timer.reset();
+	                            return;
+	                        }
+	                        if (is.getItem() instanceof ItemAxe && bestAxe != -1 && bestAxe != k) {
+	                            this.drop(k, is);
+	                            this.timer.reset();
+	                            return;
+	                        }
+	                        if (this.isShovel(is.getItem()) && bestShovel != -1 && bestShovel != k) {
+	                            this.drop(k, is);
+	                            this.timer.reset();
+	                            return;
+	                        }
+	                    }
+	                    final int swordSlot = (int)(Hypnotic.instance.setmgr.getSettingByName("SwordSlot").getValDouble() - 1.0);
+	                    if (bestSword != -1 && bestSword != swordSlot) {
+	                        for (int i = 0; i < mc.thePlayer.inventoryContainer.inventorySlots.size(); ++i) {
+	                            final Slot s = mc.thePlayer.inventoryContainer.inventorySlots.get(i);
+	                            if (s.getHasStack() && s.getStack() == mc.thePlayer.inventory.mainInventory[bestSword]) {
+	                                mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, s.slotNumber, swordSlot, 2, mc.thePlayer);
+	                                this.timer.reset();
+	                                return;
+	                            }
+	                        }
+	                    }
+	                    if (Hypnotic.instance.setmgr.getSettingByName("CleanBadItems").getValBoolean() && this.isBad(is.getItem())) {
+	                        this.drop(k, is);
+	                        this.timer.reset();
+	                        return;
+	                    }
+	                }
+	            }
+	        }
+    	}
     }
     
     private int getBestSword() {

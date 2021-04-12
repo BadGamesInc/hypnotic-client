@@ -189,4 +189,11 @@ public class RotationUtils {
         }
         return angle;
     }
+    public static Vec3 getVectorForRotation(final float[] rotation) {
+        float yawCos = MathHelper.cos(-rotation[0] * 0.017453292F - (float) Math.PI);
+        float yawSin = MathHelper.sin(-rotation[0] * 0.017453292F - (float) Math.PI);
+        float pitchCos = -MathHelper.cos(-rotation[1] * 0.017453292F);
+        float pitchSin = MathHelper.sin(-rotation[1] * 0.017453292F);
+        return new Vec3(yawSin * pitchCos, pitchSin, yawCos * pitchCos);
+    }
 }

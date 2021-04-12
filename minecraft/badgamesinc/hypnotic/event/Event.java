@@ -34,33 +34,18 @@ public abstract class Event {
      */
 
     private boolean cancelled;
-    
-    public EventType type;
-    public EventDirection direction;
-    
-    public EventType getType() {
-		return type;
-	}
-	public void setType(EventType type) {
-		this.type = type;
-	}
-	
-	public EventDirection getDirection() {
-		return direction;
-	}
-	public void setDirection(EventDirection direction) {
-		this.direction = direction;
-	}
 
     public enum State {
         PRE("PRE", 0),
 
         POST("POST", 1);
 
-        State(final String string, final int number) {
+        private State(final String string, final int number) {
 
         }
     }
+
+
 
     public Event call() {
 
@@ -97,58 +82,4 @@ public abstract class Event {
             }
         }
     }
-    
-    public boolean isBeforePre() {
-		if (type == null) {
-			return false;
-		}
-		
-		return type == EventType.BEFOREPRE;
-		
-	}
-	
-	public boolean isPre() {
-		if (type == null) {
-			return false;
-		}
-		
-		return type == EventType.PRE;
-		
-	}
-	
-	public boolean isBeforePost() {
-		if (type == null) {
-			return false;
-		}
-		
-		return type == EventType.BEFOREPOST;
-		
-	}
-	
-	public boolean isPost() {
-		if (type == null) {
-			return false;
-		}
-		
-		return type == EventType.POST;
-		
-	}
-	
-	public boolean isIncoming() {
-		if (direction == null) {
-			return false;
-		}
-		
-		return direction == EventDirection.INCOMING;
-		
-	}
-	
-	public boolean isOutgoing() {
-		if (direction == null) {
-			return false;
-		}
-		
-		return direction == EventDirection.OUTGOING;
-		
-	}
 }

@@ -22,7 +22,7 @@ public class Element {
 	public double width;
 	public double height;
 	
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Comfortaa-Bold", 20, 0, 1, 1);
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
 	
 	public String setstrg;
 	
@@ -37,9 +37,9 @@ public class Element {
 		 * Richtig positionieren! Offset wird von ClickGUI aus bestimmt, sodass
 		 * nichts ineinander gerendert wird
 		 */
-		x = parent.x - 2;
+		x = parent.x + 8;
 		y = parent.y + offset + 12;
-		width = parent.width + 4;
+		width = parent.width - 16;
 		height = 15;
 		
 		/*
@@ -49,17 +49,17 @@ public class Element {
 		String sname = set.getName();
 		if(set.isCheck()){
 			setstrg = sname.substring(0, 1).toUpperCase() + sname.substring(1, sname.length());
-			double textx = x + width - FontUtil.getStringWidth(setstrg);
+			double textx = x + width - ufr.getStringWidth(setstrg);
 			if (textx < x + 13) {
 				width += (x + 13) - textx + 1;
 			}
 		}else if(set.isCombo()){
-			height = comboextended ? set.getOptions().size() * (FontUtil.getFontHeight() + 2) + 15 : 15;
+			height = comboextended ? set.getOptions().size() * (ufr.FONT_HEIGHT + 2) + 15 : 15;
 			
 			setstrg = sname.substring(0, 1).toUpperCase() + sname.substring(1, sname.length());
-			int longest = FontUtil.getStringWidth(setstrg);
+			int longest = ufr.getStringWidth(setstrg);
 			for (String s : set.getOptions()) {
-				int temp = FontUtil.getStringWidth(s);
+				int temp = ufr.getStringWidth(s);
 				if (temp > longest) {
 					longest = temp;
 				}
@@ -72,7 +72,7 @@ public class Element {
 			setstrg = sname.substring(0, 1).toUpperCase() + sname.substring(1, sname.length());
 			String displayval = "" + Math.round(set.getValDouble() * 100D)/ 100D;
 			String displaymax = "" + Math.round(set.getMax() * 100D)/ 100D;
-			double textx = x + width - FontUtil.getStringWidth(setstrg) - FontUtil.getStringWidth(displaymax) - 4;
+			double textx = x + width - ufr.getStringWidth(setstrg) - ufr.getStringWidth(displaymax) - 4;
 			if (textx < x) {
 				width += x - textx + 1;
 			}
