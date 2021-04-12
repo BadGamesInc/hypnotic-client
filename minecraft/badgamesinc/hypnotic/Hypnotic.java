@@ -30,8 +30,7 @@ public class Hypnotic {
 	public CommandManager commandManager;
 	public static FontManager fm;
 	public SaveLoad saveload;
-	private DiscordRP discordRP = new DiscordRP();
-	private Random r = new Random();
+	
 	public static final String clientName = "Hypnotic", clientVersion = "r1005", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
 	public void startup() {	
@@ -44,12 +43,11 @@ public class Hypnotic {
 		hud = new HUD();
 		saveload = new SaveLoad();
 		Display.setTitle(clientName + " " + clientVersion);
-		discordRP.title = this.rptitle();
-		discordRP.start();
+		
 	}
 	
 	public void shutdown() {
-		discordRP.shutdown();
+		
 		saveload.save();
 	}
 	
@@ -67,25 +65,7 @@ public class Hypnotic {
 			}
 			return false;
 		}
-	public DiscordRP getDiscordRP() {
-		return discordRP;
-	}
-	public String rptitle() 
-	{
-		switch(r.nextInt(10)) 
-		{
-			case 0: return "Gaming PVP 1.8.8";
-			case 1: return "I downloaded a PC pinger...";
-			case 2: return "FUELPUMPS ON TOP :fuelpump:";
-			case 3: return "don't let trent censor the media";
-			case 4: return "Gaming.";
-			case 5: return "https://github.com/BadGamesInc/hypnotic-client/";
-			case 6: return "Down with the Millers!";
-			case 7: return "Hypnotic on top";
-			case 8: return "L";
-			case 9: return "E4PE4J";
-			default: return "Default Text";
-		}
-	}
+	
+	
 	
 }

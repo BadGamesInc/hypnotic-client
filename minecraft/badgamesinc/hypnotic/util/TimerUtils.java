@@ -19,6 +19,17 @@ public class TimerUtils {
 
         return false;
     }
+    public boolean hasTimeElapsed(double time, boolean reset) {
+        if (System.currentTimeMillis() - lastMS > time) {
+            if (reset)
+                reset();
+
+
+            return true;
+        }
+
+        return false;
+    }
 
     public long getTime() {
         return System.currentTimeMillis() - lastMS;

@@ -87,6 +87,7 @@ public class ModuleManager {
 		modules.add(new FastEat());
 		modules.add(new AutoGapple());
 		modules.add(new AutoL());
+		modules.add(new DiscordRPC());
 
 		//World
 		modules.add(new FastBreak());
