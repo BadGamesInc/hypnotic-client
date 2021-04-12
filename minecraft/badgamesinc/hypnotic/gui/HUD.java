@@ -1,6 +1,7 @@
 package badgamesinc.hypnotic.gui;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -29,13 +30,16 @@ public class HUD {
 	public FontRenderer fr = mc.fontRendererObj;
 	public ScaledResolution sr = new ScaledResolution(mc);
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
-    public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Magneto-Bold", 20, 0, 1, 1);;
+    public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Magneto-Bold", 20, 0, 1, 1);
+    public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("lucon", 20, 0, 1, 1);
 	private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Consolas", 18, false, false, false);
 	
 	public int height;
 	public int width;
 	
 	public static int count = 0;
+	
+	DecimalFormat df = new DecimalFormat("###.#");
 	
 	public static class ModuleComparator implements Comparator<Mod>
     {
@@ -67,16 +71,19 @@ public class HUD {
         //    ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 15, 0, 1, 1);
        // }
         
-        
-		
-	
-		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) {
-				fontRenderer.drawString("PINGING PC", 2.8f, 3, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
-			
+		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) 
+		{
+			fontRenderer.drawString("PINGING PC", 2.8f, 3, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
         }
 		
-		
-		
+		if(Hypnotic.instance.moduleManager.getModuleByName("HUD").isEnabled()) 
+		{
+			ScaledResolution scaled = new ScaledResolution(mc);
+			// overworld coords
+			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10, -1);
+			// nether coords
+			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY/8) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120);
+        }
 		
 	}
 	

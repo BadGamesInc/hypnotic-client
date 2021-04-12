@@ -10,7 +10,7 @@ import badgamesinc.hypnotic.module.Mod;
 public class HUDModule extends Mod {
 
 	public HUDModule() {
-		super("HUD", 0, Category.RENDER, "Change what is displayed on your screen");
+		super("HUD", 0, Category.GUI, "Change what is displayed on your screen");
 		// TODO Auto-generated constructor stub
 	}
 	
