@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.TimerUtils;
@@ -31,8 +32,17 @@ public class ChatSpammer extends Mod {
 		messages.add("bro its a pc pinger, dont download it");
 	}
 	
+	public void setup()
+	{
+		Hypnotic.instance.setmgr.rSetting(new Setting("Delay", this, 4, 0, 30, false)); 
+	}
+	
+	public double getDelayValue() {
+		return Hypnotic.instance.setmgr.getSettingByName("Delay").getValDouble(); 	
+	}
+	
 	public void onUpdate() {
-		if(timer.hasTimeElapsed(4000, true)) {
+		if(timer.hasTimeElapsed(getDelayValue() * 1000, true)) {
 			Random r = new Random();
 			int index = r.nextInt(messages.size());
 			String message = messages.get(index);

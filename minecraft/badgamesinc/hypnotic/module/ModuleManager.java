@@ -73,6 +73,7 @@ public class ModuleManager {
 		modules.add(new Velocity());
 		modules.add(new Reach());
 		modules.add(new AutoPot());
+		modules.add(new AutoGapple());
 		//TODO: Fix these
 		//modules.add(new TargetStrafe());
 		//modules.add(new BowAimbot());
@@ -85,7 +86,6 @@ public class ModuleManager {
 		modules.add(new PCPinger());
 		modules.add(new ChestStealer());
 		modules.add(new FastEat());
-		modules.add(new AutoGapple());
 		modules.add(new AutoL());
 		modules.add(new DiscordRPC());
 

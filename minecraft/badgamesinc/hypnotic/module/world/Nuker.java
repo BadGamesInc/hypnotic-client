@@ -26,10 +26,10 @@ public class Nuker extends Mod {
 	
 	public void setup()
 	{
-		Hypnotic.instance.setmgr.rSetting(new Setting("Break Delay", this, 20, 0, 100, false)); 
+		Hypnotic.instance.setmgr.rSetting(new Setting("Break Delay", this, 1, 0, 10, false)); 
 	}
 	
-	public double getSettingValue() {
+	public double getDelayValue() {
 		return Hypnotic.instance.setmgr.getSettingByName("Break Delay").getValDouble(); 	
 	}
 	
@@ -51,7 +51,7 @@ public class Nuker extends Mod {
 					if(block.getMaterial() == Material.air)
 						continue;
 					
-					if(timer.hasTimeElapsed(getSettingValue() * 50, true)) {
+					if(timer.hasTimeElapsed(getDelayValue() * 1000, true)) {
 						mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
 						mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
 					}

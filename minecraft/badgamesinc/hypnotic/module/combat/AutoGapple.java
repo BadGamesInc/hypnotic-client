@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.module.misc;
+package badgamesinc.hypnotic.module.combat;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
