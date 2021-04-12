@@ -82,7 +82,7 @@ public class HUD {
 			// overworld coords
 			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10, -1);
 			// nether coords
-			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY/8) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120);
+			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120);
         }
 		
 	}
