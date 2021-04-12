@@ -5,13 +5,6 @@ import java.util.ArrayList;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Mod;
 
-/**
- *  Made by HeroCode
- *  it's free to use
- *  but you have to credit me
- *
- *  @author HeroCode
- */
 public class Setting {
 
 
