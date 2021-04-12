@@ -11,6 +11,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.gui.HUDModule;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
@@ -57,7 +58,7 @@ public class HUD {
 	
 	public void draw() {
 		
-		
+		double serverTPS = 21.0;
 		
 		ufr2.drawStringWithShadow("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f));
 		ufr2.drawStringWithShadow("ypnotic", 14, 4, -1);
@@ -83,6 +84,32 @@ public class HUD {
 			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10, -1);
 			// nether coords
 			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120);
+			// fps
+			ufr3.drawStringWithShadow("FPS: " + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 30, -1);
+			// tps
+			ufr3.drawStringWithShadow("TPS: ", 2, scaled.getScaledHeight() - 40, -1);
+			if(serverTPS < 5.0) {
+				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 11141120);
+			}
+			else if(serverTPS < 10.0) {
+				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 16733525);
+			}
+			else if(serverTPS < 15.0) {
+				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 16777045);
+			}
+			else if(serverTPS < 20.0) {
+				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 5635925);
+			}
+			else {
+				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 5592575);
+			}
+			// ping
+			if(!mc.isSingleplayer()) {
+				ufr3.drawStringWithShadow("Ping: " + mc.getCurrentServerData().pingToServer, 2, scaled.getScaledHeight() - 50, -1);
+			}
+			else {
+				ufr3.drawStringWithShadow("Ping: 0", 2, scaled.getScaledHeight() - 50, -1);
+			}
         }
 		
 	}
