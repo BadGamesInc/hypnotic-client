@@ -392,24 +392,27 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         //
         ufr.drawString("§a+", 16, 72, -1);
         ufr.drawString("Added Chams", 24, 72, -1);
-        //Changes
-        ufr.drawString("§e*", 16, 82, -1);
-        ufr.drawString("Fixed ESP", 24, 82, -1);
         //
+        ufr.drawString("§a+", 16, 82, -1);
+        ufr.drawString("Added Discord Rich Presecnce", 24, 82, -1);
+        //Changes
         ufr.drawString("§e*", 16, 92, -1);
-        ufr.drawString("Improved Scaffold", 24, 92, -1);
+        ufr.drawString("Fixed ESP", 24, 92, -1);
         //
         ufr.drawString("§e*", 16, 102, -1);
-        ufr.drawString("Fixed SafeWalk", 24, 102, -1);
+        ufr.drawString("Improved Scaffold", 24, 102, -1);
         //
         ufr.drawString("§e*", 16, 112, -1);
-        ufr.drawString("Improved ClickGUI", 24, 112, -1);
+        ufr.drawString("Fixed SafeWalk", 24, 112, -1);
         //
         ufr.drawString("§e*", 16, 122, -1);
-        ufr.drawString("Idk probably other stuff I forgot about", 24, 122, -1);
+        ufr.drawString("Improved ClickGUI", 24, 122, -1);
+        //
+        ufr.drawString("§e*", 16, 132, -1);
+        ufr.drawString("Idk probably other stuff I forgot about", 24, 132, -1);
         //Deletions
-        ufr.drawString("§c-", 16, 132, -1);
-        ufr.drawString("Removed music player", 24, 132, -1);
+        ufr.drawString("§c-", 16, 142, -1);
+        ufr.drawString("Removed music player", 24, 142, -1);
         /*           */
         ufr.drawString(s, 2, this.height - 14, -1);
         String s1 = "Copyright Mojang AB. Do not distribute!";
