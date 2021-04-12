@@ -19,15 +19,15 @@ public class Setting {
     private Mod parent;
     public String mode;
 
-    private String sval;
+    public String sval;
     private ArrayList<String> options;
 
-    private boolean bval;
+    public boolean bval;
 
-    private double dval;
-    private double min;
-    private double max;
-    private boolean onlyint = false;
+    public double dval;
+    public double min;
+    public double max;
+    public boolean onlyint = false;
 
 
     public Setting(String name, Mod parent, String sval, ArrayList<String> options) {
@@ -36,6 +36,10 @@ public class Setting {
         this.sval = sval;
         this.options = options;
         this.mode = "Combo";
+	if (Hypnotic.instance.saveload != null) {
+            sval = this.getValString
+        }
+	    //probably doesnt work, will fix when i get home
     }
 
     public Setting(String name, Mod parent, boolean bval) {
@@ -43,6 +47,10 @@ public class Setting {
         this.parent = parent;
         this.bval = bval;
         this.mode = "Check";
+	    if (Hypnotic.instance.saveload != null) {
+            bval = this.getValBoolean
+        }
+	    //probably doesnt work, will fix when i get home
     }
 
     public Setting(String name, Mod parent, double dval, double min, double max, boolean onlyint) {
@@ -53,6 +61,10 @@ public class Setting {
         this.max = max;
         this.onlyint = onlyint;
         this.mode = "Slider";
+	    if (Hypnotic.instance.saveload != null) {
+            dval = this.getValDouble
+        }
+	    //probably doesnt work, will fix when i get home
     }
 
     public String getName() {
