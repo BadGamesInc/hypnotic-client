@@ -11,13 +11,6 @@ import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.gui.Gui;
 
-/**
- *  Made by HeroCode
- *  it's free to use
- *  but you have to credit me
- *
- *  @author HeroCode
- */
 public class Panel {
 	public String title;
 	public double x;
@@ -34,9 +27,6 @@ public class Panel {
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
 	public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 25, 0, 1, 1);
 
-	/*
-	 * Konstrukor
-	 */
 	public Panel(String ititle, double ix, double iy, double iwidth, double iheight, boolean iextended, ClickGUI parent) {
 		this.title = ititle;
 		this.x = ix;
@@ -50,14 +40,8 @@ public class Panel {
 		setup();
 	}
 
-	/*
-	 * Wird in ClickGUI überschrieben, sodass auch ModuleButtons hinzugefügt werden können :3
-	 */
 	public void setup() {}
 
-	/*
-	 * Rendern des Elements.
-	 */
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		if (!this.visible)
 			return;
@@ -109,10 +93,6 @@ public class Panel {
 		}
 	}
 
-	/*
-	 * Zum Bewegen und Extenden des Panels
-	 * usw.
-	 */
 	public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		if (!this.visible) {
 			return false;
@@ -135,9 +115,6 @@ public class Panel {
 		return false;
 	}
 
-	/*
-	 * Damit das Panel auch losgelassen werden kann 
-	 */
 	public void mouseReleased(int mouseX, int mouseY, int state) {
 		if (!this.visible) {
 			return;
@@ -147,9 +124,6 @@ public class Panel {
 		}
 	}
 
-	/*
-	 * HoverCheck
-	 */
 	public boolean isHovered(int mouseX, int mouseY) {
 		return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
 	}

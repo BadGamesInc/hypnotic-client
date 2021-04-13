@@ -4,13 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.StringUtils;
 
-/**
- *  Made by HeroCode
- *  it's free to use
- *  but you have to credit me
- *
- *  @author HeroCode
- */
 public class FontUtil {
 	private static FontRenderer fontRenderer;
 

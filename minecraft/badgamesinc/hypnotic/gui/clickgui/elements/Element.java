@@ -5,13 +5,6 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 
-/**
- *  Made by HeroCode
- *  it's free to use
- *  but you have to credit me
- *
- *  @author HeroCode
- */
 public class Element {
 	public ClickGUI clickgui;
 	public ModuleButton parent;
@@ -33,19 +26,11 @@ public class Element {
 	}
 	
 	public void update(){
-		/*
-		 * Richtig positionieren! Offset wird von ClickGUI aus bestimmt, sodass
-		 * nichts ineinander gerendert wird
-		 */
 		x = parent.x + 12;
 		y = parent.y + offset + 12;
 		width = parent.width - 24;
 		height = 15;
-		
-		/*
-		 * Title der Box bestimmen und falls nötig die Breite der CheckBox
-		 * erweitern
-		 */
+
 		String sname = set.getName();
 		if(set.isCheck()){
 			setstrg = sname.substring(0, 1).toUpperCase() + sname.substring(1, sname.length());

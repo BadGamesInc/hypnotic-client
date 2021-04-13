@@ -9,13 +9,6 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 
-/**
- *  Made by HeroCode
- *  it's free to use
- *  but you have to credit me
- *
- *  @author HeroCode
- */
 public class GUI extends Mod{
 
     public GUI()
@@ -23,7 +16,6 @@ public class GUI extends Mod{
         super("ClickGUI Color", Keyboard.KEY_RSHIFT, Category.GUI, "Change the color of the click gui");
     }
 
-    //Setup is called in the Module con
     @Override
     public void setup(){
     	ArrayList<String> options = new ArrayList<>();
@@ -40,10 +32,6 @@ public class GUI extends Mod{
     @Override
     public void onEnable()
     {
-    	/**
-    	 * Einfach in der StartMethode
-    	 * clickgui = new ClickGUI(); ;)
-    	 */
     	mc.displayGuiScreen(Hypnotic.instance.clickgui);
     	toggle();
     	super.onEnable();
