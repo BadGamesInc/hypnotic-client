@@ -18,6 +18,7 @@ import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
@@ -38,6 +39,7 @@ public class ClickGUI extends GuiScreen {
 	public static ArrayList<Panel> rpanels;
 	private ModuleButton mb = null;
 	public SettingsManager setmgr;
+	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 2);
 	
 	/*
 	 * Konstrukor sollte nur einmal aufgerufen werden => in der MainMethode des eigenen Codes
@@ -168,9 +170,9 @@ public class ClickGUI extends GuiScreen {
 			GL11.glPushMatrix();
 			GL11.glTranslatef(s.getScaledWidth() / 2, s.getScaledHeight() / 2, 0.0F);
 			GL11.glScalef(4.0F, 4.0F, 0F);
-			FontUtil.drawTotalCenteredStringWithShadow("Listening...", 0, -10, 0xffffffff);
+			ufr.drawTotalCenteredStringWithShadow("Listening...", 0, -10, 0xffffffff);
 			GL11.glScalef(0.5F, 0.5F, 0F);
-			FontUtil.drawTotalCenteredStringWithShadow("Press ESCAPE to unbind " + mb.mod.getName() + (mb.mod.getKey() > -1 ? " (" + Keyboard.getKeyName(mb.mod.getKey())+ ")" : ""), 0, 0, 0xffffffff);
+			ufr.drawTotalCenteredStringWithShadow("Press ESCAPE to unbind " + mb.mod.getName() + (mb.mod.getKey() > -1 ? " (" + Keyboard.getKeyName(mb.mod.getKey())+ ")" : ""), 0, 0, 0xffffffff);
 			GL11.glScalef(0.25F, 0.25F, 0F);
 			//FontUtil.drawTotalCenteredStringWithShadow("by HeroCode", 0, 20, 0xffffffff);
 			GL11.glPopMatrix();

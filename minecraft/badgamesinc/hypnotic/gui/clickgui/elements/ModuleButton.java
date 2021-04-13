@@ -100,7 +100,7 @@ public class ModuleButton {
 			Minecraft mc = Minecraft.getMinecraft();
 			ScaledResolution sr = new ScaledResolution(mc);
 			Gui.drawRect(0, sr.getScaledHeight(), 8 + ufr.getStringWidth(mod.getDescription()) + 10, sr.getScaledHeight() - 14, 0xff212020);
-			Gui.drawRect(x + 8, y, x + width - 8, y + height + 1, 0x55111111);	
+			Gui.drawRect(x + 12, y, x + width - 12, y + height + 1, 0x55111111);	
 			ufr.drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1);
 		}
 		

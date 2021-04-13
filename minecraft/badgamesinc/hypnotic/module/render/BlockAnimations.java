@@ -21,6 +21,9 @@ public class BlockAnimations extends Mod {
 		options.add("Slap");
 		options.add("Spin");
 		options.add("Stab");
+		options.add("Slide");
+		options.add("Sigma");
+		options.add("Leaked");	
 		options.add("Astolfo");
 		options.add("Exhibition");
 		Hypnotic.instance.setmgr.rSetting(new Setting("Block mode", this, "Exhibition", options));

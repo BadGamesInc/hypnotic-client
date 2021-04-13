@@ -3,9 +3,12 @@ package net.minecraft.client.entity;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.events.EventChat;
+import badgamesinc.hypnotic.event.events.EventLastDistance;
+import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.util.MoveUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -156,6 +159,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public void heal(float healAmount)
     {
     }
+    
+    public boolean isMovingOnGround() {
+        return mc.thePlayer.onGround && MoveUtils.isMoving();
+    }
 
     /**
      * Called when a player mounts an entity. e.g. mounts a pig, mounts a boat.
@@ -170,24 +177,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
     }
     
-    /*@Override
-   	public void moveEntity(double x, double y, double z) {
-       	EventMove event = new EventMove(z, y, z);
-       	event.setType(EventType.PRE);
-       	event.setX(x);
-       	event.setY(y);
-       	event.setZ(z);
-       	event.call();
-       	
-       	if (Hypnotic.instance.moduleManager.getModuleByName("TargetStrafe").isEnabled()) {
-       		TargetStrafe targetStrafe = new TargetStrafe();
-       		targetStrafe.onEvent(event);
-       	}
-       	
-   		super.moveEntity(event.x, event.y, event.z);
-   		event.setType(EventType.POST);
-   		event.call();
-   	}*/
+    @Override
+    public void moveEntity(double x, double y, double z) {
+        EventMotion event = new EventMotion(x, y, z);
+        event.call();
+        super.moveEntity(event.getX(), event.getY(), event.getZ());
+        EventLastDistance lastDistanceEvent = new EventLastDistance();
+        lastDistanceEvent.call();
+    }
 
     /**
      * Called to update the entity's position/logic.
@@ -968,5 +965,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.capabilities.isFlying = false;
             this.sendPlayerAbilities();
         }
+    }
+    
+    public void jumpWithBoost(double speed) {
+        this.jump();
+        MoveUtils.strafe(speed);
     }
 }

@@ -1,5 +1,6 @@
 package badgamesinc.hypnotic.module.combat;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
@@ -7,6 +8,7 @@ import org.lwjgl.input.Keyboard;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
+import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
@@ -29,6 +31,9 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
+import static net.minecraft.client.gui.inventory.GuiInventory.drawEntityOnScreen;
+import static org.lwjgl.opengl.GL11.*;
+
 public class KillAura extends Mod {
     public static EntityLivingBase target;
     private long current, last;
@@ -36,6 +41,7 @@ public class KillAura extends Mod {
     private float yaw, pitch;
     private boolean others;
     public boolean blocking;
+    public Setting ESP;
 
     public KillAura() {
         super("KillAura", Keyboard.KEY_R, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
@@ -60,6 +66,7 @@ public class KillAura extends Mod {
         Hypnotic.instance.setmgr.rSetting(new Setting("Monsters", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Villagers", this, false));
         Hypnotic.instance.setmgr.rSetting(new Setting("Teams", this, false));
+        Hypnotic.instance.setmgr.rSetting(ESP = new Setting("ESP", this, true));
     }
     
     @Override
@@ -227,5 +234,64 @@ public class KillAura extends Mod {
     
     private boolean isHoldingSword() {
         return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
+    }
+    
+    double delay1 = 0;
+    boolean step  = false;
+    @EventTarget
+    public void on3D(Event3D event){
+        if(ESP.getValBoolean()){
+            if(target != null){
+                //for(int i = 0; i < 5; i++){
+                    drawCircle(target, event.getPartialTicks(), 0.8, delay1 / 100);
+              //  }
+            }
+        }
+        if(delay1 > 200){
+            step = false;
+        }
+        if(delay1 < 0){
+            step = true;
+        }
+        if(step){
+            delay1+= 3;
+        }else {
+            delay1-= 3;
+        }
+    }
+
+    public int getAlpha(int delay1){
+        double state = Math.ceil((System.currentTimeMillis()) / 10);
+        state %= delay1 * 2;
+        return (int) ((int) state > delay1 ? (delay1 * 2 - state) : state) > 0 ? (int) ((int) state > delay1 ? (delay1 * 2 - state) : state) : 1;
+    }
+
+    private void drawCircle(Entity entity, float partialTicks, double rad, double height) {
+        glPushMatrix();
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(false);
+        glLineWidth(2.0f);
+        glBegin(GL_LINE_STRIP);
+
+        final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - mc.getRenderManager().viewerPosX;
+        final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - mc.getRenderManager().viewerPosY;
+        final double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - mc.getRenderManager().viewerPosZ;
+
+        final float r = ((float) 1 / 255) * Color.WHITE.getRed();
+        final float g = ((float) 1 / 255) * Color.WHITE.getGreen();
+        final float b = ((float) 1 / 255) * Color.WHITE.getBlue();
+
+        final double pix2 = Math.PI * 2.0D;
+
+        for (int i = 0; i <= 90; ++i) {
+            glVertex3d(x + rad * Math.cos(i * pix2 / 45), y + height, z + rad * Math.sin(i * pix2 / 45));
+        }
+
+        glEnd();
+        glDepthMask(true);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_TEXTURE_2D);
+        glPopMatrix();
     }
 }

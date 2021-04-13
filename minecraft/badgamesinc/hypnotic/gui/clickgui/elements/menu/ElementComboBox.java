@@ -38,9 +38,7 @@ public class ElementComboBox extends Element {
 		Color temp = ColorUtil.getClickGUIColor();
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 150).getRGB();
 		
-		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
-			color = ColorUtils.rainbow(2, 0.5f, 1);
-		}
+		
 		
 		/*
 		 * Die Box und Umrandung rendern
@@ -50,6 +48,12 @@ public class ElementComboBox extends Element {
 		ufr.drawTotalCenteredString(setstrg, x + width / 2, y + 15/2, 0xffffffff);
 		int clr1 = color;
 		int clr2 = temp.getRGB();
+		
+		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
+			color = ColorUtils.rainbow(2, 0.5f, 1);
+			clr2 = color = ColorUtils.rainbow(2, 0.5f, 1);
+			clr1 = color = ColorUtils.rainbow(2, 0.5f, 1);
+		}
 
 		Gui.drawRect(x, y + 14, x + width, y + 15, 0x77000000);
 		if (comboextended) {

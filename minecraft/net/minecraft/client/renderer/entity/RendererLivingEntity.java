@@ -3,7 +3,9 @@ package net.minecraft.client.renderer.entity;
 import com.google.common.collect.Lists;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventRenderEntity;
 import badgamesinc.hypnotic.event.events.EventRenderNametag;
+import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.OutlineUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
@@ -101,6 +103,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
      */
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
+    	EventRenderEntity eventPre = new EventRenderEntity(entity, Event.State.PRE);
+        eventPre.call();
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
         this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
@@ -220,6 +224,9 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         {
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
         }
+        
+        EventRenderEntity eventPost = new EventRenderEntity(entity, Event.State.POST);
+        eventPost.call();
     }
 
     protected boolean setScoreTeamColor(T entityLivingBaseIn)

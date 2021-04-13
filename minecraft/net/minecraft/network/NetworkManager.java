@@ -22,6 +22,7 @@ import badgamesinc.hypnotic.EventSigma.impl.EventPacket;
 import badgamesinc.hypnotic.event.EventDirection;
 import badgamesinc.hypnotic.event.EventType;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
+import badgamesinc.hypnotic.event.events.EventSendPacket;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;
@@ -157,14 +158,16 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
     {
-    	EventPacket ep = ((EventPacket) EventSystem.getInstance(EventPacket.class));
-        ep.fire(p_channelRead0_2_, false);
+    	EventReceivePacket event = new EventReceivePacket(p_channelRead0_2_);
+        event.call();
+        if(event.isCancelled()){
+            return;
+        }
         if (this.channel.isOpen())
         {
             try
             {
-            	EventReceivePacket event = new EventReceivePacket(EventType.PRE, EventDirection.INCOMING, p_channelRead0_2_);
-            	event.call();
+            	
                 p_channelRead0_2_.processPacket(this.packetListener);
             }
             catch (ThreadQuickExitException var4)
@@ -196,12 +199,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     public void sendPacket(Packet packetIn)
     {
-    	EventPacket ep = (EventPacket) EventSystem.getInstance(EventPacket.class);
-        ep.fire(packetIn, true);
-        
-        if (ep.isCancelled()) {
+    	EventSendPacket event = new EventSendPacket(packetIn);
+        event.call();
+        if(event.isCancelled())
             return;
-        }
        
         if (this.isChannelOpen())
         {
@@ -221,7 +222,6 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                 this.field_181680_j.writeLock().unlock();
             }
         }
-        ep.fire(packetIn);
     }
 
     public void sendPacket(Packet packetIn, GenericFutureListener <? extends Future <? super Void >> listener, GenericFutureListener <? extends Future <? super Void >> ... listeners)

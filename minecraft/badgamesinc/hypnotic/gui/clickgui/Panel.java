@@ -97,7 +97,7 @@ public class Panel {
 				if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 					Gui.drawRect(x, startY, x + width, startY, ColorUtils.rainbow(2, 0.5f, 1));
 				}
-				Gui.drawRect(x + 10, 	startY, x + width - 10, startY + et.height + 1, epanelcolor);
+				Gui.drawRect(x + 14, 	startY, x + width - 14, startY + et.height + 1, epanelcolor);
 				et.x = x + 2;
 				et.y = startY;
 				et.width = width - 4;

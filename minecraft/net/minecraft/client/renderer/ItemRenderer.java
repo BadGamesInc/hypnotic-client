@@ -28,6 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
 import org.lwjgl.opengl.GL11;
 
+import static net.minecraft.util.MathHelper.*;
+
 import badgamesinc.hypnotic.Hypnotic;
 
 public class ItemRenderer
@@ -413,7 +415,39 @@ public class ItemRenderer
 	                    	GlStateManager.rotate((float)(System.currentTimeMillis() / Hypnotic.instance.setmgr.getSettingByName("Hand speed").getValDouble() % 360), 0.0f, 0.0f, -0.1f);
 	                        this.transformFirstPersonItem(f / 1.6f, 0.0f);
 	                        this.func_178103_d();
+                    	} else if(mode.equalsIgnoreCase("Slide")) { 
+                    		float var15 = sin(sqrt_float(f1) * 3.1415927F);
+
+                            GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+                            GlStateManager.translate(0.0F, 0.13F, 0.0F);
+                            GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+                            float var3 = sin(0.0F);
+                            float var4 = sin(sqrt_float(0.0F) * 3.1415927F);
+                            GlStateManager.rotate(var3 * -34.0F, 0.0F, 1.0F, 0.2F);
+                            GlStateManager.rotate(var4 * -20.7F, 0.2F, 0.1F, 1.0F);
+                            GlStateManager.rotate(var4 * -68.6F, 1.3F, 0.1F, 0.2F);
+                            GlStateManager.scale(0.3F, 0.3F, 0.3F);
+                            this.func_178103_d();
+                            float var91 = sin(sqrt_float(f1) * 3.1415927F);
+                            GlStateManager.translate(-0.5F, 0.4F, 0.0F);
+                            GlStateManager.rotate(-var91 * 50.0F, -8.0F, -0.0F, 9.0F);
+                            GlStateManager.rotate(-var91 * 70.0F, 1.0F, -0.4F, -0.0F);
+                    	} else if(mode.equalsIgnoreCase("Leaked")) { 
+                    		float var101 = sin(sqrt_float(f1) * 3.1415927f);
+                            GlStateManager.translate(-var101 * 0.2, 0, 0.00f);
+                            GlStateManager.rotate(-var101 * (float) 20, 0.0f, 0.1f, -0.0f);
+                            this.transformFirstPersonItem( 0.0F, f);
+                            GlStateManager.rotate(-var101 * (float) 30, -0.1f, -0.3f, -0.1f);
+                            this.func_178103_d();
+                    	} else if(mode.equalsIgnoreCase("Sigma")) { 
+                    		GlStateManager.translate(0.15    , 0.2f, -0.1 );
+                            this.transformFirstPersonItem( 0.0F, f);
+                            final float var100 = sin(sqrt_float(f1) * 3.1415927f);
+                            GlStateManager.rotate(var100 * 70, -0.1f, 0.0f, 0.1f);
+
+                            this.func_178103_d();
                     	}
+                    	
                     	break;
 					                   
                     	

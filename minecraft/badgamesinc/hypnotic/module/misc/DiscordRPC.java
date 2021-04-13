@@ -14,6 +14,7 @@ public class DiscordRPC extends Mod
 	public DiscordRPC() 
 	{
 		super("Discord RPC", 0, Category.MISC, "Toggles on or off Discord Rich Presence");
+		this.setEnabled(true);
 	}
 	
 	@Override

@@ -1,123 +1,115 @@
 package badgamesinc.hypnotic.module.combat;
 
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
+import java.awt.Color;
+
+import org.lwjgl.input.Keyboard;
+
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
-import badgamesinc.hypnotic.event.events.EventMove;
-import badgamesinc.hypnotic.event.events.EventRender3D;
+import badgamesinc.hypnotic.event.events.Event3D;
+import badgamesinc.hypnotic.event.events.EventMotion;
+import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.util.MovementUtils;
-import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.RotationUtils;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 
-public class TargetStrafe extends Mod{
-    
-	public TargetStrafe() {
-		super("TargetStrafe", 0, Category.COMBAT, "Strafes around your KillAura target");
-		
-		Hypnotic.instance.setmgr.rSetting(new Setting("Distance", this, 1.90f, 1.0f, 6.0f, false));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Speed", this, 1.90f, 1.0f, 6.0f, false));
-	}
-	
-	/*public static transient boolean direction = false, forward = false, left = false, right = false, back = false;
-	
-	@Override
-	public void onEnable() {
-		
-		forward = mc.gameSettings.keyBindForward.pressed;
-		left = mc.gameSettings.keyBindLeft.pressed;
-		right = mc.gameSettings.keyBindRight.pressed;
-		back = mc.gameSettings.keyBindBack.pressed;
-		
-	}
+public class TargetStrafe extends Mod {
+    public static Setting radius;
+    public static Setting spacebar;
+    public TargetStrafe(){
+        super("TargetStrafe", Keyboard.KEY_NONE, Category.MOVEMENT, "Strafe around targets");
+        Hypnotic.instance.setmgr.rSetting(radius = new Setting("Radius", this, 3, 0.5, 5, false));
+        Hypnotic.instance.setmgr.rSetting(spacebar = new Setting("SpaceBar", this, false));
+    }
 
-	@EventTarget
-	public void onEvent(Event e) {
-		
-		if (e instanceof EventMove && e.isPre()) {
-			
-			EventMove event = (EventMove)e;
-			
-			if (mc.thePlayer.isCollidedHorizontally) {
-				direction = !direction;
-			}
-			
-			KillAura k = new KillAura();
-			
-			if (k.target == null || !k.isEnabled()) {
-				return;
-			}else {
-				
-				double currentSpeed = MovementUtils.getSpeed();
-				
-				//event.setSpeed(0);
-				
-				double yawChange = 45;
-				
-				float f = (float) ((RotationUtils.getRotations(k.target)[0] + (direction ? -yawChange : yawChange)) * 0.017453292F);
-				double x2 = k.target.posX, z2 = k.target.posZ;
-	            x2 -= (double)(MathHelper.sin(f) * (Hypnotic.instance.setmgr.getSettingByName("Distance").getValDouble()) * -1);
-	            z2 += (double)(MathHelper.cos(f) * (Hypnotic.instance.setmgr.getSettingByName("Distance").getValDouble()) * -1);
-	            
-	            float currentSpeed1 = MovementUtils.getSpeed();
-	            
-				double backupMotX = mc.thePlayer.motionX, backupMotZ = mc.thePlayer.motionZ;
-	            event.setSpeed(((currentSpeed + Hypnotic.instance.setmgr.getSettingByName("Speed").getValDouble()) / 100) * 90, RotationUtils.getRotationFromPosition(x2, z2, mc.thePlayer.posY)[0]);
-	            mc.thePlayer.motionX = backupMotX;
-	            mc.thePlayer.motionZ = backupMotZ;
-	            
-	            if (currentSpeed > MovementUtils.getSpeed()) {
-	            	direction = !direction;
-	            }
-	            
-			}
-			
-		}
-		
-		if (e instanceof EventRender3D && e.isPre()) {
-			
-			if (mc.thePlayer.isCollidedHorizontally) {
-				direction = !direction;
-			}
-			
-			KillAura k = new KillAura();
-			
-			if (k.target == null || !k.isEnabled()) {
-				return;
-			}else {
-				
-				Vec3 lastLine = new Vec3(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
-				
-				for (short i = 0; i <= 360; i++) {
-					
-					float f = (RotationUtils.getRotations(k.target)[0] + (direction ? -i : i)) * 0.017453292F;
-					double x2 = k.target.posX, z2 = k.target.posZ;
-		            x2 -= (double)(MathHelper.sin(f) * Hypnotic.instance.setmgr.getSettingByName("Distance").getValDouble()) * -1;
-		            z2 += (double)(MathHelper.cos(f) * Hypnotic.instance.setmgr.getSettingByName("Distance").getValDouble()) * -1;
-		            
-		            if (i != 0) {
-		            	RenderUtils.drawLine(lastLine.xCoord, lastLine.yCoord, lastLine.zCoord, x2, lastLine.yCoord, z2);
-		            }
-		            
-		            //RenderUtils.drawLine(lastLine.xCoord, lastLine.yCoord, lastLine.zCoord, x2, lastLine.yCoord, z2);
-		            lastLine.xCoord = x2;
-		            lastLine.zCoord = z2;
-					
-				}
-				
-				RenderUtils.drawLine(k.target.posX, mc.thePlayer.posY, k.target.posZ, k.target.posX, k.target.posY, k.target.posZ);
-				
-			}
-			
-		}
-		
-	}
+    @EventTarget
+    public final void onRender3D(Event3D event) {
+        if (canStrafe()) {
+            EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(KillAura.class).target;
+            glColor3f(rainbow(100).getRed(), rainbow(100).getGreen(), rainbow(100).getRed());
 
-	public void onEventWhenDisabled(Event e) {
-		
-	}*/
+            drawCircle(target, event.getPartialTicks(), radius.getValDouble(), 0.1);
+        }
+    }
+
+    public static void strafe(EventMotion event, double moveSpeed, EntityLivingBase target,  boolean direction) {
+        double direction1 = direction ? 1 : -1;
+        float[] rotations = RotationUtils.getRotations(target);
+        if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValDouble()) {
+            MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 0.0D);
+        } else {
+            MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 1.0D);
+        }
+
+    }
+
+    public static void strafe(EventMotionUpdate event, double moveSpeed, EntityLivingBase target, boolean direction) {
+        double direction1 = direction ? 1 : -1;
+        float[] rotations = RotationUtils.getRotations(target);
+        if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValDouble()) {
+            MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 0.0D);
+        } else {
+            MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 1.0D);
+        }
+
+    }
+    public static boolean canStrafe(){
+        return spacebar.getValBoolean() ? Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed: Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
+    }
+
+    private void drawCircle(Entity entity, float partialTicks, double rad, double height) {
+    	glPushMatrix();
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(false);
+        glLineWidth(2.0f);
+        glBegin(GL_LINE_STRIP);
+
+        final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - mc.getRenderManager().viewerPosX;
+        final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - mc.getRenderManager().viewerPosY;
+        final double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - mc.getRenderManager().viewerPosZ;
+
+        final float r = ((float) 1 / 255) * Color.WHITE.getRed();
+        final float g = ((float) 1 / 255) * Color.WHITE.getGreen();
+        final float b = ((float) 1 / 255) * Color.WHITE.getBlue();
+
+        final double pix2 = Math.PI * 2.0D;
+
+        for (int i = 0; i <= 90; ++i) {
+            glVertex3d(x + rad * Math.cos(i * pix2 / 45), y + height, z + rad * Math.sin(i * pix2 / 45));
+        }
+
+        glEnd();
+        glDepthMask(true);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_TEXTURE_2D);
+        glPopMatrix();
+    }
+    public static Color rainbow(int delay) {
+        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
+        rainbowState %= 360;
+        return Color.getHSBColor((float) (rainbowState / 360.0f), 0.8f, 0.7f);
+    }
+
+
 }

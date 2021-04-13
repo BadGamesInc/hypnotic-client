@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.AxisAlignedBB;
@@ -143,6 +146,17 @@ public class Flight extends Mod implements UpdateListener{
 			}
 		
 		
+	}
+	
+	public void onMotion(EventMotion event) {
+		Speed speed = new Speed();
+		if(Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).target.posY - Hypnotic.instance.moduleManager.getModule(KillAura.class).target.prevPosY >=0) {
+			double motion = Math.sqrt(event.getX() * event.getX() + event.getZ() * event.getZ());
+			boolean direction = false;
+			if(TargetStrafe.canStrafe()){
+                TargetStrafe.strafe(event, speed.motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, speed.direction);
+            }
+		}
 	}
 	
 	//@Override

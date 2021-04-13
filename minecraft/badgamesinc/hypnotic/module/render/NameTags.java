@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event3D;
+import badgamesinc.hypnotic.event.events.EventRenderNametag;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
@@ -53,12 +54,16 @@ public class NameTags extends Mod {
         GlStateManager.scale(2.0f, 2.0f, 2.0f);
         GL11.glPopMatrix();
     }
+    
+    @EventTarget
+    public void eventNameTag(EventRenderNametag e) {
+    	e.setCancelled(true);
+    }
 
     @EventTarget
-    public void on3D(Event3D event){
+    public void evemt3D(Event3D event){
         if(ufr == null) {
             ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 20, 0, 2, 1);
-
         }
         for(Entity e : mc.theWorld.loadedEntityList){
             if(e instanceof EntityLivingBase && !(e instanceof EntityPlayerSP)){
@@ -80,7 +85,7 @@ public class NameTags extends Mod {
                     GL11.glRotated(-this.mc.getRenderManager().playerViewY, 0.0d, 1.0d, 0.0d);
                     GL11.glRotated(this.mc.getRenderManager().playerViewX, 1.0d, 0.0d, 0.0d);
                     GlStateManager.disableDepth();
-                    float width = ufr.getStringWidth(player.getName());
+                    float width = FontUtil.getStringWidth(player.getName());
                     float progress = player.getHealth() / player.getMaxHealth();
 
                     Color color = Color.WHITE;
@@ -91,8 +96,8 @@ public class NameTags extends Mod {
                     }else if(player.getHealth() <= 7){
                         color = Color.RED;
                     }
-                    Gui.drawRect(-width / 2 - 5, -2, width / 2 + 5, ufr.FONT_HEIGHT + 2, new Color(0, 0, 0, 80).getRGB());
-                    Gui.drawRect(-width / 2 - 5, ufr.FONT_HEIGHT + 1,  -width / 2 - 5 + (width / 2 + 5 - -width / 2 + 5) * progress, ufr.FONT_HEIGHT + 2, color.getRGB());
+                    Gui.drawRect(-width / 2 - 5, -2, width / 2 + 5, FontUtil.getFontHeight() + 2, new Color(0, 0, 0, 80).getRGB());
+                    Gui.drawRect(-width / 2 - 5, FontUtil.getFontHeight() + 1,  -width / 2 - 5 + (width / 2 + 5 - -width / 2 + 5) * progress, FontUtil.getFontHeight() + 2, color.getRGB());
                     FontUtil.drawCenteredString(player.getName(), 0, 0, 0xFFFFFFFF);
                     GL11.glTranslated(-x, -(y + 2.5D), -z);
                     GL11.glScalef(1.0f,1.0f,1.0f);

@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class DiscordRP {
 	private boolean running = true;
 	private long created = 0;
-	public String title = "Default Text";
+	public static String title = "Default Text";
 	public void start() 
 	{
 		this.created = System.currentTimeMillis();

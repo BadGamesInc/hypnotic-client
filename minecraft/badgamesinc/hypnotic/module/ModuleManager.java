@@ -58,6 +58,8 @@ public class ModuleManager {
 		modules.add(new Cape());
 		modules.add(new Chams());
 		modules.add(new NameTags());
+		modules.add(new ItemPhysics());
+		modules.add(new Tracers());
 		
 		//Player
 		modules.add(new NoFall());
@@ -75,8 +77,9 @@ public class ModuleManager {
 		modules.add(new AutoPot());
 		modules.add(new AutoGapple());
 		//TODO: Fix these
-		//modules.add(new TargetStrafe());
+		modules.add(new TargetStrafe());
 		//modules.add(new BowAimbot());
+		modules.add(new Criticals());
 		
 		//Misc
 		modules.add(new ChatSpammer());
@@ -87,13 +90,16 @@ public class ModuleManager {
 		modules.add(new ChestStealer());
 		modules.add(new FastEat());
 		modules.add(new AutoL());
+
 		modules.add(new DiscordRPC());
+		modules.add(new KillSults());
 
 		//World
 		modules.add(new FastBreak());
 		modules.add(new FastPlace());
 		modules.add(new Timer());
 		modules.add(new Nuker());
+		modules.add(new BedNuker());
 		
 		//GUI
 		modules.add(new ArrayListModule());
@@ -108,6 +114,10 @@ public class ModuleManager {
 	public void registerModule(Mod m) {
 		modules.add(m);
 	}
+	
+	public <T extends Mod> T getModule(Class<T> clazz) {
+        return (T) modules.stream().filter(mod -> mod.getClass() == clazz).findFirst().orElse(null);
+    }
 	
 	
 }

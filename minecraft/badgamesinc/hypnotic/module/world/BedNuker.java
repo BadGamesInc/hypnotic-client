@@ -1,15 +1,13 @@
 package badgamesinc.hypnotic.module.world;
 
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.RenderUtils;
-import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
@@ -18,29 +16,19 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 
-public class Nuker extends Mod {
+public class BedNuker extends Mod {
 
 	private int xPos;
 	private int yPos;
 	private int zPos;
 	private static int radius = 4;
-	public TimerUtils timer = new TimerUtils();
 	
-	public Nuker() {
-		super("Nuker", 0, Category.WORLD, "Destroy lots of blocks");
-	}
-	
-	public void setup()
-	{
-		Hypnotic.instance.setmgr.rSetting(new Setting("Break Delay", this, 2, 0, 10, false)); 
-	}
-	
-	public double getSettingValue() {
-		return Hypnotic.instance.setmgr.getSettingByName("Break Delay").getValDouble(); 	
+	public BedNuker() {
+		super("BedNuker", 0, Category.WORLD, "Fuck up all beds in your way");
 	}
 	
 	@EventTarget
-	public void eventMotionUpdate(EventMotionUpdate e) {
+	public void onMotion(EventMotionUpdate e) {
 		if(e.getState() == Event.State.PRE) {
 			if(!this.isEnabled())
 				return;
@@ -55,28 +43,20 @@ public class Nuker extends Mod {
 						BlockPos blockPos = new BlockPos(this.xPos, this.yPos, this.zPos);
 						Block block = mc.theWorld.getBlockState(blockPos).getBlock();
 						
-						float[] rots = this.getRotations(blockPos, EnumFacing.NORTH);
-								
-						if(block.getMaterial() == Material.air)
+						if(!(blockPos.getBlock() instanceof BlockBed))
 							continue;
 						
-						if(timer.hasTimeElapsed((long) (getSettingValue() * 1000), true) && getSettingValue() != 0) {
-							e.setYaw(rots[0]);
-							e.setPitch(rots[1]);
-							RenderUtils.setCustomYaw(rots[0]);
-							RenderUtils.setCustomPitch(rots[1]);
-							mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-							mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-							mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
-						} else if(getSettingValue() == 0) {
-							e.setYaw(rots[0]);
-							e.setPitch(rots[1]);
-							RenderUtils.setCustomYaw(rots[0]);
-							RenderUtils.setCustomPitch(rots[1]);
-							mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-							mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-							mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
-						}
+						float[] rots = this.getRotations(blockPos, EnumFacing.NORTH);
+						
+						e.setYaw(rots[0]);
+						e.setPitch(rots[1]);
+						
+						RenderUtils.setCustomYaw(rots[0]);
+						RenderUtils.setCustomPitch(rots[1]);
+						
+						mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
+						mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
+						mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
 					}
 				}
 			}

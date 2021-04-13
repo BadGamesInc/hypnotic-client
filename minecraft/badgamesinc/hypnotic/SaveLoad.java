@@ -101,7 +101,9 @@ public class SaveLoad {
                     if (set != null) {
                         if (set.isCheck()) {
                             set.setValBoolean(Boolean.parseBoolean(args[3]));
+
                             set.bval = (Boolean.parseBoolean(args[3]));
+                            set.bval = Boolean.parseBoolean(args[3]);
                         }
                         if (set.isCombo()) {
                             set.setValString(args[3]);
@@ -109,7 +111,9 @@ public class SaveLoad {
                         }
                         if (set.isSlider()) {
                             set.setValDouble(Double.parseDouble(args[3]));
+
                             set.dval = (Double.parseDouble(args[3]));
+                            set.dval = Double.parseDouble(args[3]);
                         }
                     }
                 }

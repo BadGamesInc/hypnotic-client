@@ -37,9 +37,9 @@ public class Element {
 		 * Richtig positionieren! Offset wird von ClickGUI aus bestimmt, sodass
 		 * nichts ineinander gerendert wird
 		 */
-		x = parent.x + 8;
+		x = parent.x + 12;
 		y = parent.y + offset + 12;
-		width = parent.width - 16;
+		width = parent.width - 24;
 		height = 15;
 		
 		/*

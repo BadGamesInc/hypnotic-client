@@ -30,6 +30,7 @@ public class Hypnotic {
 	public CommandManager commandManager;
 	public static FontManager fm;
 	public SaveLoad saveload;
+	public DiscordRP discordRP;
 	
 	public static final String clientName = "Hypnotic", clientVersion = "r1005", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
@@ -43,7 +44,7 @@ public class Hypnotic {
 		hud = new HUD();
 		saveload = new SaveLoad();
 		Display.setTitle(clientName + " " + clientVersion);
-		
+		eventManager.register(this);
 	}
 	
 	public void shutdown() {
