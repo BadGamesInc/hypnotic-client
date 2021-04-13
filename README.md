@@ -7,8 +7,7 @@ join the discord: https://discord.gg/H4pgRcmZga
 ## requirements  
 you need to import the io.netty files and pack.png from a stock jar and put the files from this jar (https://github.com/Vatuu/discord-rpc/releases/download/1.6.2/discord-rpc.jar)in it 
 if you are exporting the client from a development environment
-
-java 11 is REQUIRED - you will crash on startup if you do not have it  
+  
 ## authors  
 BadGamesInc - actual knowledge  
 KawaiiZenbo - knows next to nothing, has to keep editing the readme  
