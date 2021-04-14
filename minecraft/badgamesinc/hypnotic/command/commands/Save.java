@@ -14,19 +14,22 @@ public class Save extends Command {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Saves your config";
 	}
 
 	@Override
 	public String getSyntax() {
-		// TODO Auto-generated method stub
-		return ".save";
+		return ".save (config_name)";
 	}
 
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
-		Hypnotic.instances.saveLoad.save();
-    Wrapper.tellPlayer("Succesfully saved);
-  }
+		if(args[0] == null) {
+			Wrapper.tellPlayer("Usage: " + getSyntax());
+		} else {
+			Hypnotic.instance.saveLoad.configName = args[0];
+			Hypnotic.instance.saveLoad.save();
+    			Wrapper.tellPlayer("Succesfully saved " + args[0]);
+		}
+  	}
 }
