@@ -29,9 +29,9 @@ public class Setting {
         this.sval = sval;
         this.options = options;
         this.mode = "Combo";
-	if (Hypnotic.instance.saveload != null) {
-            sval = this.getValString();
-        }
+	//if (Hypnotic.instance.saveload != null) {
+          //  sval = this.getValString();
+        //}
 	    //probably doesnt work, will fix when i get home
 	    
 	    /*Reminder for me later because I had an idea of how to fix configs*/
@@ -45,9 +45,9 @@ public class Setting {
         this.parent = parent;
         this.bval = bval;
         this.mode = "Check";
-	    if (Hypnotic.instance.saveload != null) {
-            bval = this.getValBoolean();
-        }
+	   // if (Hypnotic.instance.saveload != null) {
+            //bval = this.getValBoolean();
+        //}
 	    //probably doesnt work, will fix when i get home
     }
 
@@ -59,9 +59,9 @@ public class Setting {
         this.max = max;
         this.onlyint = onlyint;
         this.mode = "Slider";
-	    if (Hypnotic.instance.saveload != null) {
-            dval = this.getValDouble();
-        }
+	   // if (Hypnotic.instance.saveload != null) {
+            //dval = this.getValDouble();
+        //}
 	    //probably doesnt work, will fix when i get home
     }
 
@@ -116,9 +116,9 @@ public class Setting {
 
     public void setValDouble(double in) {
         this.dval = in;
-        if (Hypnotic.instance.saveload != null) {
-            Hypnotic.instance.saveload.save();
-        }
+        //if (Hypnotic.instance.saveload != null) {
+          //  Hypnotic.instance.saveload.save();
+        //}
     }
 
     public double getMin() {
