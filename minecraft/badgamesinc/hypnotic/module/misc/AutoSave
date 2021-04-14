@@ -9,7 +9,7 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.TimerUtils;
 
-public class ChatSpammer extends Mod {
+public class AutoSave extends Mod {
 
 	ArrayList<String> messages;
 	public TimerUtils timer = new TimerUtils();
