@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.util.Wrapper;
+import badgamesinc.hypnotic.Hypnotic;
 
 public class Save extends Command {
   
@@ -25,6 +26,7 @@ public class Save extends Command {
 
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
+		Hypnotic.instances.saveLoad.save();
     Wrapper.tellPlayer("Succesfully saved);
   }
 }
