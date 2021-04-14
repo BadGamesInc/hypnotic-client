@@ -5,10 +5,6 @@ we dont care if you get banned from any server
 use at your own risk i guess  
 join the discord: https://discord.gg/H4pgRcmZga  
 
-if you hate skidded clients then this is not the client for you,
-this client is just something for me (BadGamesInc) to learn coding and learn about java
-so i can make my own stuff, im not going to claim that the client is entirely original, a good bit of the stuff is original but a good bit is also skidded,
-just a little disclaimer
 ## requirements  
 you need to import the io.netty files and pack.png from a stock jar and put the files from this jar ( https://github.com/Vatuu/discord-rpc/releases/download/1.6.2/discord-rpc.jar )in it 
 if you are exporting the client from a development environment
@@ -29,4 +25,9 @@ directory should be the eclipse folder in your project folder. Wait for it to bu
 errors right click on the Client folder, click buildpath>configure-buildpath and the go to the libraries tab
 and double click on jre 1.6 and change the compliance to 1.8. Now it should work when you go to debug it.
 I probably explained that in the worst way possible but its good enough
+
+## disclaimer
+if you hate skidded clients then this is not the client for you,
+this client is just something for me (BadGamesInc) to learn coding and learn about java
+so i can make my own stuff, im not going to claim that the client is entirely original, a good bit of the stuff is original but a good bit is also skidded
 
