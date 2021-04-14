@@ -90,6 +90,7 @@ public class ModuleManager {
 		modules.add(new ChestStealer());
 		modules.add(new FastEat());
 		modules.add(new AutoL());
+		modules.add(new AutoSave());
 
 		modules.add(new DiscordRPC());
 		modules.add(new KillSults());
