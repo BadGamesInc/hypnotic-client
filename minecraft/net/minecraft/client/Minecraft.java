@@ -1036,9 +1036,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void shutdownMinecraftApplet()
     {
-        if(Hypnotic.instance.saveLoad != null) {
-            Hypnotic.instance.saveLoad.save()
-        }
     	Hypnotic.instance.shutdown();
         try
         {
