@@ -91,9 +91,10 @@ public class Mod {
 	public void setEnabled(boolean enabled) {
 		
 		this.enabled = enabled;
-		if(Hypnotic.instance.saveload != null) {
-			Hypnotic.instance.saveload.save();
-		}
+		//if(Hypnotic.instance.saveload != null) {
+		//	Hypnotic.instance.saveload.save();
+		//}
+		//Will test when i get home
 	}
 
 	public String getName() {
