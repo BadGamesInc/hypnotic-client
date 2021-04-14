@@ -17,6 +17,7 @@ public class SaveLoad {
     public File dir;
     public File configs;
     public File dataFile;
+    public static String configName = "data";
 
     public SaveLoad() {
         dir = new File(Minecraft.getMinecraft().mcDataDir, "Hypnotic");
@@ -27,7 +28,7 @@ public class SaveLoad {
         if (!configs.exists()) {
             configs.mkdir();
         }
-        dataFile = new File(dir, "data.txt");
+        dataFile = new File(dir, configName + ".txt");
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
