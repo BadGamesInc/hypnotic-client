@@ -5,7 +5,7 @@ we dont care if you get banned from any server
 use at your own risk i guess  
 join the discord: https://discord.gg/H4pgRcmZga  
 
-if you hate skidded clients then this is not for you
+if you hate skidded clients then this is not the client for you,
 this client is just something for me (BadGamesInc) to learn coding and learn about java
 so i can make my own stuff, im not going to claim that the client is entirely original, a good bit of the stuff is original but a good bit is also skidded,
 just a little disclaimer
