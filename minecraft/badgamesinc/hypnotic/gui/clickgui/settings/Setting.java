@@ -33,6 +33,11 @@ public class Setting {
             sval = this.getValString();
         }
 	    //probably doesnt work, will fix when i get home
+	    
+	    /*Reminder for me later because I had an idea of how to fix configs*/
+	    /*
+	    	Minecraft.getMinecraft.shutdownMinecraftApplet();
+	    */
     }
 
     public Setting(String name, Mod parent, boolean bval) {
