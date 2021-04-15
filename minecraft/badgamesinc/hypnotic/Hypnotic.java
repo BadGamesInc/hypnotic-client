@@ -45,6 +45,10 @@ public class Hypnotic {
 		saveload = new SaveLoad();
 		Display.setTitle(clientName + " " + clientVersion);
 		eventManager.register(this);
+		
+		if(saveload.configs.exists()) {
+			saveload.load();
+		}
 	}
 	
 	public void shutdown() {
