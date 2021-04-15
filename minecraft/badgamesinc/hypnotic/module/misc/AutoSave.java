@@ -14,7 +14,7 @@ public class AutoSave extends Mod {
 	ArrayList<String> messages;
 	public TimerUtils timer = new TimerUtils();
 	
-	public ChatSpammer() {
+	public AutoSave() {
 		super("ChatSpammer", 0, Category.MISC, "Automatically saves your config");
 	}
 	
