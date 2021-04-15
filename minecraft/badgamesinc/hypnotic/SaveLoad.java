@@ -28,7 +28,7 @@ public class SaveLoad {
         if (!configs.exists()) {
             configs.mkdir();
         }
-        dataFile = new File(dir, configName + ".txt");
+        dataFile = new File(configs, configName + ".txt");
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
