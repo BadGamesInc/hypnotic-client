@@ -35,7 +35,7 @@ public class SaveLoad {
             } catch (IOException e) {e.printStackTrace();}
         }
 
-        this.load();
+        //this.load();
     }
 
 
