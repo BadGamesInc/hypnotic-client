@@ -16,6 +16,7 @@ public class CommandManager {
 		commands.add(new Bind());
 		commands.add(new Server());
 		commands.add(new Save());
+		commands.add(new Seed());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {
