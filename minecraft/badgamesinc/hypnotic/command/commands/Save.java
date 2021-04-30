@@ -24,6 +24,6 @@ public class Save extends Command {
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
 			Hypnotic.instance.saveload.save();
-    			Wrapper.tellPlayer("Succesfully saved");
+    		Wrapper.tellPlayer("Succesfully saved");
   	}
 }

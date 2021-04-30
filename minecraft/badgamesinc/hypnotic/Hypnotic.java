@@ -52,6 +52,7 @@ public class Hypnotic {
 				discordRP.start();
 			}
 		}
+		
 		if(saveload.configs.exists()) {
 			saveload.load();
 		}
