@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -374,18 +375,26 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             s = s + " Demo";
         }
-        //ufr4.drawCenteredString("Hypnotic", this.width / 2, this.height / 2 - 40, -1);
+        
         /* Changelog */
+
         ufr2.drawString("Changes", 4, 4, -1);
         //Additions
         ufr.drawString("§a+", 16, 32, -1);
-        ufr.drawString("Addition Message", 24, 32, -1);
+        ufr.drawString("Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed", 24, 32, -1);
+        
+        ufr.drawString("§a+", 16, 42, -1);
+        ufr.drawString("Added AutoConfig as a temp fix to configs being broken :/", 24, 42, -1);
         //Changes
-        ufr.drawString("§e*", 16, 42, -1);
-        ufr.drawString("Change Message", 24, 42, -1);
+        ufr.drawString("§e*", 16, 52, -1);
+        ufr.drawString("Improved Nametags", 24, 52, -1);
+        
+        ufr.drawString("§e*", 16, 62, -1);
+        ufr.drawString("Improved TargetHUD", 24, 62, -1);
         //Deletions
-        ufr.drawString("§c-", 16, 52, -1);
-        ufr.drawString("Remove Message", 24, 52, -1);
+        //ufr.drawString("§c-", 16, 62, -1);
+        //ufr.drawString("Remove Message", 24, 72, -1);
+        
         /*           */
         ufr.drawString(s, 2, this.height - 14, -1);
         String s1 = "Copyright Mojang AB. Do not distribute!";

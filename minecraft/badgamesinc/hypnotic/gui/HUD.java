@@ -1,6 +1,9 @@
 package badgamesinc.hypnotic.gui;
 
+import static net.minecraft.client.gui.inventory.GuiInventory.drawEntityOnScreen;
+
 import java.awt.Color;
+import java.awt.Font;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,19 +14,24 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
-import badgamesinc.hypnotic.module.gui.HUDModule;
+import badgamesinc.hypnotic.module.render.TargetHUD;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
+import badgamesinc.hypnotic.util.TimeHelper;
+import badgamesinc.hypnotic.util.TimerUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Timer;
 
 public class HUD {
 
@@ -32,13 +40,20 @@ public class HUD {
 	public ScaledResolution sr = new ScaledResolution(mc);
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
     public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Magneto-Bold", 20, 0, 1, 1);
-    public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("lucon", 20, 0, 1, 1);
-	private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Consolas", 18, false, false, false);
+    public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 15, 0, 1, 1);
+    public static UnicodeFontRenderer ufr4 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 21, 0, 2, 1);
+    public static UnicodeFontRenderer ufr5 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 15, 0, 2, 1);
+	private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 	
 	public int height;
 	public int width;
 	
+	public TimerUtils timer = new TimerUtils();
+	public TimeHelper timeHelper = new TimeHelper();
+	
 	public static int count = 0;
+	
+	private float lastHealth = 0;
 	
 	DecimalFormat df = new DecimalFormat("###.#");
 	
@@ -58,10 +73,10 @@ public class HUD {
 	
 	public void draw() {
 		
-		double serverTPS = 21.0;
+		double serverTPS = Timer.ticksPerSecond;
 		
 		ufr2.drawStringWithShadow("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f));
-		ufr2.drawStringWithShadow("ypnotic", 14, 4, -1);
+		ufr2.drawString("ypnotic", 14, 4, -1);
 		
 		renderTargetHUD();
 		renderArrayList(new ScaledResolution(mc));    
@@ -77,7 +92,7 @@ public class HUD {
 			fontRenderer.drawString("PINGING PC", 2.8f, 3, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
         }
 		
-		if(Hypnotic.instance.moduleManager.getModuleByName("HUD").isEnabled()) 
+		if(Hypnotic.instance.moduleManager.getModuleByName("Info").isEnabled()) 
 		{
 			ScaledResolution scaled = new ScaledResolution(mc);
 			// overworld coords
@@ -105,7 +120,7 @@ public class HUD {
 			}
 			// ping
 			if(!mc.isSingleplayer()) {
-				ufr3.drawStringWithShadow("Ping: " + mc.getCurrentServerData().pingToServer, 2, scaled.getScaledHeight() - 50, -1);
+				ufr3.drawStringWithShadow("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50, -1);
 			}
 			else {
 				ufr3.drawStringWithShadow("Ping: 0", 2, scaled.getScaledHeight() - 50, -1);
@@ -122,8 +137,6 @@ public class HUD {
 		final int width = sr.getScaledWidth();	
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 		int count = 0;
-		
-		
 		
 			for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {	
 				if(Hypnotic.instance.moduleManager != null) {
@@ -156,7 +169,7 @@ public class HUD {
 					}
 					if(theme.equalsIgnoreCase("Chill") && background) {
 						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);        
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 11 + modeOffset, offset, sr.getScaledWidth() - 3, 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 11 + modeOffset, offset, sr.getScaledWidth() - 3, 4 + ufr.FONT_HEIGHT + offset, new Color(0, 0, 0, 190).getRGB());	        
 						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
 					}
 					
@@ -167,7 +180,7 @@ public class HUD {
 					}
 					if(theme.equalsIgnoreCase("Accent") && background) {
 						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);        
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);	        
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, new Color(0, 0, 0, 190).getRGB());	        
 						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					
@@ -176,7 +189,7 @@ public class HUD {
 						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 					if(theme.equalsIgnoreCase("Normal") && background) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, 0xff212020);
+						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, new Color(0, 0, 0, 190).getRGB());
 						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
 					}
 				count++;
@@ -185,47 +198,107 @@ public class HUD {
 	}
 	
 	public void renderTargetHUD() {
-		Color temp = ColorUtil.getClickGUIColor().darker();
-		FontRenderer fr = mc.fontRendererObj;
-		ScaledResolution sr = new ScaledResolution(mc);		
-		EntityLivingBase target = KillAura.target;
+		ScaledResolution scaledResolution = new ScaledResolution(mc);
+		TargetHUD targetHud = new TargetHUD();
 		
-		int healthBarColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 		
-		if(Hypnotic.instance.moduleManager.getModuleByName("TargetHUD").isEnabled() && Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled()) {
-			if(target != null) {
+		if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {		
+			if (Hypnotic.instance.setmgr.getSettingByName("TargetHUD Design").getValString().equalsIgnoreCase("New")) {
+				if (Hypnotic.instance.moduleManager.getModule(TargetHUD.class).isEnabled()) {
+		            if (KillAura.target instanceof EntityPlayer || KillAura.target instanceof EntityOtherPlayerMP) {
+		                float width = (float) ((scaledResolution.getScaledWidth() / 2) + 100);
+		                float height = (float) (scaledResolution.getScaledHeight() / 2);
+		
+		                EntityPlayer player = (EntityPlayer) KillAura.target;
+		                Gui.drawRect(width - 70, height + 30, width + 80, height + 105, new Color(0, 0, 0, 180).getRGB());
+		                ufr4.drawString(player.getName(), width - 65, height + 35, 0xFFFFFF);
+		                ufr3.drawString(player.onGround ? "On Ground" : "Off Ground", width - 65, height + 50, 0xFFFFFF);
+		                ufr3.drawString("Health: " + player.getHealth(),  width - 65, height + 70, 0xFFFFFF);
+		                ufr3.drawString("Distance: " + MathUtils.round(mc.thePlayer.getDistanceToEntity(player), 2), width - 65, height + 60, -1);
+		                //ufr.drawString(player.getHealth() > mc.thePlayer.getHealth() ? "You Might Lose" : "You Might Win", width - 65, height + 80, player.getHealth() > mc.thePlayer.getHealth() ? Color.RED.getRGB() : Color.GREEN.getRGB());
+		                GL11.glPushMatrix();
+		                GL11.glColor4f(1, 1, 1, 1);
+		                GlStateManager.scale(1.0f, 1.0f,1.0f);
+		                mc.getRenderItem().renderItemAndEffectIntoGUI(player.getCurrentEquippedItem(), (int) width + 50, (int) height + 80);
+		                GL11.glPopMatrix();
+		
+		                float health = player.getHealth();
+		                float healthPercentage = (health / player.getMaxHealth());
+		                float targetHealthPercentage = 0;
+		                if (healthPercentage != lastHealth) {
+		                    float diff = healthPercentage - this.lastHealth;
+		                    targetHealthPercentage = this.lastHealth;
+		                    this.lastHealth += diff / 8;
+		                }
+		                Color healthcolor = Color.WHITE;
+		                Color healthBarColor = Color.GREEN;
+		                if (healthPercentage * 100 > 75) {
+		                    healthcolor = Color.GREEN.brighter();
+		                } else if (healthPercentage * 100 > 50 && healthPercentage * 100 < 75) {
+		                    healthcolor = Color.YELLOW.brighter();
+		                } else if (healthPercentage * 100 < 50 && healthPercentage * 100 > 25) {
+		                    healthcolor = Color.ORANGE.brighter();
+		                } else if (healthPercentage * 100 < 25) {
+		                    healthcolor = Color.RED.brighter();
+		                }
+		                
+		                if (healthPercentage * 100 > 75) {
+		                	healthBarColor = Color.GREEN;
+		                } else if (healthPercentage * 100 > 50 && healthPercentage * 100 < 75) {
+		                	healthBarColor = Color.YELLOW;
+		                } else if (healthPercentage * 100 < 50 && healthPercentage * 100 > 25) {
+		                	healthBarColor = Color.ORANGE;
+		                } else if (healthPercentage * 100 < 25) {
+		                	healthBarColor = Color.RED;
+		                }
+		                Gui.drawRect(width - 70, height + 104, width - 70 + (149 * targetHealthPercentage), height + 106, healthcolor.getRGB());
+		                Gui.drawRect(width - 70, height + 104, width - 70 + (149 * healthPercentage), height + 106, healthBarColor.getRGB()    );
+		                GL11.glColor4f(1, 1, 1, 1);
+		                drawEntityOnScreen((int) width + 60, (int) height + 80, 20, player.rotationYaw, player.rotationPitch, player);
+		            }
+		        }
+			} else if (Hypnotic.instance.setmgr.getSettingByName("TargetHUD Design").getValString().equalsIgnoreCase("Astolfo")) {
+				Color temp = ColorUtil.getClickGUIColor().darker();
+				FontRenderer fr = mc.fontRendererObj;
+				ScaledResolution sr = new ScaledResolution(mc);		
+				EntityLivingBase target = KillAura.target;
 				
-				GuiInventory.drawEntityOnScreen(sr.getScaledWidth() / 3.2f, sr.getScaledHeight() / 1.69f, 25, target.rotationYaw, target.rotationPitch, target);
-			
-				Gui.drawRect(sr.getScaledWidth() / 3.4f, sr.getScaledHeight() / 2.05f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 2.3f, sr.getScaledHeight() / 1.6f, 0xff212020);
+				int healthBarColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+				
+					if(target != null) {
 						
-				Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + 20 * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, -1);
-				
-				Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + 20 * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, 0x55111111);
+						drawEntityOnScreen(sr.getScaledWidth() / 3.2f, sr.getScaledHeight() / 1.69f, 25, target.rotationYaw, target.rotationPitch, target);
 					
-				Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + target.getHealth() * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, healthBarColor);				
-				
-				fr.drawString(target.getName(), sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - ufr.FONT_HEIGHT / 2f, -1);
-				
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6, 0);
-				GlStateManager.scale(1.6, 1.6, 1);
-				GlStateManager.translate(-(sr.getScaledWidth() / 3f), -(sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6), 0);
-				fr.drawString(MathUtils.round(target.getHealth(), 2) + " \u2764", sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 10, ColorUtils.rainbow(2f, 0.5f, 0.5f));
-				GlStateManager.popMatrix();
-				
-			} else {
+						Gui.drawRect(sr.getScaledWidth() / 3.4f, sr.getScaledHeight() / 2.05f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 2.3f, sr.getScaledHeight() / 1.6f, new Color(0, 0, 0, 190).getRGB());
+								
+						Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + 20 * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, -1);
+						
+						Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + 20 * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, 0x55111111);
+							
+						Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + target.getHealth() * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, healthBarColor);				
+						
+						fr.drawString(target.getName(), sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - ufr.FONT_HEIGHT / 2f, -1);
+						
+						GlStateManager.pushMatrix();
+						GlStateManager.translate(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6, 0);
+						GlStateManager.scale(1.6, 1.6, 1);
+						GlStateManager.translate(-(sr.getScaledWidth() / 3f), -(sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6), 0);
+						fr.drawString(MathUtils.round(target.getHealth(), 2) + " \u2764", sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 10, ColorUtils.rainbow(2f, 0.5f, 0.5f));
+						GlStateManager.popMatrix();
+						
+					} else {
+						
+					}
 				
 			}
 		}
 	}
 	
-	private void renderPlayer2d(final double n, final double n2, final float n3, final float n4, final int n5, final int n6, final int n7, final int n8, final float n9, final float n10, final AbstractClientPlayer abstractClientPlayer) {
-        mc.getTextureManager().bindTexture(abstractClientPlayer.getLocationSkin());
-        GL11.glEnable(3042);
-        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        Gui.drawScaledCustomSizeModalRect((int)n, (int)n2, n3, n4, n5, n6, n7, n8, n9, n10);
-        GL11.glDisable(3042);
-    }
+	public int getPing(EntityPlayer entityPlayer) {
+	    if (entityPlayer == null || mc.isSingleplayer())
+	      return 0; 
+	    NetworkPlayerInfo networkPlayerInfo = mc.getNetHandler().getPlayerInfo(entityPlayer.getUniqueID());
+	    return (networkPlayerInfo == null) ? 0 : networkPlayerInfo.getResponseTime();
+	}
 
 }

@@ -4,26 +4,26 @@ import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.util.Wrapper;
 import badgamesinc.hypnotic.Hypnotic;
 
-public class Save extends Command {
+public class Load extends Command {
   
   @Override
 	public String getAlias() {
-		return "save";
+		return "load";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Saves your config";
+		return "Loads your config";
 	}
 
 	@Override
 	public String getSyntax() {
-		return ".save";
+		return ".load";
 	}
 
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
-			Hypnotic.instance.saveload.save();
-    			Wrapper.tellPlayer("Succesfully saved");
+			Hypnotic.instance.saveload.load();;
+    		Wrapper.tellPlayer("Succesfully loaded");
   	}
 }

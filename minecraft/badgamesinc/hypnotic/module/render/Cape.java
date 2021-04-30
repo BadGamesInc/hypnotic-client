@@ -20,7 +20,7 @@ public class Cape extends Mod {
 		options.add("FuelPump");
 		options.add("Hypnotic");
 		options.add("Custom");
-		Hypnotic.instance.setmgr.rSetting(new Setting("Cape", this, "FuelPump", options));
+		Hypnotic.instance.setmgr.rSetting(new Setting("Cape", this, "Hypnotic", options));
 	}
 
 }

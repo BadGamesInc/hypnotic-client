@@ -61,7 +61,7 @@ public class Speed extends Mod {
     public Speed(){
         super("Speed", Keyboard.KEY_V, Category.MOVEMENT, "Move faster");
         ArrayList<String> options = new ArrayList<>();
-        options.add("Bhop");
+        options.add("NCPBhop");
         options.add("BhopYPort");
         options.add("Bhop2");
         options.add("Bhop3");
@@ -212,16 +212,17 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
             ++stage;
-        }else if(mode.getValString().equalsIgnoreCase("Bhop") || mode.getValString().equalsIgnoreCase("BhopDamage")){
+        }else if(mode.getValString().equalsIgnoreCase("NCPBhop") || mode.getValString().equalsIgnoreCase("BhopDamage")){
             
             if (MoveUtils.isMoving()) {
                     double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
                     boolean inLiquid = MoveUtils.isInLiquid();
+                    mc.timer.timerSpeed = 1.05f;
                     if (inLiquid) {
                         event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
 
                         if (ticksSinceJump > 2) {
-                            moveSpeed = MoveUtils.getBaseMoveSpeed();
+                            moveSpeed = MoveUtils.getBaseMoveSpeed() + 1;
                         } else {
                             ticksSinceJump++;
                             moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
@@ -365,7 +366,7 @@ public class Speed extends Mod {
                     }
                     break;
                 case "Bhop2":
-                case "Bhop":
+                case "NCPBhop":
                     if(!MoveUtils.isMoving())
                         return;
                     if (MoveUtils.isOnGround()) {
@@ -482,8 +483,8 @@ public class Speed extends Mod {
         timer.reset();;
         air = 0;
 
-        Hypnotic.instance.moduleManager.getModule(KillAura.class).toggle();
-        Hypnotic.instance.moduleManager.getModule(KillAura.class).toggle();
+        //Hypnotic.instance.moduleManager.getModule(KillAura.class).toggle();
+        //Hypnotic.instance.moduleManager.getModule(KillAura.class).toggle();
     }
     public static double motion = 0;
     @EventTarget

@@ -45,7 +45,7 @@ public class Tracers extends Mod {
 
         GlStateManager.color(255, 255, 255, 255);
 
-        GL11.glLineWidth(5);
+        GL11.glLineWidth(3);
         GL11.glBegin(1);
         GL11.glVertex3d(playerX, playerY, playerZ);
         GL11.glVertex3d(x, y, z);

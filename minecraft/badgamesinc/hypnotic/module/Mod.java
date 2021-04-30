@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 
 public class Mod {
@@ -53,12 +54,11 @@ public class Mod {
 		} else {
 			onDisable();
 		}
-		if(Hypnotic.instance.saveload != null) {
-			Hypnotic.instance.saveload.save();
-		}
-		
+		//if(Hypnotic.instance.saveload != null) {
+			//Hypnotic.instance.saveload.save();
+		//}
 		if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
-			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, 0.5f);
+			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, this.isEnabled() ? 0.6f : 0.3f);
 		}
 	}
 	
@@ -90,11 +90,17 @@ public class Mod {
 
 	public void setEnabled(boolean enabled) {
 		
-		this.enabled = enabled;
-		//if(Hypnotic.instance.saveload != null) {
-		//	Hypnotic.instance.saveload.save();
-		//}
-		//Will test when i get home
+		if (enabled){
+			if (Hypnotic.instance.eventManager != null)
+            Hypnotic.instance.eventManager.register(this);
+        } else {
+        	if (Hypnotic.instance.eventManager != null)
+            Hypnotic.instance.eventManager.unregister(this);
+        }
+        this.enabled = enabled;
+        if(Hypnotic.instance.saveload != null){
+            Hypnotic.instance.saveload.save();
+        }
 	}
 
 	public String getName() {

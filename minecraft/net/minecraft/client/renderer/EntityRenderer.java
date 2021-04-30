@@ -18,16 +18,22 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.EventType;
 import badgamesinc.hypnotic.event.events.Event3D;
-import badgamesinc.hypnotic.event.events.EventRender3D;
 import badgamesinc.hypnotic.event.events.EventRenderWorld;
+import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.module.render.NameTags;
+import badgamesinc.hypnotic.module.render.NoRender;
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.MapItemRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.particle.EffectRenderer;
@@ -184,6 +190,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
     private int shaderIndex;
     private boolean useShader;
     private int frameCount;
+    
+    UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 20, 0, 2, 1);
+    private GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Light", 20, false, false, false);
 
     public EntityRenderer(Minecraft mcIn, IResourceManager resourceManagerIn)
     {
@@ -777,7 +786,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
             GlStateManager.translate((float)(pass * 2 - 1) * 0.1F, 0.0F, 0.0F);
         }
 
-        this.hurtCameraEffect(partialTicks);
+        if (Hypnotic.instance.moduleManager.getModule(NoRender.class).isEnabled()) {
+        	NoRender noRender = new NoRender();
+        	if (!noRender.hurtCam.getValBoolean())
+        		this.hurtCameraEffect(partialTicks);
+        } else 
+        	this.hurtCameraEffect(partialTicks);
 
         if (this.mc.gameSettings.viewBobbing)
         {
@@ -1488,6 +1502,104 @@ public class EntityRenderer implements IResourceManagerReloadListener
        Event3D event = new Event3D(partialTicks);
 	   event.call();
 
+	   if (Hypnotic.instance.moduleManager.getModule(NameTags.class).isEnabled()) {
+		   NameTags nameTags = new NameTags();
+		   for (EntityPlayer entity1 : mc.theWorld.playerEntities) {
+
+	            if (entity1.isInvisible() || entity1 == mc.thePlayer)
+	                continue;
+
+	            GL11.glPushMatrix();
+
+
+	            double x = entity1.lastTickPosX + (entity1.posX - entity1.lastTickPosX) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosX;
+	            double y = entity1.lastTickPosY + (entity1.posY - entity1.lastTickPosY) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosY;
+	            double z = entity1.lastTickPosZ + (entity1.posZ - entity1.lastTickPosZ) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosZ;
+	            //float distance = mc.thePlayer.getDistanceToEntity(entity);
+
+
+	            GL11.glTranslated(x, y + entity1.getEyeHeight() + 1.7, z);
+	            GL11.glNormal3f(0, 1, 0);
+	            if (mc.gameSettings.thirdPersonView == 2) {
+	                GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0, 1, 0);
+	                GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1, 0, 0);
+	            } else {
+	                GlStateManager.rotate(-mc.thePlayer.rotationYaw, 0, 1, 0);
+	                GlStateManager.rotate(mc.thePlayer.rotationPitch, 1, 0, 0);
+	            }
+	            float distance = mc.thePlayer.getDistanceToEntity(entity1),
+	                    scaleConst_1 = 0.02672f, scaleConst_2 = 0.10f;
+	            double maxDist = 7.0;
+
+
+	            float scaleFactor = (float) (distance <= maxDist ? maxDist * scaleConst_2 : (double) (distance * scaleConst_2));
+	            scaleConst_1 *= scaleFactor;
+
+	            float scaleBet = (float) (nameTags.scale.getValDouble() * 15E-3);
+	            scaleConst_1 = Math.min(scaleBet, scaleConst_1);
+
+
+	            GL11.glScalef(-scaleConst_1, -scaleConst_1, .2f);
+
+	            GlStateManager.disableLighting();
+	            GlStateManager.depthMask(false);
+	            GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+
+	            String colorCode = entity1.getHealth() > 15 ? "\247a" : entity1.getHealth() > 10 ? "\247e" : entity1.getHealth() > 7 ? "\2476" : "\247c";
+	            int colorrectCode = entity1.getHealth() > 15 ? 0xff4DF75B : entity1.getHealth() > 10 ? 0xffF1F74D : entity1.getHealth() > 7 ? 0xffF7854D : 0xffF7524D;
+	            String thing = entity1.getName() + " " + colorCode + (int) entity1.getHealth();
+	            float namewidth = (float) fontRenderer.getStringWidth(thing) + 0;
+
+
+	            Gui.drawRect(-namewidth / 2 - 2, 42, namewidth / 2 + 2, 40, 0x90080808);
+
+
+	            if (nameTags.healthbar.getValBoolean())
+	                Gui.drawRect(-namewidth / 2 - 15, 42, namewidth / 2 + 15 - (1 - (entity1.getHealth() / entity1.getMaxHealth())) * (namewidth + 4), 40, colorrectCode);
+
+	            if (nameTags.background.getValBoolean())
+	                Gui.drawRect(-namewidth / 2 - 15, 20, namewidth / 2 + 15, 40, 0x90202020);
+
+
+	            fontRenderer.drawString(entity1.getName(), -namewidth / 2 - 15 + 4, 23, -1, true);
+	            fontRenderer.drawString(colorCode + (int) entity1.getHealth(), namewidth / 2, 23, -1, true);
+
+	            GlStateManager.disableBlend();
+	            GlStateManager.depthMask(true);
+	            GL11.glEnable(GL11.GL_DEPTH_TEST);
+
+
+	            double movingArmor = 1.2;
+
+	            if (namewidth <= 65) {
+	                movingArmor = 2;
+	            }
+	            if (namewidth <= 85) {
+	                movingArmor = 1.2;
+	            }
+
+	            if (namewidth <= 100) {
+	                movingArmor = 1.1;
+	            }
+
+	            if (nameTags.armor.getValBoolean()) {
+	                for (int index = 0; index < 5; index++) {
+
+	                    if (entity1.getEquipmentInSlot(index) == null)
+	                        continue;
+
+
+	                    nameTags.renderItem(entity1.getEquipmentInSlot(index), (int) (index * 19 / movingArmor) - 40, -10);
+
+
+	                }
+	            }
+
+	            GL11.glPopMatrix();
+
+	        }
+	   }
         this.mc.mcProfiler.endStartSection("hand");
 
         if (this.renderHand)

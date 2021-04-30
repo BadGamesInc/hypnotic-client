@@ -16,6 +16,8 @@ public class CommandManager {
 		commands.add(new Bind());
 		commands.add(new Server());
 		commands.add(new Save());
+		commands.add(new Teleport());
+		commands.add(new Load());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {

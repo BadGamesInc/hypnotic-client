@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.EventRenderEntity;
 import badgamesinc.hypnotic.event.events.EventRenderNametag;
+import badgamesinc.hypnotic.module.render.NameTags;
 import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.OutlineUtils;
@@ -579,7 +580,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     	if(entity instanceof EntityPlayer) {
         	EventRenderNametag event = new EventRenderNametag();
         	event.call();
-        	if(event.isCancelled())
+        	if(event.isCancelled() || Hypnotic.instance.moduleManager.getModule(NameTags.class).isEnabled())
         		return;
         	}
     	

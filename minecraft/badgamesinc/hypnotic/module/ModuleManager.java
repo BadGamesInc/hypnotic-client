@@ -60,6 +60,7 @@ public class ModuleManager {
 		modules.add(new NameTags());
 		modules.add(new ItemPhysics());
 		modules.add(new Tracers());
+		modules.add(new NoRender());
 		
 		//Player
 		modules.add(new NoFall());
@@ -76,10 +77,10 @@ public class ModuleManager {
 		modules.add(new Reach());
 		modules.add(new AutoPot());
 		modules.add(new AutoGapple());
-		//TODO: Fix these
 		modules.add(new TargetStrafe());
+		//TODO: Fix these
 		//modules.add(new BowAimbot());
-		modules.add(new Criticals());
+		//modules.add(new Criticals());
 		
 		//Misc
 		modules.add(new ChatSpammer());
@@ -91,6 +92,7 @@ public class ModuleManager {
 		modules.add(new FastEat());
 		modules.add(new AutoL());
 		modules.add(new AutoSave());
+		modules.add(new AutoConfig());
 
 		modules.add(new DiscordRPC());
 		modules.add(new KillSults());
@@ -104,7 +106,7 @@ public class ModuleManager {
 		
 		//GUI
 		modules.add(new ArrayListModule());
-		modules.add(new HUDModule());
+		modules.add(new InfoHud());
 		
 	}
 	

@@ -19,6 +19,7 @@ import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.RotationUtils;
+import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -27,9 +28,13 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.client.C02PacketUseEntity.Action;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 
 import static net.minecraft.client.gui.inventory.GuiInventory.drawEntityOnScreen;
 import static org.lwjgl.opengl.GL11.*;
@@ -99,28 +104,43 @@ public class KillAura extends Mod {
 	        pitch = mc.thePlayer.rotationPitch;
 	
 	      // mc.thePlayer.setRotationYawHead(yaw);
-	       
+	        boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
+	        //if(block && target.getDistanceToEntity(mc.thePlayer) < 8F) {
+	        	//unBlock();
+	        	//mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
+	        //}
 	       if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
-		       event.setPitch(pitch);
-		       event.setYaw(yaw);
-		
 		       RenderUtils.resetPlayerPitch();
 		       RenderUtils.resetPlayerYaw();
 	       } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("None")) {
 	    	   
 	       } 
-	        
 	       
-	        boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
-	        if(block && target.getDistanceToEntity(mc.thePlayer) < 8F)
-	            mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
 	        if(current - last > 1000 / Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble()) {
-	            attack(target);
+	        	if (block) {
+	        		mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+	        	}
+	        	blocking = false;
+	        	attack(target);
 	            resetTime();
 	        }
     	} else {
     		if(target == null)
                 return;
+    		
+    		boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
+
+            if (block) {
+                Wrapper.getPlayer().setItemInUse(Wrapper.getPlayer().getCurrentEquippedItem(), Wrapper.getPlayer().getCurrentEquippedItem().getMaxItemUseDuration());
+                if (!blocking) {
+                    mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, null, 0.0f, 0.0f, 0.0f));
+                    blocking = true;
+                }
+            }
+            
+    		//if(block && target.getDistanceToEntity(mc.thePlayer) < 8F) {
+	        	//block(target);
+	        //}
             
             
             pitch = RotationUtils.getRotations(target)[1];
@@ -130,14 +150,24 @@ public class KillAura extends Mod {
             if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
     	        RenderUtils.setCustomPitch(pitch);
     	        RenderUtils.setCustomYaw(yaw);
+    	        event.setYaw(yaw);
+            	event.setPitch(pitch);
             } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
          	   mc.thePlayer.rotationPitch = pitch;
          	   mc.thePlayer.rotationYaw = yaw;
+            } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
+            	event.setYaw(yaw);
+            	event.setPitch(pitch);
             }
     	}
     }
 
     private void attack(Entity entity) {
+    	if(blocking) {
+    		if(hasSword()) {
+    			unBlock();
+    		}
+    	}
         for(int i = 0; i < Hypnotic.instance.setmgr.getSettingByName("Crack Size").getValDouble(); i++)
             mc.thePlayer.onCriticalHit(entity);
 
@@ -216,21 +246,21 @@ public class KillAura extends Mod {
         return new float[] { yaw, pitch };
     }
     
-    private void block() {
-        if (Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() &&
-                !mc.gameSettings.keyBindUseItem.isPressed() &&
-                !blocking) {
-            mc.getNetHandler().getNetworkManager().sendPacket(
-                    new C08PacketPlayerBlockPlacement(
-                            new BlockPos(-1, -1, -1),
-                            255,
-                            mc.thePlayer.getCurrentEquippedItem(),
-                            0,
-                            0,
-                            0));
-            blocking = true;
-        }
-    }
+    private void block(EntityLivingBase ent) {
+		blocking = true;		
+		if(Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean()){
+			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(ent, new Vec3((double)randomNumber(-50, 50)/100, (double)randomNumber(0, 200)/100, (double)randomNumber(-50, 50)/100)));
+			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(ent, Action.INTERACT));
+		}
+
+		mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()));
+	}
+    
+    private void unBlock() {
+		blocking = false;
+		mc.playerController.syncCurrentPlayItem();
+		mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+	}
     
     private boolean isHoldingSword() {
         return mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword;
@@ -242,9 +272,7 @@ public class KillAura extends Mod {
     public void on3D(Event3D event){
         if(ESP.getValBoolean()){
             if(target != null){
-                //for(int i = 0; i < 5; i++){
                     drawCircle(target, event.getPartialTicks(), 0.8, delay1 / 100);
-              //  }
             }
         }
         if(delay1 > 200){
@@ -259,6 +287,10 @@ public class KillAura extends Mod {
             delay1-= 3;
         }
     }
+    
+    private boolean hasSword(){
+		return mc.thePlayer.inventory.getCurrentItem() != null && mc.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemSword;
+	}
 
     public int getAlpha(int delay1){
         double state = Math.ceil((System.currentTimeMillis()) / 10);
@@ -271,7 +303,7 @@ public class KillAura extends Mod {
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_DEPTH_TEST);
         glDepthMask(false);
-        glLineWidth(2.0f);
+        glLineWidth(8.0f);
         glBegin(GL_LINE_STRIP);
 
         final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - mc.getRenderManager().viewerPosX;
@@ -294,4 +326,8 @@ public class KillAura extends Mod {
         glEnable(GL_TEXTURE_2D);
         glPopMatrix();
     }
+    
+    public static int randomNumber(int max, int min) {
+		return Math.round(min + (float)Math.random() * ((max - min)));
+	}
 }

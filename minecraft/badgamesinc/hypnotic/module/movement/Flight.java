@@ -12,6 +12,7 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
+import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.AxisAlignedBB;
@@ -27,15 +28,14 @@ public class Flight extends Mod implements UpdateListener{
 	public float speed = 1F;
 	public double flyHeight;
 	private double startY;
-	//public String getMode = Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString();
 	
 	@Override
 	public void setup() {
 		ArrayList<String> options = new ArrayList<String>();
-		//options.add("Velocity");
-		//options.add("Vanilla");
-		//Hypnotic.instance.setmgr.rSetting(new Setting("Flight Mode", this, "Vanilla", options));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Speed", this, 1, 0, 10, false));
+		options.add("Velocity");
+		options.add("Vanilla");
+		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Mode", this, "Vanilla", options));
+		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Speed", this, 1, 0, 10, false));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Vanilla kick bypass", this, true));	
 		
 	}
@@ -94,8 +94,7 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onEnable()
 	{
-		
-		//if(getMode.equalsIgnoreCase("Velocity")) {
+		//if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
 			double startX = mc.thePlayer.posX;
 			startY = mc.thePlayer.posY;
 			double startZ = mc.thePlayer.posZ;
@@ -111,14 +110,17 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onUpdate()
 	{
-		
-		speed = (float) Hypnotic.instance.setmgr.getSettingByName("Speed").getValDouble();
+		this.setDisplayName("Flight " + ColorUtils.gray + "- " + Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString() + "  ");
+		speed = (float) Hypnotic.instance.setmgr.getSettingByName("Flight Speed").getValDouble();
 
-		//if (getMode.equalsIgnoreCase("Vanilla")) {
-          // mc.thePlayer.capabilities.isFlying = true;
-       // }
+		if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {
+			mc.thePlayer.capabilities.isFlying = true;
+			mc.timer.timerSpeed = 1.3f;
+        } else {
+        	mc.thePlayer.capabilities.isFlying = false;
+        }
 		
-		//if(getMode.equalsIgnoreCase("Velocity")) {
+		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
 			updateMS();
 			
 			mc.thePlayer.capabilities.isFlying = false;
@@ -131,7 +133,8 @@ public class Flight extends Mod implements UpdateListener{
 				mc.thePlayer.motionY += speed / 2.3;
 			if(mc.gameSettings.keyBindSneak.pressed)
 				mc.thePlayer.motionY -= speed / 2.3;
-		//}
+		
+		
 		
 			if(Hypnotic.instance.setmgr.getSettingByName("Vanilla kick bypass").getValBoolean())
 			{
@@ -145,7 +148,7 @@ public class Flight extends Mod implements UpdateListener{
 				}
 			}
 		
-		
+		}
 	}
 	
 	public void onMotion(EventMotion event) {
@@ -159,10 +162,11 @@ public class Flight extends Mod implements UpdateListener{
 		}
 	}
 	
-	//@Override
-	//public void onDisable() {
-	//	if(getMode.equalsIgnoreCase("Vanilla")) {
-	//		mc.thePlayer.capabilities.isFlying = false;
-	//	}
-	//}
+	@Override
+	public void onDisable() {
+		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {
+			mc.timer.timerSpeed = 1f;
+			mc.thePlayer.capabilities.isFlying = false;
+		}
+	}
 }

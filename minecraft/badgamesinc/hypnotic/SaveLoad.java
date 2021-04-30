@@ -28,14 +28,14 @@ public class SaveLoad {
         if (!configs.exists()) {
             configs.mkdir();
         }
-        dataFile = new File(dir, configName + ".txt");
+        dataFile = new File(configs, configName + ".txt");
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
             } catch (IOException e) {e.printStackTrace();}
         }
 
-        this.load();
+        //this.load();
     }
 
 
@@ -102,19 +102,12 @@ public class SaveLoad {
                     if (set != null) {
                         if (set.isCheck()) {
                             set.setValBoolean(Boolean.parseBoolean(args[3]));
-
-                            set.bval = (Boolean.parseBoolean(args[3]));
-                            set.bval = Boolean.parseBoolean(args[3]);
                         }
                         if (set.isCombo()) {
                             set.setValString(args[3]);
-                            set.sval = (args[3]);
                         }
                         if (set.isSlider()) {
                             set.setValDouble(Double.parseDouble(args[3]));
-
-                            set.dval = (Double.parseDouble(args[3]));
-                            set.dval = Double.parseDouble(args[3]);
                         }
                     }
                 }

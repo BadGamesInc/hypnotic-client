@@ -1,5 +1,6 @@
 package badgamesinc.hypnotic;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.lwjgl.opengl.Display;
@@ -14,10 +15,11 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.FontManager;
+import badgamesinc.hypnotic.module.misc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 
 public class Hypnotic {
 
@@ -45,6 +47,14 @@ public class Hypnotic {
 		saveload = new SaveLoad();
 		Display.setTitle(clientName + " " + clientVersion);
 		eventManager.register(this);
+		if (this.discordRP != null) {
+			if (this.moduleManager.getModule(DiscordRPC.class).isEnabled()) {
+				discordRP.start();
+			}
+		}
+		if(saveload.configs.exists()) {
+			saveload.load();
+		}
 	}
 	
 	public void shutdown() {

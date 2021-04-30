@@ -20,7 +20,7 @@ public class Velocity extends Mod {
 	@Override
 	public void onUpdate() {
 		double horizontal = Hypnotic.instance.setmgr.getSettingByName("Horizontal").getValDouble();
-		double vertical = Hypnotic.instance.setmgr.getSettingByName("Horizontal").getValDouble();
+		double vertical = Hypnotic.instance.setmgr.getSettingByName("Vertical").getValDouble();
 		
 		if(mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime && mc.thePlayer.maxHurtTime > 0) {
 			mc.thePlayer.motionX *= horizontal / 100;

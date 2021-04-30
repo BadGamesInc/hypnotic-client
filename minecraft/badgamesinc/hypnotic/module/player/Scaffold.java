@@ -126,7 +126,7 @@ public class Scaffold extends Mod {
         Hypnotic.instance.setmgr.rSetting(expand = new Setting("Expand", this, 0, 0, 5, false));
         
         Hypnotic.instance.setmgr.rSetting(keeprots = new Setting("KeepRots", this, true));
-        Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("Safewalk", this, false));
+        Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("SafeWalk", this, false));
         Hypnotic.instance.setmgr.rSetting(blockFly = new Setting("Downwards", this, true));
         Hypnotic.instance.setmgr.rSetting(boost = new Setting("Redesky Boost", this, false));
         Hypnotic.instance.setmgr.rSetting(tower = new Setting("Tower", this, true));
@@ -181,7 +181,6 @@ public class Scaffold extends Mod {
             if (!this.keepSprint.getValBoolean()) {
                 mc.thePlayer.setSprinting(false);
                 mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
-                //  Hypnotic.instance.addChatMessage(mc.thePlayer.moveForward + "");
                 mc.gameSettings.keyBindSprint.pressed = false;
 
             }
@@ -800,7 +799,7 @@ public class Scaffold extends Mod {
             this.renderItem(stack, GuiScreen.width / 2 - 10, GuiScreen.height + 20);
             GL11.glPopMatrix();
             //Gui.drawRect(GuiScreen.width / 2 + ufr.getStringWidth(getBlockCount() + " Blocks left") - 32, GuiScreen.height / 2 + 34, GuiScreen.width / 2.05 - ufr.getStringWidth(getBlockCount() + " Blocks left") + 32, GuiScreen.height / 2 + 18, 0xff212020);
-            ufr.drawString(getBlockCount() + " Blocks left", GuiScreen.width / 2.2, GuiScreen.height / 2 + 20, -1);
+            ufr.drawCenteredString(getBlockCount() + " Blocks left", GuiScreen.width / 2, GuiScreen.height / 2 + 20, -1);
         }
     }
     

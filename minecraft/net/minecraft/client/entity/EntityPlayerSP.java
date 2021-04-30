@@ -8,6 +8,8 @@ import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.player.NoSlow;
 import badgamesinc.hypnotic.util.MoveUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
@@ -43,6 +45,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.network.play.client.C0CPacketInput;
@@ -208,6 +211,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.onUpdateWalkingPlayer();
                 EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.POST);
                 eventMotionUpdate.call();
+                
+                NoSlow noSlow = new NoSlow();
+                if (Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled())
+	                if(mc.thePlayer.isUsingItem() && noSlow.mode.getValString().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){
+	                    mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, null, 0.0f, 0.0f, 0.0f));
+	                }
             }
         }
     }
@@ -219,6 +228,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
     {
     	EventMotionUpdate eventPre = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.PRE);
         eventPre.call();
+        
+        NoSlow noSlow = new NoSlow();
+        if (Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled())
+	        if(mc.thePlayer.isUsingItem() && noSlow.mode.getValString().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){ 
+	        	mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+	        }
         boolean flag = this.isSprinting();
 
         if (flag != this.serverSprintState)

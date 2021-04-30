@@ -64,7 +64,7 @@ public class Panel {
 		Gui.drawRect(x + 12, y + 6, x + width - 12, y + height - 2, (outlineColor));
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-			ufr2.drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2 - 1.5, textColor);
+			ufr.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef);
 			//if(title.equalsIgnoreCase("combat")) {
 				//Gui.drawRect(outlineColor, mouseX, mouseY, partialTicks, -1);
 			//}

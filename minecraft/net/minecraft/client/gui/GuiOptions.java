@@ -1,6 +1,8 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
+import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;
@@ -25,6 +27,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
     private GuiButton field_175357_i;
     private GuiLockIconButton field_175356_r;
     protected String field_146442_a = "Options";
+    public UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 25, 0, 1, 1);
 
     public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_)
     {
@@ -230,7 +233,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, this.field_146442_a, this.width / 2, 15, 16777215);
+        ufr.drawCenteredString(this.field_146442_a, this.width / 2, 10, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

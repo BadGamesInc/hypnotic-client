@@ -88,9 +88,6 @@ public class ModuleButton {
 
 		if (mouseButton == 0) {
 			mod.toggle();
-			
-			if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean())
-			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, 0.5f);
 		} else if (mouseButton == 1) {
 			if (menuelements != null && menuelements.size() > 0) {
 				boolean b = !this.extended;

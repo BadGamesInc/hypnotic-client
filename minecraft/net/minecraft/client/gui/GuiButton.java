@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -97,7 +98,7 @@ public class GuiButton extends Gui
             Gui.drawRect(this.xPosition + this.width - 2, this.yPosition + 2, this.xPosition + this.width, this.yPosition + this.height, -1);
             Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x44000000);
             this.mouseDragged(mc, mouseX, mouseY);
-            int j = 14737632;
+            int j = -1;
 
             if (!this.enabled)
             {
@@ -105,7 +106,8 @@ public class GuiButton extends Gui
             }
             else if (this.hovered)
             {
-                j = 16777120;
+                j = 0xffff8ac4;
+                Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x30f0f0f0);
             }
 
             ufr.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 12) / 2, j);

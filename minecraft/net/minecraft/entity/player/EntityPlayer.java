@@ -16,6 +16,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -90,6 +91,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     /**
      * The Container for the player's inventory (which opens when they press E)
      */
+    public long airTicks = 0;
     public Container inventoryContainer;
 
     /** The Container the player has open. */
@@ -126,6 +128,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     public float renderOffsetX;
     public float renderOffsetY;
     public float renderOffsetZ;
+    public int groundTicks = 0;
 
     /** holds the spawn chunk of the player */
     private BlockPos spawnChunk;
@@ -271,7 +274,13 @@ public abstract class EntityPlayer extends EntityLivingBase
     public void onUpdate()
     {
         this.noClip = this.isSpectator();
-
+        if (this.onGround) {
+            groundTicks++;
+            airTicks = 0;
+        } else {
+            airTicks++;
+        }
+        
         if (this.isSpectator())
         {
             this.onGround = false;

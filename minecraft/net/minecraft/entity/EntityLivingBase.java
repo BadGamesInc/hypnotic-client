@@ -1325,7 +1325,7 @@ public abstract class EntityLivingBase extends Entity
      */
     private int getArmSwingAnimationEnd()
     {
-    	float speed = (float) Hypnotic.instance.setmgr.getSettingByName("Hand Speed").getValDouble();
+    	float speed = 1;//(float) Hypnotic.instance.setmgr.getSettingByName("Hand Speed").getValDouble();
         return (int) (this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) * 1 : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6) * (speed));
     }
 

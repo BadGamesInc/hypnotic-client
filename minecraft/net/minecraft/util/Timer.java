@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 public class Timer
 {
     /** The number of timer ticks per second of real time */
-    public float ticksPerSecond;
+    public static float ticksPerSecond;
 
     /**
      * The time reported by the high-resolution clock at the last call of updateTimer(), in seconds

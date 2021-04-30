@@ -8,19 +8,19 @@ import badgamesinc.hypnotic.module.Mod;
 public class Setting {
 
 
-    public String name;
+    private String name;
     private Mod parent;
     public String mode;
 
-    public String sval;
+    private String sval;
     private ArrayList<String> options;
 
-    public boolean bval;
+    private boolean bval;
 
-    public double dval;
-    public double min;
-    public double max;
-    public boolean onlyint = false;
+    private double dval;
+    private double min;
+    private double max;
+    private boolean onlyint = false;
 
 
     public Setting(String name, Mod parent, String sval, ArrayList<String> options) {
@@ -29,15 +29,6 @@ public class Setting {
         this.sval = sval;
         this.options = options;
         this.mode = "Combo";
-	//if (Hypnotic.instance.saveload != null) {
-          //  sval = this.getValString();
-        //}
-	    //probably doesnt work, will fix when i get home
-	    
-	    /*Reminder for me later because I had an idea of how to fix configs*/
-	    /*
-	    	Minecraft.getMinecraft.shutdownMinecraftApplet();
-	    */
     }
 
     public Setting(String name, Mod parent, boolean bval) {
@@ -45,10 +36,6 @@ public class Setting {
         this.parent = parent;
         this.bval = bval;
         this.mode = "Check";
-	   // if (Hypnotic.instance.saveload != null) {
-            //bval = this.getValBoolean();
-        //}
-	    //probably doesnt work, will fix when i get home
     }
 
     public Setting(String name, Mod parent, double dval, double min, double max, boolean onlyint) {
@@ -59,10 +46,6 @@ public class Setting {
         this.max = max;
         this.onlyint = onlyint;
         this.mode = "Slider";
-	   // if (Hypnotic.instance.saveload != null) {
-            //dval = this.getValDouble();
-        //}
-	    //probably doesnt work, will fix when i get home
     }
 
     public String getName() {
@@ -88,9 +71,6 @@ public class Setting {
 
     public void setValBoolean(boolean in) {
         this.bval = in;
-        if (Hypnotic.instance.saveload != null) {
-            Hypnotic.instance.saveload.save();
-        }
     }
 
     public double getValDouble() {
@@ -102,9 +82,6 @@ public class Setting {
 
     public void setValString(String in) {
         this.sval = in;
-        if (Hypnotic.instance.saveload != null) {
-            Hypnotic.instance.saveload.save();
-        }
     }
 
     public int getValInt() {
@@ -116,9 +93,6 @@ public class Setting {
 
     public void setValDouble(double in) {
         this.dval = in;
-        //if (Hypnotic.instance.saveload != null) {
-          //  Hypnotic.instance.saveload.save();
-        //}
     }
 
     public double getMin() {
@@ -144,12 +118,5 @@ public class Setting {
     public boolean onlyInt() {
         return this.onlyint;
     }
-
-	public boolean is(String string) {
-		if(getValString().equalsIgnoreCase(string)) {
-			return true;
-		}
-			return false;
-	}
 
 }

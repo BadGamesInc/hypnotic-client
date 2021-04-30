@@ -26,6 +26,7 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.module.movement.Speed;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.RotationUtils;
 import net.minecraft.client.Minecraft;
@@ -74,10 +75,13 @@ public class TargetStrafe extends Mod {
 
     }
     public static boolean canStrafe(){
-        return spacebar.getValBoolean() ? Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed: Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
+        return spacebar.getValBoolean() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed: Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
     }
 
     private void drawCircle(Entity entity, float partialTicks, double rad, double height) {
+    	if(!Hypnotic.instance.moduleManager.getModule(Speed.class).isEnabled()) {
+    		return;
+    	}
     	glPushMatrix();
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_DEPTH_TEST);
@@ -89,7 +93,7 @@ public class TargetStrafe extends Mod {
         final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - mc.getRenderManager().viewerPosY;
         final double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - mc.getRenderManager().viewerPosZ;
 
-        final float r = ((float) 1 / 255) * Color.WHITE.getRed();
+        final float r = ((float) 1 / 255) * Color.RED.getRed();
         final float g = ((float) 1 / 255) * Color.WHITE.getGreen();
         final float b = ((float) 1 / 255) * Color.WHITE.getBlue();
 

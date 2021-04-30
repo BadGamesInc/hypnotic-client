@@ -18,18 +18,19 @@ public class DiscordRPC extends Mod
 	}
 	
 	@Override
-	public void onEnable()
+	public void onUpdate()
 	{
 		discordRP.title = this.rptitle();
-		discordRP.start();
 	}
+	
 	public void onDisable() 
 	{
 		discordRP.shutdown();
 	}
+	
 	public String rptitle() 
 	{
-		switch(r.nextInt(10)) 
+		switch(r.nextInt(11)) 
 		{
 			case 0: return "Gaming PVP 1.8.8";
 			case 1: return "I downloaded a PC pinger...";
@@ -41,9 +42,11 @@ public class DiscordRPC extends Mod
 			case 7: return "Hypnotic on top";
 			case 8: return "L";
 			case 9: return "E4PE4J";
+			case 10: return "Now featuring bypasses!";
 			default: return "Default Text";
 		}
 	}
+	
 	public DiscordRP getDiscordRP() 
 	{
 		return discordRP;

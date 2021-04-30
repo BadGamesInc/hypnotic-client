@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.EventSigma.EventSystem;
 import badgamesinc.hypnotic.EventSigma.impl.EventStep;
+import badgamesinc.hypnotic.module.player.NoSlow;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -607,18 +608,20 @@ public abstract class Entity implements ICommandSender
             if (this.isInWeb)
             {
                 this.isInWeb = false;
-                x *= 0.25D;
-                y *= 0.05000000074505806D;
-                z *= 0.25D;
-                this.motionX = 0.0D;
-                this.motionY = 0.0D;
-                this.motionZ = 0.0D;
+                if (!Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled()) {
+	                x *= 0.25D;
+	                y *= 0.05000000074505806D;
+	                z *= 0.25D;
+	                this.motionX = 0.0D;
+	                this.motionY = 0.0D;
+	                this.motionZ = 0.0D;
+                }
             }
 
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking()  || Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled() && Hypnotic.instance.setmgr.getSettingByName("SafeWalk").getValBoolean() && this.onGround || this.onGround && Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled() && this instanceof EntityPlayer;
+            boolean flag = this.onGround && this.isSneaking()|| this.onGround && Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled() && this instanceof EntityPlayer;
 
             if (flag)
             {

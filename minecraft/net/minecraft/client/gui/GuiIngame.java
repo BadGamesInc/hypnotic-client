@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.Event2D;
+import badgamesinc.hypnotic.module.render.NoRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -136,10 +137,13 @@ public class GuiIngame extends Gui
 
         if (this.mc.gameSettings.thirdPersonView == 0 && itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.pumpkin))
         {
-            this.renderPumpkinOverlay(scaledresolution);
+        	if (Hypnotic.instance.moduleManager.getModule(NoRender.class).isEnabled()) {
+        		if (!Hypnotic.instance.setmgr.getSettingByName("No Pumpkin Overlay").getValBoolean()) {
+        			this.renderPumpkinOverlay(scaledresolution);
+        		}
+        	} else
+        		this.renderPumpkinOverlay(scaledresolution);
         }
-        
-        Hypnotic.instance.hud.draw();
 
         if (!this.mc.thePlayer.isPotionActive(Potion.confusion))
         {
@@ -159,6 +163,7 @@ public class GuiIngame extends Gui
         {
             this.renderTooltip(scaledresolution, partialTicks);
         }
+        
         
         Event2D event2D = new Event2D(scaledresolution.getScaledWidth(), scaledresolution.getScaledWidth());
         event2D.call();
@@ -269,6 +274,8 @@ public class GuiIngame extends Gui
             this.mc.mcProfiler.endSection();
         }
 
+        Hypnotic.instance.hud.draw();
+        
         if (this.field_175195_w > 0)
         {
             this.mc.mcProfiler.startSection("titleAndSubtitle");
@@ -351,6 +358,9 @@ public class GuiIngame extends Gui
             this.overlayPlayerList.updatePlayerList(true);
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
         }
+        
+        //NotificationManager.render();
+        //badgamesinc.hypnotic.notifications.Notification.
         
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();

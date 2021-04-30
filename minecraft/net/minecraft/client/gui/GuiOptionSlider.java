@@ -58,8 +58,16 @@ public class GuiOptionSlider extends GuiButton
 
             mc.getTextureManager().bindTexture(buttonTextures);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition, 0, 66, 4, 20);
-            this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
+            int color = 0xffff8ac4;
+            if (this.dragging) {
+            	Gui.drawRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition, this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 8, this.yPosition + 20, color);
+            }
+            Gui.drawRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 6, this.yPosition, this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 8, this.yPosition + 20, color);
+            Gui.drawRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition, this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 2, this.yPosition + 20, color);
+            Gui.drawRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition + 18, this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 8, this.yPosition + 20, color);
+            Gui.drawRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition, this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 8, this.yPosition + 2, color);
+            //this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition, 0, 66, 4, 20);
+            //this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
         }
     }
 
