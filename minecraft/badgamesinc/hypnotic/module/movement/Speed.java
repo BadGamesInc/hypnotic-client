@@ -22,6 +22,9 @@ import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -75,6 +78,7 @@ public class Speed extends Mod {
         //options.add("NCP");
         options.add("Gaming2");
         options.add("Y-Port");
+        options.add("Redesky LongJump");
 
 
         Hypnotic.instance.setmgr.rSetting(mode = new Setting("Speed Mode", this, "Bhop2", options));
@@ -140,11 +144,11 @@ public class Speed extends Mod {
             Entity player = mc.thePlayer;
             BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
             Block block = mc.theWorld.getBlockState(pos).getBlock();
-//            if (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet) {
-//                MoveUtils.setMoveSpeed(event, 0.4);
-//                speed = 0;
-//                return;
-//            }
+            if (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet) {
+                MoveUtils.setMoveSpeed(event, 0.4);
+                //speed = 0;
+                return;
+            }
             mc.timer.timerSpeed = 1.0F;
             if (mc.thePlayer.isMovingOnGround()) {
                 mc.timer.timerSpeed = 1F;
@@ -171,6 +175,47 @@ public class Speed extends Mod {
             if(TargetStrafe.canStrafe()){
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
+        }else if(mode.getValString().equalsIgnoreCase("Redesky LongJump")){
+
+            switch (stage) {
+                case 1:
+                    moveSpeed = 0.62;
+                    lastDist = 0.0D;
+                    ++stage;
+                    break;
+                case 2:
+                    lastDist = 0.0D;
+                    float motionY = 0.636f;
+                    if (mc.thePlayer.onGround && (mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
+                        if (mc.thePlayer.isPotionActive(Potion.jump))
+                            motionY += ((mc.thePlayer.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.099F);
+                        event.setY(mc.thePlayer.motionY = motionY);
+                        moveSpeed = 0.4 * 1.4;
+
+                    } else if ((mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
+
+                    }
+                    break;
+                case 3:
+                    double boost = (mc.thePlayer.isPotionActive(Potion.moveSpeed) ? (mc.thePlayer.isPotionActive(Potion.jump) ? 0.915f : 0.725f) :
+                            0.71625f);
+                    moveSpeed = moveSpeed - boost * (lastDist - MoveUtils.getBaseMoveSpeed());
+                    break;
+                default:
+                    ++stage;
+                    if ((mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0D, mc.thePlayer.motionY, 0.0D)).size() > 0 || mc.thePlayer.isCollidedVertically) && stage > 0) {
+                        stage = mc.thePlayer.moveForward == 0.0F && mc.thePlayer.moveStrafing == 0.0F ? 0 : 1;
+                    }
+                    moveSpeed = moveSpeed - lastDist / 159D;
+                    break;
+            }
+            moveSpeed = Math.max(moveSpeed, MoveUtils.getBaseMoveSpeed());
+            MoveUtils.setMotion(event, moveSpeed + 0.047);
+            motion = moveSpeed;
+            if(TargetStrafe.canStrafe()){
+                TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
+            }
+            ++stage;
         }else if(mode.getValString().equalsIgnoreCase("Bhop2")){
 
             switch (stage) {
@@ -251,7 +296,8 @@ public class Speed extends Mod {
             if(TargetStrafe.canStrafe()) {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
-        }else if(mode.getValString().equalsIgnoreCase("BhopDamage")){
+        }
+        else if(mode.getValString().equalsIgnoreCase("BhopDamage")){
             if(mc.thePlayer.onGround){
                 moveSpeed = 0.635;
                 event.setY(event.getLegitMotion());
@@ -288,37 +334,44 @@ public class Speed extends Mod {
             }
 
         }else if(mode.getValString().equalsIgnoreCase("Bhop3")){
-            ++timerDelay;
-            timerDelay %= 5;
-            if (timerDelay != 0) {
-                mc.timer.timerSpeed = 1f;
-            } else {
-             //   if (MoveUtils.isMoving()) mc.timer.timerSpeed = 32767f;
-                if (MoveUtils.isMoving()) {
-              //      mc.timer.timerSpeed = 1.3f;
-                   // mc.thePlayer.motionX *= 1.0199999809265137;
-                    //mc.thePlayer.motionZ *= 1.0199999809265137;
-                }
-            }
-            if (Math.round(mc.thePlayer.posY - Math.round(mc.thePlayer.posY)) == Math.round(0.138)) {
-                event.y = event.y - 0.09316090325960147;
+        	if (MoveUtils.isMoving()) {
+                double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
+                boolean inLiquid = MoveUtils.isInLiquid();
+                mc.timer.timerSpeed = 1.05f;
+                if (inLiquid) {
+                    //event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
 
-            }
-            if(MoveUtils.isOnGround()){
-                event.setY(event.getLegitMotion());
-                moveSpeed = 0.39;
-                wasOnGround = true;
-            }else if(wasOnGround){
-                moveSpeed = 0.37;
-                wasOnGround = false;
-            }else {
-                moveSpeed = moveSpeed - lastDist / 159;
-            }
-            MoveUtils.setMotion(event, Math.max(moveSpeed, MoveUtils.getBaseMoveSpeed()));
-            motion = MoveUtils.getSpeed();
-            if (TargetStrafe.canStrafe()) {
-                TargetStrafe.strafe(event, moveSpeed, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
-            }
+                    if (ticksSinceJump > 2) {
+                        moveSpeed = MoveUtils.getBaseMoveSpeed() + 1;
+                    } else {
+                        ticksSinceJump++;
+                        moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
+                    }
+                } else if (MoveUtils.isOnGround()) {
+                	
+                    wasOnGround = true;
+                    moveSpeed = (baseMoveSpeed / (ticksSinceJump <= 2 ? MoveUtils.SPRINTING_MOD : 1.0)) * MoveUtils.MAX_DIST;
+                    if (MoveUtils.isOnIce())
+                        moveSpeed *= MoveUtils.ICE_MOD;
+                    event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
+                    ticksSinceJump = 0;
+                } else if (wasOnGround) {
+                    double difference = MoveUtils.WATCHDOG_BUNNY_SLOPE * (lastDist - baseMoveSpeed);
+                    moveSpeed = lastDist - difference;
+                    wasOnGround = false;
+                } else {
+                    ticksSinceJump++;
+                    moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
+                }
+
+                MoveUtils.setMotion(event, Math.max(moveSpeed, baseMoveSpeed + 0.1));
+
+
+        }
+        motion = MoveUtils.getSpeed();
+        if(TargetStrafe.canStrafe()) {
+            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
+        }
         }
 
 
@@ -352,7 +405,7 @@ public class Speed extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
         if(event.getState() == Event.State.PRE) {
-            this.setDisplayName("Speed §7- " + mode.getValString() + " ");
+            this.setDisplayName("Speed §7" + mode.getValString() + "  ");
             switch (mode.getValString()) {
                 case "NCP":
                     if(mc.thePlayer.onGround){

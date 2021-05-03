@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -48,6 +49,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 40, 0, 1, 3);
     public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 15, 0, 1, 1);
     public static UnicodeFontRenderer ufr4 = UnicodeFontRenderer.getFontFromAssets("Roboto-Bold", 100, 0, 1, 3);
+    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
     /** Counts the number of screen updates. */
     private float updateCounter;
@@ -380,17 +382,20 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
         ufr2.drawString("Changes", 4, 4, -1);
         //Additions
-        ufr.drawString("§a+", 16, 32, -1);
-        ufr.drawString("Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed", 24, 32, -1);
+        fontRenderer.drawString("§a+", 16, 32, -1, false);
+        fontRenderer.drawString("Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed", 24, 32, -1, false);
         
-        ufr.drawString("§a+", 16, 42, -1);
-        ufr.drawString("Added AutoConfig as a temp fix to configs being broken :/", 24, 42, -1);
+        fontRenderer.drawString("§a+", 16, 42, -1, false);
+        fontRenderer.drawString("Added AutoConfig as a temp fix to configs being broken :/", 24, 42, -1, false);
         //Changes
-        ufr.drawString("§e*", 16, 52, -1);
-        ufr.drawString("Improved Nametags", 24, 52, -1);
+        fontRenderer.drawString("§e*", 16, 52, -1, false);
+        fontRenderer.drawString("Improved Nametags", 24, 52, -1, false);
         
-        ufr.drawString("§e*", 16, 62, -1);
-        ufr.drawString("Improved TargetHUD", 24, 62, -1);
+        fontRenderer.drawString("§e*", 16, 62, -1, false);
+        fontRenderer.drawString("Changed font renderer because the other one sucked", 24, 62, -1, false);
+        
+        fontRenderer.drawString("§e*", 16, 72, -1, false);
+        fontRenderer.drawString("Improved TargetHUD", 24, 72, -1, false);
         //Deletions
         //ufr.drawString("§c-", 16, 62, -1);
         //ufr.drawString("Remove Message", 24, 72, -1);

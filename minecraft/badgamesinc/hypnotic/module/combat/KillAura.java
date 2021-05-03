@@ -76,7 +76,7 @@ public class KillAura extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("KillAura" + ColorUtils.gray + " - R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " - " + "APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + " ");
+    	this.setDisplayName("KillAura" + ColorUtils.gray + " R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + " ");
     	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
     		target = null;
     		RenderUtils.resetPlayerPitch();
@@ -303,7 +303,7 @@ public class KillAura extends Mod {
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_DEPTH_TEST);
         glDepthMask(false);
-        glLineWidth(8.0f);
+        glLineWidth(2.0f);
         glBegin(GL_LINE_STRIP);
 
         final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - mc.getRenderManager().viewerPosX;

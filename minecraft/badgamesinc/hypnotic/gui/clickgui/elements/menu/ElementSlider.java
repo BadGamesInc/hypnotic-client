@@ -10,12 +10,14 @@ import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.MathHelper;
 
 public class ElementSlider extends Element {
 	public boolean dragging;
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 18, 0, 1, 1);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
 	public ElementSlider(ModuleButton iparent, Setting iset) {
 		parent = iparent;
@@ -43,8 +45,8 @@ public class ElementSlider extends Element {
 
 		Gui.drawRect(x, y, x + width, y + height, 0xff1a1a1a);
 
-		ufr.drawString(setstrg, x + 1, y + 2, 0xffffffff);
-		ufr.drawString(displayval, x + width - FontUtil.getStringWidth(displayval), y + 2, 0xffffffff);
+		fontRenderer.drawString(setstrg, x + 2, y + 0, 0xffffffff, false);
+		fontRenderer.drawString(displayval, x + width - FontUtil.getStringWidth(displayval) - 4, y + 0, 0xffffffff, false);
 
 		Gui.drawRect(x, y + 12, x + width, y + 13.5, 0xff101010);
 		Gui.drawRect(x, y + 12, x + (percentBar * width), y + 13.5, color);

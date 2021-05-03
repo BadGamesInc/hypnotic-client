@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.EventSigma.EventSystem;
 import badgamesinc.hypnotic.EventSigma.impl.EventStep;
+import badgamesinc.hypnotic.module.movement.Flight;
 import badgamesinc.hypnotic.module.player.NoSlow;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
@@ -419,7 +420,7 @@ public abstract class Entity implements ICommandSender
         this.prevPosZ = this.posZ;
         this.prevRotationPitch = this.rotationPitch;
         this.prevRotationYaw = this.rotationYaw;
-
+        
         if (!this.worldObj.isRemote && this.worldObj instanceof WorldServer)
         {
             this.worldObj.theProfiler.startSection("portal");
@@ -621,7 +622,7 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking()|| this.onGround && Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled() && this instanceof EntityPlayer;
+            boolean flag = this.onGround && (this.isSneaking() || Hypnotic.instance.moduleManager.getModuleByName("SafeWalk").isEnabled()) && this instanceof EntityPlayer;
 
             if (flag)
             {

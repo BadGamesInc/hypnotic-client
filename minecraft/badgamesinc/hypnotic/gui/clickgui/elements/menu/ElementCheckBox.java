@@ -10,11 +10,13 @@ import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.gui.Gui;
 
 public class ElementCheckBox extends Element {
 	
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 18, 0, 1, 1);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 	public ElementCheckBox(ModuleButton iparent, Setting iset) {
 		parent = iparent;
 		set = iset;
@@ -31,7 +33,7 @@ public class ElementCheckBox extends Element {
 
 		Gui.drawRect(x, y, x + width, y + height, 0xff1a1a1a);
 
-		ufr.drawString(setstrg, x + width - ufr.getStringWidth(setstrg) - 8, y + ufr.FONT_HEIGHT / 2 - 0.5, 0xffffffff);
+		fontRenderer.drawString(setstrg, x + width - fontRenderer.getStringWidth(setstrg) - 6, y + fontRenderer.getFontHeight() / 2 - 4, 0xffffffff, false);
 		Gui.drawRect(x + 1, y + 2, x + 12, y + 13, set.getValBoolean() ? color : 0xff000000);
 		if (isCheckHovered(mouseX, mouseY))
 			Gui.drawRect(x + 1, y + 2, x + 12, y + 13, 0x55111111);

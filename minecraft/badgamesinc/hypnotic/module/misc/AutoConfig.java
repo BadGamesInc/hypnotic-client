@@ -31,7 +31,7 @@ public class AutoConfig extends Mod {
 		Wrapper.tellPlayer("Configuring for " + server.getValString() + "...");
 		if(server.getValString().equalsIgnoreCase("Redesky")) {
 			Hypnotic.instance.setmgr.getSettingByName("Scaffold Mode").setValString("Redesky");
-			Hypnotic.instance.setmgr.getSettingByName("Redesky Boost").setValBoolean(true);
+			Hypnotic.instance.setmgr.getSettingByName("Boost").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Tower").setValBoolean(false);
 			Hypnotic.instance.setmgr.getSettingByName("TowerMove").setValBoolean(false);
 			Hypnotic.instance.setmgr.getSettingByName("Range").setValDouble(4.65);
@@ -39,9 +39,10 @@ public class AutoConfig extends Mod {
 			Hypnotic.instance.setmgr.getSettingByName("Players").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").setValString("None");
 			Hypnotic.instance.setmgr.getSettingByName("Flight Mode").setValString("Vanilla");
+			Hypnotic.instance.setmgr.getSettingByName("Speed Mode").setValString("Redesky LongJump");
 		} else if(server.getValString().equalsIgnoreCase("No Anticheat")) {
 			Hypnotic.instance.setmgr.getSettingByName("Scaffold Mode").setValString("Redesky");
-			Hypnotic.instance.setmgr.getSettingByName("Redesky Boost").setValBoolean(true);
+			Hypnotic.instance.setmgr.getSettingByName("Boost").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Tower").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("TowerMove").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Range").setValDouble(6);

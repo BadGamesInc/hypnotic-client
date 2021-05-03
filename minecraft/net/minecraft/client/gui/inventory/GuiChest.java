@@ -65,7 +65,7 @@ public class GuiChest extends GuiContainer
                         for (int i = 0; i < GuiChest.this.inventoryRows * 9; ++i) {
                             final Slot slot = GuiChest.this.inventorySlots.inventorySlots.get(i);
                             if (slot.getStack() != null) {
-                                Thread.sleep(100L);
+                                Thread.sleep(Hypnotic.instance.setmgr.getSettingByName("Steal Speed").getValInt());
                                 GuiChest.this.handleMouseClick(slot, slot.slotNumber, 0, 1);
                                 GuiChest.this.handleMouseClick(slot, slot.slotNumber, 0, 6);
                             }

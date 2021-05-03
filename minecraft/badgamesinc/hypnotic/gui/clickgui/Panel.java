@@ -9,6 +9,7 @@ import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.gui.Gui;
 
 public class Panel {
@@ -26,6 +27,7 @@ public class Panel {
 	public ClickGUI clickgui;
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
 	public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 25, 0, 1, 1);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
 	public Panel(String ititle, double ix, double iy, double iwidth, double iheight, boolean iextended, ClickGUI parent) {
 		this.title = ititle;
@@ -64,14 +66,14 @@ public class Panel {
 		Gui.drawRect(x + 12, y + 6, x + width - 12, y + height - 2, (outlineColor));
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-			ufr.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef);
+			fontRenderer.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef, false);
 			//if(title.equalsIgnoreCase("combat")) {
 				//Gui.drawRect(outlineColor, mouseX, mouseY, partialTicks, -1);
 			//}
 		}else if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
-			ufr.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef);
+			fontRenderer.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef, false);
 		}
 		
 		if (this.extended && !Elements.isEmpty()) {

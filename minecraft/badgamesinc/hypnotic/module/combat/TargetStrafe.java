@@ -26,6 +26,7 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.module.movement.Flight;
 import badgamesinc.hypnotic.module.movement.Speed;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.RotationUtils;
@@ -75,11 +76,11 @@ public class TargetStrafe extends Mod {
 
     }
     public static boolean canStrafe(){
-        return spacebar.getValBoolean() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed: Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
+        return spacebar.getValBoolean() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed : Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
     }
 
     private void drawCircle(Entity entity, float partialTicks, double rad, double height) {
-    	if(!Hypnotic.instance.moduleManager.getModule(Speed.class).isEnabled()) {
+    	if(!Hypnotic.instance.moduleManager.getModule(Speed.class).isEnabled() || !Hypnotic.instance.moduleManager.getModule(Flight.class).isEnabled()) {
     		return;
     	}
     	glPushMatrix();

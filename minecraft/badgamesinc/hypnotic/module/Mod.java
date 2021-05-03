@@ -21,6 +21,9 @@ public class Mod {
 	private long currentMS = 0L;
 	protected long lastMS = -1L;
 	
+	public float mSize;
+    public float lastSize;
+	
 	public Mod(String name, int key, Category category, String description) {
 		this.name = name;
 		this.key = key;
@@ -54,9 +57,6 @@ public class Mod {
 		} else {
 			onDisable();
 		}
-		//if(Hypnotic.instance.saveload != null) {
-			//Hypnotic.instance.saveload.save();
-		//}
 		if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
 			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, this.isEnabled() ? 0.6f : 0.3f);
 		}

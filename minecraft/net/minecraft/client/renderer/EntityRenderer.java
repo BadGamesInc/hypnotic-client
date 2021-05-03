@@ -23,6 +23,7 @@ import badgamesinc.hypnotic.event.EventType;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventRenderWorld;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.module.movement.Flight;
 import badgamesinc.hypnotic.module.render.NameTags;
 import badgamesinc.hypnotic.module.render.NoRender;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
@@ -797,6 +798,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             this.setupViewBobbing(partialTicks);
         }
+        
+        if (Hypnotic.instance.moduleManager.getModule(Flight.class).isEnabled())
+        {
+        	this.setupViewBobbing(partialTicks);
+        }
 
         float f1 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * partialTicks;
 
@@ -876,6 +882,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
             {
                 this.setupViewBobbing(partialTicks);
             }
+            
+            if (Hypnotic.instance.moduleManager.getModule(Flight.class).isEnabled())
+            {
+            	this.setupViewBobbing(partialTicks);
+            }
 
             boolean flag = this.mc.getRenderViewEntity() instanceof EntityLivingBase && ((EntityLivingBase)this.mc.getRenderViewEntity()).isPlayerSleeping();
 
@@ -897,6 +908,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
             if (this.mc.gameSettings.viewBobbing)
             {
                 this.setupViewBobbing(partialTicks);
+            }
+            
+            if (Hypnotic.instance.moduleManager.getModule(Flight.class).isEnabled())
+            {
+            	this.setupViewBobbing(partialTicks);
             }
         }
     }

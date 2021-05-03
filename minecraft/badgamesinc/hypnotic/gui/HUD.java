@@ -43,7 +43,9 @@ public class HUD {
     public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 15, 0, 1, 1);
     public static UnicodeFontRenderer ufr4 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 21, 0, 2, 1);
     public static UnicodeFontRenderer ufr5 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 15, 0, 2, 1);
-	private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	private static GlyphPageFontRenderer fontRenderer2 = GlyphPageFontRenderer.create("Roboto-Light", 13, false, false, false);
+	private static GlyphPageFontRenderer fontRenderer3 = GlyphPageFontRenderer.create("Magneto", 18, false, false, false);
 	
 	public int height;
 	public int width;
@@ -51,41 +53,25 @@ public class HUD {
 	public TimerUtils timer = new TimerUtils();
 	public TimeHelper timeHelper = new TimeHelper();
 	
-	public static int count = 0;
+	public int count = 0;
 	
 	private float lastHealth = 0;
 	
 	DecimalFormat df = new DecimalFormat("###.#");
 	
-	public static class ModuleComparator implements Comparator<Mod>
-    {
-        @Override
-        public int compare(final Mod arg0, final Mod arg1) {
-            if (ufr.getStringWidth(arg0.getDisplayName()) > ufr.getStringWidth(arg1.getDisplayName())) {
-                return -1;
-            }
-            if (ufr.getStringWidth(arg0.getDisplayName()) < ufr.getStringWidth(arg1.getDisplayName())) {
-                return 1;
-            }
-            return 0;
-        }
-    }
-	
 	public void draw() {
 		
 		double serverTPS = Timer.ticksPerSecond;
 		
-		ufr2.drawStringWithShadow("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f));
-		ufr2.drawString("ypnotic", 14, 4, -1);
+		if (mc.gameSettings.showDebugInfo) {
+			return;
+		}
+		
+		fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
+		fontRenderer3.drawString("ypnotic", 9.5, 4, -1, true);
 		
 		renderTargetHUD();
 		renderArrayList(new ScaledResolution(mc));    
-	    
-		//ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 15, 0, 1, 1);
-		
-		//if(ufr == null){
-        //    ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 15, 0, 1, 1);
-       // }
         
 		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) 
 		{
@@ -130,13 +116,14 @@ public class HUD {
 	}
 	
 	public void renderArrayList(ScaledResolution sr) {
-		Collections.sort(Hypnotic.instance.moduleManager.modules, new ModuleComparator());	
 		Color temp = ColorUtil.getClickGUIColor().darker();
 		String theme = Hypnotic.instance.setmgr.getSettingByName("Style").getValString();
 		final int height = sr.getScaledHeight();    
 		final int width = sr.getScaledWidth();	
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 		int count = 0;
+		
+		Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
 		
 			for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {	
 				if(Hypnotic.instance.moduleManager != null) {
@@ -145,7 +132,6 @@ public class HUD {
 					}
 				}
 				String mods = m.getDisplayName();
-				float modeOffset = 0;
 				Boolean background = Hypnotic.instance.setmgr.getSettingByName("Background").getValBoolean();
 				if(Hypnotic.instance.setmgr != null && Hypnotic.instance.setmgr.getSettingByName("Rainbow") != null) {
 					if(Hypnotic.instance.setmgr.getSettingByName("Rainbow").getValBoolean()) {
@@ -155,42 +141,38 @@ public class HUD {
 					}
 				}
 				
-				if(mods.contains("§7")) {
-					modeOffset = ufr.getStringWidth("§7");
-				}
-				
-				double offset = count * (ufr.FONT_HEIGHT + 4);      
+				double offset = count * (fontRenderer.getFontHeight() + 1);      
 				
 				if(!mods.equalsIgnoreCase("Array List")) {
 					//Chill
 					if(theme.equalsIgnoreCase("Chill") && !background) {
-						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);               
-						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
+						Gui.drawRect(width , offset, width - 3, 1 + fontRenderer.getFontHeight() + offset, color);               
+						fontRenderer.drawString(m.getDisplayName(), (float)(width - fontRenderer.getStringWidth(m.displayName) - 8) , (offset), color, false);
 					}
 					if(theme.equalsIgnoreCase("Chill") && background) {
-						Gui.drawRect(width + modeOffset, offset, width - 3, 4 + ufr.FONT_HEIGHT + offset, color);        
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 11 + modeOffset, offset, sr.getScaledWidth() - 3, 4 + ufr.FONT_HEIGHT + offset, new Color(0, 0, 0, 190).getRGB());	        
-						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 8) + modeOffset, (1 + offset), color);
+						Gui.drawRect(width , offset, width - 3, 1 + fontRenderer.getFontHeight() + offset, color);        
+						Gui.drawRect(width - fontRenderer.getStringWidth(m.getDisplayName()) - 11 , offset, sr.getScaledWidth() - 3, 1 + fontRenderer.getFontHeight() + offset, new Color(0, 0, 0, 190).getRGB());	        
+						fontRenderer.drawString(m.getDisplayName(), (float)(width - fontRenderer.getStringWidth(m.displayName) - 8) , (offset), color, false);
 					}
 					
 					//Accent
 					if(theme.equalsIgnoreCase("Accent") && !background) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);                
-						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						Gui.drawRect(width - fontRenderer.getStringWidth(m.getDisplayName()) - 9 , offset, width - fontRenderer.getStringWidth(m.getDisplayName()) - 10 , 1 + fontRenderer.getFontHeight() + offset, color);                
+						fontRenderer.drawString(m.getDisplayName(), (float)(width - fontRenderer.getStringWidth(m.displayName) - 6) , (offset), color, false);
 					}
 					if(theme.equalsIgnoreCase("Accent") && background) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, width - ufr.getStringWidth(m.getDisplayName()) - 10 + modeOffset, 4 + ufr.FONT_HEIGHT + offset, color);        
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, new Color(0, 0, 0, 190).getRGB());	        
-						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						Gui.drawRect(width - fontRenderer.getStringWidth(m.getDisplayName()) - 9 , offset, width - fontRenderer.getStringWidth(m.getDisplayName()) - 10 , 1 + fontRenderer.getFontHeight() + offset, color);        
+						Gui.drawRect(width - fontRenderer.getStringWidth(m.getDisplayName()) - 9 , offset, sr.getScaledWidth(), 1 + fontRenderer.getFontHeight() + offset, new Color(0, 0, 0, 190).getRGB());	        
+						fontRenderer.drawString(m.getDisplayName(), (float)(width - fontRenderer.getStringWidth(m.displayName) - 6) , (offset), color, false);
 					}
 					
 					//Normal
 					if(theme.equalsIgnoreCase("Normal") && !background) {
-						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						fontRenderer.drawString(m.getDisplayName(), (float)(width - fontRenderer.getStringWidth(m.displayName) - 6) , (offset), color, false);
 					}
 					if(theme.equalsIgnoreCase("Normal") && background) {
-						Gui.drawRect(width - ufr.getStringWidth(m.getDisplayName()) - 9 + modeOffset, offset, sr.getScaledWidth(), 4 + ufr.FONT_HEIGHT + offset, new Color(0, 0, 0, 190).getRGB());
-						ufr.drawString(m.getDisplayName(), (float)(width - ufr.getStringWidth(m.displayName) - 5) + modeOffset, (1 + offset), color);
+						Gui.drawRect(width - fontRenderer.getStringWidth(m.getDisplayName()) - 9 , offset, sr.getScaledWidth(), 1 + fontRenderer.getFontHeight() + offset, new Color(0, 0, 0, 190).getRGB());
+						fontRenderer.drawString(m.getDisplayName(), (float)(width - fontRenderer.getStringWidth(m.displayName) - 6) , (offset), color, false);
 					}
 				count++;
 			}
@@ -211,11 +193,11 @@ public class HUD {
 		
 		                EntityPlayer player = (EntityPlayer) KillAura.target;
 		                Gui.drawRect(width - 70, height + 30, width + 80, height + 105, new Color(0, 0, 0, 180).getRGB());
-		                ufr4.drawString(player.getName(), width - 65, height + 35, 0xFFFFFF);
-		                ufr3.drawString(player.onGround ? "On Ground" : "Off Ground", width - 65, height + 50, 0xFFFFFF);
-		                ufr3.drawString("Health: " + player.getHealth(),  width - 65, height + 70, 0xFFFFFF);
-		                ufr3.drawString("Distance: " + MathUtils.round(mc.thePlayer.getDistanceToEntity(player), 2), width - 65, height + 60, -1);
-		                //ufr.drawString(player.getHealth() > mc.thePlayer.getHealth() ? "You Might Lose" : "You Might Win", width - 65, height + 80, player.getHealth() > mc.thePlayer.getHealth() ? Color.RED.getRGB() : Color.GREEN.getRGB());
+		                fontRenderer.drawString(player.getName(), width - 65, height + 35, 0xFFFFFF, true);
+		                fontRenderer2.drawString(player.onGround ? "On Ground" : "Off Ground", width - 65, height + 50, 0xFFFFFF, true);
+		                fontRenderer2.drawString("Health: " + MathUtils.round(player.getHealth(), 2),  width - 65, height + 70, 0xFFFFFF, true);
+		                fontRenderer2.drawString("Distance: " + MathUtils.round(mc.thePlayer.getDistanceToEntity(player), 2), width - 65, height + 60, -1, true);
+		                //fontRenderer.drawString(player.getHealth() > mc.thePlayer.getHealth() ? "You Might Lose" : "You Might Win", width - 65, height + 80, player.getHealth() > mc.thePlayer.getHealth() ? Color.RED.getRGB() : Color.GREEN.getRGB());
 		                GL11.glPushMatrix();
 		                GL11.glColor4f(1, 1, 1, 1);
 		                GlStateManager.scale(1.0f, 1.0f,1.0f);
@@ -277,7 +259,7 @@ public class HUD {
 							
 						Gui.drawRect(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 1.7f - fr.FONT_HEIGHT / 2f, sr.getScaledWidth() / 3f + target.getHealth() * 4, sr.getScaledHeight() / 1.78f - fr.FONT_HEIGHT / 2f, healthBarColor);				
 						
-						fr.drawString(target.getName(), sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - ufr.FONT_HEIGHT / 2f, -1);
+						fr.drawString(target.getName(), sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f, -1);
 						
 						GlStateManager.pushMatrix();
 						GlStateManager.translate(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6, 0);

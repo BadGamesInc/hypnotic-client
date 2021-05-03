@@ -17,7 +17,7 @@ public class FastEat extends Mod {
     @Override
     public void onUpdate() {
         if (mc.thePlayer.getHealth() > 0.0f && mc.thePlayer.onGround && mc.thePlayer.inventory.getCurrentItem() != null && mc.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemFood && mc.gameSettings.keyBindUseItem.pressed) {
-            for (int i = 0; i < Hypnotic.instance.setmgr.getSettingByName("Packets per second").getValDouble(); ++i) {
+            for (int i = 0; i < 70; ++i) {
                 mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(false));
             }
         }

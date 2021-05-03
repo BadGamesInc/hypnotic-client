@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.Event2D;
+import badgamesinc.hypnotic.gui.HUD;
 import badgamesinc.hypnotic.module.render.NoRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -164,6 +165,7 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
         
+        Hypnotic.instance.hud.draw();
         
         Event2D event2D = new Event2D(scaledresolution.getScaledWidth(), scaledresolution.getScaledWidth());
         event2D.call();
@@ -274,7 +276,7 @@ public class GuiIngame extends Gui
             this.mc.mcProfiler.endSection();
         }
 
-        Hypnotic.instance.hud.draw();
+        
         
         if (this.field_175195_w > 0)
         {
@@ -596,7 +598,7 @@ public class GuiIngame extends Gui
             ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
             String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
             String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
+            int k = j1 - j * this.getFontRenderer().FONT_HEIGHT + Hypnotic.instance.moduleManager.getEnabledModules().size() * 11 - 100;
             int l = p_180475_2_.getScaledWidth() - k1 + 2;
             drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
             this.getFontRenderer().drawString(s1, l1, k, 553648127);

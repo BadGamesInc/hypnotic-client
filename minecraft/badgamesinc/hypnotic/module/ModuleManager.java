@@ -80,7 +80,7 @@ public class ModuleManager {
 		modules.add(new TargetStrafe());
 		//TODO: Fix these
 		//modules.add(new BowAimbot());
-		//modules.add(new Criticals());
+		modules.add(new Criticals());
 		
 		//Misc
 		modules.add(new ChatSpammer());
@@ -93,9 +93,9 @@ public class ModuleManager {
 		modules.add(new AutoL());
 		modules.add(new AutoSave());
 		modules.add(new AutoConfig());
-
 		modules.add(new DiscordRPC());
 		modules.add(new KillSults());
+		modules.add(new PingSpoof());
 
 		//World
 		modules.add(new FastBreak());

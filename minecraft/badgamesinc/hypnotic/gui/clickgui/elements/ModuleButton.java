@@ -18,6 +18,7 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -34,10 +35,11 @@ public class ModuleButton {
 	public boolean extended = false;
 	public boolean listening = false;
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
 	public ModuleButton(Mod imod, Panel pl) {
 		mod = imod;
-		height = ufr.FONT_HEIGHT + 2;
+		height = fontRenderer.getFontHeight() + 2;
 		parent = pl;
 		menuelements = new ArrayList<>();
 
@@ -71,15 +73,15 @@ public class ModuleButton {
 		if (isHovered(mouseX, mouseY)) {	
 			Minecraft mc = Minecraft.getMinecraft();
 			ScaledResolution sr = new ScaledResolution(mc);
-			Gui.drawRect(0, sr.getScaledHeight(), 8 + ufr.getStringWidth(mod.getDescription()) + 10, sr.getScaledHeight() - 14, 0xff212020);
+			Gui.drawRect(0, sr.getScaledHeight(), 8 + fontRenderer.getStringWidth(mod.getDescription()) + 10, sr.getScaledHeight() - 14, 0xff212020);
 			Gui.drawRect(x + 12, y, x + width - 12, y + height + 1, 0x55111111);	
-			ufr.drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1);
+			fontRenderer.drawString(mod.getDescription(), 4, sr.getScaledHeight() - 12, -1, false);
 		}
 
 		if(mod.isEnabled())
-			ufr.drawTotalCenteredString(mod.getName(), x + width / 2, y + 0 + height / 2 - 1, textcolor);
+			fontRenderer.drawTotalCenteredString(mod.getName(), x + width / 2 + 2, y + 0 + height / 2 - 2, textcolor, false);
 		else
-			ufr.drawTotalCenteredString(mod.getName(), x + width / 2, y + 0 + height / 2 - 1, textcolor);
+			fontRenderer.drawTotalCenteredString(mod.getName(), x + width / 2 + 2, y + 0 + height / 2 - 2, textcolor, false);
 	}
 
 	public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {

@@ -42,6 +42,7 @@ import badgamesinc.hypnotic.util.RotationUtils;
 import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.material.Material;
@@ -93,7 +94,7 @@ public class Scaffold extends Mod {
     public Setting scaffoldMode;
     private double startY;
     public TimeHelper towerTimer = new TimeHelper();
-    UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 2, 1);;
+    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
     private int count;
     private BlockPos currentPos;
     private EnumFacing currentFacing;
@@ -128,7 +129,7 @@ public class Scaffold extends Mod {
         Hypnotic.instance.setmgr.rSetting(keeprots = new Setting("KeepRots", this, true));
         Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("SafeWalk", this, false));
         Hypnotic.instance.setmgr.rSetting(blockFly = new Setting("Downwards", this, true));
-        Hypnotic.instance.setmgr.rSetting(boost = new Setting("Redesky Boost", this, false));
+        Hypnotic.instance.setmgr.rSetting(boost = new Setting("Boost", this, false));
         Hypnotic.instance.setmgr.rSetting(tower = new Setting("Tower", this, true));
         Hypnotic.instance.setmgr.rSetting(towermove = new Setting("TowerMove", this, true));
         Hypnotic.instance.setmgr.rSetting(swing = new Setting("Swing", this, false));
@@ -162,7 +163,7 @@ public class Scaffold extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("Scaffold " + ColorUtils.gray + "- " + scaffoldMode.getValString() + " ");
+    	this.setDisplayName("Scaffold " + ColorUtils.gray + scaffoldMode.getValString() + "  ");
     }
 
     float lastYaw = 0;
@@ -767,7 +768,7 @@ public class Scaffold extends Mod {
     int slotIndex = 0;
     TimeHelper slotTimer = new TimeHelper();
 
-    private int getSlot() {
+    public int getSlot() {
         ArrayList<Integer> slots = new ArrayList<>();
         for (int k = 0; k < 9; ++k) {
             final ItemStack itemStack = mc.thePlayer.inventory.mainInventory[k];
@@ -791,15 +792,15 @@ public class Scaffold extends Mod {
 
     @EventTarget
     public void on2D(Event2D event) {
-        if (this.getSlot() != -1) {
+        if (this.getSlot() != -1 && mc.gameSettings.thirdPersonView == 0) {
             ItemStack stack = mc.thePlayer.inventory.getStackInSlot(getSlot());
             GL11.glPushMatrix();
             GL11.glColor4f(1, 1, 1, 1);
             GlStateManager.scale(1.0f, 1.0f, 1.0f);
             this.renderItem(stack, GuiScreen.width / 2 - 10, GuiScreen.height + 20);
             GL11.glPopMatrix();
-            //Gui.drawRect(GuiScreen.width / 2 + ufr.getStringWidth(getBlockCount() + " Blocks left") - 32, GuiScreen.height / 2 + 34, GuiScreen.width / 2.05 - ufr.getStringWidth(getBlockCount() + " Blocks left") + 32, GuiScreen.height / 2 + 18, 0xff212020);
-            ufr.drawCenteredString(getBlockCount() + " Blocks left", GuiScreen.width / 2, GuiScreen.height / 2 + 20, -1);
+            Gui.drawRect(GuiScreen.width / 2 + 26 - fontRenderer.getStringWidth(getBlockCount() + " Blocks left"), GuiScreen.height / 2 + 23 + fontRenderer.getFontHeight(), GuiScreen.width / 2 - 28 + fontRenderer.getStringWidth(getBlockCount() + " Blocks left"), GuiScreen.height / 2 + 29 - fontRenderer.getFontHeight(), new Color(0, 0, 0, 190).getRGB());           
+            fontRenderer.drawCenteredString(getBlockCount() + " Blocks left", GuiScreen.width / 2 + 5, GuiScreen.height / 2 + 20, -1, true);
         }
     }
     
@@ -844,7 +845,7 @@ public class Scaffold extends Mod {
         return false;
     }
 
-    private int getBlockCount() {
+    public int getBlockCount() {
         int count = 0;
         for (int k = 0; k < mc.thePlayer.inventory.mainInventory.length; ++k) {
             final ItemStack itemStack = mc.thePlayer.inventory.mainInventory[k];

@@ -30,7 +30,7 @@ public class NoSlow extends Mod {
 	
 	@Override
 	public void onUpdate() {
-		this.setDisplayName("NoSlow §7- " + mode.getValString() + " "); 
+		this.setDisplayName("NoSlow §7" + mode.getValString() + "  "); 
 	}
 	
 }
