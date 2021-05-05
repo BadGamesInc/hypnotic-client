@@ -36,7 +36,7 @@ public class PingSpoof extends Mod {
 
 
 
-        if (event.getPacket() instanceof C00PacketKeepAlive && mc.thePlayer.isEntityAlive()) {
+        if (event.getPacket() instanceof C00PacketKeepAlive && mc.thePlayer.isEntityAlive() && mc.thePlayer != null) {
             C00PacketKeepAlive packet = (C00PacketKeepAlive) event.getPacket();
             this.packetList.add(packet);
             event.setCancelled(true);

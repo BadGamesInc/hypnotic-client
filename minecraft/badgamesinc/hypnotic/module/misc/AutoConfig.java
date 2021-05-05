@@ -21,24 +21,25 @@ public class AutoConfig extends Mod {
 	public AutoConfig() {
 		super("AutoConfig", 0, Category.MISC, "Automatically configure your settings for a specific server");
 		ArrayList<String> options = new ArrayList<String>();
-		options.add("Redesky");
+		options.add("Redesky ");
 		options.add("No Anticheat");
-		Hypnotic.instance.setmgr.rSetting(server = new Setting("Server", this, "Redesky", options));
+		Hypnotic.instance.setmgr.rSetting(server = new Setting("Server", this, "Redesky ", options));
 	}
 	
 	@Override
 	public void onEnable() {
 		Wrapper.tellPlayer("Configuring for " + server.getValString() + "...");
-		if(server.getValString().equalsIgnoreCase("Redesky")) {
+		if(server.getValString().equalsIgnoreCase("Redesky ")) {
 			Hypnotic.instance.setmgr.getSettingByName("Scaffold Mode").setValString("Redesky");
+			Hypnotic.instance.setmgr.getSettingByName("Flight Mode").setValString("Redesky Fly");
 			Hypnotic.instance.setmgr.getSettingByName("Boost").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Tower").setValBoolean(false);
 			Hypnotic.instance.setmgr.getSettingByName("TowerMove").setValBoolean(false);
-			Hypnotic.instance.setmgr.getSettingByName("Range").setValDouble(4.65);
+			Hypnotic.instance.setmgr.getSettingByName("Range").setValDouble(5.09);
+			Hypnotic.instance.setmgr.getSettingByName("APS").setValDouble(14);
 			Hypnotic.instance.setmgr.getSettingByName("AutoBlock").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Players").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").setValString("None");
-			Hypnotic.instance.setmgr.getSettingByName("Flight Mode").setValString("Vanilla");
 			Hypnotic.instance.setmgr.getSettingByName("Speed Mode").setValString("Redesky LongJump");
 		} else if(server.getValString().equalsIgnoreCase("No Anticheat")) {
 			Hypnotic.instance.setmgr.getSettingByName("Scaffold Mode").setValString("Redesky");

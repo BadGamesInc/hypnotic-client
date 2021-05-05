@@ -13,6 +13,7 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.MoveUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.AxisAlignedBB;
@@ -34,6 +35,7 @@ public class Flight extends Mod implements UpdateListener{
 		ArrayList<String> options = new ArrayList<String>();
 		options.add("Velocity");
 		options.add("Vanilla");
+		options.add("Redesky Fly");
 		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Mode", this, "Vanilla", options));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Speed", this, 1, 0, 10, false));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Vanilla kick bypass", this, true));	
@@ -94,7 +96,7 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onEnable()
 	{
-		//if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
+		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
 			double startX = mc.thePlayer.posX;
 			startY = mc.thePlayer.posY;
 			double startZ = mc.thePlayer.posZ;
@@ -104,7 +106,7 @@ public class Flight extends Mod implements UpdateListener{
 				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(startX, startY, startZ, false));
 			}
 			mc.thePlayer.jump();
-		//}
+		}
 	}
 	
 	@Override
@@ -115,9 +117,11 @@ public class Flight extends Mod implements UpdateListener{
 
 		if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {
 			mc.thePlayer.capabilities.isFlying = true;
-			mc.timer.timerSpeed = 1.3f;
-        } else {
+        } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
         	mc.thePlayer.capabilities.isFlying = false;
+        } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Redesky Fly")) {
+        	mc.thePlayer.capabilities.isFlying = true;
+			mc.timer.timerSpeed = 0.2f;
         }
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
@@ -164,7 +168,7 @@ public class Flight extends Mod implements UpdateListener{
 	
 	@Override
 	public void onDisable() {
-		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {
+		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla") || Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Redesky Fly")) {
 			mc.timer.timerSpeed = 1f;
 			mc.thePlayer.capabilities.isFlying = false;
 		}

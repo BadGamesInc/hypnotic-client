@@ -177,6 +177,7 @@ public class Speed extends Mod {
             }
         }else if(mode.getValString().equalsIgnoreCase("Redesky LongJump")){
 
+        	mc.timer.timerSpeed = 0.6f;
             switch (stage) {
                 case 1:
                     moveSpeed = 0.62;
@@ -185,7 +186,7 @@ public class Speed extends Mod {
                     break;
                 case 2:
                     lastDist = 0.0D;
-                    float motionY = 0.636f;
+                    float motionY = 0.70f;
                     if (mc.thePlayer.onGround && (mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
                         if (mc.thePlayer.isPotionActive(Potion.jump))
                             motionY += ((mc.thePlayer.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.099F);
@@ -210,7 +211,8 @@ public class Speed extends Mod {
                     break;
             }
             moveSpeed = Math.max(moveSpeed, MoveUtils.getBaseMoveSpeed());
-            MoveUtils.setMotion(event, moveSpeed + 0.047);
+            double amplifier = mc.thePlayer.isPotionActive(Potion.moveSpeed.id) ? 0.1 : 0.277;
+            MoveUtils.setMotion(event, moveSpeed + amplifier);
             motion = moveSpeed;
             if(TargetStrafe.canStrafe()){
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);

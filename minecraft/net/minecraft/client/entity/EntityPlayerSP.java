@@ -349,6 +349,8 @@ public class EntityPlayerSP extends AbstractClientPlayer
         
         EventChat event = new EventChat(message);
         event.call();
+        event.setMessage(message);
+        message = event.getMessage();
         
         if(message.startsWith(".")) {
     		Hypnotic.instance.onSendChatMessage(event.getMessage());

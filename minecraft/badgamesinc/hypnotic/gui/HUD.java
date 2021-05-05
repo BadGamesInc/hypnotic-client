@@ -60,7 +60,7 @@ public class HUD {
 	DecimalFormat df = new DecimalFormat("###.#");
 	
 	public void draw() {
-		
+
 		double serverTPS = Timer.ticksPerSecond;
 		
 		if (mc.gameSettings.showDebugInfo) {

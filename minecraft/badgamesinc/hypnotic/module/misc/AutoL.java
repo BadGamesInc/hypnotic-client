@@ -1,5 +1,7 @@
 package badgamesinc.hypnotic.module.misc;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventChat;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
@@ -12,15 +14,9 @@ public class AutoL extends Mod {
 	public AutoL() {
 		super("AutoL", 0, Category.MISC, "Automatically say L when you win");
 	}
+
 	
-	/*public void eventChat(EventChat e) {
-		if(e.getMessage().contains("You won the fight!")
-			|| e.getMessage().contains("You won the fight!")) {
-			
-		}
-	}*/
-	
-	@EventTarget
+	/*@EventTarget
 	public void eventReceivePacket(EventChat e) {
 		String message = e.getMessage();		
 					
@@ -30,4 +26,17 @@ public class AutoL extends Mod {
 			
 		
 	}
+	*/
+	@EventTarget
+    public void onReceive(EventReceivePacket event){
+        if(event.getPacket() instanceof S02PacketChat){
+            S02PacketChat packet = (S02PacketChat) event.getPacket();
+            String message = packet.getChatComponent().getUnformattedText();
+
+            if(message.contains(mc.thePlayer.getName()) && message.contains("venceu a partida") || message.contains("You won the fight!")){
+            	mc.thePlayer.sendChatMessage("L you guys got rekt by Hypnotic");;
+            }
+        }
+    }
+
 }

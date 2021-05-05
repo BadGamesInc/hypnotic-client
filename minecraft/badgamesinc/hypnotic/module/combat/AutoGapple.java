@@ -5,6 +5,7 @@ import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityTameable;
@@ -12,10 +13,12 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemAppleGold;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 
 public class AutoGapple extends Mod implements UpdateListener{
 
-private int oldSlot;
+	private int oldSlot;
+	public TimerUtils timerUtils = new TimerUtils();
     
     public AutoGapple() {
         super("AutoGapple", 0, Category.COMBAT, "Automatically eats gapps for you when your health is low");
@@ -33,6 +36,9 @@ private int oldSlot;
     
     @Override
     public void onUpdate() {
+    	if (mc.thePlayer.isPotionActive(Potion.regeneration.id)) {
+    		return;
+    	}
         for (int i = 0; i < 36; ++i) {
             final ItemStack stack = mc.thePlayer.inventory.getStackInSlot(i);
             if (stack == null || stack.getItem() != Items.golden_apple) {}
@@ -50,9 +56,11 @@ private int oldSlot;
         if (this.oldSlot == -1) {
             this.oldSlot = mc.thePlayer.inventory.currentItem;
         }
-        mc.thePlayer.inventory.currentItem = gapInHotbar;
-        mc.gameSettings.keyBindUseItem.pressed = true;
-        mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem());
+        if (timerUtils.hasTimeElapsed(250L, true)) {
+	        mc.thePlayer.inventory.currentItem = gapInHotbar;
+	        mc.gameSettings.keyBindUseItem.pressed = true;
+	        mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem());
+        }
     }
     
     private int findGap(final int startSlot, final int endSlot) {
