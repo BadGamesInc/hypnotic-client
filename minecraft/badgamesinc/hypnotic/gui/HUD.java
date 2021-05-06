@@ -90,19 +90,19 @@ public class HUD {
 			// tps
 			ufr3.drawStringWithShadow("TPS: ", 2, scaled.getScaledHeight() - 40, -1);
 			if(serverTPS < 5.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 11141120);
+				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 11141120);
 			}
 			else if(serverTPS < 10.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 16733525);
+				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16733525);
 			}
 			else if(serverTPS < 15.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 16777045);
+				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16777045);
 			}
 			else if(serverTPS < 20.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 5635925);
+				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5635925);
 			}
 			else {
-				ufr3.drawStringWithShadow(serverTPS + "", 32, scaled.getScaledHeight() - 40, 5592575);
+				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5592575);
 			}
 			// ping
 			if(!mc.isSingleplayer()) {

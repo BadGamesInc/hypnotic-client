@@ -34,7 +34,7 @@ public class Hypnotic {
 	public SaveLoad saveload;
 	public DiscordRP discordRP;
 	
-	public static final String clientName = "Hypnotic", clientVersion = "r1005", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "r1006", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.gray + ": ";
 	
 	public void startup() {	
 		setmgr = new SettingsManager();
