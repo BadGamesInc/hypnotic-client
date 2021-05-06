@@ -32,6 +32,8 @@ public class Phase extends Mod {
 		      this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0E-8D, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, false));
 		      this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0D, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, false));
 		      this.toggle();
+		   } else {
+			   
 		   }
 	   }
 	   
@@ -58,10 +60,10 @@ public class Phase extends Mod {
 
 	    @EventTarget
 	    public boolean onCollision(EventCollide event) {
-	    	if (phaseMode.getValString().equalsIgnoreCase("Vanilla Phase")) {
+	    	
 		    	if((PlayerUtils.isInsideBlock() && mc.gameSettings.keyBindJump.isKeyDown()) || (!(PlayerUtils.isInsideBlock()) && event.getBoundingBox() != null && event.getBoundingBox().maxY > mc.thePlayer.boundingBox.minY && mc.thePlayer.isSneaking()))
 		            event.setBoundingBox(null);
-		    	}
+		    	
 	        return true;
 	    }
 	    

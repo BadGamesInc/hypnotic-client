@@ -110,6 +110,7 @@ public class ModuleManager {
 		//GUI
 		modules.add(new ArrayListModule());
 		modules.add(new InfoHud());
+		modules.add(new Logo());
 		
 	}
 	

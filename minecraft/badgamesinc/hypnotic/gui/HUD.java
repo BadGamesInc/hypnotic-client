@@ -14,6 +14,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.gui.Logo;
 import badgamesinc.hypnotic.module.render.TargetHUD;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
@@ -31,6 +32,7 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Timer;
 
 public class HUD {
@@ -67,8 +69,7 @@ public class HUD {
 			return;
 		}
 		
-		fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
-		fontRenderer3.drawString("ypnotic", 9.5, 4, -1, true);
+		renderLogo();
 		
 		renderTargetHUD();
 		renderArrayList(new ScaledResolution(mc));    
@@ -115,6 +116,19 @@ public class HUD {
 		
 	}
 	
+	public void renderLogo() {
+		if (!Hypnotic.instance.moduleManager.getModule(Logo.class).isEnabled()) {
+			return;
+		}
+		if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Text")) {
+			fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
+			fontRenderer3.drawString("ypnotic", 9.5, 4, -1, true);
+		} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Image")) {
+			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/purple.png"));
+			Gui.drawModalRectWithCustomSizedTexture(4, 4, 80, 20,  80, 20, 80, 20);
+		}
+	}
+	
 	public void renderArrayList(ScaledResolution sr) {
 		Color temp = ColorUtil.getClickGUIColor().darker();
 		String theme = Hypnotic.instance.setmgr.getSettingByName("Style").getValString();
@@ -143,7 +157,7 @@ public class HUD {
 				
 				double offset = count * (fontRenderer.getFontHeight() + 1);      
 				
-				if(!mods.equalsIgnoreCase("Array List")) {
+				if(!mods.equalsIgnoreCase("Array List") || !mods.equalsIgnoreCase("Logo")) {
 					//Chill
 					if(theme.equalsIgnoreCase("Chill") && !background) {
 						Gui.drawRect(width , offset, width - 3, 1 + fontRenderer.getFontHeight() + offset, color);               
