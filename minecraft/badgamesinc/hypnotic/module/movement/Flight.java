@@ -112,7 +112,7 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onUpdate()
 	{
-		this.setDisplayName("Flight " + ColorUtils.gray + "- " + Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString() + "  ");
+		this.setDisplayName("Flight " + ColorUtils.gray + "- " + Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString() + " ");
 		speed = (float) Hypnotic.instance.setmgr.getSettingByName("Flight Speed").getValDouble();
 
 		if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {
@@ -120,8 +120,9 @@ public class Flight extends Mod implements UpdateListener{
         } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
         	mc.thePlayer.capabilities.isFlying = false;
         } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Redesky Fly")) {
+        	//MoveUtils.setMotion((20.635 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
         	mc.thePlayer.capabilities.isFlying = true;
-			mc.timer.timerSpeed = 0.2f;
+			mc.timer.timerSpeed = 0.3f;
         }
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {

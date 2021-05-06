@@ -336,10 +336,11 @@ public class Speed extends Mod {
             }
 
         }else if(mode.getValString().equalsIgnoreCase("Bhop3")){
+        	
         	if (MoveUtils.isMoving()) {
+        		mc.timer.timerSpeed = 0.3f;
                 double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
                 boolean inLiquid = MoveUtils.isInLiquid();
-                mc.timer.timerSpeed = 1.05f;
                 if (inLiquid) {
                     //event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
 
@@ -366,7 +367,7 @@ public class Speed extends Mod {
                     moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                 }
 
-                MoveUtils.setMotion(event, Math.max(moveSpeed, baseMoveSpeed + 0.1));
+                MoveUtils.setMotion(event, Math.max(moveSpeed, baseMoveSpeed + 0.4));
 
 
         }

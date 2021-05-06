@@ -48,6 +48,8 @@ public class ModuleManager {
 		modules.add(new AirJump());
 		modules.add(new Spider());
 		modules.add(new InventoryMove());
+		modules.add(new Phase());
+		modules.add(new Longjump());
 		
 		//Render
 		modules.add(new Fullbright());
@@ -78,6 +80,7 @@ public class ModuleManager {
 		modules.add(new AutoPot());
 		modules.add(new AutoGapple());
 		modules.add(new TargetStrafe());
+		modules.add(new AntiBot());
 		//TODO: Fix these
 		//modules.add(new BowAimbot());
 		modules.add(new Criticals());
