@@ -61,7 +61,8 @@ public class ModuleManager {
 		modules.add(new Chams());
 		modules.add(new NameTags());
 		modules.add(new ItemPhysics());
-		modules.add(new Tracers());
+		//TODO: Fix these
+		//modules.add(new Tracers());
 		modules.add(new NoRender());
 		
 		//Player
@@ -99,6 +100,7 @@ public class ModuleManager {
 		modules.add(new DiscordRPC());
 		modules.add(new KillSults());
 		modules.add(new PingSpoof());
+		modules.add(new AutoCaptcha());
 
 		//World
 		modules.add(new FastBreak());

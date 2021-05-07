@@ -388,37 +388,43 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         fontRenderer.drawString("§a+", 16, 42, -1, false);
         fontRenderer.drawString("Added AutoConfig as a temp fix to configs being broken :/", 24, 42, -1, false);
         
-        fontRenderer.drawString("§a+", 16, 42, -1, false);
-        fontRenderer.drawString("Added Phase", 24, 42, -1, false);
+        fontRenderer.drawString("§a+", 16, 52, -1, false);
+        fontRenderer.drawString("Added Phase", 24, 52, -1, false);
         
-        fontRenderer.drawString("§a+", 16, 42, -1, false);
-        fontRenderer.drawString("Added LongJump", 24, 42, -1, false);
+        fontRenderer.drawString("§a+", 16, 62, -1, false);
+        fontRenderer.drawString("Added LongJump", 24, 62, -1, false);
         
-        fontRenderer.drawString("§a+", 16, 42, -1, false);
-        fontRenderer.drawString("Added AntiBot", 24, 42, -1, false);
+        fontRenderer.drawString("§a+", 16, 72, -1, false);
+        fontRenderer.drawString("Added AntiBot", 24, 72, -1, false);
+        
+        fontRenderer.drawString("§a+", 16, 82, -1, false);
+        fontRenderer.drawString("Added .enchant", 24, 82, -1, false);
+        
+        fontRenderer.drawString("§a+", 16, 92, -1, false);
+        fontRenderer.drawString("Added AutoCaptcha for RedeSky", 24, 92, -1, false);
         
         //Changes
-        fontRenderer.drawString("§e*", 16, 52, -1, false);
-        fontRenderer.drawString("Improved Nametags", 24, 52, -1, false);
+        fontRenderer.drawString("§e*", 16, 102, -1, false);
+        fontRenderer.drawString("Improved Nametags", 24, 102, -1, false);
         
-        fontRenderer.drawString("§e*", 16, 62, -1, false);
-        fontRenderer.drawString("Changed font renderer because the other one sucked", 24, 62, -1, false);
+        fontRenderer.drawString("§e*", 16, 112, -1, false);
+        fontRenderer.drawString("Changed font renderer because the other one sucked", 24, 112, -1, false);
         
-        fontRenderer.drawString("§e*", 16, 72, -1, false);
-        fontRenderer.drawString("Improved TargetHUD", 24, 72, -1, false);
+        fontRenderer.drawString("§e*", 16, 122, -1, false);
+        fontRenderer.drawString("Improved TargetHUD", 24, 122, -1, false);
         
-        fontRenderer.drawString("§e*", 16, 72, -1, false);
-        fontRenderer.drawString("Improved KillSults", 24, 72, -1, false);
+        fontRenderer.drawString("§e*", 16, 132, -1, false);
+        fontRenderer.drawString("Improved KillSults", 24, 132, -1, false);
         
-        fontRenderer.drawString("§e*", 16, 72, -1, false);
-        fontRenderer.drawString("Fixed Disabler", 24, 72, -1, false);
+        fontRenderer.drawString("§e*", 16, 142, -1, false);
+        fontRenderer.drawString("Fixed Disabler", 24, 142, -1, false);
         
-        fontRenderer.drawString("§e*", 16, 72, -1, false);
-        fontRenderer.drawString("Fixed InfoHUD TPS display", 24, 72, -1, false);
+        fontRenderer.drawString("§e*", 16, 152, -1, false);
+        fontRenderer.drawString("Fixed InfoHUD TPS display", 24, 152, -1, false);
         
         //Deletions
-        //ufr.drawString("§c-", 16, 62, -1);
-        //ufr.drawString("Remove Message", 24, 72, -1);
+        fontRenderer.drawString("§c-", 16, 162, -1, false);
+        fontRenderer.drawString("Removed Tracers (temp)", 24, 162, -1, false);
         
         /*           */
         ufr.drawString(s, 2, this.height - 14, -1);

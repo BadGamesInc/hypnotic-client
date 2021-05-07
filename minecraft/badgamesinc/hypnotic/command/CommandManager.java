@@ -19,6 +19,7 @@ public class CommandManager {
 		commands.add(new Teleport());
 		commands.add(new Load());
 		commands.add(new Seed());
+		commands.add(new Enchant());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {

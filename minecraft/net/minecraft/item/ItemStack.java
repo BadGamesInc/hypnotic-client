@@ -892,7 +892,7 @@ public final class ItemStack
         NBTTagList nbttaglist = this.stackTagCompound.getTagList("ench", 10);
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setShort("id", (short)ench.effectId);
-        nbttagcompound.setShort("lvl", (short)((byte)level));
+        nbttagcompound.setShort("lvl", (short) level);
         nbttaglist.appendTag(nbttagcompound);
     }
 
