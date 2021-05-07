@@ -3,7 +3,6 @@
 "utility mod" for minecraft java 1.8.8  
 we dont care if you get banned from any server  
 use at your own risk i guess  
-join the discord: https://discord.gg/H4pgRcmZga  
 
 ## requirements  
 you need to import the io.netty files and pack.png from a stock jar and put the files from this jar ( https://github.com/Vatuu/discord-rpc/releases/download/1.6.2/discord-rpc.jar )in it 
