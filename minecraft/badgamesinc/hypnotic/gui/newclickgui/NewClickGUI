@@ -1,0 +1,50 @@
+package badgamesinc.hypnotic.gui.newclickgui;
+
+import net.minecraft.gui.*;
+
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.module.*;
+
+public class NewClickGUI extends GuiScreen{
+
+    /* Made in a google doc so don't expect much */
+    
+    int x;
+    int y;
+    int width;
+    int height;
+    int xOffset = 0;
+    int yOffset = 0;
+    
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    
+    public NewClickGUI() {
+        
+    }
+    
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        
+        int guiColor = ColorUtils.rainbow(6, 0.8f, 1, xOffset * 120);
+        
+        width = 10;
+        height = 5;
+        
+        for (Category c : Category.values()) {
+			String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+            
+            fontRenderer.drawString(x + 5 + xOffset, y + fontRenderer.getFontHeight(), -1);
+            Gui.drawRect(x + xOffset, y, x + width + xOffset, y + height, guiColor);
+            
+                    
+            for (Mod m : Hypnotic.instance.moduleManager.modules) {
+                if (!m.getCategory().equals(c))
+                    continue;
+                    
+                fontRenderer.drawString(m.getName(), x + xOffset + 5, y + yOffset, guiColor);
+            }
+            
+            xOffset++;
+        }
+    }
+}
