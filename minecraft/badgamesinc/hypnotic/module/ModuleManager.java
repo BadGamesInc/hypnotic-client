@@ -124,9 +124,19 @@ public class ModuleManager {
 		modules.add(m);
 	}
 	
+	public ArrayList<Mod> getModulesInCategory(Category category){
+		ArrayList<Mod> categoryModules = new ArrayList<>();
+		for(Mod m : modules){
+		    if (m.getCategory() == category){
+			categoryModules.add(m);
+		    }
+		}
+		return categoryModules;
+    	}
+	
 	public <T extends Mod> T getModule(Class<T> clazz) {
-        return (T) modules.stream().filter(mod -> mod.getClass() == clazz).findFirst().orElse(null);
-    }
+        	return (T) modules.stream().filter(mod -> mod.getClass() == clazz).findFirst().orElse(null);
+    	}
 	
 	
 }
