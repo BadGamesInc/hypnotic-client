@@ -43,6 +43,8 @@ public class ClickGUI extends GuiScreen {
 	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 2);
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 	
+	public int xOffset = 0;
+	
 	/*
 	 * Konstrukor sollte nur einmal aufgerufen werden => in der MainMethode des eigenen Codes
 	 * hier Hypnotic.instance.startHypnotic.instance()
@@ -67,9 +69,10 @@ public class ClickGUI extends GuiScreen {
 		/*
 		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
 		 */
+		xOffset = 0;
 		for (Category c : Category.values()) {
 			String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
-			ClickGUI.panels.add(new Panel(title, px, py, pwidth + 40, pheight + 5, false, this) {
+			ClickGUI.panels.add(new Panel(title, px + xOffset * 110, py, pwidth + 40 + xOffset, pheight + 5, false, this) {
 						@Override
 						public void setup() {
 							for (Mod m : Hypnotic.instance.moduleManager.modules) {
@@ -78,7 +81,7 @@ public class ClickGUI extends GuiScreen {
 							}
 						}
 			});
-			py += pyplus;
+			xOffset++;
 		}
 		
 		/*
@@ -109,6 +112,8 @@ public class ClickGUI extends GuiScreen {
 		 * benutzt wird habe ich mich einfach mal dazu entschieden,
 		 * einfach weil es einfacher ist nur einmal panels zu benutzen
 		 */
+		
+		this.drawDefaultBackground();
 		for (Panel p : panels) {
 			p.drawScreen(mouseX, mouseY, partialTicks);
 		}
@@ -312,12 +317,12 @@ public class ClickGUI extends GuiScreen {
 		/*
 		 * Start blur
 		 */
-		if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer) {
+		/*if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer) {
 			if (mc.entityRenderer.theShaderGroup != null) {
 				mc.entityRenderer.theShaderGroup.deleteShaderGroup();
 			}
 			mc.entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
-		}
+		}*/
 	}
 
 	@Override
@@ -325,10 +330,10 @@ public class ClickGUI extends GuiScreen {
 		/*
 		 * End blur 
 		 */
-		if (mc.entityRenderer.theShaderGroup != null) {
+		/*if (mc.entityRenderer.theShaderGroup != null) {
 			mc.entityRenderer.theShaderGroup.deleteShaderGroup();
 			mc.entityRenderer.theShaderGroup = null;
-		}
+		}*/
 		/*
 		 * Sliderfix
 		 */

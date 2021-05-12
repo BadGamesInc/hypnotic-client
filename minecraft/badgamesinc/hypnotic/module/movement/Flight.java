@@ -122,7 +122,7 @@ public class Flight extends Mod implements UpdateListener{
         } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Redesky Fly")) {
         	//MoveUtils.setMotion((20.635 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
         	mc.thePlayer.capabilities.isFlying = true;
-			mc.timer.timerSpeed = 0.3f;
+			mc.timer.timerSpeed = 0.2f;
         }
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {

@@ -1,9 +1,11 @@
 package badgamesinc.hypnotic.module;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.example.GUI;
+import badgamesinc.hypnotic.gui.newclickgui.ClickGuiMod;
 import badgamesinc.hypnotic.module.combat.*;
 import badgamesinc.hypnotic.module.gui.*;
 import badgamesinc.hypnotic.module.movement.*;
@@ -101,6 +103,8 @@ public class ModuleManager {
 		modules.add(new KillSults());
 		modules.add(new PingSpoof());
 		modules.add(new AutoCaptcha());
+		modules.add(new ClickGuiMod());
+
 
 		//World
 		modules.add(new FastBreak());

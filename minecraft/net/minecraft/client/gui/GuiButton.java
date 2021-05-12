@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
@@ -11,7 +12,8 @@ import net.minecraft.util.ResourceLocation;
 public class GuiButton extends Gui
 {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
-    public UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
+    public GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+
 
     /** Button width in pixels */
     protected int width;
@@ -110,7 +112,7 @@ public class GuiButton extends Gui
                 Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x30f0f0f0);
             }
 
-            ufr.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 12) / 2, j);
+            fontRenderer.drawCenteredString(this.displayString, this.xPosition + this.width / 2 + 1, this.yPosition + (this.height - 12) / 2, j, true);
         }
     }
 

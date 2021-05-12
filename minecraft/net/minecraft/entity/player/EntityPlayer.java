@@ -8,15 +8,11 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 
-import badgamesinc.hypnotic.EventSigma.Event;
-import badgamesinc.hypnotic.EventSigma.EventSystem;
-import badgamesinc.hypnotic.EventSigma.impl.EventDeath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -726,11 +722,6 @@ public abstract class EntityPlayer extends EntityLivingBase
      */
     public void onDeath(DamageSource cause)
     {
-    	Event event = EventSystem.getInstance(EventDeath.class);
-        event.fire();
-        if (event.isCancelled()) {
-            return;
-        }
         super.onDeath(cause);
         this.setSize(0.2F, 0.2F);
         this.setPosition(this.posX, this.posY, this.posZ);

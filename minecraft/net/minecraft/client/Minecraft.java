@@ -57,9 +57,6 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.EventSigma.EventSystem;
-import badgamesinc.hypnotic.EventSigma.impl.EventAttack;
-import badgamesinc.hypnotic.gui.MainMenu;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -1510,10 +1507,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     private void clickMouse()
     {
-    	EventAttack ej = (EventAttack) EventSystem.getInstance(EventAttack.class);
-    	if(objectMouseOver != null && objectMouseOver.typeOfHit.ordinal() == 1){          	
-        	ej.fire(objectMouseOver.entityHit, true);
-    	}
         if (this.leftClickCounter <= 0)
         {
             this.thePlayer.swingItem();

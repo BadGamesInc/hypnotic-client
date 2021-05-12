@@ -7,6 +7,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
@@ -58,22 +59,28 @@ public class Panel {
 		int textColor = -1;
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
-			outlineColor = 0xff212020;
+			int xOffset = 0;
+			for (Category c : Category.values()) {
+				xOffset++;
+			}
+			outlineColor = ColorUtils.rainbow(6, 0.5f, 0.5f, (long) (xOffset * 150));
 			textColor = ColorUtils.rainbow(2.0f, 0.5f, 1f);
 		}
 		
-		Gui.drawRect(x + 10, y + 4, x + width - 10, y + height, (textColor));
-		Gui.drawRect(x + 12, y + 6, x + width - 12, y + height - 2, (outlineColor));
+		Gui.drawRect(x + 14, y + 4, x + width - 14, y + height - 0, (outlineColor));
+		
+		String extendedText = this.extended ? "-" : "+";
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-			fontRenderer.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef, false);
+			fontRenderer.drawString(title, x + width / 2 - 42, y + height / 2 - 4, 0xffefefef, true);
+			fontRenderer.drawString(extendedText, x + width / 2 + 36, y + height / 2 - 4, 0xffefefef, true);
 			//if(title.equalsIgnoreCase("combat")) {
 				//Gui.drawRect(outlineColor, mouseX, mouseY, partialTicks, -1);
 			//}
 		}else if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
-			fontRenderer.drawTotalCenteredString(title, x + width / 2, y + height / 2, 0xffefefef, false);
+			fontRenderer.drawString(title, x + width / 2, y + height / 2 - 4, 0xffefefef, true);
 		}
 		
 		if (this.extended && !Elements.isEmpty()) {
@@ -81,9 +88,9 @@ public class Panel {
 			int epanelcolor = Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New") ? 0xbb151515 : Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike") ? 0xbb151515 : 0;;
 			for (ModuleButton et : Elements) {
 				if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-					Gui.drawRect(x, startY, x + width, startY, ColorUtils.rainbow(2, 0.5f, 1));
+					Gui.drawRect(x, startY, x + width, startY, outlineColor);
 				}
-				Gui.drawRect(x + 14, 	startY, x + width - 14, startY + et.height + 1, epanelcolor);
+				Gui.drawRect(x + 14, 	startY, x + width - 14, startY + et.height + 1, new Color(0, 0, 0, 130).getRGB());
 				et.x = x + 2;
 				et.y = startY;
 				et.width = width - 4;

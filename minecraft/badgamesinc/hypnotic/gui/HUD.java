@@ -48,6 +48,7 @@ public class HUD {
 	private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer2 = GlyphPageFontRenderer.create("Roboto-Light", 13, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer3 = GlyphPageFontRenderer.create("Magneto", 18, false, false, false);
+	private static GlyphPageFontRenderer fontRenderer4 = GlyphPageFontRenderer.create("Consolas", 50, false, false, false);
 	
 	public int height;
 	public int width;
@@ -76,7 +77,7 @@ public class HUD {
         
 		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) 
 		{
-			fontRenderer.drawString("PINGING PC", 2.8f, 3, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
+			fontRenderer4.drawCenteredString("PINGING PC", sr.getScaledWidth(), sr.getScaledHeight() - 150, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
         }
 		
 		if(Hypnotic.instance.moduleManager.getModuleByName("Info").isEnabled()) 

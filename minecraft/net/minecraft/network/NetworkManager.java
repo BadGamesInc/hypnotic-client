@@ -17,10 +17,6 @@ import org.apache.logging.log4j.MarkerManager;
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import badgamesinc.hypnotic.EventSigma.EventSystem;
-import badgamesinc.hypnotic.EventSigma.impl.EventPacket;
-import badgamesinc.hypnotic.event.EventDirection;
-import badgamesinc.hypnotic.event.EventType;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.event.events.EventSendPacket;
 import io.netty.bootstrap.Bootstrap;

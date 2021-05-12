@@ -14,6 +14,7 @@ import badgamesinc.hypnotic.gui.clickgui.elements.menu.ElementSlider;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.clickgui.util.FontUtil;
+import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
@@ -61,7 +62,11 @@ public class ModuleButton {
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 150).getRGB();
 		
 		if(Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) {
-			color = ColorUtils.rainbow(2, 0.4f, 1);
+			int xOffset = 0;
+			for (Category c : Category.values()) {
+				xOffset++;
+			}
+			color = ColorUtils.rainbow(6, 0.5f, 0.5f, (long) (xOffset * 150));
 		}
 		
 		int textcolor = 0xffafafaf;
@@ -79,9 +84,9 @@ public class ModuleButton {
 		}
 
 		if(mod.isEnabled())
-			fontRenderer.drawTotalCenteredString(mod.getName(), x + width / 2 + 2, y + 0 + height / 2 - 2, textcolor, false);
+			fontRenderer.drawString(mod.getName(), x + width / 2 - 42, y + 0 + height / 2 - 6, textcolor, true);
 		else
-			fontRenderer.drawTotalCenteredString(mod.getName(), x + width / 2 + 2, y + 0 + height / 2 - 2, textcolor, false);
+			fontRenderer.drawString(mod.getName(), x + width / 2 - 42, y + 0 + height / 2 - 6, textcolor, true);
 	}
 
 	public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
