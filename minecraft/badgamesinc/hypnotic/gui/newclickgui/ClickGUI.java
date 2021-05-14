@@ -3,6 +3,8 @@ package badgamesinc.hypnotic.gui.newclickgui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Keyboard;
+
 import badgamesinc.hypnotic.module.Category;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -39,6 +41,13 @@ public class ClickGUI extends GuiScreen {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		for (Frame frame : frames) {
 			frame.onClick(mouseX, mouseY, mouseButton);
+		}
+	}
+	
+	@Override
+	public void keyTyped(char typedChar, int keyCode) {
+		if (keyCode == Keyboard.KEY_ESCAPE) {
+			Button.settingsOpen = false;	
 		}
 	}
 	
