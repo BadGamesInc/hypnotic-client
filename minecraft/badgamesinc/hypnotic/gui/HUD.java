@@ -44,7 +44,7 @@ public class HUD {
 	private static GlyphPageFontRenderer fontRenderer2 = GlyphPageFontRenderer.create("Roboto-Light", 13, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer3 = GlyphPageFontRenderer.create("Magneto", 18, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer4 = GlyphPageFontRenderer.create("Consolas", 50, false, false, false);
-	private static GlyphPageFontRenderer fontRenderer5 = GlyphPageFontRenderer.create("LUCON", 15, false, false, false);
+	private static GlyphPageFontRenderer fontRenderer5 = GlyphPageFontRenderer.create("lucon", 15, false, false, false);
 	
 	public int height;
 	public int width;
