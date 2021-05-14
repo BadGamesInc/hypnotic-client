@@ -29,6 +29,7 @@ public class Button {
 	public Mod m;
 	public Frame parent;
 	public float x, y, width, height;
+	public boolean settingsOpen = false;
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
 	public Button(Mod m, float x, float y, Frame parent) {
@@ -64,12 +65,15 @@ public class Button {
 		int enabledColor = ColorUtils.rainbow(6, 0.5f, 0.5f, (long) (rainbowOrder * 150));
 		
 		Gui.drawRect(x, y, x + width, y + height, isHovered(MouseX, MouseY) ? new Color (100, 100, 100, 150).getRGB() : new Color(0, 0, 0, 150).getRGB());
-		fontRenderer.drawString(m.getName(), x + 2, y + 4, m.isEnabled() ? enabledColor : 0xffafafaf, true);
+		fontRenderer.drawString(m.getName(), x + 2, y + 4, m.isEnabled() ? (enabledColor) : 0xffafafaf, true);
+		
 	}
 
 	public void onClick(int mouseX, int mouseY, int mouseButton) {
 		if (mouseButton == 0 && isHovered(mouseX, mouseY)) {
 			m.toggle();
+		} else if (mouseButton == 1 && isHovered(mouseX, mouseY)) {
+			settingsOpen = true;
 		}
 	}
 
