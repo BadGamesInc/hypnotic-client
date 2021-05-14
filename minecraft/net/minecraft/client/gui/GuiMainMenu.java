@@ -45,10 +45,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final AtomicInteger field_175373_f = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
     private static final Random RANDOM = new Random();
-    public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
-    public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 40, 0, 1, 3);
-    public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 15, 0, 1, 1);
-    public static UnicodeFontRenderer ufr4 = UnicodeFontRenderer.getFontFromAssets("Roboto-Bold", 100, 0, 1, 3);
     private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
     /** Counts the number of screen updates. */
@@ -380,7 +376,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         /* Changelog */
 
-        ufr2.drawString("Changes", 4, 4, -1);
+        fontRenderer.drawString("Changes", 4, 4, -1, false);
         //Additions
         fontRenderer.drawString("§a+", 16, 32, -1, false);
         fontRenderer.drawString("Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed", 24, 32, -1, false);
@@ -433,9 +429,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         fontRenderer.drawString("Removed Tracers (temp)", 24, 182, -1, false);
         
         /*           */
-        ufr.drawString(s, 2, this.height - 14, -1);
+        fontRenderer.drawString(s, 2, this.height - 14, -1, false);
         String s1 = "Copyright Mojang AB. Do not distribute!";
-        ufr.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 4, this.height - 14, -1);
+        fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 4, this.height - 14, -1, false);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {

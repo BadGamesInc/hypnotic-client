@@ -40,15 +40,11 @@ public class HUD {
 	public Minecraft mc = Minecraft.getMinecraft();
 	public FontRenderer fr = mc.fontRendererObj;
 	public ScaledResolution sr = new ScaledResolution(mc);
-	public static UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 20, 0, 1, 1);
-    public static UnicodeFontRenderer ufr2 = UnicodeFontRenderer.getFontFromAssets("Magneto-Bold", 20, 0, 1, 1);
-    public static UnicodeFontRenderer ufr3 = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 15, 0, 1, 1);
-    public static UnicodeFontRenderer ufr4 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 21, 0, 2, 1);
-    public static UnicodeFontRenderer ufr5 = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 15, 0, 2, 1);
 	private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer2 = GlyphPageFontRenderer.create("Roboto-Light", 13, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer3 = GlyphPageFontRenderer.create("Magneto", 18, false, false, false);
 	private static GlyphPageFontRenderer fontRenderer4 = GlyphPageFontRenderer.create("Consolas", 50, false, false, false);
+	private static GlyphPageFontRenderer fontRenderer5 = GlyphPageFontRenderer.create("LUCON", 15, false, false, false);
 	
 	public int height;
 	public int width;
@@ -84,34 +80,34 @@ public class HUD {
 		{
 			ScaledResolution scaled = new ScaledResolution(mc);
 			// overworld coords
-			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10, -1);
+			fontRenderer5.drawString(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10, -1, true);
 			// nether coords
-			ufr3.drawStringWithShadow(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120);
+			fontRenderer5.drawString(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120, true);
 			// fps
-			ufr3.drawStringWithShadow("FPS: " + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 30, -1);
+			fontRenderer5.drawString("FPS: " + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 30, -1, true);
 			// tps
-			ufr3.drawStringWithShadow("TPS: ", 2, scaled.getScaledHeight() - 40, -1);
+			fontRenderer5.drawString("TPS: ", 2, scaled.getScaledHeight() - 40, -1, true);
 			if(serverTPS < 5.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 11141120);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 11141120, true);
 			}
 			else if(serverTPS < 10.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16733525);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16733525, true);
 			}
 			else if(serverTPS < 15.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16777045);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16777045, true);
 			}
 			else if(serverTPS < 20.0) {
-				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5635925);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5635925, true);
 			}
 			else {
-				ufr3.drawStringWithShadow(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5592575);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5592575, true);
 			}
 			// ping
 			if(!mc.isSingleplayer()) {
-				ufr3.drawStringWithShadow("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50, -1);
+				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50, -1, true);
 			}
 			else {
-				ufr3.drawStringWithShadow("Ping: 0", 2, scaled.getScaledHeight() - 50, -1);
+				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 50, -1, true);
 			}
         }
 		
