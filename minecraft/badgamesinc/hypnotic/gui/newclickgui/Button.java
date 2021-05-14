@@ -29,7 +29,7 @@ public class Button {
 	public Mod m;
 	public Frame parent;
 	public float x, y, width, height;
-	public boolean settingsOpen = false;
+	public static boolean settingsOpen = false;
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
 	public Button(Mod m, float x, float y, Frame parent) {
