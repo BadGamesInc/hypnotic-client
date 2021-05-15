@@ -23,6 +23,8 @@ public class Mod {
 	
 	public float mSize;
     public float lastSize;
+    
+    public transient float animation = 0;
 	
 	public Mod(String name, int key, Category category, String description) {
 		this.name = name;

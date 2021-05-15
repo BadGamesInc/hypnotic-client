@@ -105,6 +105,7 @@ public class Scaffold extends Mod {
     public Setting expand;
     public Setting legit;
     public Setting boost;
+    public Setting redeskyBoost;
 
     float oldPitch = 0;
     private RotationUtils RayCastUtil;
@@ -130,6 +131,7 @@ public class Scaffold extends Mod {
         Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("SafeWalk", this, false));
         Hypnotic.instance.setmgr.rSetting(blockFly = new Setting("Downwards", this, true));
         Hypnotic.instance.setmgr.rSetting(boost = new Setting("Boost", this, false));
+        Hypnotic.instance.setmgr.rSetting(redeskyBoost = new Setting("Redesky Boost", this, false));
         Hypnotic.instance.setmgr.rSetting(tower = new Setting("Tower", this, true));
         Hypnotic.instance.setmgr.rSetting(towermove = new Setting("TowerMove", this, true));
         Hypnotic.instance.setmgr.rSetting(swing = new Setting("Swing", this, false));
@@ -254,7 +256,9 @@ public class Scaffold extends Mod {
                     event.setYaw(yaw);
                     event.setPitch(79.44f);
                     RenderUtils.setCustomPitch(event.getPitch());
-                    //mc.thePlayer.rotationPitchHead = (event.getPitch());
+                    
+                    if (redeskyBoost.getValBoolean())
+                    	mc.timer.timerSpeed = 11f;
 
                 }
             } else {
@@ -309,6 +313,7 @@ public class Scaffold extends Mod {
                 //mc.thePlayer.rotationYawHead = event.getYaw();
                 //mc.thePlayer.rotationPitchHead = event.getPitch();
                 //mc.thePlayer.renderYawOffset = event.getYaw();
+                mc.timer.timerSpeed = 1f;
 
 
             }
@@ -712,6 +717,7 @@ public class Scaffold extends Mod {
     public void onDisable() {
         super.onDisable();
         this.setSneaking(false);
+        mc.timer.timerSpeed = 1f;
     }
 
     private void setSneaking(boolean b) {

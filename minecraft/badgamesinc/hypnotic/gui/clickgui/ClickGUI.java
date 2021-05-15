@@ -350,6 +350,8 @@ public class ClickGUI extends GuiScreen {
 				}
 			}
 		}
+		
+		Hypnotic.instance.saveload.save();
 	}
 
 	public void closeAllSettings() {

@@ -3,10 +3,11 @@ package badgamesinc.hypnotic.gui;
 import static net.minecraft.client.gui.inventory.GuiInventory.drawEntityOnScreen;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.text.DecimalFormat;
-import java.util.Collections;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Comparator;
+import java.util.Date;
 
 import org.lwjgl.opengl.GL11;
 
@@ -23,10 +24,10 @@ import badgamesinc.hypnotic.util.TimerUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
@@ -49,6 +50,7 @@ public class HUD {
 	public int height;
 	public int width;
 	
+	public static badgamesinc.hypnotic.util.Timer animationTimer = new badgamesinc.hypnotic.util.Timer();
 	public TimerUtils timer = new TimerUtils();
 	public TimeHelper timeHelper = new TimeHelper();
 	
@@ -73,41 +75,45 @@ public class HUD {
         
 		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) 
 		{
-			fontRenderer4.drawCenteredString("PINGING PC", sr.getScaledWidth(), sr.getScaledHeight() - 150, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
+			fontRenderer4.drawCenteredString("PINGING PC", sr.getScaledWidth(), sr.getScaledHeight() - 150, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
         }
 		
 		if(Hypnotic.instance.moduleManager.getModuleByName("Info").isEnabled()) 
 		{
 			ScaledResolution scaled = new ScaledResolution(mc);
+			boolean isChatOpen = mc.currentScreen instanceof GuiChat;
+			if (isChatOpen) {
+				return;
+			}
 			// overworld coords
-			fontRenderer5.drawString(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10, -1, true);
+			fontRenderer5.drawString(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10  , -1, true);
 			// nether coords
-			fontRenderer5.drawString(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20, 11141120, true);
+			fontRenderer5.drawString(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20  , 11141120, true);
 			// fps
-			fontRenderer5.drawString("FPS: " + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 30, -1, true);
+			fontRenderer5.drawString("FPS: " + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 30  , -1, true);
 			// tps
-			fontRenderer5.drawString("TPS: ", 2, scaled.getScaledHeight() - 40, -1, true);
+			fontRenderer5.drawString("TPS: ", 2, scaled.getScaledHeight() - 40  , -1, true);
 			if(serverTPS < 5.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 11141120, true);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 11141120, true);
 			}
 			else if(serverTPS < 10.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16733525, true);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 16733525, true);
 			}
 			else if(serverTPS < 15.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 16777045, true);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 16777045, true);
 			}
 			else if(serverTPS < 20.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5635925, true);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 5635925, true);
 			}
 			else {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40, 5592575, true);
+				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 5592575, true);
 			}
 			// ping
 			if(!mc.isSingleplayer()) {
-				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50, -1, true);
+				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50  , -1, true);
 			}
 			else {
-				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 50, -1, true);
+				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 50  , -1, true);
 			}
         }
 		
@@ -117,9 +123,12 @@ public class HUD {
 		if (!Hypnotic.instance.moduleManager.getModule(Logo.class).isEnabled()) {
 			return;
 		}
+		
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("hh.mm aa");
 		if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Text")) {
-			fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(2, 0.5f, 0.5f), true);
-			fontRenderer3.drawString("ypnotic", 9.5, 4, -1, true);
+			fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
+			fontRenderer3.drawString(ColorUtils.white + "ypnotic " + "[" + format.format(date).toLowerCase().replace('.', ':') + "] " + "[" + mc.getDebugFPS() + " fps]" + ColorUtils.reset, 9.5, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
 		} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Image")) {
 			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/purple.png"));
 			Gui.drawModalRectWithCustomSizedTexture(4, 4, 80, 20,  80, 20, 80, 20);
@@ -142,11 +151,14 @@ public class HUD {
 						return;
 					}
 				}
+				
 				String mods = m.getDisplayName();
 				Boolean background = Hypnotic.instance.setmgr.getSettingByName("Background").getValBoolean();
+				boolean shouldmove = animationTimer.hasTimeElapsed(1000 / 75, true);
+				
 				if(Hypnotic.instance.setmgr != null && Hypnotic.instance.setmgr.getSettingByName("Rainbow") != null) {
 					if(Hypnotic.instance.setmgr.getSettingByName("Rainbow").getValBoolean()) {
-						color = ColorUtils.rainbow(2.0f, 0.5f, 1f, count * 120);
+						color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
 					} else {
 						color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 					}
@@ -276,7 +288,7 @@ public class HUD {
 						GlStateManager.translate(sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6, 0);
 						GlStateManager.scale(1.6, 1.6, 1);
 						GlStateManager.translate(-(sr.getScaledWidth() / 3f), -(sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 6), 0);
-						fr.drawString(MathUtils.round(target.getHealth(), 2) + " \u2764", sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 10, ColorUtils.rainbow(2f, 0.5f, 0.5f));
+						fr.drawString(MathUtils.round(target.getHealth(), 2) + " \u2764", sr.getScaledWidth() / 3f, sr.getScaledHeight() / 2f - fr.FONT_HEIGHT / 2f + 10, ColorUtils.rainbow(4f, 0.5f, 0.5f));
 						GlStateManager.popMatrix();
 						
 					} else {

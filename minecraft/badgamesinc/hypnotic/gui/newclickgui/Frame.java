@@ -3,6 +3,7 @@ package badgamesinc.hypnotic.gui.newclickgui;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.newclickgui.button.Button;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
@@ -12,7 +13,10 @@ import net.minecraft.client.gui.Gui;
 
 public class Frame {
 
-	float x, y, width, height, guiColor;
+	float x, y;
+	public float width;
+	float height;
+	float guiColor;
 	public boolean extended = false;
 	
 	Category category;
@@ -61,7 +65,7 @@ public class Frame {
 		} else if (title.equalsIgnoreCase("Gui")) {
 			rainbowOrder = 7;
 		}
-	    guiColor = ColorUtils.rainbow(6, 0.5f, 0.5f, (long) (rainbowOrder * 150));
+	    guiColor = ColorUtils.rainbow(7, 0.5f, 0.5f, (long) (rainbowOrder * 110));
 
 	    Gui.drawRect(x, y, x + width, y + height, (int) guiColor);
         fontRenderer.drawString(title, x + 2, y + 2, -1, true);
