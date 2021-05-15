@@ -66,6 +66,10 @@ public class Frame {
 			rainbowOrder = 7;
 		}
 	    guiColor = ColorUtils.rainbow(7, 0.5f, 0.5f, (long) (rainbowOrder * 110));
+	    guiColor = ColorUtils.rainbow(6, 0.5f, 0.5f, (long) (rainbowOrder * 150));
+		
+		if (Button.settingsOpen)
+			return;	
 
 	    Gui.drawRect(x, y, x + width, y + height, (int) guiColor);
         fontRenderer.drawString(title, x + 2, y + 2, -1, true);
