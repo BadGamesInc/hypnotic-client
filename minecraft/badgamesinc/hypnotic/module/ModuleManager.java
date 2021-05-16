@@ -51,6 +51,7 @@ public class ModuleManager {
 		modules.add(new InventoryMove());
 		modules.add(new Phase());
 		modules.add(new Longjump());
+		modules.add(new Step());
 		
 		//Render
 		modules.add(new Fullbright());
