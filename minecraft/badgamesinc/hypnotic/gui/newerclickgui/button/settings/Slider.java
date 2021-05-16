@@ -11,6 +11,7 @@ import net.minecraft.client.gui.Gui;
 public class Slider extends Component{
 	
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 14, false, false, false);
 	
     public Slider(int x, int y, Setting set, SettingsWindow window){
         super(x, y, set, window);
@@ -41,8 +42,12 @@ public class Slider extends Component{
         Gui.drawRect(x, y + height / 2 - 1, x + width, y + height / 2 + 1, new Color(150, 150, 150, 255).getRGB());
         Gui.drawRect(x, y + height / 2 - 1, (this.x + (double)width * progress), y + height / 2 + 1, isWithinComponent(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.08f, 0.08f) : ColorUtils.rainbow(6, 0.2f, 0.2f));
         RenderUtils.drawFilledCircle((int) (this.x + (double)width * progress)    , y + height / 2, 3, isWithinComponent(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.3f, 0.3f) : ColorUtils.rainbow(6, 0.5f, 0.5f));
-        fontRenderer.drawString(this.set.getName() + " : " + (this.set.onlyInt() ? (double)((int)this.set.getValDouble()) : (double)Math.round(this.set.getValDouble() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
+        if (mc.gameSettings.guiScale <= 2)
+        	fontRenderer.drawString(this.set.getName() + " : " + (this.set.onlyInt() ? (double)((int)this.set.getValDouble()) : (double)Math.round(this.set.getValDouble() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
+        else
+        	smallFontRenderer.drawString(this.set.getName() + " : " + (this.set.onlyInt() ? (double)((int)this.set.getValDouble()) : (double)Math.round(this.set.getValDouble() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
 
+        
         super.draw(mouseX, mouseY);
     }
 

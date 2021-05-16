@@ -2,12 +2,17 @@ package badgamesinc.hypnotic.gui.login;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.Session;
+
 import org.lwjgl.input.Keyboard;
 
 public final class GuiAltLogin
@@ -31,6 +36,14 @@ extends GuiScreen {
             case 0: {
                 this.thread = new AltLoginThread(this.username.getText(), this.password.getText());
                 this.thread.start();
+            } case 2: {
+            	Random r = new Random();
+            	String randomUsername = "HypnoticUser" + r.nextInt(9999);
+            	mc.session = new Session(randomUsername, "", "", "mojang");
+            	break;
+            } case 3: {
+                this.mc.displayGuiScreen(new GuiMultiplayer(this));
+                break;
             }
         }
     }
@@ -56,6 +69,8 @@ extends GuiScreen {
         int var3 = height / 4 + 24;
         this.buttonList.add(new GuiButton(0, width / 2 - 100, var3 + 72 + 12, "Login"));
         this.buttonList.add(new GuiButton(1, width / 2 - 100, var3 + 72 + 12 + 24, "Back"));
+        this.buttonList.add(new GuiButton(2, width / 2 - 100, var3 + 72 + 12 - 100, "Random Cracked"));
+        this.buttonList.add(new GuiButton(3, width / 2 - 100, var3 + 72 + 12 - 76, "Play Multiplayer"));
         this.username = new GuiTextField(var3, this.mc.fontRendererObj, width / 2 - 100, 60, 200, 20);
         this.password = new PasswordField(this.mc.fontRendererObj, width / 2 - 100, 100, 200, 20);
         this.username.setFocused(true);

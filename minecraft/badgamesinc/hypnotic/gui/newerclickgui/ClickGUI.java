@@ -23,7 +23,7 @@ public class ClickGUI extends GuiScreen {
     public Category currentCategory;
     ArrayList<CategoryButton> buttons = new ArrayList<>();
     ArrayList<Button> mods = new ArrayList<>();
-    public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 30, false, false, false);
+    public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 36, false, false, false);
     public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
     int offset = 0;
     int lastOffset = 0;
@@ -59,25 +59,25 @@ public class ClickGUI extends GuiScreen {
         if (Button.settingsWindow == null) {
         this.prepareScissorBox(left, top, right, bottom);
         GL11.glEnable(3089);
-        RenderUtils.drawRoundedRect(left, top, right, bottom, 5, new Color(48, 48, 48, 255));
-        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 5, new Color(60, 60, 60));
+        RenderUtils.drawRoundedRect(left, top, right, bottom, 10, new Color(48, 48, 48, 255));
+        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 10, new Color(60, 60, 60));
         for(CategoryButton button : buttons){
             button.draw(mouseX, mouseY);
         }
-        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 10, height / 7 + 5 + 10, ColorUtils.rainbow(6, 0.5f, 0.5f), true);
-        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 + 5 + 25, ColorUtils.rainbow(6, 0.5f, 0.5f), true);
+        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 + 5 + 15, ColorUtils.rainbow(6, 0.5f, 0.5f), true);
+        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 + 5 + 35, ColorUtils.rainbow(6, 0.5f, 0.5f), true);
         if(currentCategory != null){
-
-            for(Button b : mods){
-                b.setY(b.start - lastOffset);
-                b.draw(mouseX, mouseY);
-            }
-            for(Button b : mods){
-                b.setY(b.start - lastOffset);
-                b.drawString();
-            }
-
-        }
+	
+	            for(Button b : mods){
+	                b.setY(b.start - lastOffset);
+	                b.draw(mouseX, mouseY);
+	            }
+	            for(Button b : mods){
+	                b.setY(b.start - lastOffset);
+	                b.drawString();
+	            }
+	
+	        }
         }
         for(Button b : mods){
             if(b.settingsWindow != null){
@@ -142,8 +142,13 @@ public class ClickGUI extends GuiScreen {
         int left = width / 6;
         int top = height / 7;
         int count = 1;
+        int countMultiplier = 40;
+        
+        if (mc.gameSettings.guiScale > 2) {
+        	countMultiplier = 25;
+        }
         for(Category category : Category.values()){
-            buttons.add(new CategoryButton(left + 15, top + 5 + 44 * count, category, this));
+            buttons.add(new CategoryButton(left + 15, top + 20 + countMultiplier * count, category, this));
             count++;
         }
         super.initGui();
@@ -166,6 +171,11 @@ public class ClickGUI extends GuiScreen {
             }
         }
         super.keyTyped(typedChar, keyCode);
+    }
+    
+    @Override
+    public void onGuiClosed() {
+    	super.onGuiClosed();
     }
     
     @Override

@@ -333,7 +333,6 @@ public class Speed extends Mod {
         }else if(mode.getValString().equalsIgnoreCase("Bhop3")){
         	
         	if (MoveUtils.isMoving()) {
-        		mc.timer.timerSpeed = 0.3f;
                 double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
                 boolean inLiquid = MoveUtils.isInLiquid();
                 if (inLiquid) {

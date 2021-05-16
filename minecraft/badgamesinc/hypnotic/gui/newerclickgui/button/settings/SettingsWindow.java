@@ -20,6 +20,9 @@ public class SettingsWindow {
     int yCount = 0;
     public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 20, false, false, false);
     public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    public static GlyphPageFontRenderer smallBigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 16, false, false, false);
+    public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 14, false, false, false);
+    
     public SettingsWindow(Button parent) {
         yCount = 0;
         this.parent = parent;
@@ -28,17 +31,23 @@ public class SettingsWindow {
         if (Hypnotic.instance.setmgr.getSettingsByMod(parent.mod) != null) {
         	settings = Hypnotic.instance.setmgr.getSettingsByMod(parent.mod);
         }
+        int guiScaleMultiplier = 22;
+        if (Minecraft.getMinecraft().gameSettings.guiScale > 2) {
+        	guiScaleMultiplier = 14;
+        	x = 155;
+        	y = 55;
+        }
         if (settings != null) {
 	        for(Setting set : settings){
 	        	
 		            if(set.isCheck()){
-		                this.components.add(new CheckBox(x + 20 + xCount, y + 10 + count * 22, set, this));
+		                this.components.add(new CheckBox(x + 20 + xCount, y + 10 + count * guiScaleMultiplier, set, this));
 		
 		            }else if(set.isCombo()){
-		                this.components.add(new ComboBox(x + 20 + xCount, y + 10 + count * 22, set, this));
+		                this.components.add(new ComboBox(x + 20 + xCount, y + 10 + count * guiScaleMultiplier, set, this));
 		
 		            }else if(set.isSlider()){
-		                this.components.add(new Slider(x + 20 + xCount, y + 10 + count * 22, set, this));
+		                this.components.add(new Slider(x + 20 + xCount, y + 10 + count * guiScaleMultiplier, set, this));
 		
 		            }
 	        	
@@ -52,13 +61,16 @@ public class SettingsWindow {
     public void draw(int mouseX, int mouseY){
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
-        RenderUtils.drawRoundedRect(x, y, sr.getScaledWidth() - x, sr.getScaledHeight() - y, 5, new Color(48, 48, 48, 255));
+        RenderUtils.drawRoundedRect(x, y, sr.getScaledWidth() - x, sr.getScaledHeight() - y, 10, new Color(48, 48, 48, 255));
 
         for(Component c : components){
         	if (!components.isEmpty())
         		c.draw(mouseX, mouseY);
         }
-        bigFontRenderer.drawString(parent.mod.getDescription(), x + 5, y + 5, -1, true);
+        if (Minecraft.getMinecraft().gameSettings.guiScale <= 2)
+        	bigFontRenderer.drawString(parent.mod.getDescription(), x + 5, y + 5, -1, true);
+        else
+        	smallBigFontRenderer.drawString(parent.mod.getDescription(), x + 5, y + 5, -1, true);
     }
 
     public void mouseClicked(int mouseX, int mouseY){

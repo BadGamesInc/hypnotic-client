@@ -52,37 +52,37 @@ public class CategoryButton {
             case COMBAT:
             	if (isHovered(mouseX, mouseY))
             		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-            	fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);
+            	fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);
                 break;
             case MOVEMENT:
             	if (isHovered(mouseX, mouseY))
             		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-            	fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);
+            	fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);
                 break;
             case PLAYER:
             	if (isHovered(mouseX, mouseY))
             		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-            	fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);
+            	fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);
                 break;
             case MISC:
             	if (isHovered(mouseX, mouseY))
             		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-            	fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);            
+            	fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);            
                 break;
             case WORLD:
             	if (isHovered(mouseX, mouseY))
             		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-            	fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);           
+            	fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);           
                 break;
             case RENDER:
             	if (isHovered(mouseX, mouseY))
             		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-            	fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);      
+            	fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);      
                 break;
 			case GUI:
 				if (isHovered(mouseX, mouseY))
 	        		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
-				fontRenderer.drawString(categoryName, x + 2 - mouseTicks, y + 15 - mouseTicks, color, true);      
+				fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);      
 	            break;
 			default:
 				break;

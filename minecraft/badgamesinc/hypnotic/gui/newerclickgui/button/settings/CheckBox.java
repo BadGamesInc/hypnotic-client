@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 public class CheckBox extends Component{
 	
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 14, false, false, false);
 
     public CheckBox(int x, int y, Setting set, SettingsWindow window){
         super(x,y,set,window);
@@ -19,11 +20,14 @@ public class CheckBox extends Component{
         GlStateManager.enableAlpha();
         GlStateManager.disableBlend();
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f );
-        fontRenderer.drawString(set.getName(),x + 15, y + 2 , -1, true);
+        if (mc.gameSettings.guiScale <= 2)
+        	fontRenderer.drawString(set.getName(),x + 15, y + 2 , -1, true);
+        else
+        	smallFontRenderer.drawString(set.getName(),x + 15, y + 2 , -1, true);
 
-        if(!set.getValBoolean()) {
+        if (!set.getValBoolean()) {
             RenderUtils.drawCircle(x + 4, y + 8, 6, 100, isWithinComponent(mouseX, mouseY) ? 0xFF707070 : 0xFF505050);
-        }else {
+        } else {
             RenderUtils.drawCircle(x + 4, y + 8, 6, 100, -1);
             RenderUtils.drawFilledCircle(x + 4, y + 8, 4, isWithinComponent(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.3f, 0.3f): ColorUtils.rainbow(6, 0.5f, 0.5f));
         }

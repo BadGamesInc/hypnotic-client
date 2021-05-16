@@ -2,12 +2,14 @@ package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import net.minecraft.client.Minecraft;
 
 public class Component {
 
     int x, y;
     Setting set;
     SettingsWindow parent;
+    Minecraft mc = Minecraft.getMinecraft();
     public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
     public Component(int x, int y, Setting set, SettingsWindow parent) {

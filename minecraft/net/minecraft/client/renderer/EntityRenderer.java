@@ -1603,6 +1603,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
 
 	                    nameTags.renderItem(entity1.getEquipmentInSlot(index), (int) (index * 19 / movingArmor) - 40, -10);
+	                    if (entity1.getEquipmentInSlot(index).isItemEnchanted())
+	                    fontRenderer.drawString(entity1.getEquipmentInSlot(index).getEnchantmentTagList() + "", 10, 10, -1, true);
 
 
 	                }

@@ -30,7 +30,7 @@ public class About extends Command {
 	@Override
 	public void onCommand(String command, String[] args) throws Exception 
 	{
-		Wrapper.tellPlayer("You are running Hypnotic " + Hypnotic.instance.clientVersion);
+		Wrapper.tellPlayer("You are running Hypnotic build " + Hypnotic.instance.clientVersion);
 		Wrapper.tellPlayer("There have been " + "[TEMP]" + " new releases since this version");
 	}
 }

@@ -9,6 +9,7 @@ import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 public class ComboBox extends Component {
 	
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 14, false, false, false);
 
     public ComboBox(int x, int y, Setting set, SettingsWindow window){
         super(x, y, set, window);
@@ -17,7 +18,10 @@ public class ComboBox extends Component {
     @Override
     public void draw(int mouseX, int mouseY) {
         RenderUtils.drawRoundedRect(x, y, x + 150, y + 16, 3, isWithinComponent(mouseX, mouseY) ? new Color(100, 100, 100, 255) : new Color(80, 80, 80, 255));
-        fontRenderer.drawString(set.getName() + " : " + set.getValString(),x + 2, y + 1, -1, true);
+        if (mc.gameSettings.guiScale <= 2)
+        	fontRenderer.drawString(set.getName() + " : " + set.getValString(),x + 6, y + 1, -1, true);
+        else
+        	smallFontRenderer.drawString(set.getName() + " : " + set.getValString(),x + 6, y + 1, -1, true);
 
         super.draw(mouseX, mouseY);
     }

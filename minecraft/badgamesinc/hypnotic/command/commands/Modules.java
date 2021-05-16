@@ -34,12 +34,13 @@ public class Modules extends Command {
 	@Override
 	public void onCommand(String command, String[] args) throws Exception 
 	{
-		Wrapper.tellPlayer("Command List: (" + Hypnotic.instance.moduleManager.modules.size() + ")");
+		Wrapper.tellPlayer("Module List: (" + Hypnotic.instance.moduleManager.modules.size() + ")");
 		for(Mod mod : Hypnotic.instance.moduleManager.modules) 
 		{
-			Wrapper.rawTellPlayer("Command: " + mod.displayName);
+			Wrapper.rawTellPlayer("Module: " + mod.displayName);
 			Wrapper.rawTellPlayer("Description: " + mod.getDescription());
 			Wrapper.rawTellPlayer("==========================");
 		}
+		Wrapper.rawTellPlayer(Hypnotic.instance.moduleManager.modules.size() + " total modules");
 	}
 }

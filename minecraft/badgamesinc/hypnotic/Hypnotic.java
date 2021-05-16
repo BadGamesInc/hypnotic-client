@@ -3,6 +3,7 @@ package badgamesinc.hypnotic;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import badgamesinc.hypnotic.command.CommandManager;
@@ -18,6 +19,7 @@ import badgamesinc.hypnotic.settings.SettingsManager;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.util.ResourceLocation;
 
 public class Hypnotic {
@@ -64,6 +66,9 @@ public class Hypnotic {
 		for(Mod m : moduleManager.getModules()) {
 			if(m.getKey() == key) {
 				m.toggle();
+			}
+			if (Minecraft.getMinecraft().currentScreen == null && key == Keyboard.KEY_PERIOD) {
+				Minecraft.getMinecraft().displayGuiScreen(new GuiChat());
 			}
 		}
 	}

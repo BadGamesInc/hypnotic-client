@@ -391,10 +391,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         fontRenderer.drawString("Added .enchant", 24, 82, -1, false);
         
         fontRenderer.drawString("§a+", 16, 92, -1, false);
-        fontRenderer.drawString("Added AutoCaptcha for RedeSky", 24, 92, -1, false);
+        fontRenderer.drawString("Added .about", 24, 92, -1, false);
         
         fontRenderer.drawString("§a+", 16, 102, -1, false);
-        fontRenderer.drawString("New ClickGUI (not finished)", 24, 102, -1, false);
+        fontRenderer.drawString("Added .help", 24, 102, -1, false);
         
         //Changes
         fontRenderer.drawString("§e*", 16, 112, -1, false);
@@ -421,9 +421,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         fontRenderer.drawString("§e*", 16, 182, -1, false);
         fontRenderer.drawString("Rewrote the ClickGUI", 24, 182, -1, false);
         
+        fontRenderer.drawString("§e*", 16, 192, -1, false);
+        fontRenderer.drawString("Replaced retard talk with retard detectore", 24, 192, -1, false);
+        
         //Deletions
-        fontRenderer.drawString("§c-", 16, 192, -1, false);
-        fontRenderer.drawString("Removed Tracers (temp)", 24, 192, -1, false);
+        fontRenderer.drawString("§c-", 16, 202, -1, false);
+        fontRenderer.drawString("Removed Tracers (temp)", 24, 202, -1, false);
         
         /*           */
         String s1 = "Copyright Mojang AB. Do not distribute!";

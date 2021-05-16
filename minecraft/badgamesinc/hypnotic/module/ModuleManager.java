@@ -91,7 +91,7 @@ public class ModuleManager {
 		//Misc
 		modules.add(new ChatSpammer());
 		modules.add(new PizzaHutWY());
-		modules.add(new RetardTalk());
+		modules.add(new RetardDetector());
 		modules.add(new Disabler());
 		modules.add(new PCPinger());
 		modules.add(new ChestStealer());

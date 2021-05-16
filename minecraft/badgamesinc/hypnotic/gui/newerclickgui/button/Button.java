@@ -91,7 +91,11 @@ public class Button {
         GlStateManager.color(1, 1, 1, 1);
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
-        Gui.drawModalRectWithCustomSizedTexture(x - mouseTicks, y - mouseTicks, 0, 0, 550 + mouseTicks, 35 + mouseTicks, 550 + mouseTicks    , 35 + mouseTicks);
+        int guiScaleThing = 0;
+        if (mc.gameSettings.guiScale > 2) {
+        	guiScaleThing = 210;
+        }
+        Gui.drawModalRectWithCustomSizedTexture(x - mouseTicks, y - mouseTicks, 0, 0, 550 + mouseTicks, 35 + mouseTicks, 550 + mouseTicks - guiScaleThing    , 35 + mouseTicks);
 
         GlStateManager.color(1.0f, 1.0f, 1.0f ,1.0f);
         GlStateManager.enableAlpha();
@@ -99,10 +103,18 @@ public class Button {
         int target = mod.isEnabled() ? 518 : 500;
         float diff  = target - last;
         last += diff / 4;
-        for(int i = 0; i < 15; i++){
-            RenderUtils.drawFilledCircle(x + 500 +  i, y + 17, 4, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : new Color(150, 150, 150, 255).getRGB());
+        int guiScaleThing2 = 500;
+        if (mc.gameSettings.guiScale > 2) {
+        	guiScaleThing2 = 310;
         }
-        RenderUtils.drawFilledCircle(x + last, y + 17, 6, -1);
+        for(int i = 0; i < 15; i++){
+            RenderUtils.drawFilledCircle(x + guiScaleThing2 +  i, y + 17, 4, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : new Color(150, 150, 150, 255).getRGB());
+        }
+        int guiScaleThing3 = 0;
+        if (mc.gameSettings.guiScale > 2) {
+        	guiScaleThing3 = 190;
+        }
+        RenderUtils.drawFilledCircle(x + last - guiScaleThing3, y + 17, 6, -1);
     }
 
     public boolean isWithinButton(int mouseX, int mouseY){
