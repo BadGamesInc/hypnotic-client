@@ -20,6 +20,9 @@ public class CommandManager {
 		commands.add(new Load());
 		commands.add(new Seed());
 		commands.add(new Enchant());
+		commands.add(new Help());
+		commands.add(new About());
+		commands.add(new Modules());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {

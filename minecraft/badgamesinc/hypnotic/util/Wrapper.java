@@ -13,6 +13,10 @@ public class Wrapper {
 		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(Hypnotic.instance.prefix + message));
 	}
 	
+	public static void rawTellPlayer(String message) {
+		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
+	}
+	
 	public static Timer getTimer(){
         return Minecraft.getMinecraft().timer;
     }
