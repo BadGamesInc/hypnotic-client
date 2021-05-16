@@ -1,26 +1,14 @@
 package badgamesinc.hypnotic.gui.newclickgui.button;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.lwjgl.input.Keyboard;
-
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.newclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newclickgui.Frame;
-import badgamesinc.hypnotic.gui.newclickgui.settingwindow.SettingsWindow;
-import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.Wrapper;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
 
 public class Button {
 

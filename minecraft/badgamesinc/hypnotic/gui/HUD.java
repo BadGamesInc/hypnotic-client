@@ -22,7 +22,6 @@ import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
 import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.TimerUtils;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;

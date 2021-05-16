@@ -1,28 +1,15 @@
 package badgamesinc.hypnotic.module.render;
 
-import java.awt.Color;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.EventTarget;
-import badgamesinc.hypnotic.event.events.Event3D;
-import badgamesinc.hypnotic.event.events.EventRenderNametag;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
-import badgamesinc.hypnotic.util.FontUtil;
-import badgamesinc.hypnotic.util.font.FontUtils;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class NameTags extends Mod {

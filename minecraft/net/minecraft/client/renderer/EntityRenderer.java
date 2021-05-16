@@ -19,14 +19,11 @@ import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.EventType;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventRenderWorld;
 import badgamesinc.hypnotic.module.movement.Flight;
 import badgamesinc.hypnotic.module.render.NameTags;
 import badgamesinc.hypnotic.module.render.NoRender;
-import badgamesinc.hypnotic.util.FontUtil;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -192,7 +189,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
     private boolean useShader;
     private int frameCount;
     
-    UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Light", 20, 0, 2, 1);
     private GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Light", 20, false, false, false);
 
     public EntityRenderer(Minecraft mcIn, IResourceManager resourceManagerIn)

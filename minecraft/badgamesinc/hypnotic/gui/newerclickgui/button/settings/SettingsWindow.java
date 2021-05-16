@@ -1,17 +1,15 @@
 package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.RenderUtils;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 
 public class SettingsWindow {
     int x = 180;

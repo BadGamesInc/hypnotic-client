@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.RenderUtils;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 
 public class ComboBox extends Component {

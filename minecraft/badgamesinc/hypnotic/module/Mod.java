@@ -1,11 +1,7 @@
 package badgamesinc.hypnotic.module;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.util.RenderUtils;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 
 public class Mod {

@@ -1,7 +1,6 @@
 package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
 import badgamesinc.hypnotic.settings.Setting;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 
 public class Component {

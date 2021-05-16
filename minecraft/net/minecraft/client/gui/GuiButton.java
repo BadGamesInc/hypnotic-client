@@ -1,7 +1,5 @@
 package net.minecraft.client.gui;
 
-import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;

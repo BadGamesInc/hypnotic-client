@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
-import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;
@@ -21,13 +21,14 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 {
     private static final GameSettings.Options[] field_146440_f = new GameSettings.Options[] {GameSettings.Options.FOV};
     private final GuiScreen field_146441_g;
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 20, false, false, false);
 
     /** Reference to the GameSettings object. */
     private final GameSettings game_settings_1;
     private GuiButton field_175357_i;
     private GuiLockIconButton field_175356_r;
     protected String field_146442_a = "Options";
-    public UnicodeFontRenderer ufr = UnicodeFontRenderer.getFontFromAssets("Roboto-Medium", 25, 0, 1, 1);
+
 
     public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_)
     {
@@ -233,7 +234,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        ufr.drawCenteredString(this.field_146442_a, this.width / 2, 10, 16777215);
+        fontRenderer.drawCenteredString(this.field_146442_a, this.width / 2, 10, 16777215, true);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }
