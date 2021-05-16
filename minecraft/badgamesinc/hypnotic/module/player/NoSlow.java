@@ -10,6 +10,7 @@ import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
@@ -30,7 +31,7 @@ public class NoSlow extends Mod {
 	
 	@Override
 	public void onUpdate() {
-		this.setDisplayName("NoSlow §7" + mode.getValString() + "  "); 
+		this.setDisplayName("NoSlow " + ColorUtils.white + mode.getValString() + "  "); 
 	}
 	
 }

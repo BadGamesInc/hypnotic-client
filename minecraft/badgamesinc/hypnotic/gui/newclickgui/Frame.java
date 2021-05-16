@@ -13,10 +13,10 @@ import net.minecraft.client.gui.Gui;
 
 public class Frame {
 
-	float x, y;
+	public float x, y;
 	public float width;
-	float height;
-	float guiColor;
+	public float height;
+	public float guiColor;
 	public boolean extended = false;
 	
 	Category category;
@@ -66,7 +66,6 @@ public class Frame {
 			rainbowOrder = 7;
 		}
 	    guiColor = ColorUtils.rainbow(7, 0.5f, 0.5f, (long) (rainbowOrder * 110));
-	    guiColor = ColorUtils.rainbow(6, 0.5f, 0.5f, (long) (rainbowOrder * 150));
 		
 		if (Button.settingsOpen)
 			return;	

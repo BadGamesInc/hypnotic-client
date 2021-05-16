@@ -11,6 +11,7 @@ import badgamesinc.hypnotic.event.events.EventUpdate;
 import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S0CPacketSpawnPlayer;
 
@@ -48,10 +49,10 @@ public class AntiBot extends Mod {
         }
     }
 
-    @EventTarget
-    public void onUpdate(EventUpdate event) {
+    @Override
+    public void onUpdate() {
         String mode = Hypnotic.instance.setmgr.getSettingByName("AntiBot Mode").getValString();
-        this.setDisplayName("AntiBot \u00A77" + mode);
+        this.setDisplayName("AntiBot " + ColorUtils.white + mode + "  ");
 
         if(mode.equalsIgnoreCase("Watchdog"))
             for (Object entity : mc.theWorld.loadedEntityList)

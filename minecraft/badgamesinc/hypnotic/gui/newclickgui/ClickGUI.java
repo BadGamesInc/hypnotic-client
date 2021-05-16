@@ -10,23 +10,33 @@ import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
 import badgamesinc.hypnotic.gui.clickgui.settings.SettingsManager;
 import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.newclickgui.button.Button;
-import badgamesinc.hypnotic.gui.newclickgui.button.Element;
-import badgamesinc.hypnotic.gui.newclickgui.button.settingelements.ElementSlider;
+import badgamesinc.hypnotic.gui.newclickgui.settingwindow.SettingsWindow;
 import badgamesinc.hypnotic.module.Category;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ResourceLocation;
 
 public class ClickGUI extends GuiScreen {
 
 	public static ClickGUI instance = new ClickGUI();
 	public SettingsManager setmgr;
 	public Button but = null;
-	ArrayList<Frame> frames;
+	public SettingsWindow setWin = null;
+	public ArrayList<Frame> frames;
+	public ArrayList<Button> buttons;
 	public float offset;
+	public int xWidth, xHeight;
+	public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 45, false, false, false);
 	
 	public ClickGUI() {
 		setmgr = Hypnotic.instance.setmgr;
 		frames = new ArrayList<>();
+		buttons = new ArrayList<>();
+		this.xWidth = 20;
+		this.xHeight = 20;
 		
 		offset = 0.1f;
 		for (Category category : Category.values()) {
@@ -44,45 +54,28 @@ public class ClickGUI extends GuiScreen {
 			frame.render(mouseX, mouseY);
 		}
 		
-		for (Frame frame : frames) {
-				for (Button b : frame.buttons) {
-					if (b.extended && b.buttonelements != null && !b.buttonelements.isEmpty()) {
-						double off = 0;
-						Color temp = ColorUtil.getClickGUIColor().darker();
-						int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
-						
-						for (Element e : b.buttonelements) {
-							e.offset = off;
-							e.update();
-							if(Hypnotic.instance.setmgr.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-								Gui.drawRect(e.x, e.y, e.x + e.width + 0, e.y + e.height, outlineColor);
-							}
-							e.drawScreen(mouseX, mouseY, partialTicks);
-							off += e.height;
-						}
-					}
-				}
-		}
+		for(Button b : buttons){
+            but = b;
+        }
+		
+		drawSettings(mouseX, mouseY);
+	
 	}
 	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		if(but != null)return;
-
-		for (Frame frame : frames) {
-				for (Button b : frame.buttons) {
-					if (b.extended) {
-						for (Element e : b.buttonelements) {
-							if (e.mouseClicked(mouseX, mouseY, mouseButton))
-								return;
-						}
-					}
-				}
-		}
+		
+		for(Button b : buttons){
+			but = b;
+        }
 		
 		for (Frame frame : frames) {
 			frame.onClick(mouseX, mouseY, mouseButton);
+		}
+		
+		if (isHoveredOverXButton(mouseX, mouseY) && mouseButton == 0) {
+			Button.settingsOpen = false;
 		}
 		
 		
@@ -90,20 +83,6 @@ public class ClickGUI extends GuiScreen {
 	
 	@Override
 	protected void mouseReleased(int mouseX, int mouseY, int state) {
-		
-		if(but != null)return;
-		
-		for (Frame frame : frames) {
-
-				for (Button b : frame.buttons) {
-					if (b.extended) {
-						for (Element e : b.buttonelements) {
-							e.mouseReleased(mouseX, mouseY, state);
-						}
-					}
-				}
-			
-		}
 		
 		super.mouseReleased(mouseX, mouseY, state);
 	}
@@ -116,24 +95,45 @@ public class ClickGUI extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
-		for (Frame frame : frames) {
-			for (Button b : frame.buttons) {
-				if (b.extended) {
-					for (Element e : b.buttonelements) {
-						if(e instanceof ElementSlider){
-							((ElementSlider)e).dragging = false;
-						}
-					}
-				}
-			}
-		}
+		Button.settingsOpen = false;
 	}
 	
-	public void closeAllSettings() {
-		for (Frame frame : frames) {
-				for (Button button : frame.buttons) {
-					button.extended = false;
+	//Settings window
+		public void drawSettings(int mouseX, int mouseY) {
+			
+				ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+				if (Button.settingsOpen == false)
+					return;
+				
+				Gui.drawRect(sr.getScaledWidth() / 2 - 350, sr.getScaledHeight() / 2 - 175, sr.getScaledWidth() / 2 + 350, sr.getScaledHeight() / 2 + 175, new Color(0, 0, 0, 150).getRGB());
+				//Outline
+				Gui.drawRect(sr.getScaledWidth() / 2 - 350, sr.getScaledHeight() / 2 - 175, sr.getScaledWidth() / 2 - 352, sr.getScaledHeight() / 2 + 175, -1);
+				Gui.drawRect(sr.getScaledWidth() / 2 + 352, sr.getScaledHeight() / 2 - 175, sr.getScaledWidth() / 2 + 350, sr.getScaledHeight() / 2 + 175, -1);
+				Gui.drawRect(sr.getScaledWidth() / 2 - 350, sr.getScaledHeight() / 2 - 175, sr.getScaledWidth() / 2 + 350, sr.getScaledHeight() / 2 - 173, -1);
+				Gui.drawRect(sr.getScaledWidth() / 2 - 350, sr.getScaledHeight() / 2 + 173, sr.getScaledWidth() / 2 + 350, sr.getScaledHeight() / 2 + 175, -1);
+				
+				for (Button button : buttons) {
+					bigFontRenderer.drawString(button.name, sr.getScaledWidth() / 2 - 330, sr.getScaledHeight() / 2 - 165, -1, true);
 				}
+				
+				drawCloseSettingsButton(mouseX, mouseY);
 		}
-	}
+		
+		public void drawCloseSettingsButton(int mouseX, int mouseY) {
+			ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+			int xX = sr.getScaledWidth() / 2 + 320;
+			int xY = sr.getScaledHeight() / 2 - 165;
+			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/clickgui/XButton.png"));
+			
+			Gui.drawModalRectWithCustomSizedTexture(sr.getScaledWidth() / 2 + 320, sr.getScaledHeight() / 2 - 165, 20, 20, 20, 20, 20, 20);
+			if (isHoveredOverXButton(mouseX, mouseY))
+				Gui.drawRect(xX, xY, xX + xWidth, xY + xHeight, new Color(100, 100, 100, 170).getRGB());
+		}
+		
+		public boolean isHoveredOverXButton(int mouseX, int mouseY) {
+			ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+			int xX = sr.getScaledWidth() / 2 + 320;
+			int xY = sr.getScaledHeight() / 2 - 165;
+			return mouseX >= xX && mouseX <= xX + xWidth && mouseY >= xY && mouseY <= xY + xHeight;
+		}
 }

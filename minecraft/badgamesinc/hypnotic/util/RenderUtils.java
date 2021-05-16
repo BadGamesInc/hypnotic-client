@@ -1036,5 +1036,44 @@ public class RenderUtils {
 		     frustrum.setPosition(current.posX, current.posY, current.posZ);
 		     return frustrum.isBoundingBoxInFrustum(bb);
 		 }
+		 
+		 public static void drawFilledCircle(final int xx, final int yy, final float radius, final int color) {
+		        int sections = 50;
+		        double dAngle = 2 * Math.PI / sections;
+		        float x, y;
+
+		        GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+
+		        GL11.glEnable(GL11.GL_BLEND);
+		        GL11.glDisable(GL11.GL_TEXTURE_2D);
+		        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		        GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+
+		        for (int i = 0; i < sections; i++) {
+		            x = (float) (radius * Math.sin((i * dAngle)));
+		            y = (float) (radius * Math.cos((i * dAngle)));
+
+		            GL11.glColor4f(new Color(color).getRed() / 255F, new Color(color).getGreen() / 255F, new Color(color).getBlue() / 255F, new Color(color).getAlpha() / 255F);
+		            GL11.glVertex2f(xx + x, yy + y);
+		        }
+
+		        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+		        GL11.glEnd();
+
+		        GL11.glPopAttrib();
+		    }
+		 
+		 
+		 public static void drawRoundedRect(float left, float top, float right, float bottom, int smooth, Color color){
+		        Gui.drawRect(left + smooth, top, right - smooth, bottom, color.getRGB());
+		        Gui.drawRect(left, top + smooth, right, bottom - smooth, color.getRGB());
+		        drawFilledCircle((int)left + smooth, (int)top + smooth, smooth, color.getRGB());
+		        drawFilledCircle((int)right - smooth, (int)top + smooth, smooth, color.getRGB());
+		        drawFilledCircle((int)right - smooth, (int)bottom - smooth, smooth, color.getRGB());
+		        drawFilledCircle((int)left + smooth, (int)bottom - smooth, smooth, color.getRGB());
+
+		    }
     
 }

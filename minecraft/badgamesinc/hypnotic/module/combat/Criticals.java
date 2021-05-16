@@ -24,10 +24,10 @@ public class Criticals extends Mod {
         Hypnotic.instance.setmgr.rSetting(new Setting("Criticals Mode", this, "Packet", options));
 	}
 
-    @EventTarget
-    public void onUpdate(EventUpdate event) {
-        String mode = Hypnotic.instance.setmgr.getSettingByName("Criticals Mode").getValString();
-        this.setDisplayName("Criticals " + ColorUtils.gray + mode);
+    @Override
+    public void onUpdate() {
+        String mode = Hypnotic.instance.setmgr.getSettingByName("Criticals Mode").getValString() + "  ";
+        this.setDisplayName("Criticals " + ColorUtils.white + mode);
     }
 
     @EventTarget

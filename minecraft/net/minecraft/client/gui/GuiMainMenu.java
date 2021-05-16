@@ -45,6 +45,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final AtomicInteger field_175373_f = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
     private static final Random RANDOM = new Random();
+    private final GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 40, false, false, false);
     private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
     /** Counts the number of screen updates. */
@@ -376,7 +377,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         /* Changelog */
 
-        fontRenderer.drawString("Changes", 4, 4, -1, false);
+        bigFontRenderer.drawString("Changes", 4, 4, -1, false);
         //Additions
         fontRenderer.drawString("§a+", 16, 32, -1, false);
         fontRenderer.drawString("Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed", 24, 32, -1, false);
@@ -424,16 +425,17 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         fontRenderer.drawString("§e*", 16, 172, -1, false);
         fontRenderer.drawString("Improved PC Pinger", 24, 172, -1, false);
         
+        fontRenderer.drawString("§e*", 16, 182, -1, false);
+        fontRenderer.drawString("Rewrote the ClickGUI", 24, 182, -1, false);
+        
         //Deletions
-        fontRenderer.drawString("§c-", 16, 182, -1, false);
-        fontRenderer.drawString("Removed Tracers (temp)", 24, 182, -1, false);
+        fontRenderer.drawString("§c-", 16, 192, -1, false);
+        fontRenderer.drawString("Removed Tracers (temp)", 24, 192, -1, false);
         
         /*           */
-        fontRenderer.drawString(s, 2, this.height - 14, -1, false);
         String s1 = "Copyright Mojang AB. Do not distribute!";
-        fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 4, this.height - 14, -1, false);
         fontRenderer.drawString(s, 2, this.height - 14, -1, true);
-        fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 4, this.height - 14, -1, true);
+        fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 16, this.height - 14, -1, true);
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);

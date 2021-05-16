@@ -84,7 +84,6 @@ public class Scaffold extends Mod {
     private Setting towermove;
     private Setting swing;
     private Setting keepY;
-    public Setting mode;
     int stage = 0;
 
     public Setting delay;
@@ -100,9 +99,7 @@ public class Scaffold extends Mod {
     private EnumFacing currentFacing;
     private boolean rotated = false;
     private TimeHelper timer = new TimeHelper();
-    public Setting eagle;
     public Setting raycast;
-    public Setting expand;
     public Setting legit;
     public Setting boost;
     public Setting redeskyBoost;
@@ -116,16 +113,11 @@ public class Scaffold extends Mod {
         ArrayList<String> options = new ArrayList<>();
 
         ArrayList<String> options1 = new ArrayList<>();
-        options.add("Redesky");
-        options.add("Cubecraft");
-        options.add("Packet");
         options1.add("Redesky");
         options1.add("AAC");
-        Hypnotic.instance.setmgr.rSetting(mode = new Setting("TowerMode", this, "Redesky", options));
         Hypnotic.instance.setmgr.rSetting(scaffoldMode = new Setting("Scaffold Mode", this, "Redesky", options1));
         
         Hypnotic.instance.setmgr.rSetting(delay = new Setting("Delay", this, 0, 0, 1000, true));
-        Hypnotic.instance.setmgr.rSetting(expand = new Setting("Expand", this, 0, 0, 5, false));
         
         Hypnotic.instance.setmgr.rSetting(keeprots = new Setting("KeepRots", this, true));
         Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("SafeWalk", this, false));
@@ -136,7 +128,6 @@ public class Scaffold extends Mod {
         Hypnotic.instance.setmgr.rSetting(towermove = new Setting("TowerMove", this, true));
         Hypnotic.instance.setmgr.rSetting(swing = new Setting("Swing", this, false));
         Hypnotic.instance.setmgr.rSetting(keepY = new Setting("KeepY", this, false));
-        Hypnotic.instance.setmgr.rSetting(eagle = new Setting("Eagle", this, false));
         Hypnotic.instance.setmgr.rSetting(legit = new Setting("Legit", this, true));
         Hypnotic.instance.setmgr.rSetting(keepSprint = new Setting("KeepSprint", this, true));
         Hypnotic.instance.setmgr.rSetting(raycast = new Setting("RayCast", this, false));
@@ -165,7 +156,7 @@ public class Scaffold extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("Scaffold " + ColorUtils.gray + scaffoldMode.getValString() + "  ");
+    	this.setDisplayName("Scaffold " + ColorUtils.white + scaffoldMode.getValString() + "  ");
     }
 
     float lastYaw = 0;
@@ -208,7 +199,7 @@ public class Scaffold extends Mod {
 
                 // tower and towermove
                 if (mc.gameSettings.keyBindJump.isKeyDown() && tower.getValBoolean() && (this.towermove.getValBoolean() || !MoveUtils.isMoving()) && !mc.thePlayer.isPotionActive(Potion.jump)) {
-                    if (mode.getValString().equalsIgnoreCase("Redesky")) {
+
                         EntityPlayerSP player = mc.thePlayer;
                                 if (!MoveUtils.isOnGround(0.79) || mc.thePlayer.onGround) {
                                     player.motionY = 0.41985;
@@ -219,30 +210,6 @@ public class Scaffold extends Mod {
                                     player.motionY = -1;
                                 }
 
-
-
-
-
-                    } else if (mode.getValString().equalsIgnoreCase("Packet")) {
-                        if (mc.thePlayer.onGround) {
-                            mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.99, mc.thePlayer.posZ);
-                            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.41999998688698, mc.thePlayer.posZ, false));
-                            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.7531999805212, mc.thePlayer.posZ, false));
-                        }
-                    } else if (mode.getValString().equalsIgnoreCase("Cubecraft")) {
-                        count++;
-                        mc.thePlayer.motionX = 0;
-                        mc.thePlayer.motionZ = 0;
-                        mc.thePlayer.jumpMovementFactor = 0;
-                        if (MoveUtils.isOnGround(2))
-                            if (count == 1) {
-                                mc.thePlayer.motionY = 0.41;
-                            } else {
-
-                                mc.thePlayer.motionY = 0.47;
-                                count = 0;
-                            }
-                    }
 
                 } else {
                     towerTimer.reset();
@@ -262,16 +229,6 @@ public class Scaffold extends Mod {
 
                 }
             } else {
-                if (eagle.getValBoolean()) {
-                    BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
-                    boolean air = mc.theWorld.getBlockState(pos).getBlock() instanceof BlockAir;
-                    if (air) {
-                        setSneaking(true);
-                    } else {
-                        setSneaking(false);
-                    }
-
-                }
 
                 rotated = false;
                 currentPos = null;
@@ -735,9 +692,6 @@ public class Scaffold extends Mod {
         BlockPos aa = new BlockPos(mc.thePlayer.getPositionVector()).offset(EnumFacing.DOWN).add(0, yValue, 0);
         BlockPos playerpos = aa;
 
-        if(expand.getValInt() > 0 && MoveUtils.isMoving()){
-            playerpos = aa.offset(mc.thePlayer.getHorizontalFacing());
-        }
         boolean tower = !this.towermove.getValBoolean() && this.tower.getValBoolean() && !MoveUtils.isMoving();
         if (!this.blockFly.getValBoolean() && this.keepY.getValBoolean() && !tower) {
             playerpos = new BlockPos(new Vec3(mc.thePlayer.getPositionVector().xCoord, this.startY, mc.thePlayer.getPositionVector().zCoord)).offset(EnumFacing.DOWN);

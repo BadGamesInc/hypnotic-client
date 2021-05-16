@@ -16,6 +16,7 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.TimeHelper;
@@ -69,13 +70,7 @@ public class Speed extends Mod {
         options.add("Bhop2");
         options.add("Bhop3");
         options.add("BhopDamage");
-        //options.add("Bhop");
-        //options.add("ZeltikAC");
         options.add("Gaming");
-        //options.add("CubecraftHop");
-        //options.add("NekoAC");
-        //options.add("Minemen");
-        //options.add("NCP");
         options.add("Gaming2");
         options.add("Y-Port");
         options.add("Redesky LongJump");
@@ -408,7 +403,7 @@ public class Speed extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
         if(event.getState() == Event.State.PRE) {
-            this.setDisplayName("Speed §7" + mode.getValString() + "  ");
+            this.setDisplayName("Speed " + ColorUtils.white + mode.getValString() + "  ");
             switch (mode.getValString()) {
                 case "NCP":
                     if(mc.thePlayer.onGround){
@@ -433,39 +428,8 @@ public class Speed extends Mod {
                 case "Gaming2":
                 	
                     break;
-                /*case "Bhop":
-                    if(mc.thePlayer.onGround){
-                        mc.thePlayer.jump();
-                    }
-                    MoveUtils.setMotion(MoveUtils.getBaseMoveSpeed() * this.speed.getValDouble());
-
-                    MoveUtils.strafe();
-                    break;*/
 
                 case "Gaming":
-
-                  /*double speed = 0.15;
-                    if(mc.thePlayer.isCollidedHorizontally || !MoveUtils.isMoving()){
-                        Gaming = -2;
-                    }
-                    if(MoveUtils.isOnGround(0.001) && MoveUtils.isMoving()){
-                        mstage = 0;
-                        mc.thePlayer.motionY = 0.42;
-                        if(Gaming < 0)
-                            Gaming ++;
-                        if(mc.thePlayer.posY != (int)mc.thePlayer.posY){
-                            Gaming = -1;
-                        }
-                        mc.timer.timerSpeed = 2.001f;
-                    }else{
-                        if(mc.timer.timerSpeed == 2.001f)
-                            mc.timer.timerSpeed = 1;
-                        speed = 0.62-mstage/300 + Gaming/5;
-                        mstage ++;
-
-                    }
-                    MoveUtils.setMotion(speed);
-*/
                    mc.thePlayer.stepHeight = 0.0F;
                     if (mc.thePlayer.isCollidedHorizontally) {
                         this.moveSpeed = 0.0D;
