@@ -16,12 +16,6 @@ public class ArrayListModule extends Mod{
 	
 	@Override
 	public void setup() {
-		ArrayList<String> options = new ArrayList<String>();
-		options.add("Accent");
-		options.add("Chill");
-		options.add("Normal");
-		Hypnotic.instance.setmgr.rSetting(new Setting("Style", this, "Accent", options));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Background", this, true));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Rainbow", this, true));
 	}
 

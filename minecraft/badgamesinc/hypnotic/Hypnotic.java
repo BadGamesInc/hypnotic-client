@@ -1,8 +1,5 @@
 package badgamesinc.hypnotic;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
@@ -12,15 +9,12 @@ import badgamesinc.hypnotic.event.EventManager;
 import badgamesinc.hypnotic.gui.HUD;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
-import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.module.misc.DiscordRPC;
 import badgamesinc.hypnotic.settings.SettingsManager;
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRichPresence;
+import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.util.ResourceLocation;
 
 public class Hypnotic {
 

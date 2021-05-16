@@ -21,12 +21,6 @@ public class Jesus extends Mod implements UpdateListener
 	public final int delay = 4;
 	
 	@Override
-	public void onEnable()
-	{
-		Hypnotic.instance.eventManager.register(UpdateListener.class);
-	}
-	
-	@Override
 	public void onUpdate()
 	{
 		if(!mc.gameSettings.keyBindSneak.pressed)
@@ -43,12 +37,6 @@ public class Jesus extends Mod implements UpdateListener
 				
 				ticksOutOfWater++;
 			}
-	}
-	
-	@Override
-	public void onDisable()
-	{
-		Hypnotic.instance.eventManager.unregister(UpdateListener.class);
 	}
 	
 	public boolean isOverWater()

@@ -2,7 +2,10 @@ package badgamesinc.hypnotic.gui.newerclickgui.button;
 
 import java.awt.Color;
 
+import org.lwjgl.input.Keyboard;
+
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.newerclickgui.button.settings.Keybind;
 import badgamesinc.hypnotic.gui.newerclickgui.button.settings.SettingsWindow;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
@@ -134,6 +137,17 @@ public class Button {
                 settingsWindow = new SettingsWindow(this);
             }
         }
+    }
+    
+    public void keyTyped(char typedChar, int keyCode) {
+    	if (Keybind.listening) {
+    		if (keyCode != Keyboard.KEY_ESCAPE)
+    			mod.setKey(keyCode);
+    		 else
+    			mod.setKey(Keyboard.KEY_NONE);
+    		
+    		Keybind.listening = false;
+    	}
     }
 
     public void drawString(){

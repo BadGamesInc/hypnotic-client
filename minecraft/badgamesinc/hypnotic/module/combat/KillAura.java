@@ -91,7 +91,7 @@ public class KillAura extends Mod {
 
     @EventTarget
     public void onPre(EventMotionUpdate event) {
-    	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
+    	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled() ) {
     		return;
     	}
     	if (event.getState() == Event.State.PRE) {

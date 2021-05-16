@@ -37,6 +37,9 @@ public class SettingsWindow {
         	x = 155;
         	y = 55;
         }
+        for (Component c : components) {
+        	//components.add(new Keybind(x + 20, y + 10, null, this));
+        }
         if (settings != null) {
 	        for(Setting set : settings){
 	        	

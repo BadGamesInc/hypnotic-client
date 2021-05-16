@@ -2,7 +2,10 @@ package badgamesinc.hypnotic.module;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.TimeHelper;
+import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 
 public class Mod {
 
@@ -13,6 +16,9 @@ public class Mod {
 	public String displayName;
 	private String description;
 	private Category category;
+	private TimeHelper timer = new TimeHelper();
+	
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 	
 	private long currentMS = 0L;
 	protected long lastMS = -1L;
@@ -20,7 +26,7 @@ public class Mod {
 	public float mSize;
     public float lastSize;
     
-    public transient float animation = 0;
+    public long start = 0;
 	
 	public Mod(String name, int key, Category category, String description) {
 		this.name = name;
@@ -63,11 +69,17 @@ public class Mod {
 	public void onUpdate() {}
 	public void onEnable() {
 		Hypnotic.instance.eventManager.register(this);
+		
+		mSize = 0;
+        lastSize = fontRenderer.getStringWidth(this.getDisplayName());
 	}
 	public void onDisable() {
 		Hypnotic.instance.eventManager.unregister(this);
 		RenderUtils.resetPlayerPitch();
 		RenderUtils.resetPlayerYaw();
+		
+		mSize = fontRenderer.getStringWidth(this.getDisplayName());
+        lastSize =0;
 	}
 	public void setup() {}
 	
@@ -91,9 +103,15 @@ public class Mod {
 		if (enabled){
 			if (Hypnotic.instance.eventManager != null)
             Hypnotic.instance.eventManager.register(this);
+			
+			mSize = 0;
+            lastSize = fontRenderer.getStringWidth(this.getDisplayName());
         } else {
         	if (Hypnotic.instance.eventManager != null)
             Hypnotic.instance.eventManager.unregister(this);
+        	
+        	mSize = fontRenderer.getStringWidth(this.getDisplayName());
+            lastSize = 0;
         }
         this.enabled = enabled;
         if(Hypnotic.instance.saveload != null){

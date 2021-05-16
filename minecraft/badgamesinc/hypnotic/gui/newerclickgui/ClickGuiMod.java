@@ -14,7 +14,7 @@ public class ClickGuiMod extends Mod {
 	public Setting mode;
 	
 	public ClickGuiMod() {
-		super("ClickGUI", Keyboard.KEY_RSHIFT, Category.RENDER, "The ClickGUI (now epic gaming)");
+		super("ClickGUI", Keyboard.KEY_RSHIFT, Category.GUI, "The ClickGUI (now epic gaming)");
 		ArrayList<String> options = new ArrayList<>();
     	options.add("New");
     	Hypnotic.instance.setmgr.rSetting(mode = new Setting("Design", this, "New", options));

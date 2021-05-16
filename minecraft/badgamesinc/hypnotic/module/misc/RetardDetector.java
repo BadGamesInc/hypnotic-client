@@ -24,7 +24,7 @@ public class RetardDetector extends Mod {
             String[] strings = packet.getChatComponent().getUnformattedText().split(" ");    
             String retard = strings[0];
 
-            if (message.contains("try FDP") || message.contains("try fdp") || message.contains("best Liquidbounce config")) {
+            if (message.contains("Try FDP") || message.contains("try fdp") || message.contains("best Liquidbounce config")) {
             	mc.thePlayer.sendChatMessage("[HYPNOTIC RETARD DETECTOR] " + retard + " is retarded");
             }
         }

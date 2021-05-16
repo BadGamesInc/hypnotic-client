@@ -38,7 +38,7 @@ public class Flight extends Mod implements UpdateListener{
 		options.add("Redesky Fly");
 		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Mode", this, "Vanilla", options));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Speed", this, 1, 0, 10, false));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Vanilla kick bypass", this, true));	
+		Hypnotic.instance.setmgr.rSetting(new Setting("Vanilla kick bypass", this, false));	
 		
 	}
 
@@ -90,22 +90,6 @@ public class Flight extends Mod implements UpdateListener{
 			
 			C04PacketPlayerPosition packet = new C04PacketPlayerPosition(mc.thePlayer.posX, y, mc.thePlayer.posZ, true);
 			mc.thePlayer.sendQueue.addToSendQueue(packet);
-		}
-	}
-	
-	@Override
-	public void onEnable()
-	{
-		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
-			double startX = mc.thePlayer.posX;
-			startY = mc.thePlayer.posY;
-			double startZ = mc.thePlayer.posZ;
-			for(int i = 0; i < 4; i++)
-			{
-				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(startX, startY + 1.01, startZ, false));
-				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(startX, startY, startZ, false));
-			}
-			mc.thePlayer.jump();
 		}
 	}
 	

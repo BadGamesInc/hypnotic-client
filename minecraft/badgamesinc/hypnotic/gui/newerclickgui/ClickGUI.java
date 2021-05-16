@@ -59,8 +59,8 @@ public class ClickGUI extends GuiScreen {
         if (Button.settingsWindow == null) {
         this.prepareScissorBox(left, top, right, bottom);
         GL11.glEnable(3089);
-        RenderUtils.drawRoundedRect(left, top, right, bottom, 10, new Color(48, 48, 48, 255));
-        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 10, new Color(60, 60, 60));
+        RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, 255));
+        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60));
         for(CategoryButton button : buttons){
             button.draw(mouseX, mouseY);
         }
@@ -163,8 +163,9 @@ public class ClickGUI extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         for(Button b : mods){
-            if(b.settingsWindow != null){
-                if(keyCode == 1){
+            if (b.settingsWindow != null) {
+            	b.keyTyped(typedChar, keyCode);
+                if (keyCode == 1) {
                     b.settingsWindow = null;
                 }
                 return;
@@ -175,6 +176,7 @@ public class ClickGUI extends GuiScreen {
     
     @Override
     public void onGuiClosed() {
+    	Hypnotic.instance.saveload.save();
     	super.onGuiClosed();
     }
     
