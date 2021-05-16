@@ -7,10 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.network.play.server.S02PacketChat;
 
 public class KillSults extends Mod {

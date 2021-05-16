@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.Panel;
-import badgamesinc.hypnotic.gui.clickgui.elements.ModuleButton;
-import badgamesinc.hypnotic.gui.clickgui.settings.SettingsManager;
-import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.gui.newclickgui.button.Button;
 import badgamesinc.hypnotic.gui.newclickgui.settingwindow.SettingsWindow;
 import badgamesinc.hypnotic.module.Category;
+import badgamesinc.hypnotic.settings.SettingsManager;
+import badgamesinc.hypnotic.util.ColorUtil;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

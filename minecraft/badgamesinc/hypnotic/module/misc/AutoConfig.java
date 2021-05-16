@@ -3,13 +3,13 @@ package badgamesinc.hypnotic.module.misc;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
-import badgamesinc.hypnotic.gui.clickgui.settings.SettingsManager;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.module.movement.Speed;
+import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.SettingsManager;
 import badgamesinc.hypnotic.util.Wrapper;
 
 public class AutoConfig extends Mod {

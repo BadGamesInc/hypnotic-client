@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.client.Minecraft;
 
 //Probably also doesnt work

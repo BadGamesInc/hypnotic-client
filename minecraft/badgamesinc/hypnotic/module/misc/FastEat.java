@@ -1,9 +1,9 @@
 package badgamesinc.hypnotic.module.misc;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.item.ItemFood;
 import net.minecraft.network.play.client.C03PacketPlayer;
 

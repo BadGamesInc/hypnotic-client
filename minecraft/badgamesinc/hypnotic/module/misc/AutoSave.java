@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.TimerUtils;
 
 public class AutoSave extends Mod {

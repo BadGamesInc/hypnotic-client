@@ -128,6 +128,7 @@ public class Button {
 
     public void drawString(){
         fontRenderer.drawString(mod.getName(), x + 20, y + 35 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1, true);
+        fontRenderer.drawString("+", x + 528, y + 35 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1, true);
     }
 
     public Category getCategory() {

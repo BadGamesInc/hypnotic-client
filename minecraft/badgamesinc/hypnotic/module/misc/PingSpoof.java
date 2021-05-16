@@ -8,9 +8,9 @@ import org.lwjgl.input.Keyboard;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventSendPacket;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.TimeHelper;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 

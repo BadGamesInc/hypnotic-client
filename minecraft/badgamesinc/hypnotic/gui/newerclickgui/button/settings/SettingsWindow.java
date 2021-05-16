@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
+import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.font.UnicodeFontRenderer;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;

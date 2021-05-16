@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event2D;
-import badgamesinc.hypnotic.gui.clickgui.util.ColorUtil;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.render.EspUtil;

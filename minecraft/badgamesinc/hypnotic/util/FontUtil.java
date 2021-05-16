@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.gui.clickgui.util;
+package badgamesinc.hypnotic.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

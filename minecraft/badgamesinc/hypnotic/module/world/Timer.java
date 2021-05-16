@@ -3,7 +3,7 @@ package badgamesinc.hypnotic.module.world;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
+import badgamesinc.hypnotic.settings.Setting;
 
 
 public class Timer extends Mod {

@@ -1,10 +1,10 @@
 package badgamesinc.hypnotic.module.movement;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.player.Scaffold;
+import badgamesinc.hypnotic.settings.Setting;
 
 public class Sprint extends Mod {
 	

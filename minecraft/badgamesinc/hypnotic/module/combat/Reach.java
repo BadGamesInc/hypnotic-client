@@ -3,9 +3,9 @@ package badgamesinc.hypnotic.module.combat;
 import com.ibm.icu.text.DecimalFormat;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.Setting;
 
 public class Reach extends Mod
 {

@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.gui.clickgui.settings;
+package badgamesinc.hypnotic.settings;
 
 import java.util.ArrayList;
 

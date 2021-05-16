@@ -2,9 +2,9 @@ package badgamesinc.hypnotic.module.combat;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
-import badgamesinc.hypnotic.gui.clickgui.settings.Setting;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.entity.Entity;
