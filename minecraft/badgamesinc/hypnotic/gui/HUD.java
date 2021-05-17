@@ -16,6 +16,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.gui.ArrayListModule;
 import badgamesinc.hypnotic.module.gui.Logo;
 import badgamesinc.hypnotic.module.render.TargetHUD;
 import badgamesinc.hypnotic.util.ColorUtil;
@@ -77,9 +78,11 @@ public class HUD {
 		renderTargetHUD();
 		renderArrayList(new ScaledResolution(mc));    
         
+		ScaledResolution scale = new ScaledResolution(mc);
+		
 		if(Hypnotic.instance.moduleManager.getModuleByName("PC Pinger").isEnabled()) 
 		{
-			fontRenderer4.drawCenteredString("PINGING PC", sr.getScaledWidth(), sr.getScaledHeight() - 150, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
+			fontRenderer4.drawString("PINGING PC", scale.getScaledWidth() / 2 - fontRenderer4.getStringWidth("PINGING PC") / 2, scale.getScaledHeight() / 10, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
         }
 		
 		if(Hypnotic.instance.moduleManager.getModuleByName("Info").isEnabled()) 
@@ -156,7 +159,7 @@ public class HUD {
             for (Mod m : modules) {
             	if(Hypnotic.instance.setmgr != null && Hypnotic.instance.setmgr.getSettingByName("Rainbow") != null) {
         			if(Hypnotic.instance.setmgr.getSettingByName("Rainbow").getValBoolean()) {
-        				color = ColorUtils.rainbow(4.0f, 0.6f, 1f, count * 120);
+        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
         			} else {
         				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
         			}
@@ -166,7 +169,7 @@ public class HUD {
                 if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
                     GlStateManager.enableBlend();
                     Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, new Color(0, 0, 0, 150).getRGB());
+                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, new Color(0, 0, 0, 180).getRGB());
                     Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, color);
                     Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(m2.getDisplayName()) - 11 + 1, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 3, color);
                     fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + 1, color, true);

@@ -80,7 +80,7 @@ public class TargetStrafe extends Mod {
     }
 
     private void drawCircle(Entity entity, float partialTicks, double rad, double height) {
-    	if(!Hypnotic.instance.moduleManager.getModule(Speed.class).isEnabled() || !Hypnotic.instance.moduleManager.getModule(Flight.class).isEnabled()) {
+    	if(!Hypnotic.instance.moduleManager.getModule(Speed.class).isEnabled()) {
     		return;
     	}
     	glPushMatrix();

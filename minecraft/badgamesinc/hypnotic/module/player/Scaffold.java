@@ -107,7 +107,7 @@ public class Scaffold extends Mod {
 
 
     public Scaffold() {
-        super("Scaffold", Keyboard.KEY_G, Category.PLAYER, "Places blocks underneath you");
+        super("Scaffold", Keyboard.KEY_R, Category.PLAYER, "Places blocks underneath you");
         ArrayList<String> options = new ArrayList<>();
 
         ArrayList<String> options1 = new ArrayList<>();

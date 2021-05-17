@@ -63,7 +63,7 @@ public class Speed extends Mod {
 
 
     public Speed(){
-        super("Speed", Keyboard.KEY_V, Category.MOVEMENT, "Move faster");
+        super("Speed", Keyboard.KEY_J, Category.MOVEMENT, "Move faster");
         ArrayList<String> options = new ArrayList<>();
         options.add("NCPBhop");
         options.add("BhopYPort");

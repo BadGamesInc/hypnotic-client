@@ -49,7 +49,7 @@ public class KillAura extends Mod {
     public Setting ESP;
 
     public KillAura() {
-        super("KillAura", Keyboard.KEY_R, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
+        super("KillAura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
     }
 
     @Override

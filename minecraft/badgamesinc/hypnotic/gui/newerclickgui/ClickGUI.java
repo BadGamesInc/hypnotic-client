@@ -14,7 +14,9 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.TimerUtils;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.render.AnimationUtils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -27,6 +29,10 @@ public class ClickGUI extends GuiScreen {
     public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
     int offset = 0;
     int lastOffset = 0;
+    double divisor = -7;
+    double fadeIn = 0;
+    public TimerUtils timer = new TimerUtils();
+    
     public ClickGUI(){}
 
     @Override
@@ -59,8 +65,9 @@ public class ClickGUI extends GuiScreen {
         if (Button.settingsWindow == null) {
         this.prepareScissorBox(left, top, right, bottom);
         GL11.glEnable(3089);
-        RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, 255));
-        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60));
+        boolean uglyAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Fade in (ugly)");
+        RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, uglyAnimation ? (int) fadeIn : 255));
+        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60, uglyAnimation ? (int) fadeIn : 255));
         for(CategoryButton button : buttons){
             button.draw(mouseX, mouseY);
         }
@@ -140,6 +147,7 @@ public class ClickGUI extends GuiScreen {
     @Override
     public void initGui() {
     	
+    	
         int left = width / 6;
         int top = height / 7;
         int count = 1;
@@ -148,7 +156,8 @@ public class ClickGUI extends GuiScreen {
         if (mc.gameSettings.guiScale > 2) {
         	countMultiplier = 25;
         }
-        for(Category category : Category.values()){
+        for (Category category : Category.values()) {
+        	this.currentCategory = Category.COMBAT;
             buttons.add(new CategoryButton(left + 15, top + 20 + countMultiplier * count, category, this));
             count++;
         }
@@ -158,7 +167,25 @@ public class ClickGUI extends GuiScreen {
     public void prepareScissorBox(final float x, final float y, final float x2, final float y2) {
         final ScaledResolution scale = new ScaledResolution(this.mc);
         final int factor = scale.getScaleFactor();
-        GL11.glScissor((int) (x * factor), (int) ((scale.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
+        boolean uglyAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Fade in (ugly)");
+        boolean slideAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Slide");
+        if (uglyAnimation) {
+	        if (timer.hasTimeElapsed(50L, false)) {
+		        if (fadeIn < 255)
+		        fadeIn += 5;
+	        }
+        } else if (slideAnimation) {
+        	if (timer.hasTimeElapsed(50L, false)) {
+	        	if (mc.gameSettings.guiScale <= 2) {
+		        	if (divisor < 1.9)
+		        	divisor += 0.2;
+	        	} else {
+	        		if (divisor < 3)
+	    	        	divisor += 0.2;
+	        	}
+	        }
+        }
+        GL11.glScissor((int) (x * divisor), (int) ((scale.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
 
     @Override

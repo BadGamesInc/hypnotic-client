@@ -40,7 +40,7 @@ public class AntiBot extends Mod {
     private Map<Integer, Double> distanceMap = new HashMap<>();
     private Set<Integer> swingSet = new HashSet<>();
     public AntiBot() {
-        super("AntiBot", Keyboard.KEY_NONE, Category.MISC, "Removes bot entities from your game");
+        super("AntiBot", Keyboard.KEY_NONE, Category.COMBAT, "Removes bot entities from your game");
         ArrayList<String> options = new ArrayList<>();
         options.add("Advanced");
         options.add("Watchdog");
