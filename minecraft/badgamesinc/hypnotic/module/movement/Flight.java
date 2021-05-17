@@ -14,6 +14,7 @@ import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.AxisAlignedBB;

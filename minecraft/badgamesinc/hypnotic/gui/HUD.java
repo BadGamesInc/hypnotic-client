@@ -111,10 +111,10 @@ public class HUD {
 			}
 			// ping
 			if(!mc.isSingleplayer()) {
-				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 70  , -1, true);
+				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 90  , -1, true);
 			}
 			else {
-				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 70  , -1, true);
+				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 90  , -1, true);
 			}
         }
 		
@@ -138,7 +138,6 @@ public class HUD {
 	
 	public void renderArrayList(ScaledResolution sr) {
 		Color temp = ColorUtil.getClickGUIColor().darker();
-		String theme = Hypnotic.instance.setmgr.getSettingByName("Style").getValString();
 		final int height = sr.getScaledHeight();    
 		final int width = sr.getScaledWidth();	
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
@@ -164,10 +163,10 @@ public class HUD {
                 if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
                     GlStateManager.enableBlend();
                     Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, new Color(0, 0, 0, 150).getRGB());
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 6 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, color);
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(m2.getDisplayName()) - 7 + 1, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 3, color);
-                    fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 4 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + 1, color, true);
+                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, new Color(0, 0, 0, 150).getRGB());
+                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 2)), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, color);
+                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 2, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(m2.getDisplayName()) - 11 + 1, count * (fontRenderer.getFontHeight() + 2) + fontRenderer.getFontHeight() + 3, color);
+                    fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 2) + 1, color, true);
                     count++;
 
 

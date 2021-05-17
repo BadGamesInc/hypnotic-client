@@ -9,6 +9,7 @@ import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
@@ -98,11 +99,13 @@ public class NameTags extends Mod {
             GlStateManager.depthMask(false);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
 
+            boolean isDeveloper = entity1.getName().equalsIgnoreCase("BadGamesInc") || entity1.getName().equalsIgnoreCase("KawaiiZenbo") || entity1.getName().equalsIgnoreCase("PowerMacG5") || entity1.getName().equalsIgnoreCase("PCPinger");
+            
 
             String colorCode = entity1.getHealth() > 15 ? "\247a" : entity1.getHealth() > 10 ? "\247e" : entity1.getHealth() > 7 ? "\2476" : "\247c";
             int colorrectCode = entity1.getHealth() > 15 ? 0xff4DF75B : entity1.getHealth() > 10 ? 0xffF1F74D : entity1.getHealth() > 7 ? 0xffF7854D : 0xffF7524D;
             String thing = entity1.getName() + " " + colorCode + (int) entity1.getHealth();
-            float namewidth = (float) fontRenderer.getStringWidth(thing) + 0;
+            float namewidth = (float) fontRenderer.getStringWidth(thing) + fontRenderer.getStringWidth((isDeveloper ? ColorUtils.purple + " DEV" : "")) + 0;
 
 
             Gui.drawRect(-namewidth / 2 - 2, 42, namewidth / 2 + 2, 40, 0x90080808);
@@ -113,9 +116,8 @@ public class NameTags extends Mod {
 
             if (background.getValBoolean())
                 Gui.drawRect(-namewidth / 2 - 15, 20, namewidth / 2 + 15, 40, 0x90202020);
-
-
-            fontRenderer.drawString(entity1.getName(), -namewidth / 2 - 15 + 4, 23, -1, true);
+            
+            fontRenderer.drawString(entity1.getName() + (isDeveloper ? ColorUtils.purple + "  DEV" : ""), -namewidth / 2 - 15 + 4, 23, -1, true);
             fontRenderer.drawString(colorCode + (int) entity1.getHealth(), namewidth / 2, 23, -1, true);
 
             GlStateManager.disableBlend();

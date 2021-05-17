@@ -139,6 +139,7 @@ public class ClickGUI extends GuiScreen {
 
     @Override
     public void initGui() {
+    	
         int left = width / 6;
         int top = height / 7;
         int count = 1;

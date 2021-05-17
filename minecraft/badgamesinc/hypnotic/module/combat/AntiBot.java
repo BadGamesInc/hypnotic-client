@@ -115,8 +115,6 @@ public class AntiBot extends Mod {
         if(mode.equalsIgnoreCase("Cubecraft")){
             for (Object entity : mc.theWorld.loadedEntityList)
                 if (((Entity) entity).isInvisible() || entity == EntityArmorStand) {
-                    //DivineClientB1.addChatMessage("Bot Detected. Removing Entity");
-                    //mc.theWorld.removeEntity((Entity) entity);
                     this.bots.add((EntityLivingBase)entity);
                 }else {
                     this.bots.remove(entity);
