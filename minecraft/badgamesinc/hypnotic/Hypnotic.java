@@ -16,6 +16,7 @@ import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.enchantment.EnchantmentManager;
 
 public class Hypnotic {
 
@@ -28,6 +29,7 @@ public class Hypnotic {
 	public static FontManager fm;
 	public SaveLoad saveload;
 	public DiscordRP discordRP;
+	public EnchantmentManager enchantmentManager;
 	private Random r = new Random();
 	
 	public static final String clientName = "Hypnotic", clientVersion = "r1006", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
@@ -41,6 +43,7 @@ public class Hypnotic {
 		hud = new HUD();
 		saveload = new SaveLoad();
 		discordRP = new DiscordRP();
+		enchantmentManager = new EnchantmentManager();
 		Display.setTitle(clientName + " " + clientVersion);
 		eventManager.register(this);
 		discordRP.start();

@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
 import java.awt.Color;
 
+import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
@@ -40,8 +41,8 @@ public class Slider extends Component{
 
         progress = this.set.getValDouble() / this.set.getMax();
         Gui.drawRect(x, y + height / 2 - 1, x + width, y + height / 2 + 1, new Color(150, 150, 150, 255).getRGB());
-        Gui.drawRect(x, y + height / 2 - 1, (this.x + (double)width * progress), y + height / 2 + 1, isWithinComponent(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.08f, 0.08f) : ColorUtils.rainbow(6, 0.2f, 0.2f));
-        RenderUtils.drawFilledCircle((int) (this.x + (double)width * progress)    , y + height / 2, 3, isWithinComponent(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.3f, 0.3f) : ColorUtils.rainbow(6, 0.5f, 0.5f));
+        Gui.drawRect(x, y + height / 2 - 1, (this.x + (double)width * progress), y + height / 2 + 1, isWithinComponent(mouseX, mouseY) ? ClickGUI.color : ClickGUI.color);
+        RenderUtils.drawFilledCircle((int) (this.x + (double)width * progress)    , y + height / 2, 3, isWithinComponent(mouseX, mouseY) ? ClickGUI.color : ClickGUI.color);
         if (mc.gameSettings.guiScale <= 2)
         	fontRenderer.drawString(this.set.getName() + " : " + (this.set.onlyInt() ? (double)((int)this.set.getValDouble()) : (double)Math.round(this.set.getValDouble() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
         else

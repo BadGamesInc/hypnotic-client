@@ -135,10 +135,10 @@ public class HUD {
 		
 		if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Text")) {
 			fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
-			fontRenderer3.drawString(ColorUtils.white + "ypnotic " + ColorUtils.reset, 9.5, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
+			fontRenderer3.drawString(ColorUtils.white + "ypnotic " + ColorUtils.reset, 12, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
 		} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Image")) {
-			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/purple.png"));
-			Gui.drawModalRectWithCustomSizedTexture(4, 4, 80, 20,  80, 20, 80, 20);
+			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/white.png"));
+			Gui.drawModalRectWithCustomSizedTexture(4, 4, 60, 15, 60, 15, 60, 15);
 		}
 	}
 	

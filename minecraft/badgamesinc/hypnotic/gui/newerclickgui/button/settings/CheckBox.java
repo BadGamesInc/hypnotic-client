@@ -1,5 +1,6 @@
 package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
+import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
@@ -29,7 +30,7 @@ public class CheckBox extends Component{
             RenderUtils.drawCircle(x + 4, y + 8, 6, 100, isWithinComponent(mouseX, mouseY) ? 0xFF707070 : 0xFF505050);
         } else {
             RenderUtils.drawCircle(x + 4, y + 8, 6, 100, -1);
-            RenderUtils.drawFilledCircle(x + 4, y + 8, 4, isWithinComponent(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.3f, 0.3f): ColorUtils.rainbow(6, 0.5f, 0.5f));
+            RenderUtils.drawFilledCircle(x + 4, y + 8, 4, isWithinComponent(mouseX, mouseY) ? ClickGUI.color: ClickGUI.color);
         }
         super.draw(mouseX, mouseY);
     }

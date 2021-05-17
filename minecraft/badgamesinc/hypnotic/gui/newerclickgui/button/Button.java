@@ -5,6 +5,7 @@ import java.awt.Color;
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newerclickgui.button.settings.Keybind;
 import badgamesinc.hypnotic.gui.newerclickgui.button.settings.SettingsWindow;
 import badgamesinc.hypnotic.module.Category;
@@ -111,7 +112,7 @@ public class Button {
         	guiScaleThing2 = 310;
         }
         for(int i = 0; i < 15; i++){
-            RenderUtils.drawFilledCircle(x + guiScaleThing2 +  i, y + 17, 4, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : new Color(150, 150, 150, 255).getRGB());
+            RenderUtils.drawFilledCircle(x + guiScaleThing2 +  i, y + 17, 4, mod.isEnabled() ? ClickGUI.color : new Color(150, 150, 150, 255).getRGB());
         }
         int guiScaleThing3 = 0;
         if (mc.gameSettings.guiScale > 2) {
@@ -151,8 +152,8 @@ public class Button {
     }
 
     public void drawString(){
-        fontRenderer.drawString(mod.getName(), x + 20, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1, true);
-        fontRenderer.drawString("+", x + 528, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1, true);
+        fontRenderer.drawString(mod.getName(), x + 20, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ClickGUI.color : -1, true);
+        fontRenderer.drawString("+", x + 528, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ClickGUI.color : -1, true);
     }
 
     public Category getCategory() {

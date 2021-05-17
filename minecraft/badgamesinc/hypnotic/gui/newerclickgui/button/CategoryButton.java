@@ -47,7 +47,7 @@ public class CategoryButton {
         
         String categoryName = Character.toUpperCase(category.name().toLowerCase().charAt(0)) + category.name().toLowerCase().substring(1);
 		
-        int color = parent.currentCategory == this.category ? ColorUtils.rainbow(6, 0.5f, 0.5f) : (isHovered(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1);
+        int color = parent.currentCategory == this.category ? ClickGUI.color : (isHovered(mouseX, mouseY) ? ClickGUI.color : -1);
         switch(category){
             case COMBAT:
             	if (isHovered(mouseX, mouseY))

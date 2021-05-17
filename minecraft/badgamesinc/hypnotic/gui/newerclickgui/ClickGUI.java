@@ -12,6 +12,7 @@ import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
 import badgamesinc.hypnotic.gui.newerclickgui.button.CategoryButton;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.util.ColorUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
@@ -25,6 +26,7 @@ public class ClickGUI extends GuiScreen {
     public Category currentCategory;
     ArrayList<CategoryButton> buttons = new ArrayList<>();
     ArrayList<Button> mods = new ArrayList<>();
+    public static int color = ColorUtils.rainbow(6, 0.5f, 0.5f);
     public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 36, false, false, false);
     public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
     int offset = 0;
@@ -71,8 +73,8 @@ public class ClickGUI extends GuiScreen {
         for(CategoryButton button : buttons){
             button.draw(mouseX, mouseY);
         }
-        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 + 5 + 15, ColorUtils.rainbow(6, 0.5f, 0.5f), true);
-        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 + 5 + 35, ColorUtils.rainbow(6, 0.5f, 0.5f), true);
+        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 + 5 + 15, color, true);
+        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 + 5 + 35, color, true);
         if(currentCategory != null){
 	
 	            for(Button b : mods){
@@ -85,6 +87,14 @@ public class ClickGUI extends GuiScreen {
 	            }
 	
 	        }
+        }
+        if(!Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) 
+        {
+        	this.color = ColorUtil.getClickGUIColor().getRGB();
+        }
+        else 
+        {
+        	this.color = ColorUtils.rainbow(6, 0.5f, 0.5f);
         }
         for(Button b : mods){
             if(b.settingsWindow != null){
@@ -175,7 +185,7 @@ public class ClickGUI extends GuiScreen {
 		        fadeIn += 5;
 	        }
         } else if (slideAnimation) {
-        	if (timer.hasTimeElapsed(50L, false)) {
+        	if (timer.hasTimeElapsed(25L, false)) {
 	        	if (mc.gameSettings.guiScale <= 2) {
 		        	if (divisor < 1.9)
 		        	divisor += 0.2;
