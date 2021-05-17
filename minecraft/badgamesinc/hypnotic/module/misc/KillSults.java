@@ -17,8 +17,7 @@ public class KillSults extends Mod {
 	
 	public Setting messageSpam;
 	
-	String allowedChars =
-			"会意字會意字也馳驰施弓新隸體新隶体中國必亡漢字不滅天婦羅天麩羅亜米利加隸書隶书";
+	String allowedChars = "会意字會意字也馳驰施弓新隸體新隶体中國必亡漢字不滅天婦羅天麩羅亜米利加隸書隶书";
 	
 	public final int OUTPUT_STRING_LENGTH = 7;
 	
@@ -35,7 +34,16 @@ public class KillSults extends Mod {
             S02PacketChat packet = (S02PacketChat) event.getPacket();
             
             String message = packet.getChatComponent().getUnformattedText();
-            String[] killsults = {"You just got killed by Hypnotic ( https://github.com/BadGamesInc/hypnotic-client )", "Hypnotic is better than liquidbounce", "is bad, get good with Hypnotic", "Hypnotic is FREE and OPEN SOURCE", "Your shitty liquidbounce config cant save you from hypnotic client", "Tell me what other killsults I should add :)"};
+            String[] killsults = 
+            {
+            	"You just got killed by Hypnotic ( https://github.com/BadGamesInc/hypnotic-client )", 
+            	"Hypnotic is better than liquidbounce", 
+            	"is bad, get good with Hypnotic", 
+            	"Hypnotic is FREE and OPEN SOURCE", 
+            	"Your shitty liquidbounce config cant save you from hypnotic client", 
+            	"FDP? more like FPC",
+            	"Tell me what other killsults I should add :)"
+            };
             String[] strings = packet.getChatComponent().getUnformattedText().split(" ");    
             String victim = strings[0];
                       
