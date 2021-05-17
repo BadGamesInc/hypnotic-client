@@ -76,7 +76,7 @@ public class KillAura extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("KillAura" + ColorUtils.white + " R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + " ");
+    	this.setDisplayName("KillAura " + ColorUtils.white + "[R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + "] ");
     	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
     		target = null;
     		RenderUtils.resetPlayerPitch();

@@ -26,7 +26,7 @@ public class Criticals extends Mod {
 
     @Override
     public void onUpdate() {
-        String mode = Hypnotic.instance.setmgr.getSettingByName("Criticals Mode").getValString() + "  ";
+        String mode = "[" + Hypnotic.instance.setmgr.getSettingByName("Criticals Mode").getValString() + "] ";
         this.setDisplayName("Criticals " + ColorUtils.white + mode);
     }
 

@@ -35,7 +35,7 @@ public class AutoConfig extends Mod {
 			Hypnotic.instance.setmgr.getSettingByName("Boost").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Tower").setValBoolean(false);
 			Hypnotic.instance.setmgr.getSettingByName("TowerMove").setValBoolean(false);
-			Hypnotic.instance.setmgr.getSettingByName("Range").setValDouble(5.09);
+			Hypnotic.instance.setmgr.getSettingByName("Range").setValDouble(5.29);
 			Hypnotic.instance.setmgr.getSettingByName("APS").setValDouble(14);
 			Hypnotic.instance.setmgr.getSettingByName("AutoBlock").setValBoolean(true);
 			Hypnotic.instance.setmgr.getSettingByName("Players").setValBoolean(true);

@@ -97,7 +97,7 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onUpdate()
 	{
-		this.setDisplayName("Flight " + ColorUtils.white + "" + Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString() + "  ");
+		this.setDisplayName("Flight " + ColorUtils.white + "[" + Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString() + "] ");
 		speed = (float) Hypnotic.instance.setmgr.getSettingByName("Flight Speed").getValDouble();
 
 		if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {

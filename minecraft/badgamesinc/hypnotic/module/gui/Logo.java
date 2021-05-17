@@ -14,9 +14,13 @@ public class Logo extends Mod {
 	public Logo() {
 		super("Logo", 0, Category.GUI, "Toggle and customize the logo");
 		ArrayList<String> options = new ArrayList<>();
+		ArrayList<String> options2 = new ArrayList<>();
 		options.add("Text");
 		options.add("Image");
 		Hypnotic.instance.setmgr.rSetting(mode = new Setting("Logo Mode", this, "Text", options));
+		options2.add("Roboto-Regular");
+		options2.add("Minecraft");
+		Hypnotic.instance.setmgr.rSetting(new Setting("Logo Font", this, "Roboto-Regular", options2));
 	}
 
 }

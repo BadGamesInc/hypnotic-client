@@ -39,7 +39,7 @@ public class ClickGUI extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    	
+    	this.drawDefaultBackground();
         if (Mouse.hasWheel()) {
             final int wheel = Mouse.getDWheel();
             if (wheel < 0) {
@@ -167,7 +167,6 @@ public class ClickGUI extends GuiScreen {
         	countMultiplier = 25;
         }
         for (Category category : Category.values()) {
-        	this.currentCategory = Category.COMBAT;
             buttons.add(new CategoryButton(left + 15, top + 20 + countMultiplier * count, category, this));
             count++;
         }
@@ -180,10 +179,8 @@ public class ClickGUI extends GuiScreen {
         boolean uglyAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Fade in (ugly)");
         boolean slideAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Slide");
         if (uglyAnimation) {
-	        if (timer.hasTimeElapsed(50L, false)) {
-		        if (fadeIn < 255)
+        	if (fadeIn < 255)
 		        fadeIn += 5;
-	        }
         } else if (slideAnimation) {
         	if (timer.hasTimeElapsed(25L, false)) {
 	        	if (mc.gameSettings.guiScale <= 2) {
@@ -193,9 +190,16 @@ public class ClickGUI extends GuiScreen {
 	        		if (divisor < 3)
 	    	        	divisor += 0.2;
 	        	}
+	        if (mc.gameSettings.guiScale <= 2) {
+		        if (divisor < 1.9)
+		        	divisor += 0.25;
+	        } else {
+	        	if (divisor < 3)
+	    	        divisor += 0.2;
 	        }
         }
-        GL11.glScissor((int) (x * divisor), (int) ((scale.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
+        GL11.glScissor((int) (x * factor), (int) ((scale.getScaledHeight() - y2) * divisor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
+        }
     }
 
     @Override

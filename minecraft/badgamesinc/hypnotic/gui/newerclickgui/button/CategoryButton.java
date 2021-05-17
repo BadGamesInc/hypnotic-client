@@ -36,7 +36,7 @@ public class CategoryButton {
         GlStateManager.enableBlend();
 
         if(isHovered(mouseX, mouseY)){
-            if(mouseTicks < 3){
+            if(mouseTicks < 1){
                 mouseTicks++;
             }
         }else {
@@ -48,6 +48,8 @@ public class CategoryButton {
         String categoryName = Character.toUpperCase(category.name().toLowerCase().charAt(0)) + category.name().toLowerCase().substring(1);
 		
         int color = parent.currentCategory == this.category ? ClickGUI.color : (isHovered(mouseX, mouseY) ? ClickGUI.color : -1);
+        
+        //int color = parent.currentCategory == this.category ? ColorUtils.rainbow(6, 0.5f, 0.5f) : (isHovered(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1);
         switch(category){
             case COMBAT:
             	if (isHovered(mouseX, mouseY))
@@ -84,8 +86,6 @@ public class CategoryButton {
 	        		RenderUtils.drawRoundedRect(parent.width / 6 + 3, y + 13 - mouseTicks, parent.width / 6 + 77, y + 13 - mouseTicks + 20, 5, new Color(100, 100, 100, 255));
 				fontRenderer.drawString(categoryName, x - 6 - mouseTicks, y + 15 - mouseTicks, color, true);      
 	            break;
-			default:
-				break;
 
         }
 
