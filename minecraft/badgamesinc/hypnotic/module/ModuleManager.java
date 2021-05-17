@@ -99,11 +99,9 @@ public class ModuleManager {
 		modules.add(new AutoL());
 		modules.add(new AutoSave());
 		modules.add(new AutoConfig());
-		modules.add(new DiscordRPC());
 		modules.add(new KillSults());
 		modules.add(new PingSpoof());
 		modules.add(new AutoCaptcha());
-
 
 		//World
 		modules.add(new FastBreak());
