@@ -9,7 +9,7 @@ import badgamesinc.hypnotic.settings.Setting;
 public class Sprint extends Mod {
 	
 	public Sprint() {
-		super("Sprint", 0, Category.MOVEMENT, "Sprint in all directions");
+		super("Sprint", 0, Category.MOVEMENT, "Sprint all the time");
 	}
 	
 	public void onUpdate() {
