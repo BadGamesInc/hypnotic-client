@@ -61,6 +61,9 @@ public class HUD {
 	
 	DecimalFormat df = new DecimalFormat("###.#");
 	
+	Date date = new Date();
+	SimpleDateFormat format = new SimpleDateFormat("hh.mm aa");
+	
 	public void draw() {
 
 		double serverTPS = Timer.ticksPerSecond;
@@ -111,11 +114,13 @@ public class HUD {
 			}
 			// ping
 			if(!mc.isSingleplayer()) {
-				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 90  , -1, true);
+				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50  , -1, true);
 			}
 			else {
-				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 90  , -1, true);
+				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 50  , -1, true);
 			}
+			fontRenderer5.drawString("Time: " + format.format(date).toLowerCase().replace('.', ':'), 2, scaled.getScaledHeight() - 60  , -1, true);
+			
         }
 		
 	}
@@ -125,11 +130,9 @@ public class HUD {
 			return;
 		}
 		
-		Date date = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("hh.mm aa");
 		if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Text")) {
 			fontRenderer3.drawString("H", 2, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
-			fontRenderer3.drawString(ColorUtils.white + "ypnotic " + "[" + format.format(date).toLowerCase().replace('.', ':') + "] " + "[" + mc.getDebugFPS() + " fps]" + ColorUtils.reset, 9.5, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
+			fontRenderer3.drawString(ColorUtils.white + "ypnotic " + ColorUtils.reset, 9.5, 4, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
 		} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Image")) {
 			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/purple.png"));
 			Gui.drawModalRectWithCustomSizedTexture(4, 4, 80, 20,  80, 20, 80, 20);
