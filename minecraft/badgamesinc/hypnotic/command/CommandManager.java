@@ -23,6 +23,7 @@ public class CommandManager {
 		commands.add(new Help());
 		commands.add(new About());
 		commands.add(new Modules());
+		commands.add(new NBT());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {
