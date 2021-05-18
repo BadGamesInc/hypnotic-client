@@ -31,7 +31,7 @@ public class NoSlow extends Mod {
 	
 	@Override
 	public void onUpdate() {
-		this.setDisplayName("NoSlow " + ColorUtils.white + mode.getValString() + "  "); 
+		this.setDisplayName("NoSlow " + ColorUtils.white + "[" + mode.getValString() + "] "); 
 	}
 	
 }

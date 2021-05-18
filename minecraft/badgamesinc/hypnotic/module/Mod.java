@@ -5,6 +5,7 @@ import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.EnumChatFormatting;
 
 public class Mod {
@@ -19,6 +20,7 @@ public class Mod {
 	private TimeHelper timer = new TimeHelper();
 	
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public FontRenderer fr = mc.fontRendererObj;
 	
 	private long currentMS = 0L;
 	protected long lastMS = -1L;
@@ -70,16 +72,30 @@ public class Mod {
 	public void onEnable() {
 		Hypnotic.instance.eventManager.register(this);
 		
-		mSize = 0;
-        lastSize = fontRenderer.getStringWidth(this.getDisplayName());
+		if (Hypnotic.instance.setmgr != null && Hypnotic.instance.moduleManager != null) {
+			if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
+				mSize = 0;
+	        	lastSize = fontRenderer.getStringWidth(this.getDisplayName());
+			} else if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Minecraft")) {
+				mSize = 0;
+		        lastSize = fr.getStringWidth(this.getDisplayName());
+			}
+		}
 	}
 	public void onDisable() {
 		Hypnotic.instance.eventManager.unregister(this);
 		RenderUtils.resetPlayerPitch();
 		RenderUtils.resetPlayerYaw();
 		
-		mSize = fontRenderer.getStringWidth(this.getDisplayName());
-        lastSize =0;
+		if (Hypnotic.instance.setmgr != null && Hypnotic.instance.moduleManager != null) {
+			if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
+				mSize = fontRenderer.getStringWidth(this.getDisplayName());
+		        lastSize =0;
+			} else if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Minecraft")) {
+				mSize = fr.getStringWidth(this.getDisplayName());
+		        lastSize =0;
+			}
+		}
 	}
 	public void setup() {}
 	
@@ -102,16 +118,30 @@ public class Mod {
 		
 		if (enabled){
 			if (Hypnotic.instance.eventManager != null)
-            Hypnotic.instance.eventManager.register(this);
-			
-			mSize = 0;
-            lastSize = fontRenderer.getStringWidth(this.getDisplayName());
+	            Hypnotic.instance.eventManager.register(this);
+				
+			if (Hypnotic.instance.setmgr != null && Hypnotic.instance.moduleManager != null) {
+				if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
+					mSize = 0;
+	            	lastSize = fontRenderer.getStringWidth(this.getDisplayName());
+				} else if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Minecraft")) {
+					mSize = 0;
+	            	lastSize = fr.getStringWidth(this.getDisplayName());
+				}
+			}
         } else {
         	if (Hypnotic.instance.eventManager != null)
             Hypnotic.instance.eventManager.unregister(this);
         	
-        	mSize = fontRenderer.getStringWidth(this.getDisplayName());
-            lastSize = 0;
+        	if (Hypnotic.instance.setmgr != null && Hypnotic.instance.moduleManager != null) {
+	        	if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
+	        		mSize = fontRenderer.getStringWidth(this.getDisplayName());
+	            	lastSize = 0;
+	        	} else if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Minecraft")) {
+	        		mSize = fr.getStringWidth(this.getDisplayName());
+	                lastSize = 0;
+	        	}
+        	}
         }
         this.enabled = enabled;
         if(Hypnotic.instance.saveload != null){

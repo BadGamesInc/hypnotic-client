@@ -402,7 +402,7 @@ public class Speed extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
         if(event.getState() == Event.State.PRE) {
-            this.setDisplayName("Speed " + ColorUtils.white + mode.getValString() + "  ");
+            this.setDisplayName("Speed " + ColorUtils.white + "[" + mode.getValString() + "] ");
             switch (mode.getValString()) {
                 case "NCP":
                     if(mc.thePlayer.onGround){

@@ -65,11 +65,12 @@ public class Longjump extends Mod {
     public Longjump(){
         super("LongJump", Keyboard.KEY_V, Category.MOVEMENT, "Move faster");
         ArrayList<String> options = new ArrayList<>();
-        options.add(" Redesky ");
+        options.add("Redesky  ");
 
 
-        Hypnotic.instance.setmgr.rSetting(mode = new Setting("LongJump Mode", this, " Redesky ", options));
+        Hypnotic.instance.setmgr.rSetting(mode = new Setting("LongJump Mode", this, "Redesky  ", options));
     }
+    
     private boolean isBlockUnder() {
         for (int i = (int) (mc.thePlayer.posY - 1.0); i > 0; --i) {
             BlockPos pos = new BlockPos(mc.thePlayer.posX, i, mc.thePlayer.posZ);
@@ -78,11 +79,10 @@ public class Longjump extends Mod {
         }
         return false;
     }
+    
     @EventTarget
     public void onMotion(EventMotion event){
-
-
-
+    	
         if(Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).target.posY - Hypnotic.instance.moduleManager.getModule(KillAura.class).target.prevPosY >=0) {
             if (!isBlockUnder() || mc.thePlayer.isCollidedHorizontally) {
                 airTicks++;
@@ -103,7 +103,7 @@ public class Longjump extends Mod {
         }
 
         double slowdown;
-        if(mode.getValString().equalsIgnoreCase(" Redesky ")){
+        if(mode.getValString().equalsIgnoreCase("Redesky  ")){
 
         	mc.timer.timerSpeed = 0.6f;
             switch (stage) {
@@ -179,7 +179,7 @@ public class Longjump extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
         if(event.getState() == Event.State.PRE) {
-            this.setDisplayName("LongJump " + ColorUtils.white + mode.getValString() + "");
+            this.setDisplayName("LongJump " + ColorUtils.white + "[" + mode.getValString() + "]");
             
         if(TargetStrafe.canStrafe()){
             TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);

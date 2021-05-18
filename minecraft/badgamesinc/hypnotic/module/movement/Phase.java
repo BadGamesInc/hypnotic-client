@@ -9,6 +9,7 @@ import badgamesinc.hypnotic.event.events.EventUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.PlayerUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -32,7 +33,7 @@ public class Phase extends Mod {
 
 	    @Override
 	    public void onUpdate() {
-	    	
+	    	this.setDisplayName("Phase " + ColorUtils.white + "[" + phaseMode.getValString() + "] ");
 	    	if (Hypnotic.instance.setmgr.getSettingByName("Phase Mode").getValString().equalsIgnoreCase("Redesky")) {
 			      this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0E-8D, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, false));
 			      this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0D, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, false));

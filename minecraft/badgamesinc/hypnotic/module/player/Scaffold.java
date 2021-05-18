@@ -154,7 +154,7 @@ public class Scaffold extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("Scaffold " + ColorUtils.white + scaffoldMode.getValString() + "  ");
+    	this.setDisplayName("Scaffold " + ColorUtils.white + "[" + scaffoldMode.getValString() + "] ");
     }
 
     float lastYaw = 0;

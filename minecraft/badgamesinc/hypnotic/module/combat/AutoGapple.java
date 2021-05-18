@@ -5,6 +5,7 @@ import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.entity.Entity;
@@ -36,6 +37,7 @@ public class AutoGapple extends Mod implements UpdateListener{
     
     @Override
     public void onUpdate() {
+    	this.setDisplayName("AutoGapple " + ColorUtils.white + "[Min: " + minHealthVal() + "] ");
     	if (mc.thePlayer.isPotionActive(Potion.regeneration.id)) {
     		return;
     	}
