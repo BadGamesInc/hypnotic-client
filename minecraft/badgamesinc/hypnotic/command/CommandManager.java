@@ -24,6 +24,7 @@ public class CommandManager {
 		commands.add(new About());
 		commands.add(new Modules());
 		commands.add(new NBT());
+		//commands.add(new Plugins());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() {
