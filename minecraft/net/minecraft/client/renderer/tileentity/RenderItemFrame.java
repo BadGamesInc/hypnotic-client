@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer.tileentity;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -28,7 +30,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
-import org.lwjgl.opengl.GL11;
 
 public class RenderItemFrame extends Render<EntityItemFrame>
 {

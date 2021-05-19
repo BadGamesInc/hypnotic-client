@@ -1,10 +1,12 @@
 package net.minecraft.potion;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;

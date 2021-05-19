@@ -1,21 +1,23 @@
 package net.minecraft.client.renderer.entity;
 
-import com.google.common.collect.Lists;
-
-import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.events.EventRenderEntity;
-import badgamesinc.hypnotic.event.events.EventRenderNametag;
-import badgamesinc.hypnotic.module.render.NameTags;
-import badgamesinc.hypnotic.event.Event;
-import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.OutlineUtils;
-import badgamesinc.hypnotic.util.RenderUtils;
-
 import java.awt.Color;
 import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
+
+import com.google.common.collect.Lists;
+
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.Event;
+import badgamesinc.hypnotic.event.events.EventRenderEntity;
+import badgamesinc.hypnotic.event.events.EventRenderNametag;
+import badgamesinc.hypnotic.module.render.NameTags;
+import badgamesinc.hypnotic.util.OutlineUtils;
+import badgamesinc.hypnotic.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -35,9 +37,6 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 
 public abstract class RendererLivingEntity<T extends EntityLivingBase> extends Render<T>
 {

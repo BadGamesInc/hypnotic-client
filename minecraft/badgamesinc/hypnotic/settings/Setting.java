@@ -2,7 +2,6 @@ package badgamesinc.hypnotic.settings;
 
 import java.util.ArrayList;
 
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Mod;
 
 public class Setting {

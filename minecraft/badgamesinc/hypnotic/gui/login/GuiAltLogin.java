@@ -1,19 +1,16 @@
 package badgamesinc.hypnotic.gui.login;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Session;
-
-import org.lwjgl.input.Keyboard;
 
 public final class GuiAltLogin
 extends GuiScreen {

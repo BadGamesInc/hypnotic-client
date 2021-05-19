@@ -6,7 +6,6 @@ import badgamesinc.hypnotic.event.events.EventChat;
 import badgamesinc.hypnotic.event.events.EventLastDistance;
 import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
-import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.player.NoSlow;

@@ -1,10 +1,14 @@
 package net.minecraft.client.gui.achievement;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.lwjgl.input.Mouse;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
@@ -26,7 +30,6 @@ import net.minecraft.stats.StatCrafting;
 import net.minecraft.stats.StatFileWriter;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
 
 public class GuiStats extends GuiScreen implements IProgressMeter
 {

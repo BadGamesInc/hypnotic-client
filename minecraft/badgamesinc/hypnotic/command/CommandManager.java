@@ -2,7 +2,20 @@ package badgamesinc.hypnotic.command;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import badgamesinc.hypnotic.command.commands.*;
+import badgamesinc.hypnotic.command.commands.About;
+import badgamesinc.hypnotic.command.commands.Bind;
+import badgamesinc.hypnotic.command.commands.Enchant;
+import badgamesinc.hypnotic.command.commands.Help;
+import badgamesinc.hypnotic.command.commands.Load;
+import badgamesinc.hypnotic.command.commands.Modules;
+import badgamesinc.hypnotic.command.commands.NBT;
+import badgamesinc.hypnotic.command.commands.Save;
+import badgamesinc.hypnotic.command.commands.Say;
+import badgamesinc.hypnotic.command.commands.Seed;
+import badgamesinc.hypnotic.command.commands.Server;
+import badgamesinc.hypnotic.command.commands.Teleport;
+import badgamesinc.hypnotic.command.commands.Toggle;
+import badgamesinc.hypnotic.command.commands.VClip;
 import badgamesinc.hypnotic.util.Wrapper;
 
 public class CommandManager {

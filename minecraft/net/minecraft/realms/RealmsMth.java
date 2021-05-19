@@ -1,8 +1,10 @@
 package net.minecraft.realms;
 
 import java.util.Random;
-import net.minecraft.util.MathHelper;
+
 import org.apache.commons.lang3.StringUtils;
+
+import net.minecraft.util.MathHelper;
 
 public class RealmsMth
 {

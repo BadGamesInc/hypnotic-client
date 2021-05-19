@@ -1,6 +1,7 @@
 package net.minecraft.entity.effect;
 
 import java.util.List;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;

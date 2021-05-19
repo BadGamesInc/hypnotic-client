@@ -2,6 +2,7 @@ package net.minecraft.item;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;

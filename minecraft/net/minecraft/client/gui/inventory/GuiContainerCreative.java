@@ -1,10 +1,15 @@
 package net.minecraft.client.gui.inventory;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -29,8 +34,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 public class GuiContainerCreative extends InventoryEffectRenderer
 {

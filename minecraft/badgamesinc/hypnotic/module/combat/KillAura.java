@@ -1,5 +1,18 @@
 package badgamesinc.hypnotic.module.combat;
 
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -10,8 +23,6 @@ import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
-import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
-import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
@@ -35,9 +46,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-
-import static net.minecraft.client.gui.inventory.GuiInventory.drawEntityOnScreen;
-import static org.lwjgl.opengl.GL11.*;
 
 public class KillAura extends Mod {
     public static EntityLivingBase target;

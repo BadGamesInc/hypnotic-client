@@ -2,6 +2,7 @@ package net.minecraft.tileentity;
 
 import java.util.Arrays;
 import java.util.List;
+
 import net.minecraft.block.BlockBrewingStand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,6 +1,5 @@
 package net.minecraft.world.chunk.storage;
 
-import com.google.common.collect.Lists;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,6 +12,9 @@ import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.server.MinecraftServer;
 
 public class RegionFile

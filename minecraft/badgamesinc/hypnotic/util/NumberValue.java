@@ -1,10 +1,5 @@
 package badgamesinc.hypnotic.util;
 
-
-import badgamesinc.hypnotic.util.Value;
-import badgamesinc.hypnotic.util.NumberClamper;
-import badgamesinc.hypnotic.util.NumberParser;
-
 public class NumberValue<T extends Number> extends Value<T> {
 
     private final T minimum, maximum, inc;

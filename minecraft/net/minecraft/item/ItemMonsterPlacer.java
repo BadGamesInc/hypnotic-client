@@ -1,6 +1,7 @@
 package net.minecraft.item;
 
 import java.util.List;
+
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;

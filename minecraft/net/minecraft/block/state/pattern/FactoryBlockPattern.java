@@ -1,17 +1,20 @@
 package net.minecraft.block.state.pattern;
 
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.lang.reflect.Array;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+
 import net.minecraft.block.state.BlockWorldState;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 public class FactoryBlockPattern
 {

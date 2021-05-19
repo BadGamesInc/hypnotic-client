@@ -3,6 +3,7 @@ package net.minecraft.world.gen.structure;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.ChunkCoordIntPair;

@@ -1,6 +1,5 @@
 package badgamesinc.hypnotic.module.player;
 
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;

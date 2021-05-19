@@ -1,9 +1,11 @@
 package net.minecraft.util;
 
-import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

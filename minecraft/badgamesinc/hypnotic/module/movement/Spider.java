@@ -1,7 +1,5 @@
 package badgamesinc.hypnotic.module.movement;
 
-import org.lwjgl.input.Keyboard;
-
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 

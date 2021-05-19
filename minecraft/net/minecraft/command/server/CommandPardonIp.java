@@ -2,6 +2,7 @@ package net.minecraft.command.server;
 
 import java.util.List;
 import java.util.regex.Matcher;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

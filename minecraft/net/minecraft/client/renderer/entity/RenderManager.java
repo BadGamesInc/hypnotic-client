@@ -1,7 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;

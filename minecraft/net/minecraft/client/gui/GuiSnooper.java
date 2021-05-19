@@ -1,9 +1,11 @@
 package net.minecraft.client.gui;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 

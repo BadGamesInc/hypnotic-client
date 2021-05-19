@@ -1,7 +1,9 @@
 package net.minecraft.client.gui;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

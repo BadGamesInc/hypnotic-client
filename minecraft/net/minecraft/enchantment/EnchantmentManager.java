@@ -1,7 +1,6 @@
 package net.minecraft.enchantment;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import net.minecraft.enchantment.*;
 
 // this is fucking stupid why did i add this
 

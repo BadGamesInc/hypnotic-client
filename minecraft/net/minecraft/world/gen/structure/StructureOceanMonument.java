@@ -1,13 +1,15 @@
 package net.minecraft.world.gen.structure;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.Map.Entry;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 import net.minecraft.entity.monster.EntityGuardian;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

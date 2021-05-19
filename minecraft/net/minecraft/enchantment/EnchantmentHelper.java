@@ -1,11 +1,13 @@
 package net.minecraft.enchantment;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;

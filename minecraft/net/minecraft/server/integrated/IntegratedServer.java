@@ -1,12 +1,17 @@
 package net.minecraft.server.integrated;
 
-import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.Futures;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.Futures;
+
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ThreadLanServerPing;
@@ -27,8 +32,6 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.demo.DemoWorldServer;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class IntegratedServer extends MinecraftServer
 {

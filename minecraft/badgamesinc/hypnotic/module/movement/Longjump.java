@@ -18,23 +18,15 @@ import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
-import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.TimeHelper;
-import badgamesinc.hypnotic.util.Wrapper;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockCarpet;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
 
 public class Longjump extends Mod {
     public Setting mode;

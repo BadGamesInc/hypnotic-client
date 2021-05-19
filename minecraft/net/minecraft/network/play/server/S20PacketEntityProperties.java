@@ -1,10 +1,12 @@
 package net.minecraft.network.play.server;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.network.Packet;

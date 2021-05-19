@@ -1,7 +1,9 @@
 package net.minecraft.client.resources.model;
 
-import com.google.common.collect.Lists;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BreakingFour;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;

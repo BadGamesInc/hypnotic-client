@@ -1,10 +1,10 @@
 package net.minecraft.util;
 
-import com.google.common.collect.AbstractIterator;
 import java.util.Iterator;
 
+import com.google.common.collect.AbstractIterator;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 

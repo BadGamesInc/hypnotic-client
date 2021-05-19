@@ -1,8 +1,5 @@
 package badgamesinc.hypnotic.module.gui;
 
-import java.util.ArrayList;
-
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;

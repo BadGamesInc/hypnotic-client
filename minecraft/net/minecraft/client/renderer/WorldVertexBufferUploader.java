@@ -2,9 +2,11 @@ package net.minecraft.client.renderer;
 
 import java.nio.ByteBuffer;
 import java.util.List;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
-import org.lwjgl.opengl.GL11;
 
 public class WorldVertexBufferUploader
 {

@@ -2,6 +2,7 @@ package net.minecraft.entity.projectile;
 
 import java.util.List;
 import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

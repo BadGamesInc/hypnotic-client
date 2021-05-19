@@ -1,8 +1,12 @@
 package net.minecraft.client.gui;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
+
+import org.lwjgl.input.Keyboard;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -10,7 +14,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.ChunkProviderSettings;
-import org.lwjgl.input.Keyboard;
 
 public class GuiScreenCustomizePresets extends GuiScreen
 {

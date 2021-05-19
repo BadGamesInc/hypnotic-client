@@ -5,14 +5,13 @@
 package badgamesinc.hypnotic.module.combat;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.TimerUtils;
-import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;

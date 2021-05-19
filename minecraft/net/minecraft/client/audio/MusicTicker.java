@@ -1,6 +1,7 @@
 package net.minecraft.client.audio;
 
 import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.MathHelper;

@@ -1,8 +1,10 @@
 package net.minecraft.world.gen.feature;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;

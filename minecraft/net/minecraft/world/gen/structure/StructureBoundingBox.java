@@ -1,6 +1,7 @@
 package net.minecraft.world.gen.structure;
 
 import com.google.common.base.Objects;
+
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;

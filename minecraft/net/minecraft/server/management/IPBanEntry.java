@@ -1,7 +1,8 @@
 package net.minecraft.server.management;
 
-import com.google.gson.JsonObject;
 import java.util.Date;
+
+import com.google.gson.JsonObject;
 
 public class IPBanEntry extends BanEntry<String>
 {

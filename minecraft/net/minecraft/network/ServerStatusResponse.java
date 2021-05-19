@@ -1,5 +1,8 @@
 package net.minecraft.network;
 
+import java.lang.reflect.Type;
+import java.util.UUID;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -9,8 +12,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.mojang.authlib.GameProfile;
-import java.lang.reflect.Type;
-import java.util.UUID;
+
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.JsonUtils;
 

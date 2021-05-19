@@ -1,6 +1,7 @@
 package net.minecraft.item;
 
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.IGrowable;

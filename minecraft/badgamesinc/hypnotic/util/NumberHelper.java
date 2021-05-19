@@ -1,10 +1,5 @@
 package badgamesinc.hypnotic.util;
 
-
-import badgamesinc.hypnotic.util.MathUtils;
-import badgamesinc.hypnotic.util.NumberValue;
-import badgamesinc.hypnotic.util.RangedValue;
-
 public class NumberHelper {
 
     public static void decrecement(NumberValue value) {

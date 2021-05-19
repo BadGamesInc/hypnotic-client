@@ -1,9 +1,7 @@
 package badgamesinc.hypnotic.util;
 
 
-import badgamesinc.hypnotic.util.Value;
-
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * made by Xen for OhareWare

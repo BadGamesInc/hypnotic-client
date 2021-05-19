@@ -1,5 +1,7 @@
 package net.minecraft.entity;
 
+import org.apache.commons.lang3.Validate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneDiode;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +11,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.Validate;
 
 public abstract class EntityHanging extends Entity
 {

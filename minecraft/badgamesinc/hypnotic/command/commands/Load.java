@@ -1,8 +1,8 @@
 package badgamesinc.hypnotic.command.commands;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.util.Wrapper;
-import badgamesinc.hypnotic.Hypnotic;
 
 public class Load extends Command {
   

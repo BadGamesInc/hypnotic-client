@@ -1,6 +1,7 @@
 package net.minecraft.item;
 
 import com.google.common.base.Function;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.world.ColorizerGrass;

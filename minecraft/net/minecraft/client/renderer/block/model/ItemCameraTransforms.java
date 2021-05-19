@@ -1,11 +1,13 @@
 package net.minecraft.client.renderer.block.model;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import java.lang.reflect.Type;
+
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ItemCameraTransforms

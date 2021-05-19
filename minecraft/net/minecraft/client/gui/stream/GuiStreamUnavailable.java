@@ -1,10 +1,17 @@
 package net.minecraft.client.gui.stream;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLContext;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -16,10 +23,6 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
 import net.minecraft.util.Util;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
 import tv.twitch.ErrorCode;
 
 public class GuiStreamUnavailable extends GuiScreen

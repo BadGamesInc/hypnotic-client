@@ -1,8 +1,10 @@
 package net.minecraft.entity.boss;
 
+import java.util.List;
+
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

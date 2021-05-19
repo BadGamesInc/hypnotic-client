@@ -1,6 +1,7 @@
 package net.minecraft.entity.monster;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

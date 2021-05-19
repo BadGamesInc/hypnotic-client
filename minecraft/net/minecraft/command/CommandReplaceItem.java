@@ -1,8 +1,10 @@
 package net.minecraft.command;
 
-import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

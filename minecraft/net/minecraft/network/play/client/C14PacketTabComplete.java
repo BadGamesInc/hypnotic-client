@@ -1,11 +1,13 @@
 package net.minecraft.network.play.client;
 
 import java.io.IOException;
+
+import org.apache.commons.lang3.StringUtils;
+
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.util.BlockPos;
-import org.apache.commons.lang3.StringUtils;
 
 public class C14PacketTabComplete implements Packet<INetHandlerPlayServer>
 {

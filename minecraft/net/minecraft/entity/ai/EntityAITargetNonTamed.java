@@ -1,6 +1,7 @@
 package net.minecraft.entity.ai;
 
 import com.google.common.base.Predicate;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 

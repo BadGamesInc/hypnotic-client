@@ -25,13 +25,11 @@ import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.movement.Flight;
 import badgamesinc.hypnotic.module.movement.Speed;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.RotationUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 

@@ -1,6 +1,7 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;

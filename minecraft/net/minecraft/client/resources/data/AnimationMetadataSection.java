@@ -1,8 +1,9 @@
 package net.minecraft.client.resources.data;
 
-import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 public class AnimationMetadataSection implements IMetadataSection
 {

@@ -2,7 +2,6 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.util.Wrapper;
-import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class VClip extends Command {
 

@@ -2,6 +2,9 @@ package net.minecraft.client.gui.achievement;
 
 import java.io.IOException;
 import java.util.Random;
+
+import org.lwjgl.input.Mouse;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -21,7 +24,6 @@ import net.minecraft.stats.StatFileWriter;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
 
 public class GuiAchievements extends GuiScreen implements IProgressMeter
 {

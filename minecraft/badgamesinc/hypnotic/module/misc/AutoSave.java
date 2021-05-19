@@ -1,7 +1,6 @@
 package badgamesinc.hypnotic.module.misc;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;

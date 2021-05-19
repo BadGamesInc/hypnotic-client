@@ -1,6 +1,5 @@
 package net.minecraft.client.resources;
 
-import com.google.common.collect.Sets;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
@@ -8,7 +7,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
+
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
+
+import com.google.common.collect.Sets;
 
 public class FolderResourcePack extends AbstractResourcePack
 {

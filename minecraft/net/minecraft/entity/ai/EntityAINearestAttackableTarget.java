@@ -1,10 +1,12 @@
 package net.minecraft.entity.ai;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;

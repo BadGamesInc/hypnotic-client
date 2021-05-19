@@ -1,6 +1,7 @@
 package net.minecraft.network.play.client;
 
 import java.io.IOException;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;

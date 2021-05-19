@@ -1,6 +1,7 @@
 package net.minecraft.util;
 
 import java.util.Random;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 

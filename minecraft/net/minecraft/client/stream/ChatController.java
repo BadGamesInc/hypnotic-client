@@ -1,13 +1,16 @@
 package net.minecraft.client.stream;
 
-import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+
 import tv.twitch.AuthToken;
 import tv.twitch.Core;
 import tv.twitch.ErrorCode;

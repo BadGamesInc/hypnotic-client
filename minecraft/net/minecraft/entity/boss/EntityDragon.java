@@ -1,8 +1,10 @@
 package net.minecraft.entity.boss;
 
-import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;

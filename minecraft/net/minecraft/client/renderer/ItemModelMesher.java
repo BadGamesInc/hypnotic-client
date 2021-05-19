@@ -1,8 +1,10 @@
 package net.minecraft.client.renderer;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelManager;

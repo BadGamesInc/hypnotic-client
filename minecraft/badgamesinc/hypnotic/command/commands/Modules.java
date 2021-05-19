@@ -1,15 +1,9 @@
 package badgamesinc.hypnotic.command.commands;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.util.Wrapper;
-import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerAddress;
-import net.minecraft.network.play.client.C01PacketChatMessage;
 
 public class Modules extends Command {
 

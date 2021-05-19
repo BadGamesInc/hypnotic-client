@@ -1,8 +1,10 @@
 package net.minecraft.item.crafting;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;

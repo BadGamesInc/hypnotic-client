@@ -2,7 +2,6 @@ package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.settings.Setting;
-import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,9 +1,10 @@
 package net.minecraft.server.management;
 
-import com.google.gson.JsonObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.google.gson.JsonObject;
 
 public abstract class BanEntry<T> extends UserListEntry<T>
 {

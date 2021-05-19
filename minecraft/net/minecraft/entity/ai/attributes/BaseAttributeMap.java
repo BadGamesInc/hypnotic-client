@@ -1,11 +1,13 @@
 package net.minecraft.entity.ai.attributes;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+
 import net.minecraft.server.management.LowerStringMap;
 
 public abstract class BaseAttributeMap

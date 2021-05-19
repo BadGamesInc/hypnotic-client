@@ -1,14 +1,7 @@
 package badgamesinc.hypnotic.command.commands;
 
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.util.Wrapper;
-import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerAddress;
-import net.minecraft.network.play.client.C01PacketChatMessage;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NBT extends Command {

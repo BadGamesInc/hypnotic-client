@@ -1,7 +1,9 @@
 package net.minecraft.client.stream;
 
-import com.google.common.collect.Lists;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import tv.twitch.AuthToken;
 import tv.twitch.ErrorCode;
 import tv.twitch.broadcast.ArchivingState;

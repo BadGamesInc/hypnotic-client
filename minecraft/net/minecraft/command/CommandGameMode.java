@@ -1,6 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;

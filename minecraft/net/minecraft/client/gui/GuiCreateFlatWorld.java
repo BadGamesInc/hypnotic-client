@@ -1,6 +1,7 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,6 +1,7 @@
 package net.minecraft.world.gen;
 
 import java.util.Random;
+
 import net.minecraft.util.MathHelper;
 
 public class NoiseGeneratorOctaves extends NoiseGenerator

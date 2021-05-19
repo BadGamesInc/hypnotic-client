@@ -1,6 +1,7 @@
 package net.minecraft.world.gen.feature;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.material.Material;

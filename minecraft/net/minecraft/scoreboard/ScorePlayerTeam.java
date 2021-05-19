@@ -1,8 +1,10 @@
 package net.minecraft.scoreboard;
 
-import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 import net.minecraft.util.EnumChatFormatting;
 
 public class ScorePlayerTeam extends Team

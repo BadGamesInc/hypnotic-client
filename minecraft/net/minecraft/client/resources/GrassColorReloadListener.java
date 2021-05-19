@@ -1,6 +1,7 @@
 package net.minecraft.client.resources;
 
 import java.io.IOException;
+
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ColorizerGrass;

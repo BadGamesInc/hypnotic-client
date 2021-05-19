@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelGuardian;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -12,7 +14,6 @@ import net.minecraft.entity.monster.EntityGuardian;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
-import org.lwjgl.opengl.GL11;
 
 public class RenderGuardian extends RenderLiving<EntityGuardian>
 {

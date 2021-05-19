@@ -5,7 +5,6 @@ import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.arikia.dev.drpc.DiscordUser;
 import net.arikia.dev.drpc.callbacks.ReadyCallback;
-import net.minecraft.util.ResourceLocation;
 
 public class DiscordRP {
 	private boolean running = true;

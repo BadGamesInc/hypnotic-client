@@ -1,8 +1,5 @@
 package badgamesinc.hypnotic.util;
 
-
-import badgamesinc.hypnotic.util.Value;
-
 public class EnumValue<T extends Enum<T>> extends Value<T> {
 
     private final T[] constants;

@@ -1,7 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
-import com.google.common.collect.Lists;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.model.ModelZombieVillager;

@@ -1,9 +1,6 @@
 package badgamesinc.hypnotic.module.misc;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import badgamesinc.hypnotic.event.EventTarget;
-import badgamesinc.hypnotic.event.events.EventChat;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;

@@ -1,7 +1,5 @@
 package badgamesinc.hypnotic.module.combat;
 
-import com.ibm.icu.text.DecimalFormat;
-
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;

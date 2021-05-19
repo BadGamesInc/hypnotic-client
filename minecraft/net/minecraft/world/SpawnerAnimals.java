@@ -1,9 +1,11 @@
 package net.minecraft.world;
 
-import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;

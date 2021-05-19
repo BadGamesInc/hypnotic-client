@@ -1,10 +1,12 @@
 package net.minecraft.world.gen.structure;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Map.Entry;
+import java.util.Random;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;

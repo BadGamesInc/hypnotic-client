@@ -6,7 +6,6 @@ import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.EnumChatFormatting;
 
 public class Mod {
 

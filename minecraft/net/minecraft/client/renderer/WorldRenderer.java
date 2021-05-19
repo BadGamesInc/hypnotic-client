@@ -1,6 +1,5 @@
 package net.minecraft.client.renderer;
 
-import com.google.common.primitives.Floats;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -10,11 +9,14 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Comparator;
 
+import org.apache.logging.log4j.LogManager;
+
+import com.google.common.primitives.Floats;
+
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.MathHelper;
-import org.apache.logging.log4j.LogManager;
 
 public class WorldRenderer
 {

@@ -1,13 +1,18 @@
 package net.minecraft.entity.player;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.mojang.authlib.GameProfile;
-import io.netty.buffer.Unpooled;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.mojang.authlib.GameProfile;
+
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -93,8 +98,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class EntityPlayerMP extends EntityPlayer implements ICrafting
 {

@@ -1,15 +1,23 @@
 package net.minecraft.client.stream;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.mojang.authlib.properties.Property;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+import org.lwjgl.opengl.GL11;
+
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.mojang.authlib.properties.Property;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,11 +37,6 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Util;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
-import org.lwjgl.opengl.GL11;
 import tv.twitch.AuthToken;
 import tv.twitch.ErrorCode;
 import tv.twitch.broadcast.EncodingCpuUsage;

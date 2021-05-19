@@ -1,9 +1,5 @@
 package badgamesinc.hypnotic.util;
 
-
-import badgamesinc.hypnotic.util.Value;
-
-
 public class StringValue extends Value<String> {
 
     public StringValue(String label, String value) {

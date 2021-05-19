@@ -1,6 +1,7 @@
 package net.minecraft.world.biome;
 
 import java.util.Random;
+
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

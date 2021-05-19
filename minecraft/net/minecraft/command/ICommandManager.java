@@ -2,6 +2,7 @@ package net.minecraft.command;
 
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.util.BlockPos;
 
 public interface ICommandManager

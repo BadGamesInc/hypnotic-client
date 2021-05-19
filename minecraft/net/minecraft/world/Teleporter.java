@@ -1,9 +1,11 @@
 package net.minecraft.world;
 
-import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;

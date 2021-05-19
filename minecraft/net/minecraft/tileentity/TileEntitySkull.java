@@ -1,9 +1,11 @@
 package net.minecraft.tileentity;
 
+import java.util.UUID;
+
 import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import java.util.UUID;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.Packet;

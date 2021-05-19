@@ -1,10 +1,12 @@
 package net.minecraft.client.renderer.tileentity;
 
+import java.util.Map;
+import java.util.UUID;
+
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-import java.util.Map;
-import java.util.UUID;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelHumanoidHead;

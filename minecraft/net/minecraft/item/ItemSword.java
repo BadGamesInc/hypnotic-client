@@ -1,6 +1,7 @@
 package net.minecraft.item;
 
 import com.google.common.collect.Multimap;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

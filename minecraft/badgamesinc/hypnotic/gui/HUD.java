@@ -5,7 +5,6 @@ import static net.minecraft.client.gui.inventory.GuiInventory.drawEntityOnScreen
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -14,10 +13,8 @@ import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
-import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
-import badgamesinc.hypnotic.module.gui.ArrayListModule;
 import badgamesinc.hypnotic.module.gui.Logo;
 import badgamesinc.hypnotic.module.render.TargetHUD;
 import badgamesinc.hypnotic.util.ColorUtil;

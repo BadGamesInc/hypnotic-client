@@ -1,6 +1,7 @@
 package net.minecraft.entity.monster;
 
 import com.google.common.base.Predicate;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

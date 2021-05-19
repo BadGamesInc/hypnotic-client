@@ -2,6 +2,7 @@ package net.minecraft.client.renderer.texture;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
 import net.minecraft.client.resources.IResourceManager;
 
 public class DynamicTexture extends AbstractTexture

@@ -1,7 +1,6 @@
 package badgamesinc.hypnotic.event.events;
 
 import badgamesinc.hypnotic.event.Event;
-import badgamesinc.hypnotic.event.Event.State;
 import net.minecraft.client.Minecraft;
 
 public class EventMotionUpdate extends Event{

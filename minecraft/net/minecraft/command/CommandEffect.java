@@ -1,6 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;

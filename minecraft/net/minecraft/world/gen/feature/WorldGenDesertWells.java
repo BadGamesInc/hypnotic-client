@@ -1,7 +1,9 @@
 package net.minecraft.world.gen.feature;
 
-import com.google.common.base.Predicates;
 import java.util.Random;
+
+import com.google.common.base.Predicates;
+
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStoneSlab;

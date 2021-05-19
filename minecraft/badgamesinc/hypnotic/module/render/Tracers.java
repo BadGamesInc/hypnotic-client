@@ -4,23 +4,12 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
-import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.util.BooleanValue;
-import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.NumberValue;
 import badgamesinc.hypnotic.util.RenderUtils;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class Tracers extends Mod {
 

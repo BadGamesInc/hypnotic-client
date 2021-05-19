@@ -1,9 +1,13 @@
 package net.minecraft.network;
 
+import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
-import java.util.Map;
+
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.network.login.client.C01PacketEncryptionResponse;
@@ -109,7 +113,6 @@ import net.minecraft.network.status.client.C00PacketServerQuery;
 import net.minecraft.network.status.client.C01PacketPing;
 import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
-import org.apache.logging.log4j.LogManager;
 
 public enum EnumConnectionState
 {

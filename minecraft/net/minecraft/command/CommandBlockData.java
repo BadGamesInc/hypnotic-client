@@ -1,6 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
+
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;

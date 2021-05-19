@@ -1,7 +1,9 @@
 package net.minecraft.realms;
 
-import com.mojang.util.UUIDTypeAdapter;
 import java.util.List;
+
+import com.mojang.util.UUIDTypeAdapter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;

@@ -1,13 +1,15 @@
 package net.minecraft.block.properties;
 
+import java.util.Collection;
+import java.util.Map;
+
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.util.Collection;
-import java.util.Map;
+
 import net.minecraft.util.IStringSerializable;
 
 public class PropertyEnum<T extends Enum<T> & IStringSerializable> extends PropertyHelper<T>

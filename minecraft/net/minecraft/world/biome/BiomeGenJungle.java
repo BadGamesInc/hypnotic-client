@@ -1,6 +1,7 @@
 package net.minecraft.world.biome;
 
 import java.util.Random;
+
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;

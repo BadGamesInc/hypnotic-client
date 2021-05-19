@@ -1,9 +1,11 @@
 package net.minecraft.world.gen;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;

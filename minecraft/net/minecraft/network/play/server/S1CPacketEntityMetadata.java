@@ -2,6 +2,7 @@ package net.minecraft.network.play.server;
 
 import java.io.IOException;
 import java.util.List;
+
 import net.minecraft.entity.DataWatcher;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;

@@ -1,12 +1,14 @@
 package net.minecraft.item;
 
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Random;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Random;
-import java.util.Map.Entry;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentDurability;

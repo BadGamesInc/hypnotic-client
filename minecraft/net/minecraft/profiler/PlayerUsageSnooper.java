@@ -1,16 +1,18 @@
 package net.minecraft.profiler;
 
-import com.google.common.collect.Maps;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.util.HttpUtil;
 
 public class PlayerUsageSnooper

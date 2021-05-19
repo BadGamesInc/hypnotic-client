@@ -1,6 +1,7 @@
 package net.minecraft.item;
 
 import java.util.List;
+
 import net.minecraft.block.BlockStandingSign;
 import net.minecraft.block.BlockWallSign;
 import net.minecraft.creativetab.CreativeTabs;

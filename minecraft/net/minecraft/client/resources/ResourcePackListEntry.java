@@ -1,6 +1,7 @@
 package net.minecraft.client.resources;
 
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiListExtended;

@@ -1,9 +1,5 @@
 package badgamesinc.hypnotic.util;
 
-import badgamesinc.hypnotic.util.Value;
-import badgamesinc.hypnotic.util.NumberClamper;
-import badgamesinc.hypnotic.util.NumberParser;
-
 /**
  * made by Fricking for negro
  *

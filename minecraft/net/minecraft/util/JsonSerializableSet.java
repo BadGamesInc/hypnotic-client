@@ -1,11 +1,12 @@
 package net.minecraft.util;
 
+import java.util.Set;
+
 import com.google.common.collect.ForwardingSet;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import java.util.Set;
 
 public class JsonSerializableSet extends ForwardingSet<String> implements IJsonSerializable
 {

@@ -1,7 +1,9 @@
 package net.minecraft.item;
 
-import com.google.common.base.Predicates;
 import java.util.List;
+
+import com.google.common.base.Predicates;
+
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;

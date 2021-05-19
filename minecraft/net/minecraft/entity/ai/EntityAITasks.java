@@ -1,11 +1,14 @@
 package net.minecraft.entity.ai;
 
-import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.profiler.Profiler;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+
+import net.minecraft.profiler.Profiler;
 
 public class EntityAITasks
 {

@@ -2,6 +2,7 @@ package net.minecraft.command.server;
 
 import java.util.Arrays;
 import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

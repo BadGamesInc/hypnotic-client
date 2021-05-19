@@ -1,8 +1,10 @@
 package net.minecraft.world.gen.structure;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.BlockFlowerPot;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockPlanks;

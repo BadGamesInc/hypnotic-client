@@ -4,7 +4,6 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.player.Scaffold;
-import badgamesinc.hypnotic.settings.Setting;
 
 public class Sprint extends Mod {
 	

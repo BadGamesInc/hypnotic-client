@@ -3,7 +3,6 @@ package badgamesinc.hypnotic.module.combat;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventPostMotionUpdate;
-import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;

@@ -1,11 +1,14 @@
 package net.minecraft.world.gen.structure;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Maps;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 
 public class MapGenStructureIO
 {

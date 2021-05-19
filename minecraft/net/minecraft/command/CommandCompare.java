@@ -1,6 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;

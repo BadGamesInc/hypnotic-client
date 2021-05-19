@@ -1,12 +1,14 @@
 package net.minecraft.entity.monster;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Sets;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

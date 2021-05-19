@@ -1,16 +1,19 @@
 package net.minecraft.command;
 
-import com.google.gson.JsonParseException;
 import java.util.List;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.JsonParseException;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentProcessor;
 import net.minecraft.util.IChatComponent;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CommandTitle extends CommandBase
 {

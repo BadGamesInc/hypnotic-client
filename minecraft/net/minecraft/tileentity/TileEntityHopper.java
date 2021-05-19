@@ -1,6 +1,7 @@
 package net.minecraft.tileentity;
 
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockHopper;

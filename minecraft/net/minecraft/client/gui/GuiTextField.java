@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;

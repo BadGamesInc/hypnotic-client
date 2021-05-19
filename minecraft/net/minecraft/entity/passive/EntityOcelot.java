@@ -1,6 +1,7 @@
 package net.minecraft.entity.passive;
 
 import com.google.common.base.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

@@ -1,12 +1,18 @@
 package net.minecraft.realms;
 
-import com.google.common.collect.Lists;
-import com.mojang.authlib.GameProfile;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.ServerStatusResponse;
@@ -18,9 +24,6 @@ import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class RealmsServerStatusPinger
 {

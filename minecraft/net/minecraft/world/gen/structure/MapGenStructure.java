@@ -1,11 +1,13 @@
 package net.minecraft.world.gen.structure;
 
-import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTBase;

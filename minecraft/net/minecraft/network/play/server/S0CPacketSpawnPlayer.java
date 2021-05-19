@@ -3,6 +3,7 @@ package net.minecraft.network.play.server;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+
 import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

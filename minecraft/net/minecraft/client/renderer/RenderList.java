@@ -1,9 +1,10 @@
 package net.minecraft.client.renderer;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.renderer.chunk.ListedRenderChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.EnumWorldBlockLayer;
-import org.lwjgl.opengl.GL11;
 
 public class RenderList extends ChunkRenderContainer
 {

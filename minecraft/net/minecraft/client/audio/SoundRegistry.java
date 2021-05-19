@@ -1,7 +1,9 @@
 package net.minecraft.client.audio;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.util.RegistrySimple;
 import net.minecraft.util.ResourceLocation;
 

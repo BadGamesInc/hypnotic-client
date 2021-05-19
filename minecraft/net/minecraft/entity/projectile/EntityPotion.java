@@ -1,6 +1,7 @@
 package net.minecraft.entity.projectile;
 
 import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

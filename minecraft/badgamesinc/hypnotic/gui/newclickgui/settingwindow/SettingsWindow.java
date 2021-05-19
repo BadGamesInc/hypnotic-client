@@ -1,17 +1,5 @@
 package badgamesinc.hypnotic.gui.newclickgui.settingwindow;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
-import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.gui.newclickgui.button.Button;
-import badgamesinc.hypnotic.settings.Setting;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
-
 public class SettingsWindow {
 	
 	/*public ArrayList<Button> buttons;

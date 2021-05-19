@@ -1,6 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
 import java.util.Random;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;

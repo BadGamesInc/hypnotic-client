@@ -1,5 +1,7 @@
 package net.minecraft.entity.ai;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +14,6 @@ import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import org.apache.commons.lang3.StringUtils;
 
 public abstract class EntityAITarget extends EntityAIBase
 {

@@ -1,8 +1,10 @@
 package net.minecraft.item;
 
-import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;

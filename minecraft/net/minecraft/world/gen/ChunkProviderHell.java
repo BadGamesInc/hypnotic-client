@@ -2,6 +2,7 @@ package net.minecraft.world.gen;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

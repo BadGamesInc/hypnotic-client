@@ -2,6 +2,10 @@ package net.minecraft.client.renderer;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -11,8 +15,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 
 public class ActiveRenderInfo
 {

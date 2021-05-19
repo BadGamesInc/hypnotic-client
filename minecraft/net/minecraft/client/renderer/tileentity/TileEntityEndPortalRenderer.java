@@ -2,6 +2,7 @@ package net.minecraft.client.renderer.tileentity;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GLAllocation;

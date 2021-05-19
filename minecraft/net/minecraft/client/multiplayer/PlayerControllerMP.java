@@ -1,6 +1,5 @@
 package net.minecraft.client.multiplayer;
 
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.combat.Reach;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

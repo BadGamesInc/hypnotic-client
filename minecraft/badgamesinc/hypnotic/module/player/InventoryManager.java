@@ -1,18 +1,12 @@
 package badgamesinc.hypnotic.module.player;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
-import badgamesinc.hypnotic.event.events.EventPreMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.KillAura;
-import badgamesinc.hypnotic.module.misc.ChestStealer;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.TimeHelper;
-import badgamesinc.hypnotic.util.Timer;
-import badgamesinc.hypnotic.util.TimerUtils;
 import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;

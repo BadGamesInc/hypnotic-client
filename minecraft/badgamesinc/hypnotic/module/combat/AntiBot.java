@@ -16,7 +16,6 @@ import com.google.common.collect.Ordering;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
-import badgamesinc.hypnotic.event.events.EventUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;

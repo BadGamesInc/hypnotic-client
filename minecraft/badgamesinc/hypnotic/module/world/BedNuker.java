@@ -8,7 +8,6 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
-import net.minecraft.block.material.Material;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.network.play.client.C0APacketAnimation;

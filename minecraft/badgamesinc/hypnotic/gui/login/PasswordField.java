@@ -1,10 +1,14 @@
 package badgamesinc.hypnotic.gui.login;
 
-import net.minecraft.util.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.*;
-import org.lwjgl.opengl.*;
-import net.minecraft.client.renderer.*;
+import org.lwjgl.opengl.GL11;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.util.ChatAllowedCharacters;
 
 public class PasswordField extends Gui
 {

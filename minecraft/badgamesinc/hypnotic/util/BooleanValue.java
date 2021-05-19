@@ -1,8 +1,5 @@
 package badgamesinc.hypnotic.util;
 
-import badgamesinc.hypnotic.util.Value;
-import badgamesinc.hypnotic.util.BooleanParser;
-
 import java.util.Optional;
 
 

@@ -1,6 +1,7 @@
 package net.minecraft.pathfinding;
 
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;

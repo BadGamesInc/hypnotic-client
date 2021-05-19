@@ -1,9 +1,14 @@
 package net.minecraft.init;
 
-import com.mojang.authlib.GameProfile;
 import java.io.PrintStream;
 import java.util.Random;
 import java.util.UUID;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockFire;
@@ -49,8 +54,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.LoggingPrintStream;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Bootstrap
 {

@@ -1,6 +1,7 @@
 package net.minecraft.entity;
 
 import java.util.UUID;
+
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.attributes.AttributeModifier;

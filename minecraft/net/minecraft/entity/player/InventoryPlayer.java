@@ -1,6 +1,7 @@
 package net.minecraft.entity.player;
 
 import java.util.concurrent.Callable;
+
 import net.minecraft.block.Block;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;

@@ -1,6 +1,7 @@
 package net.minecraft.entity.monster;
 
 import java.util.Random;
+
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;

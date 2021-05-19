@@ -1,8 +1,9 @@
 package net.minecraft.scoreboard;
 
-import com.google.common.collect.Maps;
 import java.util.Collection;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 public abstract class Team
 {

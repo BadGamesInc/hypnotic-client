@@ -1,9 +1,11 @@
 package net.minecraft.network.play.server;
 
-import com.google.common.collect.Maps;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.common.collect.Maps;
+
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;

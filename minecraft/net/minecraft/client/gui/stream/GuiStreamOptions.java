@@ -1,6 +1,7 @@
 package net.minecraft.client.gui.stream;
 
 import java.io.IOException;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiOptionSlider;

@@ -1,8 +1,10 @@
 package net.minecraft.command;
 
-import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.server.MinecraftServer;

@@ -1,7 +1,9 @@
 package net.minecraft.server.integrated;
 
-import com.mojang.authlib.GameProfile;
 import java.net.SocketAddress;
+
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.management.ServerConfigurationManager;

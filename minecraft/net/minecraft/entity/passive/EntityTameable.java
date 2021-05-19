@@ -1,6 +1,7 @@
 package net.minecraft.entity.passive;
 
 import java.util.UUID;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAISit;
