@@ -15,7 +15,9 @@ Whoever else we stole code from
   
 ## how to upload a custom cape  
 Open the jar file with a program like 7zip (or winrar) and go to assets/minecraft/hypnotic/textures/capes/  
-and replace cape.png with a cape file of your choice (make sure it has the same name)  
+and replace cape.png with a cape file of your choice (make sure it has the same name) or alternatively
+do it like a texture pack and just make a new directory in the assests folder called hypnotic/textures/capes
+and add the cape.png
   
 ## how to import into eclipse and compile
 WIP
