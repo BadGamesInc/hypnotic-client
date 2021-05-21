@@ -21,6 +21,7 @@ public class Logo extends Mod {
 		options2.add("Roboto-Regular");
 		options2.add("Minecraft");
 		Hypnotic.instance.setmgr.rSetting(new Setting("Logo Font", this, "Roboto-Regular", options2));
+		setEnabled(true);
 	}
 
 }

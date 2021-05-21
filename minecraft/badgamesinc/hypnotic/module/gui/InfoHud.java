@@ -10,6 +10,7 @@ public class InfoHud extends Mod {
 	
 	public InfoHud() {
 		super("Info", 0, Category.GUI, "Displays information about the player and the server");
+		setEnabled(true);
 	}
 
 }

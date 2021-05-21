@@ -422,7 +422,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         fontRenderer.drawString("Rewrote the ClickGUI", 24, 182, -1, false);
         
         fontRenderer.drawString("§e*", 16, 192, -1, false);
-        fontRenderer.drawString("Replaced retard talk with retard detectore", 24, 192, -1, false);
+        fontRenderer.drawString("Replaced retard talk with retard detector", 24, 192, -1, false);
         
         //Deletions
         fontRenderer.drawString("§c-", 16, 202, -1, false);
