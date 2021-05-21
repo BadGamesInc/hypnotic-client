@@ -369,64 +369,34 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         
         /* Changelog */
+        ArrayList<String> changes = new ArrayList<String>
+        changes.add("Â§a+ Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
+        changes.add("Â§a+ Added AutoConfig as a temp fix to configs being broken :/");
+        changes.add("Â§a+ Added Phase");
+        changes.add("Â§a+ Added LongJump");
+        changes.add("Â§a+ Added AntiBot");
+        changes.add("Â§a+ Added .enchant");
+        changes.add("Â§a+ Added .help");
+        changes.add("Â§a+ Added .about");
+        changes.add("Â§a+ Added .help");
+        changes.add("Â§e* Improved Nametags");
+        changes.add("Â§e* Changed font renderer because the other one sucked");
+        changes.add("Â§e* Improved TargetHUD");
+        changes.add("Â§e* Fixed KillSults");
+        changes.add("Â§e* Fixed Disabler");
+        changes.add("Â§e* Fixed InfoHUD TPS display");
+        changes.add("Â§e* Improved PC Pinger");
+        changes.add("Â§e* Rewrote the ClickGUI");
+        changes.add("Â§e* Replaced retard talk with retard detector");
+        changes.add("Â§c- Removed Tracers (temp)");
 
         bigFontRenderer.drawString("Changes", 4, 4, -1, false);
-        //Additions
-        fontRenderer.drawString("§a+", 16, 32, -1, false);
-        fontRenderer.drawString("Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed", 24, 32, -1, false);
         
-        fontRenderer.drawString("§a+", 16, 42, -1, false);
-        fontRenderer.drawString("Added AutoConfig as a temp fix to configs being broken :/", 24, 42, -1, false);
-        
-        fontRenderer.drawString("§a+", 16, 52, -1, false);
-        fontRenderer.drawString("Added Phase", 24, 52, -1, false);
-        
-        fontRenderer.drawString("§a+", 16, 62, -1, false);
-        fontRenderer.drawString("Added LongJump", 24, 62, -1, false);
-        
-        fontRenderer.drawString("§a+", 16, 72, -1, false);
-        fontRenderer.drawString("Added AntiBot", 24, 72, -1, false);
-        
-        fontRenderer.drawString("§a+", 16, 82, -1, false);
-        fontRenderer.drawString("Added .enchant", 24, 82, -1, false);
-        
-        fontRenderer.drawString("§a+", 16, 92, -1, false);
-        fontRenderer.drawString("Added .about", 24, 92, -1, false);
-        
-        fontRenderer.drawString("§a+", 16, 102, -1, false);
-        fontRenderer.drawString("Added .help", 24, 102, -1, false);
-        
-        //Changes
-        fontRenderer.drawString("§e*", 16, 112, -1, false);
-        fontRenderer.drawString("Improved Nametags", 24, 112, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 122, -1, false);
-        fontRenderer.drawString("Changed font renderer because the other one sucked", 24, 122, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 132, -1, false);
-        fontRenderer.drawString("Improved TargetHUD", 24, 132, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 142, -1, false);
-        fontRenderer.drawString("Improved KillSults", 24, 142, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 152, -1, false);
-        fontRenderer.drawString("Fixed Disabler", 24, 152, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 162, -1, false);
-        fontRenderer.drawString("Fixed InfoHUD TPS display", 24, 162, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 172, -1, false);
-        fontRenderer.drawString("Improved PC Pinger", 24, 172, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 182, -1, false);
-        fontRenderer.drawString("Rewrote the ClickGUI", 24, 182, -1, false);
-        
-        fontRenderer.drawString("§e*", 16, 192, -1, false);
-        fontRenderer.drawString("Replaced retard talk with retard detector", 24, 192, -1, false);
-        
-        //Deletions
-        fontRenderer.drawString("§c-", 16, 202, -1, false);
-        fontRenderer.drawString("Removed Tracers (temp)", 24, 202, -1, false);
+        int count = 0;
+        for (String str : changes) {
+            //fontRenderer.drawString("Â§e*", 16, 112, -1, true);
+            count += 10;
+        }
         
         /*           */
         String s1 = "Copyright Mojang AB. Do not distribute!";
