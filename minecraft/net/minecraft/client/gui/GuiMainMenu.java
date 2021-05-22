@@ -378,17 +378,21 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         
         /* Changelog */
-        ArrayList<String> changes = new ArrayList<String>();
-      //additions
+        ArrayList<String> changes = new ArrayList();
+        
+        //additions
         //changes.add("§a+§f Addition");
         changes.add("§a+§f Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
         changes.add("§a+§f Added AutoConfig as a temp fix to configs being broken :/");
-        changes.add("§a+§f Added Phase");  
+        changes.add("§a+§f Added Phase");
+        changes.add("§a+§f Added LongJump");
+        changes.add("§a+§f Added AntiBot");
+        changes.add("§a+§f Added .enchant");
         changes.add("§a+§f Added .help");
         changes.add("§a+§f Added .about");
         changes.add("§a+§f Added .help");
         changes.add("§a+§f Added .modules");
-
+        
         //changes
         //changes.add("§a+§f Change");
         changes.add("§e*§f Improved Nametags");
@@ -402,17 +406,19 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§e*§f Rewrote the ClickGUI");
         changes.add("§e*§f Replaced retard talk with retard detector");
         changes.add("§e*§f Many QOL changes and code optimizations");
-
+        
         // removals
         //changes.add("§a+§f Removal");
+        changes.add("§c-§f Removed Tracers (temp)");
 
         bigFontRenderer.drawString("Changes", 4, 4, -1, true);
         
-        int count = 30;
+        int count = 32;
         for (String str : changes) {
             fontRenderer.drawString(str, 16, count, -1, true);
             count += 10;
         }
+        
         /*           */
         String s1 = "Copyright Mojang AB. Do not distribute!";
         //fontRenderer.drawString(s, 2, this.height - 14, -1, true);
