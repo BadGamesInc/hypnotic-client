@@ -365,7 +365,7 @@ public class Speed extends Mod {
                     moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                 }
 
-                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + 0.03));
+                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + 0.01));
 
 
         }

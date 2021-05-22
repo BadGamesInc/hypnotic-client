@@ -40,7 +40,7 @@ public class SaveLoad {
             toSave.add("MOD:" + mod.getName() + ":" + mod.isEnabled() + ":" + mod.getKey());
         }
 
-        for (Setting set : Hypnotic.instance.setmgr.getSettings()) {
+        /*for (Setting set : Hypnotic.instance.setmgr.getSettings()) {
             if (set.isCheck()) {
                 toSave.add("SET:" + set.getName() + ":" + set.getParentMod().getName() + ":" + set.getValBoolean());
             }
@@ -50,7 +50,7 @@ public class SaveLoad {
             if (set.isSlider()) {
                 toSave.add("SET:" + set.getName() + ":" + set.getParentMod().getName() + ":" + set.getValDouble());
             }
-        }
+        }*/
 
         try {
             PrintWriter pw = new PrintWriter(this.dataFile);
@@ -88,7 +88,7 @@ public class SaveLoad {
                     m.setKey(Integer.parseInt(args[3]));
                 }
                 
-            } else if (s.toLowerCase().startsWith("set:")) {
+            } /*else if (s.toLowerCase().startsWith("set:")) {
                 Mod m = Hypnotic.instance.moduleManager.getModuleByName(args[2]);
                 if (m != null) {
                     Setting set = Hypnotic.instance.setmgr.getSettingByName(args[1]);
@@ -105,7 +105,7 @@ public class SaveLoad {
                         }
                     }
                 }
-            }
+            }*/
             
             //System.out.println(args[1]);
             //System.out.println(args[2]);
