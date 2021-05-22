@@ -369,13 +369,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         Gui.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - 55, new Color(0, 0, 0, 160).getRGB());
        // this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
        // this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
-
-        String s = Hypnotic.clientName + " " + Hypnotic.clientVersion;
-
-        if (this.mc.isDemo())
-        {
-            s = s + " Demo";
-        }
         
         /* Changelog */
         ArrayList<String> changes = new ArrayList();
