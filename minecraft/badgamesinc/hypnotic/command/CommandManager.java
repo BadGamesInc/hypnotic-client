@@ -30,7 +30,6 @@ public class CommandManager {
 		commands.add(new Modules());
 		commands.add(new NBT());
 		//commands.add(new Plugins());
-		commands.add(new ClearBind());
 	}
 	
 	public CopyOnWriteArrayList<Command> getCommands() 
