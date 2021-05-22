@@ -392,17 +392,18 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§a+§f Added .about");
         changes.add("§a+§f Added .help");
         changes.add("§a+§f Added .modules");
+        changes.add("§a+§f Added Notifications");
         
         //changes
         //changes.add("§a+§f Change");
         changes.add("§e*§f Improved Nametags");
-        changes.add("§e*§f Changed font renderer because the other one sucked");
+        changes.add("§e*§f Improved PC Pinger");
         changes.add("§e*§f Improved TargetHUD");
         changes.add("§e*§f Fixed KillSults");
         changes.add("§e*§f Fixed Disabler");
         changes.add("§e*§f Fixed InfoHUD TPS display");
         changes.add("§e*§f Fixed Discord RPC");
-        changes.add("§e*§f Improved PC Pinger");
+        changes.add("§e*§f Changed font renderer because the other one sucked");
         changes.add("§e*§f Rewrote the ClickGUI");
         changes.add("§e*§f Replaced retard talk with retard detector");
         changes.add("§e*§f Many QOL changes and code optimizations");
