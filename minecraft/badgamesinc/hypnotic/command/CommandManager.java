@@ -29,6 +29,7 @@ public class CommandManager {
 		commands.add(new About());
 		commands.add(new Modules());
 		commands.add(new NBT());
+		commands.add(new Panic());
 		//commands.add(new Plugins());
 	}
 	
