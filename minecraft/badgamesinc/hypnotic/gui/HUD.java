@@ -133,9 +133,9 @@ public class HUD {
 		
 		if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Text")) {
 			if (Hypnotic.instance.setmgr.getSettingByName("Logo Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
-				fontRenderer3.drawString("H" + ColorUtils.white + "ypnotic " + ColorUtils.reset, 4, 4, ClickGUI.color, true);
+				fontRenderer3.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
 			} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Font").getValString().equalsIgnoreCase("Minecraft")) {
-				fr.drawString("H" + ColorUtils.white + "ypnotic " + ColorUtils.reset, 4, 4, ClickGUI.color, true);
+				fr.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
 			}
 		} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Image")) {
 			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/white.png"));
@@ -144,7 +144,7 @@ public class HUD {
 	}
 	
 	public void renderArrayList(ScaledResolution sr) {
-		Color temp = ColorUtil.getClickGUIColor().darker();
+		Color temp = ColorUtil.getClickGUIColor();
 		final int height = sr.getScaledHeight();    
 		final int width = sr.getScaledWidth();	
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();

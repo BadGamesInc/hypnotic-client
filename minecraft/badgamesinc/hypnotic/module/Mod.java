@@ -1,6 +1,9 @@
 package badgamesinc.hypnotic.module;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.notifications.Notification;
+import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
@@ -80,6 +83,7 @@ public class Mod {
 		        lastSize = fr.getStringWidth(this.getDisplayName());
 			}
 		}
+		Hypnotic.instance.notificationManager.show(new Notification(this.getName() + ColorUtils.green + " was enabled", (int) 3.5, NotificationType.INFO));
 	}
 	public void onDisable() {
 		Hypnotic.instance.eventManager.unregister(this);
@@ -95,6 +99,7 @@ public class Mod {
 		        lastSize =0;
 			}
 		}
+		Hypnotic.instance.notificationManager.show(new Notification(this.getName() + ColorUtils.red + " was disabled", (int) 3.5, NotificationType.INFO));
 	}
 	public void setup() {}
 	

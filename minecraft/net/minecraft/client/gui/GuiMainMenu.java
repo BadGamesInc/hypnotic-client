@@ -1,9 +1,11 @@
 package net.minecraft.client.gui;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.lwjgl.opengl.GLContext;
 import com.google.common.collect.Lists;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -212,9 +215,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.addSingleplayerMultiplayerButtons(j, 24);
         }
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 106, this.height / 2 + 60, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + 60, 98, 20, I18n.format("menu.quit", new Object[0])));
-        //this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
+        ScaledResolution sr = new ScaledResolution(mc);
+    	int imToLazyToGoBackAddTheSameNumberToEachThing = -27 + sr.getScaledWidth() / 10;
+        this.buttonList.add(new AnimatedButton(0, this.width / 2 - 0 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new AnimatedButton(4, this.width / 2 + 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.quit", new Object[0])));
+        
 
         synchronized (this.threadLock)
         {
@@ -235,9 +240,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 210, this.height / 2 + 30, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 70, this.height / 2 + 30, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(14, this.width / 2 + 70, this.height / 2 + 30, 130, 20, "Alt Login"));
+    	ScaledResolution sr = new ScaledResolution(mc);
+    	int imToLazyToGoBackAddTheSameNumberToEachThing = -27 + sr.getScaledWidth() / 10;
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 450 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
+        this.buttonList.add(new AnimatedButton(2, this.width / 2 - 300 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
+        this.buttonList.add(new AnimatedButton(14, this.width / 2 - 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, "Alt Login"));
     }
 
     /**
@@ -245,8 +252,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     private void addDemoButtons(int p_73972_1_, int p_73972_2_)
     {
-        this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo", new Object[0])));
-        this.buttonList.add(this.buttonResetDemo = new GuiButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, I18n.format("menu.resetdemo", new Object[0])));
+        this.buttonList.add(new AnimatedButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo", new Object[0])));
+        this.buttonList.add(this.buttonResetDemo = new AnimatedButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, I18n.format("menu.resetdemo", new Object[0])));
         ISaveFormat isaveformat = this.mc.getSaveLoader();
         WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
 
@@ -358,6 +365,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         int i = 274;
         int j = this.width / 2 - i / 2;
         int k = 30;
+        Gui.drawRect(0, sr.getScaledHeight() - 55, sr.getScaledWidth(), sr.getScaledHeight() - 58, -1);
+        Gui.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - 55, new Color(0, 0, 0, 160).getRGB());
        // this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
        // this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
 
@@ -369,39 +378,45 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         
         /* Changelog */
-        ArrayList<String> changes = new ArrayList<String>
-        changes.add("Â§a+ Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
-        changes.add("Â§a+ Added AutoConfig as a temp fix to configs being broken :/");
-        changes.add("Â§a+ Added Phase");
-        changes.add("Â§a+ Added LongJump");
-        changes.add("Â§a+ Added AntiBot");
-        changes.add("Â§a+ Added .enchant");
-        changes.add("Â§a+ Added .help");
-        changes.add("Â§a+ Added .about");
-        changes.add("Â§a+ Added .help");
-        changes.add("Â§e* Improved Nametags");
-        changes.add("Â§e* Changed font renderer because the other one sucked");
-        changes.add("Â§e* Improved TargetHUD");
-        changes.add("Â§e* Fixed KillSults");
-        changes.add("Â§e* Fixed Disabler");
-        changes.add("Â§e* Fixed InfoHUD TPS display");
-        changes.add("Â§e* Improved PC Pinger");
-        changes.add("Â§e* Rewrote the ClickGUI");
-        changes.add("Â§e* Replaced retard talk with retard detector");
-        changes.add("Â§c- Removed Tracers (temp)");
+        ArrayList<String> changes = new ArrayList<String>();
+      //additions
+        //changes.add("§a+§f Addition");
+        changes.add("§a+§f Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
+        changes.add("§a+§f Added AutoConfig as a temp fix to configs being broken :/");
+        changes.add("§a+§f Added Phase");  
+        changes.add("§a+§f Added .help");
+        changes.add("§a+§f Added .about");
+        changes.add("§a+§f Added .help");
+        changes.add("§a+§f Added .modules");
 
-        bigFontRenderer.drawString("Changes", 4, 4, -1, false);
+        //changes
+        //changes.add("§a+§f Change");
+        changes.add("§e*§f Improved Nametags");
+        changes.add("§e*§f Changed font renderer because the other one sucked");
+        changes.add("§e*§f Improved TargetHUD");
+        changes.add("§e*§f Fixed KillSults");
+        changes.add("§e*§f Fixed Disabler");
+        changes.add("§e*§f Fixed InfoHUD TPS display");
+        changes.add("§e*§f Fixed Discord RPC");
+        changes.add("§e*§f Improved PC Pinger");
+        changes.add("§e*§f Rewrote the ClickGUI");
+        changes.add("§e*§f Replaced retard talk with retard detector");
+        changes.add("§e*§f Many QOL changes and code optimizations");
+
+        // removals
+        //changes.add("§a+§f Removal");
+
+        bigFontRenderer.drawString("Changes", 4, 4, -1, true);
         
-        int count = 0;
+        int count = 30;
         for (String str : changes) {
-            //fontRenderer.drawString("Â§e*", 16, 112, -1, true);
+            fontRenderer.drawString(str, 16, count, -1, true);
             count += 10;
         }
-        
         /*           */
         String s1 = "Copyright Mojang AB. Do not distribute!";
-        fontRenderer.drawString(s, 2, this.height - 14, -1, true);
-        fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 16, this.height - 14, -1, true);
+        //fontRenderer.drawString(s, 2, this.height - 14, -1, true);
+        //fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 16, this.height - 14, -1, true);
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);

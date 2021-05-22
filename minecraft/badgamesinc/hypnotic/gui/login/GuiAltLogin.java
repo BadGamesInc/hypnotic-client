@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
@@ -64,10 +65,10 @@ extends GuiScreen {
     @Override
     public void initGui() {
         int var3 = height / 4 + 24;
-        this.buttonList.add(new GuiButton(0, width / 2 - 100, var3 + 72 + 12, "Login"));
-        this.buttonList.add(new GuiButton(1, width / 2 - 100, var3 + 72 + 12 + 24, "Back"));
-        this.buttonList.add(new GuiButton(2, width / 2 - 100, var3 + 72 + 12 - 100, "Random Cracked"));
-        this.buttonList.add(new GuiButton(3, width / 2 - 100, var3 + 72 + 12 - 76, "Play Multiplayer"));
+        this.buttonList.add(new AnimatedButton(0, width / 2 - 100, var3 + 72 + 12, "Login"));
+        this.buttonList.add(new AnimatedButton(1, width / 2 - 100, var3 + 72 + 12 + 24, "Back"));
+        this.buttonList.add(new AnimatedButton(2, width / 2 - 100, var3 + 72 + 12 - 24, "Random Cracked"));
+        this.buttonList.add(new AnimatedButton(3, width / 2 - 100, var3 + 72 + 12 - 24 - 24, "Play Multiplayer"));
         this.username = new GuiTextField(var3, this.mc.fontRendererObj, width / 2 - 100, 60, 200, 20);
         this.password = new PasswordField(this.mc.fontRendererObj, width / 2 - 100, 100, 200, 20);
         this.username.setFocused(true);

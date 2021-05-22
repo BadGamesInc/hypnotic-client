@@ -165,6 +165,7 @@ public class GuiIngame extends Gui
         }
         
         Hypnotic.instance.hud.draw();
+        Hypnotic.instance.notificationManager.render();
         
         Event2D event2D = new Event2D(scaledresolution.getScaledWidth(), scaledresolution.getScaledWidth());
         event2D.call();

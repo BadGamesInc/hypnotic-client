@@ -6,20 +6,19 @@ import badgamesinc.hypnotic.module.Mod;
 
 public class Setting {
 
-
-    private String name;
+	private String name;
     private Mod parent;
     public String mode;
 
-    private String sval;
-    private ArrayList<String> options;
+    public String sval;
+    public ArrayList<String> options;
 
-    private boolean bval;
+    public boolean bval;
 
-    private double dval;
-    private double min;
-    private double max;
-    private boolean onlyint = false;
+    public double dval;
+    public double min;
+    public double max;
+    public boolean onlyint = false;
 
 
     public Setting(String name, Mod parent, String sval, ArrayList<String> options) {
@@ -117,5 +116,4 @@ public class Setting {
     public boolean onlyInt() {
         return this.onlyint;
     }
-
 }

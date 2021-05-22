@@ -111,9 +111,9 @@ public class Scaffold extends Mod {
         ArrayList<String> options = new ArrayList<>();
 
         ArrayList<String> options1 = new ArrayList<>();
-        options1.add("Redesky");
+        options1.add("Hypixel");
         options1.add("AAC");
-        Hypnotic.instance.setmgr.rSetting(scaffoldMode = new Setting("Scaffold Mode", this, "Redesky", options1));
+        Hypnotic.instance.setmgr.rSetting(scaffoldMode = new Setting("Scaffold Mode", this, "Hypixel", options1));
         
         Hypnotic.instance.setmgr.rSetting(delay = new Setting("Delay", this, 0, 0, 1000, true));
         
@@ -121,7 +121,7 @@ public class Scaffold extends Mod {
         Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("SafeWalk", this, false));
         Hypnotic.instance.setmgr.rSetting(blockFly = new Setting("Downwards", this, true));
         Hypnotic.instance.setmgr.rSetting(boost = new Setting("Boost", this, false));
-        Hypnotic.instance.setmgr.rSetting(redeskyBoost = new Setting("Redesky Boost", this, false));
+        Hypnotic.instance.setmgr.rSetting(redeskyBoost = new Setting("Timer Boost", this, false));
         Hypnotic.instance.setmgr.rSetting(tower = new Setting("Tower", this, true));
         Hypnotic.instance.setmgr.rSetting(towermove = new Setting("TowerMove", this, true));
         Hypnotic.instance.setmgr.rSetting(swing = new Setting("Swing", this, false));
@@ -176,7 +176,7 @@ public class Scaffold extends Mod {
                 mc.gameSettings.keyBindSprint.pressed = false;
 
             }
-            if (scaffoldMode.getValString().equalsIgnoreCase("Redesky")) {
+            if (scaffoldMode.getValString().equalsIgnoreCase("Hypixel")) {
                 int slot = this.getSlot();
                 this.stopWalk = (getBlockCount() == 0 || slot == -1) && safewalk.getValBoolean();
                 this.isPlaceTick = keeprots.getValBoolean() ? blockData != null && slot != -1 : blockData != null && slot != -1 && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer).add(0, -1, 0)).getBlock() == Blocks.air;
@@ -273,7 +273,7 @@ public class Scaffold extends Mod {
 
             }
         } else {
-            if (scaffoldMode.getValString().equalsIgnoreCase("Redesky")) {
+            if (scaffoldMode.getValString().equalsIgnoreCase("Hypixel")) {
                 int slot = this.getSlot();
                 BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
                 if (slot != -1 && this.blockData != null) {

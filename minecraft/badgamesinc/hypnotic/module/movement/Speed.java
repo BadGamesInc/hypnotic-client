@@ -18,6 +18,7 @@ import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
+import badgamesinc.hypnotic.util.PlayerUtils;
 import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.Wrapper;
@@ -65,10 +66,10 @@ public class Speed extends Mod {
     public Speed(){
         super("Speed", Keyboard.KEY_J, Category.MOVEMENT, "Move faster");
         ArrayList<String> options = new ArrayList<>();
-        options.add("NCPBhop");
+        options.add("NCP");
         options.add("BhopYPort");
         options.add("Bhop2");
-        options.add("Bhop3");
+        options.add("Hypixel");
         options.add("BhopDamage");
         options.add("Gaming");
         options.add("Gaming2");
@@ -76,7 +77,7 @@ public class Speed extends Mod {
         options.add("Redesky LongJump");
 
 
-        Hypnotic.instance.setmgr.rSetting(mode = new Setting("Speed Mode", this, "Bhop2", options));
+        Hypnotic.instance.setmgr.rSetting(mode = new Setting("Speed Mode", this, "Hypixel", options));
 
         Hypnotic.instance.setmgr.rSetting(speed = new Setting("Speed", this, 1, 0, 10, false));
     }
@@ -254,7 +255,7 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
             ++stage;
-        }else if(mode.getValString().equalsIgnoreCase("NCPBhop") || mode.getValString().equalsIgnoreCase("BhopDamage")){
+        }else if(mode.getValString().equalsIgnoreCase("NCP") || mode.getValString().equalsIgnoreCase("BhopDamage")){
             
             if (MoveUtils.isMoving()) {
                     double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
@@ -330,8 +331,11 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, moveSpeed, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
 
-        }else if(mode.getValString().equalsIgnoreCase("Bhop3")){
+        }else if(mode.getValString().equalsIgnoreCase("Hypixel")){
         	
+        	Entity player = mc.thePlayer;
+            BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
+            Block block = mc.theWorld.getBlockState(pos).getBlock();
         	if (MoveUtils.isMoving()) {
                 double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
                 boolean inLiquid = MoveUtils.isInLiquid();
@@ -361,7 +365,7 @@ public class Speed extends Mod {
                     moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                 }
 
-                MoveUtils.setMotion(event, Math.max(moveSpeed, baseMoveSpeed + 0.4));
+                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + 0.01));
 
 
         }
@@ -404,7 +408,7 @@ public class Speed extends Mod {
         if(event.getState() == Event.State.PRE) {
             this.setDisplayName("Speed " + ColorUtils.white + "[" + mode.getValString() + "] ");
             switch (mode.getValString()) {
-                case "NCP":
+                /*case "NCP":
                     if(mc.thePlayer.onGround){
                         mc.thePlayer.jump();
                     }else {
@@ -414,9 +418,17 @@ public class Speed extends Mod {
                         }
 
                     }
-                    break;
+                    break;*/
                 case "Bhop2":
-                case "NCPBhop":
+                case "NCP":
+                    if(!MoveUtils.isMoving())
+                        return;
+                    if (MoveUtils.isOnGround()) {
+                        event.setOnGround(false);
+                        mc.getNetHandler().addToSendQueue(new C03PacketPlayer(true));
+                    }
+                    break;
+                case "Hypixel":
                     if(!MoveUtils.isMoving())
                         return;
                     if (MoveUtils.isOnGround()) {

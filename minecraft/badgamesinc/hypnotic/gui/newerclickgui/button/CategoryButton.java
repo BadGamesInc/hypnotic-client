@@ -46,7 +46,6 @@ public class CategoryButton {
 		
         int color = parent.currentCategory == this.category ? ClickGUI.color : (isHovered(mouseX, mouseY) ? ClickGUI.color : -1);
         
-        //int color = parent.currentCategory == this.category ? ColorUtils.rainbow(6, 0.5f, 0.5f) : (isHovered(mouseX, mouseY) ? ColorUtils.rainbow(6, 0.5f, 0.5f) : -1);
         switch(category){
             case COMBAT:
             	if (isHovered(mouseX, mouseY))

@@ -42,7 +42,7 @@ public class ChatSpammer extends Mod {
 	}
 	
 	public void onUpdate() {
-		if(timer.hasTimeElapsed(getDelayValue() * 1000, true)) {
+		/*if(timer.hasTimeElapsed(getDelayValue() * 1000, true)) {
 			Random r = new Random();
 			int index = r.nextInt(messages.size());
 			String message = messages.get(index);
@@ -50,6 +50,7 @@ public class ChatSpammer extends Mod {
 			mc.thePlayer.sendChatMessage(message);
 			
 			timer.reset();
-		}
+		*///}
+		mc.thePlayer.sendChatMessage("/r STAY MAD HYPNOTIC ON TOP");
 	}
 }

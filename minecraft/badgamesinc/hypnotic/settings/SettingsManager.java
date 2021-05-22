@@ -7,7 +7,7 @@ import badgamesinc.hypnotic.module.Mod;
 
 public class SettingsManager {
 	
-	private ArrayList<Setting> settings;
+private ArrayList<Setting> settings;
 	
 	public SettingsManager(){
 		this.settings = new ArrayList<>();
@@ -21,15 +21,12 @@ public class SettingsManager {
 		return this.settings;
 	}
 	
-	public ArrayList<Setting> getSettingsByMod(Mod imod){
+	public ArrayList<Setting> getSettingsByMod(Mod mod){
 		ArrayList<Setting> out = new ArrayList<>();
 		for(Setting s : getSettings()){
-			if(s.getParentMod().equals(imod)){
+			if(s.getParentMod().equals(mod)){
 				out.add(s);
 			}
-		}
-		if(out.isEmpty()){
-			return null;
 		}
 		return out;
 	}

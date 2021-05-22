@@ -60,8 +60,12 @@ public class KillSults extends Mod {
 		
 		randomStuff = " [" + getNextRandomString(allowedChars, random) + "]";
         if (messageSpam.getValBoolean()) {
-        	if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled())
+        	if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {
         		mc.thePlayer.sendChatMessage("/tell " + KillAura.target.getName() + " NOOB" + randomStuff);
+        		for (int i = 0; i < 1000; i ++) {
+        			mc.thePlayer.sendChatMessage("/r " + KillAura.target.getName() + " NOOB EZ" + randomStuff);
+        		}
+        	}
         }
 	}
 	

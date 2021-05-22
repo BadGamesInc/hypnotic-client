@@ -1,23 +1,16 @@
 package badgamesinc.hypnotic;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.client.Minecraft;
 
-//Probably also doesnt work
 public class SaveLoad {
     public File dir;
     public File configs;
     public File dataFile;
-    public static String configName = "data";
 
     public SaveLoad() {
         dir = new File(Minecraft.getMinecraft().mcDataDir, "Hypnotic");
@@ -28,14 +21,14 @@ public class SaveLoad {
         if (!configs.exists()) {
             configs.mkdir();
         }
-        dataFile = new File(configs, configName + ".txt");
+        dataFile = new File(dir, "data.txt");
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
             } catch (IOException e) {e.printStackTrace();}
         }
 
-        //this.load();
+        this.load();
     }
 
 
@@ -94,8 +87,8 @@ public class SaveLoad {
                     m.setEnabled(Boolean.parseBoolean(args[2]));
                     m.setKey(Integer.parseInt(args[3]));
                 }
-            } 
-            if (s.toLowerCase().startsWith("set:")) {
+                
+            } else if (s.toLowerCase().startsWith("set:")) {
                 Mod m = Hypnotic.instance.moduleManager.getModuleByName(args[2]);
                 if (m != null) {
                     Setting set = Hypnotic.instance.setmgr.getSettingByName(args[1]);
@@ -107,11 +100,17 @@ public class SaveLoad {
                             set.setValString(args[3]);
                         }
                         if (set.isSlider()) {
-                            set.setValDouble(Double.parseDouble(args[3]));
+                        	
+                            set.setValDouble(Double.valueOf(args[3]));
                         }
                     }
                 }
             }
+            
+            //System.out.println(args[1]);
+            //System.out.println(args[2]);
+            //System.out.println(args[3]);
+            
         }
     }
 }

@@ -9,6 +9,7 @@ import badgamesinc.hypnotic.command.CommandManager;
 import badgamesinc.hypnotic.discordrpc.DiscordRP;
 import badgamesinc.hypnotic.event.EventManager;
 import badgamesinc.hypnotic.gui.HUD;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.settings.SettingsManager;
@@ -26,6 +27,7 @@ public class Hypnotic {
 	public EventManager eventManager;
 	public HUD hud;
 	public CommandManager commandManager;
+	public NotificationManager notificationManager;
 	public static FontManager fm;
 	public SaveLoad saveload;
 	public DiscordRP discordRP;
@@ -40,6 +42,7 @@ public class Hypnotic {
 		eventManager = new EventManager();
 		fm = new FontManager();
 		commandManager = new CommandManager();
+		notificationManager = new NotificationManager();
 		hud = new HUD();
 		saveload = new SaveLoad();
 		discordRP = new DiscordRP();
@@ -49,9 +52,9 @@ public class Hypnotic {
 		discordRP.start();
 		discordRP.title = this.rptitle();
 		
-		if(saveload.configs.exists()) {
-			saveload.load();
-		}
+		//if(saveload.configs.exists()) {
+			//saveload.load();
+		//}
 	}
 	
 	public void shutdown() {
