@@ -409,6 +409,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§e*§f Many QOL changes and code optimizations");
         
         // removals
+        //
         //changes.add("§a+§f Removal");
         changes.add("§c-§f Removed Tracers (temp)");
 
