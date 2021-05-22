@@ -2,17 +2,16 @@
 ## gaming awards frame winner 1999/2000/2001  
   
 ## About
-"utility mod" for minecraft java 1.8.8  
-we dont care if you get banned from any server  
-use at your own risk i guess  
+"Utility Mod" for Minecraft 1.8.8 (works on 1.8.9 servers too!)
+Use at your own risk, we are not responsible for any punishments on any server
   
 ## Requirements  
 Minecraft 1.8.8  
-Java SE version 1.8 or higher  
+Java SE runtime version 1.8 or higher  
   
 ## Authors  
 BadGamesInc - actual knowledge  
-KawaiiZenbo - made the logo and ported badclient modules (continues to edit readme)  
+KawaiiZenbo - made the logo and ported badclient modules (still editing the readme)  
 Whoever else we stole code from  
   
 ## How to upload a custom cape  
