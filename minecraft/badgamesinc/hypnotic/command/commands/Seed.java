@@ -1,6 +1,10 @@
 package badgamesinc.hypnotic.command.commands;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
+import badgamesinc.hypnotic.gui.notifications.Notification;
+import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 
 public class Seed extends Command {
@@ -26,6 +30,6 @@ public class Seed extends Command {
 	@Override
 	public void onCommand(String command, String[] args) throws Exception 
 	{
-		Wrapper.tellPlayer(mc.theWorld.getSeed() + "");
+		Wrapper.tellPlayer("Seed: " + mc.theWorld.getSeed());
 	}
 }

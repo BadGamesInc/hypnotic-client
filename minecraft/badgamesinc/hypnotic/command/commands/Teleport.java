@@ -1,6 +1,10 @@
 package badgamesinc.hypnotic.command.commands;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
+import badgamesinc.hypnotic.gui.notifications.Notification;
+import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 
 public class Teleport extends Command {
@@ -26,10 +30,10 @@ public class Teleport extends Command {
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
 		if(args[0] == null) {
-			Wrapper.tellPlayer("Usage: " + getSyntax());
+			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
 		} else {
 			mc.thePlayer.setPosition(Integer.valueOf(args[0]), Integer.valueOf(args[1]), Integer.valueOf(args[2]));
-			Wrapper.tellPlayer("TP'd to " + args[0] + ", " + args[1] + ", " + args[2]);
+			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "TP'd to " + args[0] + ", " + args[1] + ", " + args[2], (int) 5, NotificationType.INFO));
 		}
 		
 	}

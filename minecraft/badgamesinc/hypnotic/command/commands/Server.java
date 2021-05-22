@@ -1,6 +1,10 @@
 package badgamesinc.hypnotic.command.commands;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
+import badgamesinc.hypnotic.gui.notifications.Notification;
+import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.client.multiplayer.ServerAddress;
 
@@ -34,7 +38,7 @@ public class Server extends Command {
 		}
 		else 
 		{
-			Wrapper.tellPlayer("This is a singleplayer world.");
+			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "This is a singleplayer world", (int) 5, NotificationType.WARNING));
 		}
 	}
 }

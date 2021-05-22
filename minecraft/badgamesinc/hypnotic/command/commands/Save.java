@@ -2,6 +2,9 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
+import badgamesinc.hypnotic.gui.notifications.Notification;
+import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 
 public class Save extends Command {
@@ -24,6 +27,6 @@ public class Save extends Command {
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
 			Hypnotic.instance.saveload.save();
-    		Wrapper.tellPlayer("Succesfully saved");
+			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Successfully Saved", (int) 5, NotificationType.INFO));
   	}
 }
