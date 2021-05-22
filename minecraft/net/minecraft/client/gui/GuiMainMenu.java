@@ -371,6 +371,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         /* Changelog */
         ArrayList<String> changes = new ArrayList();
+        
+        //additions
+        //changes.add("§a+§f Addition");
         changes.add("§a+§f Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
         changes.add("§a+§f Added AutoConfig as a temp fix to configs being broken :/");
         changes.add("§a+§f Added Phase");
@@ -380,15 +383,24 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§a+§f Added .help");
         changes.add("§a+§f Added .about");
         changes.add("§a+§f Added .help");
+        changes.add("§a+§f Added .modules");
+        
+        //changes
+        //changes.add("§a+§f Change");
         changes.add("§e*§f Improved Nametags");
         changes.add("§e*§f Changed font renderer because the other one sucked");
         changes.add("§e*§f Improved TargetHUD");
         changes.add("§e*§f Fixed KillSults");
         changes.add("§e*§f Fixed Disabler");
         changes.add("§e*§f Fixed InfoHUD TPS display");
+        changes.add("§e*§f Fixed Discord RPC");
         changes.add("§e*§f Improved PC Pinger");
         changes.add("§e*§f Rewrote the ClickGUI");
         changes.add("§e*§f Replaced retard talk with retard detector");
+        changes.add("§e*§f Many QOL changes and code optimizations");
+        
+        // removals
+        //changes.add("§a+§f Removal");
         changes.add("§c-§f Removed Tracers (temp)");
 
         bigFontRenderer.drawString("Changes", 4, 4, -1, false);
