@@ -2,8 +2,8 @@
 ## gaming awards frame winner 1999/2000/2001  
   
 ## About
-"Utility Mod" for Minecraft 1.8.8 (works on 1.8.9 servers too!)
-Use at your own risk, we are not responsible for any punishments on any server
+"Utility Mod" for Minecraft 1.8.8 (works on 1.8.9 servers too!)  
+Use at your own risk, we are not responsible for any punishments on any server  
   
 ## Requirements  
 Minecraft 1.8.8  
@@ -15,10 +15,10 @@ KawaiiZenbo - made the logo and ported badclient modules (still editing the read
 Whoever else we stole code from  
   
 ## How to upload a custom cape  
-Open the jar file with a program like 7zip (or winrar) and go to assets/minecraft/hypnotic/textures/capes/  
+Open the jar file with a program like 7zip (or winrar) and go to assets/minecraft/hypnotic/textures/capes/
 and replace cape.png with a cape file of your choice (make sure it has the same name) or alternatively
 do it like a texture pack and just make a new directory in the assests folder called hypnotic/textures/capes
-and add the cape.png
+and add the cape.png  
   
 ## How to import into eclipse and compile  
 Download Eclipse at https://www.eclipse.org/ide/  
@@ -26,9 +26,9 @@ Download MCP 9.18 at http://www.modcoderpack.com/
 Download the Hypnotic client source code  
 Set up MCP as normal (guide coming soon)  
 Delete the contents of "src" in the MCP folder and replace them with the Hypnotic source files  
-Refresh Eclipse
-Click the green play button near the top of the window
-If you did everything right, Hypnotic and any of your changes should launch
+Refresh Eclipse  
+Click the green play button near the top of the window  
+If you did everything right, Hypnotic and any of your changes should launch  
   
 ## Disclaimer
 if you hate skidded clients then this is not the client for you,
