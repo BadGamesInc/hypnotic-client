@@ -7,6 +7,7 @@ public class CustomHotbar extends Mod {
 
 	public CustomHotbar() {
 		super("Custom Hotbar", 0, Category.GUI, "Renders a custom Hotbar");
+		this.setEnabled(true);
 	}
 
 }

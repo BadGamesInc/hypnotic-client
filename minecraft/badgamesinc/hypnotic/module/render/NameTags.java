@@ -99,7 +99,10 @@ public class NameTags extends Mod {
             GlStateManager.depthMask(false);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-            boolean isDeveloper = entity1.getName().equalsIgnoreCase("BadGamesInc") || entity1.getName().equalsIgnoreCase("KawaiiZenbo") || entity1.getName().equalsIgnoreCase("PowerMacG5") || entity1.getName().equalsIgnoreCase("PCPinger");
+            boolean isDeveloper = entity1.getName().equalsIgnoreCase("BadGamesInc") || 
+            		entity1.getName().equalsIgnoreCase("KawaiiZenbo") || 
+            		entity1.getName().equalsIgnoreCase("PowerMacG5") || 
+            		entity1.getName().equalsIgnoreCase("PCPinger");
             
 
             String colorCode = entity1.getHealth() > 15 ? "\247a" : entity1.getHealth() > 10 ? "\247e" : entity1.getHealth() > 7 ? "\2476" : "\247c";
