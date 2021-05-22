@@ -405,11 +405,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§e*§f Fixed Discord RPC");
         changes.add("§e*§f Changed font renderer because the other one sucked");
         changes.add("§e*§f Rewrote the ClickGUI");
+        changes.add("§e*§f New Buttons");
         changes.add("§e*§f Replaced retard talk with retard detector");
         changes.add("§e*§f Many QOL changes and code optimizations");
         
         // removals
-        //
         //changes.add("§a+§f Removal");
         changes.add("§c-§f Removed Tracers (temp)");
 
