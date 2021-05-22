@@ -44,39 +44,35 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private final GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 40, false, false, false);
     private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
 
-    /** Counts the number of screen updates. */
+    // Counts the number of screen updates.
     private float updateCounter;
 
-    /** The splash message. */
+    // The splash message.
     private String splashText;
     private GuiButton buttonResetDemo;
 
-    /** Timer used to rotate the panorama, increases every tick. */
+    // Timer used to rotate the panorama, increases every tick.
     private int panoramaTimer;
 
-    /**
-     * Texture allocated for the current viewport of the main menu's panorama background.
-     */
+    // Texture allocated for the current viewport of the main menu's panorama background.
     private DynamicTexture viewportTexture;
     private boolean field_175375_v = true;
 
-    /**
-     * The Object object utilized as a thread lock when performing non thread-safe operations
-     */
+    // The Object object utilized as a thread lock when performing non thread-safe operations
     private final Object threadLock = new Object();
 
-    /** OpenGL graphics card warning. */
+    // OpenGL graphics card warning.
     private String openGLWarning1;
 
-    /** OpenGL graphics card warning. */
+    // OpenGL graphics card warning.
     private String openGLWarning2;
 
-    /** Link to the Mojang Support about minimum requirements */
+    // Link to the Mojang Support about minimum requirements
     private String openGLWarningLink;
     private static final ResourceLocation splashTexts = new ResourceLocation("texts/splashes.txt");
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
 
-    /** An array of all the paths to the panorama pictures. */
+    // An array of all the paths to the panorama pictures.
     private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
     public static final String field_96138_a = "Please click " + EnumChatFormatting.UNDERLINE + "here" + EnumChatFormatting.RESET + " for more information.";
     private int field_92024_r;
@@ -87,7 +83,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private int field_92019_w;
     private ResourceLocation backgroundTexture;
 
-    /** Minecraft Realms button. */
+    // Minecraft Realms button.
     private GuiButton realmsButton;
 
     public GuiMainMenu()
@@ -155,34 +151,24 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    /**
-     * Called from the main game loop to update the screen.
-     */
+    // Called from the main game loop to update the screen.
     public void updateScreen()
     {
         ++this.panoramaTimer;
     }
 
-    /**
-     * Returns true if this GUI should pause the game when it is displayed in single-player
-     */
+    // Returns true if this GUI should pause the game when it is displayed in single-player
     public boolean doesGuiPauseGame()
     {
         return false;
     }
 
-    /**
-     * Fired when a key is typed (except F11 which toggles full screen). This is the equivalent of
-     * KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
-     */
+    // Fired when a key is typed (except F11 which toggles full screen). This is the equivalent of KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
     protected void keyTyped(char typedChar, int keyCode) throws IOException
     {
     }
 
-    /**
-     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
-     * window resizes, the buttonList is cleared beforehand.
-     */
+    // Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the window resizes, the buttonList is cleared beforehand.
     public void initGui()
     {
         this.viewportTexture = new DynamicTexture(256, 256);
@@ -235,9 +221,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.mc.func_181537_a(false);
     }
 
-    /**
-     * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
-     */
+    // Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
     	ScaledResolution sr = new ScaledResolution(mc);
@@ -247,9 +231,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new AnimatedButton(14, this.width / 2 - 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, "Alt Login"));
     }
 
-    /**
-     * Adds Demo buttons on Main Menu for players who are playing Demo.
-     */
+    // Adds Demo buttons on Main Menu for players who are playing Demo.
     private void addDemoButtons(int p_73972_1_, int p_73972_2_)
     {
         this.buttonList.add(new AnimatedButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo", new Object[0])));
@@ -263,9 +245,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    /**
-     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
-     */
+    //Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.id == 0)
@@ -352,9 +332,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     }
 
 
-    /**
-     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
-     */
+    // Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
     	ScaledResolution sr = new ScaledResolution(mc);
@@ -367,10 +345,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         int k = 30;
         Gui.drawRect(0, sr.getScaledHeight() - 55, sr.getScaledWidth(), sr.getScaledHeight() - 58, -1);
         Gui.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - 55, new Color(0, 0, 0, 160).getRGB());
-       // this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
-       // this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
+        // this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
+        // this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
         
-        /* Changelog */
+        // Changelog
         ArrayList<String> changes = new ArrayList();
         
         //additions
@@ -428,9 +406,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    /**
-     * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
-     */
+    // Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
