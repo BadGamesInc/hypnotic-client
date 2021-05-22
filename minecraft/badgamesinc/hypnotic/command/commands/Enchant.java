@@ -35,7 +35,7 @@ public class Enchant extends Command {
 		{
 			if(args[0] == null) 
 			{
-				Wrapper.tellPlayer("Usage: " + getSyntax());
+				Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
 			} 
 			else 
 			{	
@@ -50,7 +50,7 @@ public class Enchant extends Command {
 						mc.thePlayer.getHeldItem().addEnchantment(e, Integer.valueOf(args[0]));
 					}
 				}
-				Wrapper.tellPlayer("Successfully enchanted item to level " + args[0]);
+				Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Successfully enchanted item to level " + args[0], (int) 5, NotificationType.INFO));
 			}
 		}
 		else 
