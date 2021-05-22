@@ -83,7 +83,7 @@ public class Hypnotic {
 	
 	public String rptitle() 
 	{
-		switch(r.nextInt(11)) 
+		switch(r.nextInt(16)) 
 		{
 			case 0: return "Gaming PVP 1.8.8";
 			case 1: return "I downloaded a PC pinger...";
@@ -96,6 +96,11 @@ public class Hypnotic {
 			case 8: return "L";
 			case 9: return "E4PE4J";
 			case 10: return "Now featuring bypasses!";
+			case 11: return "sus client";
+			case 12: return "HYPNOTIC INSANE HYPIXEL BYPASSES";
+			case 13: return "Designed for Rede Sky";
+			case 14: return "so many for loops";
+			case 15: return "FDP? more like FPC";
 			default: return "Default Text";
 		}
 	}
