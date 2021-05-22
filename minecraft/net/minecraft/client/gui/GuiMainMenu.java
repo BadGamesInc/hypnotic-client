@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -369,32 +370,32 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         
         /* Changelog */
-        ArrayList<String> changes = new ArrayList<String>
-        changes.add("Â§a+ Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
-        changes.add("Â§a+ Added AutoConfig as a temp fix to configs being broken :/");
-        changes.add("Â§a+ Added Phase");
-        changes.add("Â§a+ Added LongJump");
-        changes.add("Â§a+ Added AntiBot");
-        changes.add("Â§a+ Added .enchant");
-        changes.add("Â§a+ Added .help");
-        changes.add("Â§a+ Added .about");
-        changes.add("Â§a+ Added .help");
-        changes.add("Â§e* Improved Nametags");
-        changes.add("Â§e* Changed font renderer because the other one sucked");
-        changes.add("Â§e* Improved TargetHUD");
-        changes.add("Â§e* Fixed KillSults");
-        changes.add("Â§e* Fixed Disabler");
-        changes.add("Â§e* Fixed InfoHUD TPS display");
-        changes.add("Â§e* Improved PC Pinger");
-        changes.add("Â§e* Rewrote the ClickGUI");
-        changes.add("Â§e* Replaced retard talk with retard detector");
-        changes.add("Â§c- Removed Tracers (temp)");
+        ArrayList<String> changes = new ArrayList();
+        changes.add("§a+§f Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
+        changes.add("§a+§f Added AutoConfig as a temp fix to configs being broken :/");
+        changes.add("§a+§f Added Phase");
+        changes.add("§a+§f Added LongJump");
+        changes.add("§a+§f Added AntiBot");
+        changes.add("§a+§f Added .enchant");
+        changes.add("§a+§f Added .help");
+        changes.add("§a+§f Added .about");
+        changes.add("§a+§f Added .help");
+        changes.add("§e*§f Improved Nametags");
+        changes.add("§e*§f Changed font renderer because the other one sucked");
+        changes.add("§e*§f Improved TargetHUD");
+        changes.add("§e*§f Fixed KillSults");
+        changes.add("§e*§f Fixed Disabler");
+        changes.add("§e*§f Fixed InfoHUD TPS display");
+        changes.add("§e*§f Improved PC Pinger");
+        changes.add("§e*§f Rewrote the ClickGUI");
+        changes.add("§e*§f Replaced retard talk with retard detector");
+        changes.add("§c-§f Removed Tracers (temp)");
 
         bigFontRenderer.drawString("Changes", 4, 4, -1, false);
         
-        int count = 0;
+        int count = 32;
         for (String str : changes) {
-            //fontRenderer.drawString("Â§e*", 16, 112, -1, true);
+            fontRenderer.drawString(str, 16, count, -1, false);
             count += 10;
         }
         
