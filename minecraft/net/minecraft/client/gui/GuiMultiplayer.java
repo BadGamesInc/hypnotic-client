@@ -23,7 +23,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     private static final Logger logger = LogManager.getLogger();
     private final OldServerPinger oldServerPinger = new OldServerPinger();
     private GuiScreen parentScreen;
-    private ServerSelectionList serverListSelector;
+    public ServerSelectionList serverListSelector;
     private ServerList savedServerList;
     private GuiButton btnEditServer;
     private GuiButton btnSelectServer;
@@ -398,7 +398,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    private void connectToServer(ServerData server)
+    public void connectToServer(ServerData server)
     {
         this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
     }

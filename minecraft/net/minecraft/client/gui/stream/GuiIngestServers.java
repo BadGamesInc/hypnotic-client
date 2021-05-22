@@ -2,6 +2,7 @@ package net.minecraft.client.gui.stream;
 
 import java.io.IOException;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -36,8 +37,8 @@ public class GuiIngestServers extends GuiScreen
             this.mc.getTwitchStream().func_152909_x();
         }
 
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 155, this.height - 24 - 6, 150, 20, I18n.format("gui.done", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 + 5, this.height - 24 - 6, 150, 20, I18n.format("options.stream.ingest.reset", new Object[0])));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 155, this.height - 24 - 6, 150, 20, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new AnimatedButton(2, this.width / 2 + 5, this.height - 24 - 6, 150, 20, I18n.format("options.stream.ingest.reset", new Object[0])));
     }
 
     /**

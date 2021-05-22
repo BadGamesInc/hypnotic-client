@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
@@ -15,7 +16,7 @@ public class GuiSleepMP extends GuiChat
     public void initGui()
     {
         super.initGui();
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height - 40, I18n.format("multiplayer.stopSleeping", new Object[0])));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 100, this.height - 40, I18n.format("multiplayer.stopSleeping", new Object[0])));
     }
 
     /**

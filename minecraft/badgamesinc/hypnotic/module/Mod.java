@@ -5,6 +5,7 @@ import badgamesinc.hypnotic.gui.notifications.Notification;
 import badgamesinc.hypnotic.gui.notifications.NotificationType;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.SoundUtil;
 import badgamesinc.hypnotic.util.TimeHelper;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -66,7 +67,7 @@ public class Mod {
 			onDisable();
 		}
 		if(Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
-			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, this.isEnabled() ? 0.6f : 0.3f);
+			SoundUtil.playSound(isEnabled() ? "on.wav" : "off.wav");
 		}
 	}
 	

@@ -110,16 +110,11 @@ public class KillAura extends Mod {
 	        
 	        yaw = mc.thePlayer.rotationYaw;
 	        pitch = mc.thePlayer.rotationPitch;
-	
-	      // mc.thePlayer.setRotationYawHead(yaw);
+
 	        boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
-	        //if(block && target.getDistanceToEntity(mc.thePlayer) < 8F) {
-	        	//unBlock();
-	        	//mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
-	        //}
 	       if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
-		       RenderUtils.resetPlayerPitch();
-		       RenderUtils.resetPlayerYaw();
+	    	    RenderUtils.resetPlayerPitch();
+				RenderUtils.resetPlayerYaw();
 	       } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("None")) {
 	    	   
 	       } 
@@ -145,11 +140,6 @@ public class KillAura extends Mod {
                     blocking = true;
                 }
             }
-            
-    		//if(block && target.getDistanceToEntity(mc.thePlayer) < 8F) {
-	        	//block(target);
-	        //}
-            
             
             pitch = RotationUtils.getRotations(target)[1];
             yaw = RotationUtils.getRotations(target)[0];

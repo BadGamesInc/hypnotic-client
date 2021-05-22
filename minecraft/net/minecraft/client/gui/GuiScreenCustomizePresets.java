@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -46,8 +47,8 @@ public class GuiScreenCustomizePresets extends GuiScreen
         this.field_175311_g = new GuiScreenCustomizePresets.ListPreset();
         this.field_175317_i.setMaxStringLength(2000);
         this.field_175317_i.setText(this.field_175314_r.func_175323_a());
-        this.buttonList.add(this.field_175316_h = new GuiButton(0, this.width / 2 - 102, this.height - 27, 100, 20, I18n.format("createWorld.customize.presets.select", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width / 2 + 3, this.height - 27, 100, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(this.field_175316_h = new AnimatedButton(0, this.width / 2 - 102, this.height - 27, 100, 20, I18n.format("createWorld.customize.presets.select", new Object[0])));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 + 3, this.height - 27, 100, 20, I18n.format("gui.cancel", new Object[0])));
         this.func_175304_a();
     }
 

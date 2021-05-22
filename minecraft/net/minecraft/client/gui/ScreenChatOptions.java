@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 
@@ -41,7 +42,7 @@ public class ScreenChatOptions extends GuiScreen
             ++i;
         }
 
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 120, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new AnimatedButton(200, this.width / 2 - 100, this.height / 6 + 120, I18n.format("gui.done", new Object[0])));
     }
 
     /**

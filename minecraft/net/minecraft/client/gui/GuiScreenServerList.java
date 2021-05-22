@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 
@@ -35,8 +36,8 @@ public class GuiScreenServerList extends GuiScreen
     {
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, I18n.format("selectServer.select", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(new AnimatedButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, I18n.format("selectServer.select", new Object[0])));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.format("gui.cancel", new Object[0])));
         this.field_146302_g = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 116, 200, 20);
         this.field_146302_g.setMaxStringLength(128);
         this.field_146302_g.setFocused(true);

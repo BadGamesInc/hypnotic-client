@@ -170,7 +170,7 @@ public class GlyphPageFontRenderer {
     
     public int drawCenteredString(String text, double x, double y, int color, boolean dropShadow) {
     	int i;
-    	i = drawString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y, color, false);
+    	i = drawString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y, color, dropShadow);
         
 
         return i;
@@ -178,7 +178,7 @@ public class GlyphPageFontRenderer {
     
     public int drawTotalCenteredString(String text, double x, double y, int color, boolean dropShadow) {
     	int i;
-    	i = drawString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2, color, false);        
+    	i = drawString(text, x - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2, y - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2, color, dropShadow);        
     	
         return i;
     }

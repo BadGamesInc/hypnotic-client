@@ -39,7 +39,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
     private DynamicTexture field_148305_h;
     private long field_148298_f;
 
-    protected ServerListEntryNormal(GuiMultiplayer p_i45048_1_, ServerData p_i45048_2_)
+    public ServerListEntryNormal(GuiMultiplayer p_i45048_1_, ServerData p_i45048_2_)
     {
         this.field_148303_c = p_i45048_1_;
         this.field_148301_e = p_i45048_2_;

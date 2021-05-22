@@ -9,6 +9,8 @@ import badgamesinc.hypnotic.command.CommandManager;
 import badgamesinc.hypnotic.discordrpc.DiscordRP;
 import badgamesinc.hypnotic.event.EventManager;
 import badgamesinc.hypnotic.gui.HUD;
+import badgamesinc.hypnotic.gui.altmanager.FileManager;
+import badgamesinc.hypnotic.gui.altmanager.GuiAltManager;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
@@ -18,18 +20,24 @@ import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.enchantment.EnchantmentManager;
+import thealtening.auth.TheAlteningAuthentication;
+import thealtening.auth.service.AlteningServiceType;
 
 public class Hypnotic {
 
 	public static final Hypnotic instance = new Hypnotic();
 	public SettingsManager setmgr;
+	public static String APIKey = "";
 	public ModuleManager moduleManager;
 	public EventManager eventManager;
 	public HUD hud;
 	public CommandManager commandManager;
+	public static TheAlteningAuthentication auth;
 	public NotificationManager notificationManager;
 	public static FontManager fm;
+	public FileManager fileManager;
 	public SaveLoad saveload;
+	public GuiAltManager guiAltLogin;
 	public DiscordRP discordRP;
 	public EnchantmentManager enchantmentManager;
 	private Random r = new Random();
@@ -42,9 +50,12 @@ public class Hypnotic {
 		eventManager = new EventManager();
 		fm = new FontManager();
 		commandManager = new CommandManager();
+		auth = new TheAlteningAuthentication(AlteningServiceType.MOJANG);
 		notificationManager = new NotificationManager();
 		hud = new HUD();
+		this.fileManager = new FileManager();
 		saveload = new SaveLoad();
+		this.guiAltLogin = new GuiAltManager();
 		discordRP = new DiscordRP();
 		enchantmentManager = new EnchantmentManager();
 		Display.setTitle(clientName + " " + clientVersion);
@@ -74,12 +85,24 @@ public class Hypnotic {
 		}
 	}
 	
+	public static void switchService(AlteningServiceType type) {
+        auth = new TheAlteningAuthentication(type);
+    }
+	
 	public boolean onSendChatMessage(String s){
-			if(s.startsWith(".")){
-				commandManager.callCommand(s.substring(1));
-			}
-			return false;
+		if(s.startsWith(".")){
+			commandManager.callCommand(s.substring(1));
 		}
+		return false;
+	}
+	
+	public FileManager getFileManager() {
+        return fileManager;
+    }
+
+    public void setFileManager(FileManager fileManager) {
+        this.fileManager = fileManager;
+    }
 	
 	public String rptitle() 
 	{

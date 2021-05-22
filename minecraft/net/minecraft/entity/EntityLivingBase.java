@@ -11,6 +11,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
 
+import badgamesinc.hypnotic.Hypnotic;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -1324,7 +1325,7 @@ public abstract class EntityLivingBase extends Entity
      */
     private int getArmSwingAnimationEnd()
     {
-    	float speed = 1;//(float) Hypnotic.instance.setmgr.getSettingByName("Hand Speed").getValDouble();
+    	double speed =  1;//Hypnotic.instance.setmgr.getSettingByName("Hand Speed").getValDouble();
         return (int) (this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) * 1 : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6) * (speed));
     }
 

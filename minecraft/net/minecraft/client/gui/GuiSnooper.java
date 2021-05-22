@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 
@@ -46,8 +47,8 @@ public class GuiSnooper extends GuiScreen
         this.field_146607_r = (String[])list.toArray(new String[list.size()]);
         this.field_146604_g.clear();
         this.field_146609_h.clear();
-        this.buttonList.add(this.field_146605_t = new GuiButton(1, this.width / 2 - 152, this.height - 30, 150, 20, this.game_settings_2.getKeyBinding(GameSettings.Options.SNOOPER_ENABLED)));
-        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(this.field_146605_t = new AnimatedButton(1, this.width / 2 - 152, this.height - 30, 150, 20, this.game_settings_2.getKeyBinding(GameSettings.Options.SNOOPER_ENABLED)));
+        this.buttonList.add(new AnimatedButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done", new Object[0])));
         boolean flag = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
 
         for (Entry<String, String> entry : (new TreeMap<String, String>(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet())

@@ -228,7 +228,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	int imToLazyToGoBackAddTheSameNumberToEachThing = -27 + sr.getScaledWidth() / 10;
         this.buttonList.add(new AnimatedButton(1, this.width / 2 - 450 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new AnimatedButton(2, this.width / 2 - 300 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new AnimatedButton(14, this.width / 2 - 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, "Alt Login"));
+        this.buttonList.add(new AnimatedButton(14, this.width / 2 - 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, "Alt Manager"));
     }
 
     // Adds Demo buttons on Main Menu for players who are playing Demo.
@@ -270,7 +270,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
         if (button.id == 14)
         {
-            this.mc.displayGuiScreen(new GuiAltLogin(this));
+            this.mc.displayGuiScreen(Hypnotic.instance.guiAltLogin);
         }
 
         if (button.id == 4)
@@ -378,6 +378,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§e*§f Rewrote the ClickGUI");
         changes.add("§e*§f New Buttons");
         changes.add("§e*§f Replaced retard talk with retard detector");
+        changes.add("§e*§f Changed Alt login to an actual alt manager");
         changes.add("§e*§f Many QOL changes and code optimizations");
         
         // removals

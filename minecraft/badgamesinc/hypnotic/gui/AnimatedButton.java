@@ -96,7 +96,7 @@ public class AnimatedButton extends GuiButton {
                 Gui.drawRect(xPosition + width, targetY, xPosition + width + 1, yPosition, 0xFFFFFFFF);
                 Gui.drawRect(xPosition , targetY2, xPosition - 1, yPosition + height, 0xFFFFFFFF);
             }
-            fontRenderer.drawString(this.displayString, (float) (xPosition + (((xPosition + width) - xPosition - fontRenderer.getStringWidth(displayString) - 4) / 2.0D)), (float) (yPosition + (((yPosition + height) - yPosition) / 2.0D) - 7.5), isMouseOver() ? color : -1, true);
+            fontRenderer.drawCenteredString(this.displayString, (float) (xPosition + (((xPosition + width) - xPosition - 4) / 2.0D)), (float) (yPosition + (((yPosition + height) - yPosition) / 2.0D) - 7.5), isMouseOver() ? color : -1, true);
 
 
         }

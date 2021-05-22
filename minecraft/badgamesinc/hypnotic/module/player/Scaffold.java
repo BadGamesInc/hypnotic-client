@@ -195,7 +195,6 @@ public class Scaffold extends Mod {
                     return;
                 }
 
-                // tower and towermove
                 if (mc.gameSettings.keyBindJump.isKeyDown() && tower.getValBoolean() && (this.towermove.getValBoolean() || !MoveUtils.isMoving()) && !mc.thePlayer.isPotionActive(Potion.jump)) {
 
                         EntityPlayerSP player = mc.thePlayer;
@@ -265,9 +264,6 @@ public class Scaffold extends Mod {
                 }
                 RenderUtils.setCustomYaw(event.getYaw());
                 RenderUtils.setCustomPitch(event.getPitch());
-                //mc.thePlayer.rotationYawHead = event.getYaw();
-                //mc.thePlayer.rotationPitchHead = event.getPitch();
-                //mc.thePlayer.renderYawOffset = event.getYaw();
                 mc.timer.timerSpeed = 1f;
 
 
@@ -396,6 +392,7 @@ public class Scaffold extends Mod {
         //drawCircle(mc.thePlayer, event.getPartialTicks(), 0.5);
         //drawCircle(mc.thePlayer, event.getPartialTicks(), 0.4);
     }
+    
     private void drawCircle(Entity entity, float partialTicks, double rad) {
         glPushMatrix();
         glDisable(GL_TEXTURE_2D);
@@ -433,7 +430,6 @@ public class Scaffold extends Mod {
 
     public void setBlockAndFacing(BlockPos var1) {
 
-        //if(!shouldDownwards()) {
         if (this.mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
             currentPos = var1.add(0, -1, 0);
             currentFacing = EnumFacing.UP;
@@ -545,7 +541,6 @@ public class Scaffold extends Mod {
 
     public void getExpandBlock(BlockPos var1) {
 
-        //if(!shouldDownwards()) {
         if (this.mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
             currentPos = var1.add(0, -1, 0);
             currentFacing = EnumFacing.UP;
@@ -780,7 +775,6 @@ public class Scaffold extends Mod {
         GlStateManager.disableLighting();
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.disableDepth();
-        //NameTags.renderEnchantText(stack, x, y);
         GlStateManager.enableDepth();
         GlStateManager.scale(2.0f, 2.0f, 2.0f);
         GL11.glPopMatrix();

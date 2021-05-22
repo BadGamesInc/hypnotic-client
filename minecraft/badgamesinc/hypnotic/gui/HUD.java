@@ -35,6 +35,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Timer;
+import net.minecraft.world.WorldProviderHell;
 
 public class HUD {
 
@@ -90,38 +91,32 @@ public class HUD {
 			if (isChatOpen) {
 				return;
 			}
-			// overworld coords
-			fontRenderer5.drawString(df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ), 2, scaled.getScaledHeight() - 10  , -1, true);
-			// nether coords
-			fontRenderer5.drawString(df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8), 2, scaled.getScaledHeight() - 20  , 11141120, true);
-			// fps
-			fontRenderer5.drawString("FPS: " + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 30  , -1, true);
-			// tps
-			fontRenderer5.drawString("TPS: ", 2, scaled.getScaledHeight() - 40  , -1, true);
+			boolean inNether = mc.thePlayer.worldObj.provider instanceof WorldProviderHell ? true : false;
+			String overworld = ColorUtils.white + "Coords " + ColorUtils.green + df.format(mc.thePlayer.posX) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ);
+			String nether = ColorUtils.white + "Coords " + ColorUtils.reset + df.format(mc.thePlayer.posX/8) + ", " + df.format(mc.thePlayer.posY) + ", " + df.format(mc.thePlayer.posZ/8);
+			double motion = (float)(MathUtils.square(this.mc.thePlayer.motionX) + MathUtils.square(this.mc.thePlayer.motionZ));
+			double bps = MathUtils.round(Math.sqrt((double)motion) * 20.0D * (double)this.mc.timer.timerSpeed, 2.0D);
+			fontRenderer5.drawString(inNether ? nether : overworld, 62, scaled.getScaledHeight() - 12, inNether ? 11141120 : -1, true);
+			fontRenderer5.drawString("FPS: " + ColorUtils.green + mc.getDebugFPS(), 2, scaled.getScaledHeight() - 22, -1, true);
+			fontRenderer5.drawString("TPS: ", 40, scaled.getScaledHeight() - 22, -1, true);
 			if(serverTPS < 5.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 11141120, true);
+				fontRenderer5.drawString(serverTPS + "", 62, scaled.getScaledHeight() - 22, 11141120, true);
+			} else if(serverTPS < 10.0) {
+				fontRenderer5.drawString(serverTPS + "", 62, scaled.getScaledHeight() - 22, 16733525, true);
+			} else if(serverTPS < 15.0) {
+				fontRenderer5.drawString(serverTPS + "", 62, scaled.getScaledHeight() - 22, 16777045, true);
+			} else if(serverTPS < 20.0) {
+				fontRenderer5.drawString(serverTPS + "", 62, scaled.getScaledHeight() - 22, 5635925, true);
+			} else {
+				fontRenderer5.drawString(serverTPS + "", 62, scaled.getScaledHeight() - 22, 5592575, true);
 			}
-			else if(serverTPS < 10.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 16733525, true);
-			}
-			else if(serverTPS < 15.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 16777045, true);
-			}
-			else if(serverTPS < 20.0) {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 5635925, true);
-			}
-			else {
-				fontRenderer5.drawString(serverTPS + "", 22, scaled.getScaledHeight() - 40  , 5592575, true);
-			}
-			// ping
 			if(!mc.isSingleplayer()) {
-				fontRenderer5.drawString("Ping: " + getPing(mc.thePlayer), 2, scaled.getScaledHeight() - 50  , -1, true);
+				fontRenderer5.drawString("Ping: " + ColorUtils.green + getPing(mc.thePlayer), 82, scaled.getScaledHeight() - 22, -1, true);
+			} else {
+				fontRenderer5.drawString("Ping: " + ColorUtils.green + "0", 82, scaled.getScaledHeight() - 22, -1, true);
 			}
-			else {
-				fontRenderer5.drawString("Ping: 0", 2, scaled.getScaledHeight() - 50  , -1, true);
-			}
-			fontRenderer5.drawString("Time: " + format.format(date).toLowerCase().replace('.', ':'), 2, scaled.getScaledHeight() - 60  , -1, true);
-			
+			fontRenderer5.drawString("BPS: " + ColorUtils.green + bps, 112, scaled.getScaledHeight() - 22, -1, true);
+			fontRenderer5.drawString("Time: " + ColorUtils.green + format.format(date).toLowerCase().replace('.', ':'), 2, scaled.getScaledHeight() - 12  , -1, true);
         }
 		
 	}

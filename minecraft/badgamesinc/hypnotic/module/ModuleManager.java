@@ -4,64 +4,15 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.CustomHotbar;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGuiMod;
-import badgamesinc.hypnotic.module.combat.AntiBot;
-import badgamesinc.hypnotic.module.combat.AutoGapple;
-import badgamesinc.hypnotic.module.combat.AutoPot;
-import badgamesinc.hypnotic.module.combat.Criticals;
-import badgamesinc.hypnotic.module.combat.KillAura;
-import badgamesinc.hypnotic.module.combat.Reach;
-import badgamesinc.hypnotic.module.combat.TargetStrafe;
-import badgamesinc.hypnotic.module.combat.Velocity;
-import badgamesinc.hypnotic.module.gui.ArrayListModule;
-import badgamesinc.hypnotic.module.gui.InfoHud;
-import badgamesinc.hypnotic.module.gui.Logo;
-import badgamesinc.hypnotic.module.misc.AutoCaptcha;
-import badgamesinc.hypnotic.module.misc.AutoConfig;
-import badgamesinc.hypnotic.module.misc.AutoL;
-import badgamesinc.hypnotic.module.misc.AutoSave;
-import badgamesinc.hypnotic.module.misc.ChatSpammer;
-import badgamesinc.hypnotic.module.misc.ChestStealer;
-import badgamesinc.hypnotic.module.misc.Disabler;
-import badgamesinc.hypnotic.module.misc.FastEat;
-import badgamesinc.hypnotic.module.misc.KillSults;
-import badgamesinc.hypnotic.module.misc.PCPinger;
-import badgamesinc.hypnotic.module.misc.PingSpoof;
-import badgamesinc.hypnotic.module.misc.PizzaHutWY;
-import badgamesinc.hypnotic.module.misc.RetardDetector;
-import badgamesinc.hypnotic.module.movement.AirJump;
-import badgamesinc.hypnotic.module.movement.Fast;
-import badgamesinc.hypnotic.module.movement.Flight;
-import badgamesinc.hypnotic.module.movement.InventoryMove;
-import badgamesinc.hypnotic.module.movement.LadderLauncher;
-import badgamesinc.hypnotic.module.movement.Longjump;
-import badgamesinc.hypnotic.module.movement.Phase;
-import badgamesinc.hypnotic.module.movement.Speed;
-import badgamesinc.hypnotic.module.movement.Spider;
-import badgamesinc.hypnotic.module.movement.Sprint;
-import badgamesinc.hypnotic.module.movement.Step;
-import badgamesinc.hypnotic.module.player.AutoArmor;
-import badgamesinc.hypnotic.module.player.InventoryManager;
-import badgamesinc.hypnotic.module.player.Jesus;
-import badgamesinc.hypnotic.module.player.NoFall;
-import badgamesinc.hypnotic.module.player.NoSlow;
-import badgamesinc.hypnotic.module.player.SafeWalk;
-import badgamesinc.hypnotic.module.player.Scaffold;
-import badgamesinc.hypnotic.module.render.BlockAnimations;
-import badgamesinc.hypnotic.module.render.Cape;
-import badgamesinc.hypnotic.module.render.Chams;
-import badgamesinc.hypnotic.module.render.ESP;
-import badgamesinc.hypnotic.module.render.Fullbright;
-import badgamesinc.hypnotic.module.render.ItemCustomization;
-import badgamesinc.hypnotic.module.render.ItemPhysics;
-import badgamesinc.hypnotic.module.render.NameTags;
-import badgamesinc.hypnotic.module.render.NoRender;
-import badgamesinc.hypnotic.module.render.TargetHUD;
-import badgamesinc.hypnotic.module.world.BedNuker;
-import badgamesinc.hypnotic.module.world.FastBreak;
-import badgamesinc.hypnotic.module.world.FastPlace;
-import badgamesinc.hypnotic.module.world.Nuker;
-import badgamesinc.hypnotic.module.world.Timer;
+import badgamesinc.hypnotic.module.combat.*;
+import badgamesinc.hypnotic.module.gui.*;
+import badgamesinc.hypnotic.module.misc.*;
+import badgamesinc.hypnotic.module.movement.*;
+import badgamesinc.hypnotic.module.player.*;
+import badgamesinc.hypnotic.module.render.*;
+import badgamesinc.hypnotic.module.world.*;
 
 public class ModuleManager {
 
@@ -164,6 +115,7 @@ public class ModuleManager {
 		modules.add(new ArrayListModule());
 		modules.add(new InfoHud());
 		modules.add(new Logo());
+		modules.add(new CustomHotbar());
 		
 	}
 	

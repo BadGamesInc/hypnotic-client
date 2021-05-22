@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -44,7 +45,7 @@ public class GuiEditSign extends GuiScreen
     {
         this.buttonList.clear();
         Keyboard.enableRepeatEvents(true);
-        this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(this.doneBtn = new AnimatedButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done", new Object[0])));
         this.tileSign.setEditable(false);
     }
 

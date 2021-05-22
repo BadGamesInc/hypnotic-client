@@ -1,5 +1,8 @@
 package net.minecraft.client.gui;
 
+import java.awt.Color;
+
+import badgamesinc.hypnotic.util.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -213,5 +216,18 @@ public class Gui
         worldrenderer.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)uWidth) * f), (double)(v * f1)).endVertex();
         worldrenderer.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
         tessellator.draw();
+    }
+    
+    public static void drawShadowedRect(double left, double top, double right, double bottom, int color){
+        drawRect(left, top, right, bottom, color);
+        for(double i = 50; i >= 0; i --){
+            RenderUtils.drawBorderRect((int)left - i / 8, (int)top - i / 8, (int)right + i / 8, (int)bottom + i / 8, new Color(135 + (int)i, 135 + (int)i, 135 +(int) i, Math.max(150 - (int) i * 3, 0)).getRGB(), 1);
+        }
+    }
+    public static void drawShadowedRect(double left, double top, double right, double bottom, int color, int soothing){
+        drawRect(left, top, right, bottom, color);
+        for(double i = 50; i >= 0; i --){
+        	RenderUtils.drawBorderRect((int)left - i / 8, (int)top - i / 8, (int)right + i / 8, (int)bottom + i / 8, new Color(135 + (int)i + soothing, 135 + (int)i+ soothing, 135 +(int) i+ soothing, Math.max(150 - (int) i * 3+ soothing, 0)).getRGB(), 1);
+        }
     }
 }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
@@ -116,8 +117,8 @@ public class GuiKeyBindingList extends GuiListExtended
         {
             this.keybinding = p_i45029_2_;
             this.keyDesc = I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]);
-            this.btnChangeKeyBinding = new GuiButton(0, 0, 0, 75, 20, I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]));
-            this.btnReset = new GuiButton(0, 0, 0, 50, 20, I18n.format("controls.reset", new Object[0]));
+            this.btnChangeKeyBinding = new AnimatedButton(0, 0, 0, 75, 20, I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]));
+            this.btnReset = new AnimatedButton(0, 0, 0, 50, 20, I18n.format("controls.reset", new Object[0]));
         }
 
         public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected)

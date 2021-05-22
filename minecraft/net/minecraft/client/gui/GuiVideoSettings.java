@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
@@ -30,7 +31,7 @@ public class GuiVideoSettings extends GuiScreen
     {
         this.screenTitle = I18n.format("options.videoTitle", new Object[0]);
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height - 27, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new AnimatedButton(200, this.width / 2 - 100, this.height - 27, I18n.format("gui.done", new Object[0])));
 
         if (!OpenGlHelper.vboSupported)
         {

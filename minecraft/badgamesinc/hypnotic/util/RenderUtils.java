@@ -1075,5 +1075,38 @@ public class RenderUtils {
 		        drawFilledCircle((int)left + smooth, (int)bottom - smooth, smooth, color.getRGB());
 
 		    }
+		 
+		 public static void drawHLine(double x, double y, double x1, double y1, float width, int color) {
+		        float var11 = (color >> 24 & 0xFF) / 255.0F;
+		        float var6 = (color >> 16 & 0xFF) / 255.0F;
+		        float var7 = (color >> 8 & 0xFF) / 255.0F;
+		        float var8 = (color & 0xFF) / 255.0F;
+		        GlStateManager.enableBlend();
+		        GlStateManager.disableTexture2D();
+		        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		        GlStateManager.color(var6, var7, var8, var11);
+		        GL11.glPushMatrix();
+		        GL11.glLineWidth(width);
+		        GL11.glBegin(GL11.GL_LINE_STRIP);
+		        GL11.glVertex2d(x, y);
+		        GL11.glVertex2d(x1, y1);
+		        GL11.glEnd();
+
+		        GL11.glLineWidth(1);
+
+
+		        GL11.glPopMatrix();
+		        GlStateManager.enableTexture2D();
+		        GlStateManager.disableBlend();
+		        GlStateManager.color(1, 1, 1, 1);
+
+		    }
+		 
+		 public static void drawBorderRect(double x, double y, double x1, double y1, int color, double lwidth) {
+		        drawHLine(x, y, x1, y, (float) lwidth, color);
+		        drawHLine(x1, y, x1, y1, (float) lwidth, color);
+		        drawHLine(x, y1, x1, y1, (float) lwidth, color);
+		        drawHLine(x, y1, x, y, (float) lwidth, color);
+		    }
     
 }
