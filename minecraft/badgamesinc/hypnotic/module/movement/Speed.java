@@ -255,7 +255,7 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
             ++stage;
-        }else if(mode.getValString().equalsIgnoreCase("NCP") || mode.getValString().equalsIgnoreCase("BhopDamage")){
+        } else if(mode.getValString().equalsIgnoreCase("NCP") || mode.getValString().equalsIgnoreCase("BhopDamage")){
             
             if (MoveUtils.isMoving()) {
                     double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
@@ -275,7 +275,7 @@ public class Speed extends Mod {
                         moveSpeed = (baseMoveSpeed / (ticksSinceJump <= 2 ? MoveUtils.SPRINTING_MOD : 1.0)) * MoveUtils.MAX_DIST;
                         if (MoveUtils.isOnIce())
                             moveSpeed *= MoveUtils.ICE_MOD;
-                        event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
+                        event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - 0.012);
                         ticksSinceJump = 0;
                     } else if (wasOnGround) {
                         double difference = MoveUtils.WATCHDOG_BUNNY_SLOPE * (lastDist - baseMoveSpeed);
@@ -310,7 +310,7 @@ public class Speed extends Mod {
         }else if(mode.getValString().equalsIgnoreCase("BhopYPort")){
             if(mc.thePlayer.onGround){
                 moveSpeed = (MoveUtils.getBaseMoveSpeed() * 1.026121442084547811);
-                event.setY(0.32);
+                event.setY(0.28);
                 ticksSinceJump = 0;
                 wasOnGround = true;
             }else if (wasOnGround){
@@ -354,7 +354,7 @@ public class Speed extends Mod {
                     moveSpeed = (baseMoveSpeed / (ticksSinceJump <= 2 ? MoveUtils.SPRINTING_MOD : 1.0)) * MoveUtils.MAX_DIST;
                     if (MoveUtils.isOnIce())
                         moveSpeed *= MoveUtils.ICE_MOD;
-                    event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
+                    event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - 0.01);
                     ticksSinceJump = 0;
                 } else if (wasOnGround) {
                     double difference = MoveUtils.WATCHDOG_BUNNY_SLOPE * (lastDist - baseMoveSpeed);
@@ -365,7 +365,7 @@ public class Speed extends Mod {
                     moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                 }
 
-                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + 0.02));
+                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + 0.03));
 
 
         }

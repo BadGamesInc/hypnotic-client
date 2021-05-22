@@ -115,7 +115,7 @@ public class HUD {
 			} else {
 				fontRenderer5.drawString("Ping: " + ColorUtils.green + "0", 82, scaled.getScaledHeight() - 22, -1, true);
 			}
-			fontRenderer5.drawString("BPS: " + ColorUtils.green + bps, 112, scaled.getScaledHeight() - 22, -1, true);
+			fontRenderer5.drawString("BPS: " + ColorUtils.green + bps, 122, scaled.getScaledHeight() - 22, -1, true);
 			fontRenderer5.drawString("Time: " + ColorUtils.green + format.format(date).toLowerCase().replace('.', ':'), 2, scaled.getScaledHeight() - 12  , -1, true);
         }
 		

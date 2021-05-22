@@ -36,6 +36,7 @@ public class Flight extends Mod implements UpdateListener{
 		options.add("Vanilla");
 		options.add("Redesky Fly");
 		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Mode", this, "Vanilla", options));
+		Hypnotic.instance.setmgr.rSetting(new Setting("View Bobbing", this, true));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Speed", this, 1, 0, 10, false));
 		Hypnotic.instance.setmgr.rSetting(new Setting("Vanilla kick bypass", this, false));	
 		

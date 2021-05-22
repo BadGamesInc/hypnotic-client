@@ -35,6 +35,7 @@ public class AnimatedButton extends GuiButton {
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
 
             if(this.hovered){
+            	color = 0xffff8ac4;
                 targetX = xPosition + width + 5;
                 targetX2 = xPosition;
                 targetY = yPosition + height + 11;

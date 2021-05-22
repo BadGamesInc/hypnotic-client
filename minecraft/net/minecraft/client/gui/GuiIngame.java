@@ -376,6 +376,7 @@ public class GuiIngame extends Gui
     {
         if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
+        	GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         	if (!Hypnotic.instance.moduleManager.getModule(CustomHotbar.class).isEnabled()) {
 	            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	            this.mc.getTextureManager().bindTexture(widgetsTexPath);
@@ -404,28 +405,26 @@ public class GuiIngame extends Gui
         	}
         	if (Hypnotic.instance.moduleManager.getModule(CustomHotbar.class).isEnabled()) {
         		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        		int i = sr.getScaledWidth() / 2;
+		        float f = this.zLevel;
+		        this.zLevel = -90.0F;
+        		EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
+        		this.drawRect(0, sr.getScaledHeight() - 25, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0, 0, 0, 150).getRGB());
+        		this.drawRect(i - 91 + 0 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight(), i - 91 - 2 + entityplayer.inventory.currentItem * 20 + 24, sr.getScaledHeight() - 25, new Color(255, 255, 255, 100).getRGB());
         		GlStateManager.enableRescaleNormal();
 	            GlStateManager.enableBlend();
 	            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 	            RenderHelper.enableGUIStandardItemLighting();
-		        if (!(mc.currentScreen instanceof GuiChat)) {
-		            int i = sr.getScaledWidth() / 2;
-		            float f = this.zLevel;
-		            this.zLevel = -90.0F;
-		            EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
-		            for (int j = 0; j < 9; ++j)
-		            {
-		                int k = sr.getScaledWidth() / 2 - 90 + j * 20 + 2;
-		                int l = sr.getScaledHeight() - 18 - 3;
-		                this.renderHotbarItem(j, k, l, partialTicks, entityplayer);
-		            }
-		            RenderHelper.disableStandardItemLighting();
-		            GlStateManager.disableRescaleNormal();
-		            GlStateManager.disableBlend();
-		            this.drawRect(0, sr.getScaledHeight() - 25, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0, 0, 0, 150).getRGB());
-		            this.drawRect(i - 91 + 0 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight(), i - 91 - 2 + entityplayer.inventory.currentItem * 20 + 24, sr.getScaledHeight() - 25, new Color(255, 255, 255, 100).getRGB());
-			    }
-	            
+        
+		        for (int j = 0; j < 9; ++j)
+		        {
+		            int k = sr.getScaledWidth() / 2 - 90 + j * 20 + 2;
+		            int l = sr.getScaledHeight() - 18 - 3;
+		            this.renderHotbarItem(j, k, l, partialTicks, entityplayer);
+		        }
+		        RenderHelper.disableStandardItemLighting();
+		        GlStateManager.disableRescaleNormal();
+		        GlStateManager.disableBlend();     
         	}
         }
     }
