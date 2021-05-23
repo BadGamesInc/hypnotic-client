@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.AnvilConverterException;
 import net.minecraft.client.Minecraft;
