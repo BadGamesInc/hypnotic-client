@@ -16,6 +16,9 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.settings.SettingsManager;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.drm.DRM;
+import badgamesinc.hypnotic.util.drm.Level3Checks;
+import badgamesinc.hypnotic.util.drm.Level4Checks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.enchantment.EnchantmentManager;
@@ -27,6 +30,8 @@ public class Hypnotic {
 	public static final Hypnotic instance = new Hypnotic();
 	public SettingsManager setmgr;
 	public static String APIKey = "";
+	public static String func_1065893_a = "https://github.com/BadGamesInc/hypnotic-client";
+	public int l3 = 0;
 	public ModuleManager moduleManager;
 	public EventManager eventManager;
 	public HUD hud;
@@ -60,6 +65,9 @@ public class Hypnotic {
 		discordRP.start();
 		discordRP.title = this.rptitle();
 		getAPIKey();
+		DRM.checkDRM();
+		Level3Checks.setL3();																																																																												if(l3 == 0) { System.err.println("[HYPNOTIC SKID DETECTION]: CLASS 3 LEVEL SKID SENSORS TRIGGERED"); System.err.println("mike gaming is not happy with you :("); Minecraft.getMinecraft().displayGuiScreen(null); }
+		Level4Checks.checkLevel4();
 	}
 	
 	public void shutdown() {

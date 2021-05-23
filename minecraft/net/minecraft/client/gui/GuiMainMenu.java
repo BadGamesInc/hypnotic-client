@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -43,6 +44,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final Random RANDOM = new Random();
     private final GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 40, false, false, false);
     private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    private final GlyphPageFontRenderer fontRenderer3 = GlyphPageFontRenderer.create("Magneto", 18, false, false, false);
 
     // Counts the number of screen updates.
     private float updateCounter;
@@ -336,8 +338,16 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
     	ScaledResolution sr = new ScaledResolution(mc);
-    	mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/MainMenu/MainMenu.jpg"));
-    	Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+    	//mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/MainMenu/MainMenu.jpg"));
+    	//Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+    	
+    	Gui.drawRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), ColorUtils.rainbow(18, 0.5f, 0.5f));
+    	
+    	//mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/white.png"));
+    	//Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, 640, 160, 640, 160, 640, 160);
+    	
+    	
+    	
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 274;
