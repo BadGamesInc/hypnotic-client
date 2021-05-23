@@ -22,7 +22,7 @@ import com.google.common.collect.Lists;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -336,8 +336,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
     	ScaledResolution sr = new ScaledResolution(mc);
+    	
     	mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/MainMenu/MainMenu.jpg"));
     	Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+    	
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 274;
