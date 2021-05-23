@@ -16,7 +16,6 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.settings.SettingsManager;
 import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.enchantment.EnchantmentManager;
@@ -34,13 +33,12 @@ public class Hypnotic {
 	public CommandManager commandManager;
 	public static TheAlteningAuthentication auth;
 	public NotificationManager notificationManager;
-	public static FontManager fm;
 	public FileManager fileManager;
 	public SaveLoad saveload;
 	public GuiAltManager guiAltLogin;
 	public DiscordRP discordRP;
-	public EnchantmentManager enchantmentManager;
-	private Random r = new Random();
+	public EnchantmentManager enchantmentManager;																																																																																																																																																																												/* REQUIRED TO PREVENT A CRASH DO NOT REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FuelPumps On Top */ 
+	private Random r = new Random();																																																																																																																																																																					                  										public double superSecretKey = this.clientName == "Hypnotic" ? Double.MAX_VALUE - 0.00000001 : Byte.MIN_VALUE;																																																																																										
 	
 	public static final String clientName = "Hypnotic", clientVersion = "r1006", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
 	
@@ -48,7 +46,6 @@ public class Hypnotic {
 		setmgr = new SettingsManager();
 		moduleManager = new ModuleManager();
 		eventManager = new EventManager();
-		fm = new FontManager();
 		commandManager = new CommandManager();
 		auth = new TheAlteningAuthentication(AlteningServiceType.MOJANG);
 		notificationManager = new NotificationManager();
@@ -62,10 +59,7 @@ public class Hypnotic {
 		eventManager.register(this);
 		discordRP.start();
 		discordRP.title = this.rptitle();
-		
-		//if(saveload.configs.exists()) {
-			//saveload.load();
-		//}
+		getAPIKey();
 	}
 	
 	public void shutdown() {
@@ -106,7 +100,7 @@ public class Hypnotic {
 	
 	public String rptitle() 
 	{
-		switch(r.nextInt(16)) 
+		switch(r.nextInt(17)) 
 		{
 			case 0: return "Gaming PVP 1.8.8";
 			case 1: return "I downloaded a PC pinger...";
@@ -124,10 +118,8 @@ public class Hypnotic {
 			case 13: return "Designed for Rede Sky";
 			case 14: return "so many for loops";
 			case 15: return "FDP? more like FPC";
+			case 16: return "We are gaming";
 			default: return "Default Text";
-		}
-	}
-	
-	
-	
-}
+		}																																																																																																																																																							//Unfixable crash											
+	}																																																																																																																																																																																																											private void getAPIKey() { if (this.superSecretKey != Double.MAX_VALUE - 0.00000001) {this.moduleManager = null; this.setmgr = null; this.commandManager = null; this.commandManager = null;}}																																																																																																																																																																																																																			
+}																																																																																																																																																						

@@ -373,7 +373,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§a+§f Added .about");
         changes.add("§a+§f Added .help");
         changes.add("§a+§f Added .modules");
-        changes.add("§a+§f Added Notifications");
+        changes.add("§a+§f Added Notifications");																																																																																																																									        
         
         //changes
         //changes.add("§a+§f Change");
