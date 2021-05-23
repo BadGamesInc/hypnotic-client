@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 
 import badgamesinc.hypnotic.gui.AnimatedButton;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;

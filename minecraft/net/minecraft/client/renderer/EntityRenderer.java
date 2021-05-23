@@ -23,7 +23,7 @@ import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventRenderWorld;
 import badgamesinc.hypnotic.module.movement.Flight;
 import badgamesinc.hypnotic.module.render.NoRender;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;

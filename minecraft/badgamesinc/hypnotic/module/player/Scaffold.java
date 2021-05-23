@@ -41,7 +41,7 @@ import badgamesinc.hypnotic.util.Rotation;
 import badgamesinc.hypnotic.util.RotationUtils;
 import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.TimeHelper;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.material.Material;

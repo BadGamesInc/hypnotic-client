@@ -5,7 +5,7 @@ import java.awt.Color;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.RenderUtils;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.gui.Gui;
 
 public class Slider extends Component{

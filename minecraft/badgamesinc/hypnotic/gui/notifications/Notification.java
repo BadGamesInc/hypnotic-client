@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import java.awt.*;
 
 import badgamesinc.hypnotic.Hypnotic;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 
 public class Notification {
     String message;

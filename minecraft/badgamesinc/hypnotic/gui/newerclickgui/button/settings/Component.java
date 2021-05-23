@@ -1,7 +1,7 @@
 package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
 import badgamesinc.hypnotic.settings.Setting;
-import badgamesinc.hypnotic.util.pcp.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 
 public class Component {

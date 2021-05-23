@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.util.pcp;
+package badgamesinc.hypnotic.util.font;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
