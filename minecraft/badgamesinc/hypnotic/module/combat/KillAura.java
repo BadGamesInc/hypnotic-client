@@ -76,7 +76,7 @@ public class KillAura extends Mod {
 
     public KillAura() {
         super("KillAura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
-        addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, invis, players, animals, monsters, villagers, esp);
+        addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, invis, players, animals, monsters, villagers, teams, esp);
     }
     
     @Override

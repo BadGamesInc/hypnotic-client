@@ -365,6 +365,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§a+§f Added .about");
         changes.add("§a+§f Added .help");
         changes.add("§a+§f Added .modules");
+        changes.add("§a+§f Added .config");
+        changes.add("§a+§f Added .logo");
         changes.add("§a+§f Added Notifications");																																																																																																																									        
         
         //changes
@@ -382,6 +384,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         changes.add("§e*§f Replaced retard talk with retard detector");
         changes.add("§e*§f Changed Alt login to an actual alt manager");
         changes.add("§e*§f Many QOL changes and code optimizations");
+        changes.add("§e*§f FINALLY fixed configs (mostly)");
         
         // removals
         //changes.add("§a+§f Removal");

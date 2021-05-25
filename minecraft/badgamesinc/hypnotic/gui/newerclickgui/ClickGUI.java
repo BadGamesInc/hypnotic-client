@@ -218,6 +218,10 @@ public class ClickGUI extends GuiScreen {
     @Override
     public void onGuiClosed() {
     	Hypnotic.instance.saveload.save();
+    	Hypnotic.cfgManager.saveConfig();
+    	for (Button b : mods) {
+    		b.settingsWindow = null;
+    	}
     	super.onGuiClosed();
     }
     

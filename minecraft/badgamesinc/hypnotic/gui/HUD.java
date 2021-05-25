@@ -39,6 +39,7 @@ import net.minecraft.world.WorldProviderHell;
 
 public class HUD {
 
+	public String logoName = Character.toUpperCase(Hypnotic.clientName.toLowerCase().charAt(0)) + ColorUtils.white + Hypnotic.clientName.toLowerCase().substring(1);
 	public Minecraft mc = Minecraft.getMinecraft();
 	public FontRenderer fr = mc.fontRendererObj;
 	public ScaledResolution sr = new ScaledResolution(mc);
@@ -128,7 +129,7 @@ public class HUD {
 		
 		if (Hypnotic.instance.moduleManager.logo.mode.getSelected().equalsIgnoreCase("Text")) {
 			if (Hypnotic.instance.moduleManager.logo.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
-				fontRenderer3.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
+				fontRenderer3.drawString(logoName + "-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
 			} else if (Hypnotic.instance.moduleManager.logo.font.getSelected().equalsIgnoreCase("Minecraft")) {
 				fr.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
 			}
@@ -149,53 +150,103 @@ public class HUD {
 		CopyOnWriteArrayList<Mod> modules = Hypnotic.instance.moduleManager.getEnabledModules();
 
         int count = 0;
-        if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
-        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
-            for (Mod m : modules) {
-        			if(Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
-        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
-        			} else {
-        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
-        			}
-                float diff = m.mSize - m.lastSize;
-                m.lastSize += diff / 4;
-                if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
-                    GlStateManager.enableBlend();
-                    Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, new Color(0, 0, 0, 220).getRGB());
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, color);
-                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(m2.getDisplayName()) - 11 + 1, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 1, color);
-                    fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) - 0, color, true);
-                    count++;
+        if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Boxed")) {
+	        if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
+	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
+	            for (Mod m : modules) {
+	        			if(Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+	        			} else {
+	        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+	        			}
+	                float diff = m.mSize - m.lastSize;
+	                m.lastSize += diff / 4;
+	                if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
+	                    GlStateManager.enableBlend();
+	                    Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
+	                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, new Color(0, 0, 0, 220).getRGB());
+	                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, color);
+	                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(m2.getDisplayName()) - 11 + 1, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 1, color);
+	                    fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) - 0, color, true);
+	                    count++;
+	
+	
+	                }
+	
+	            }
+	        } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
+	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
+	        	for (Mod m : modules) {
+	        			if (Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+	        			} else {
+	        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+	        			}
+	                float diff = m.mSize - m.lastSize;
+	                m.lastSize += diff / 4;
+	                if (m.lastSize != m.fr.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
+	                	boolean hasInfo = m.getDisplayName().contains(ColorUtils.white);
+	                	int infoOffset = (hasInfo ? 2 : 0);
+	                    GlStateManager.enableBlend();
+	                    Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
+	                    Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 6 + m.lastSize + infoOffset, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() + 10 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, new Color(0, 0, 0, 220).getRGB());
+	                    Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 6 + m.lastSize + infoOffset, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 7 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, color);
+	                    Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 7 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 0, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() - infoOffset : sr.getScaledWidth() - fr.getStringWidth(m2.getDisplayName()) - 6 + 0 - infoOffset + (infoOffset > 1 ? 4 : 0), count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, color);
+	                    fr.drawString(m.getDisplayName(), sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 3 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + 0.5, color);
+	                    count++;
+	
+	
+	                }
+	
+	            }
+	        }
+        } else if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Clean")) {
+        	if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
+            	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
+                for (Mod m : modules) {
+            			if(Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+            				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+            			} else {
+            				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+            			}
+                    float diff = m.mSize - m.lastSize;
+                    m.lastSize += diff / 4;
+                    if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
+                        GlStateManager.enableBlend();
+                        Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
+                        Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 9 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, new Color(0, 0, 0, 220).getRGB());
+                        Gui.drawRect(sr.getScaledWidth() - 3 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, color);
+                        fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) - 0, color, true);
+                        count++;
 
+
+                    }
 
                 }
+            } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
+            	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
+            	for (Mod m : modules) {
+            			if (Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+            				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+            			} else {
+            				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+            			}
+                    float diff = m.mSize - m.lastSize;
+                    m.lastSize += diff / 4;
+                    if (m.lastSize != m.fr.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
+                    	boolean hasInfo = m.getDisplayName().contains(ColorUtils.white);
+                    	int infoOffset = (hasInfo ? 2 : 0);
+                        GlStateManager.enableBlend();
+                        Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
+                        Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 7 + m.lastSize + infoOffset, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() + 10 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, new Color(0, 0, 0, 220).getRGB());
+                        Gui.drawRect(sr.getScaledWidth() - 3, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, color);
+                        fr.drawString(m.getDisplayName(), sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 4 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + 0.5, color);
+                        count++;
 
-            }
-        } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
-        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
-        	for (Mod m : modules) {
-        			if (Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
-        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
-        			} else {
-        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
-        			}
-                float diff = m.mSize - m.lastSize;
-                m.lastSize += diff / 4;
-                if (m.lastSize != m.fr.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
-                	boolean hasInfo = m.getDisplayName().contains(ColorUtils.white);
-                	int infoOffset = (hasInfo ? 2 : 0);
-                    GlStateManager.enableBlend();
-                    Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
-                    Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 6 + m.lastSize + infoOffset, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() + 10 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, new Color(0, 0, 0, 220).getRGB());
-                    Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 6 + m.lastSize + infoOffset, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 7 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, color);
-                    Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 7 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 0, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() - infoOffset : sr.getScaledWidth() - fr.getStringWidth(m2.getDisplayName()) - 6 + 0 - infoOffset + (infoOffset > 1 ? 4 : 0), count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, color);
-                    fr.drawString(m.getDisplayName(), sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 3 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + 0.5, color);
-                    count++;
 
+                    }
 
                 }
-
             }
         }
 	}

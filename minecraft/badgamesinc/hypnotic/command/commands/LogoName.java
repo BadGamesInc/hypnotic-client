@@ -5,28 +5,34 @@ import badgamesinc.hypnotic.command.Command;
 import badgamesinc.hypnotic.gui.notifications.Notification;
 import badgamesinc.hypnotic.gui.notifications.NotificationType;
 import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.Wrapper;
 
-public class Load extends Command {
-  
-  @Override
+public class LogoName extends Command {
+
+	@Override
 	public String getAlias() {
-		return "load";
+		return "logo";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Loads your config";
+		return "Sets the client logo name";
 	}
 
 	@Override
 	public String getSyntax() {
-		return ".load";
+		return ".logo (name)";
 	}
 
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
-			Hypnotic.instance.saveload.load();;
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Successfully Loaded", (int) 5, NotificationType.INFO));
-  	}
+		
+		if (args[0] == null) {
+			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
+		}
+		
+		String name = Character.toUpperCase(args[0].charAt(0)) + ColorUtils.white + args[0].toLowerCase().substring(1);;
+		Hypnotic.instance.hud.logoName = name;
+		
+	}
+
 }

@@ -20,9 +20,8 @@ public class CommandManager {
 		commands.add(new Say());
 		commands.add(new Bind());
 		commands.add(new Server());
-		commands.add(new Save());
 		commands.add(new Teleport());
-		commands.add(new Load());
+		commands.add(new ConfigCmd());
 		commands.add(new Seed());
 		commands.add(new Enchant());
 		commands.add(new Help());
@@ -30,6 +29,8 @@ public class CommandManager {
 		commands.add(new Modules());
 		commands.add(new NBT());
 		commands.add(new Panic());
+		commands.add(new ConfigCmd());
+		commands.add(new LogoName());
 		//commands.add(new Plugins());
 	}
 	
