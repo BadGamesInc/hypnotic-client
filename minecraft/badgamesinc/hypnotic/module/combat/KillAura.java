@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.Event;
@@ -301,6 +302,7 @@ public class KillAura extends Mod {
         glDepthMask(false);
         glLineWidth(2.0f);
         glBegin(GL_LINE_STRIP);
+        GL11.glColor3d(1, 1, 1);
 
         final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - mc.getRenderManager().viewerPosX;
         final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - mc.getRenderManager().viewerPosY;

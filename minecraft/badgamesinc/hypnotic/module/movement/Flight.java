@@ -89,6 +89,8 @@ public class Flight extends Mod implements UpdateListener{
 	public void onUpdate()
 	{
 		this.setDisplayName("Flight " + ColorUtils.white + "[" + this.flyMode.getSelected() + "] ");
+		Hypnotic.instance.moduleManager.speed.setEnabled(false);
+		
 		speed = (float) this.flySpeed.getValue();
 
 		if (this.flyMode.getSelected().equalsIgnoreCase("Vanilla")) {

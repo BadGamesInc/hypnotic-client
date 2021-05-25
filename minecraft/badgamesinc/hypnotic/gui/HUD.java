@@ -127,11 +127,20 @@ public class HUD {
 			return;
 		}
 		
+		Color temp = ColorUtil.getClickGUIColor();
+		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+		
+		if (Hypnotic.instance.moduleManager.logo.rainbow.isEnabled()) {
+			color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+		} else {
+			color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+		}
+		
 		if (Hypnotic.instance.moduleManager.logo.mode.getSelected().equalsIgnoreCase("Text")) {
 			if (Hypnotic.instance.moduleManager.logo.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
-				fontRenderer3.drawString(logoName + "-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
+				fontRenderer3.drawString(logoName + "-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, color, true);
 			} else if (Hypnotic.instance.moduleManager.logo.font.getSelected().equalsIgnoreCase("Minecraft")) {
-				fr.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
+				fr.drawString(logoName + ColorUtils.white + "-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, color, true);
 			}
 		} else if (Hypnotic.instance.moduleManager.logo.mode.getSelected().equalsIgnoreCase("Image")) {
 			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/white.png"));
