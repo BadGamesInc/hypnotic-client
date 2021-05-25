@@ -1,29 +1,27 @@
 package badgamesinc.hypnotic.gui.newerclickgui;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 
 public class ClickGuiMod extends Mod {
 
-	public Setting mode;
+	public ModeSetting mode = new ModeSetting("Animation", "Slide", "Slide", "Fade in (ugly)");
+	public BooleanSetting rainbowGUI = new BooleanSetting("Rainbow GUI", true);
+	public BooleanSetting sound = new BooleanSetting("Sound", true);
+	public NumberSetting guiRed = new NumberSetting("GuiRed", 255, 0, 255, 1);
+	public NumberSetting guiGreen = new NumberSetting("GuiGreen", 147, 0, 255, 1);
+	public NumberSetting guiBlue = new NumberSetting("GuiBlue", 255, 0, 255, 1);
 	
 	public ClickGuiMod() {
 		super("ClickGUI", Keyboard.KEY_RSHIFT, Category.GUI, "The ClickGUI (now epic gaming)");
-		ArrayList<String> options = new ArrayList<>();
-    	options.add("Slide");
-    	options.add("Fade in (ugly)");
-    	Hypnotic.instance.setmgr.rSetting(mode = new Setting("Animation", this, "Slide", options));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("Rainbow GUI", this, true));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("Sound", this, true));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiRed", this, 255, 0, 255, true));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiGreen", this, 147, 0, 255, true));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("GuiBlue", this, 255, 0, 255, true));
+		addSettings(mode, rainbowGUI, sound, guiRed, guiGreen, guiBlue);
 	}
 	
 	@Override

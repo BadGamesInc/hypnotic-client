@@ -16,6 +16,8 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.PlayerUtils;
@@ -38,8 +40,17 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public class Speed extends Mod {
-    public Setting mode;
-    public Setting speed;
+    public ModeSetting mode = new ModeSetting("Mode", "Hypixel", 
+    		"Hypixel",
+    		"NCP",
+    		"BhopYPort",
+    		"Bhop2",
+    		"BhopDamage",
+    		"Gaming",
+    		"Gaming2",
+    		"Y-Port");
+    public NumberSetting speed = new NumberSetting("Speed", 1, 0, 10, 0.1);
+    
     int stage = 0;
     private double Gaming = 0;
     double dist;
@@ -65,21 +76,7 @@ public class Speed extends Mod {
 
     public Speed(){
         super("Speed", Keyboard.KEY_J, Category.MOVEMENT, "Move faster");
-        ArrayList<String> options = new ArrayList<>();
-        options.add("NCP");
-        options.add("BhopYPort");
-        options.add("Bhop2");
-        options.add("Hypixel");
-        options.add("BhopDamage");
-        options.add("Gaming");
-        options.add("Gaming2");
-        options.add("Y-Port");
-        options.add("Redesky LongJump");
-
-
-        Hypnotic.instance.setmgr.rSetting(mode = new Setting("Speed Mode", this, "Hypixel", options));
-
-        Hypnotic.instance.setmgr.rSetting(speed = new Setting("Speed", this, 1, 0, 10, false));
+        addSettings(mode, speed);
     }
     private boolean isBlockUnder() {
         for (int i = (int) (mc.thePlayer.posY - 1.0); i > 0; --i) {
@@ -114,7 +111,7 @@ public class Speed extends Mod {
         }
 
         double slowdown;
-        if(this.mode.getValString().equalsIgnoreCase("Gaming2")){
+        if(mode.getSelected().equalsIgnoreCase("Gaming2")){
             motion = Math.sqrt(event.getX() * event.getX() + event.getZ() * event.getZ());
             if(airSlot() == -10){
                 Wrapper.tellPlayer("Clear a hotbar slot");
@@ -124,7 +121,7 @@ public class Speed extends Mod {
 
             mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(airSlot()));
             SetBlockAndFacing.BlockUtil.placeHeldItemUnderPlayer();
-            double targetSpeed = this.speed.getValDouble();
+            double targetSpeed = this.speed.getValue();
             if(moveSpeed < targetSpeed){
                 moveSpeed += 0.12505;
             }else {
@@ -135,7 +132,7 @@ public class Speed extends Mod {
             if(TargetStrafe.canStrafe()){
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
-        }else if(mode.getValString().equalsIgnoreCase("Gaming")){
+        }else if(mode.getSelected().equalsIgnoreCase("Gaming")){
             motion = Math.sqrt(event.getX() * event.getX() + event.getZ() * event.getZ());
             Entity player = mc.thePlayer;
             BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
@@ -165,13 +162,13 @@ public class Speed extends Mod {
                 event.setY(event.getY() - 1.0e-4);
             }
 
-            double max = this.speed.getValDouble();
+            double max = this.speed.getValue();
             MoveUtils.setMotion(event, Math.max(Math.min(moveSpeed, max), doSlow ? 0 : 0.42));
 
             if(TargetStrafe.canStrafe()){
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
-        }else if(mode.getValString().equalsIgnoreCase("Redesky LongJump")){
+        }else if(mode.getSelected().equalsIgnoreCase("Redesky LongJump")){
 
         	mc.timer.timerSpeed = 0.6f;
             switch (stage) {
@@ -214,7 +211,7 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
             ++stage;
-        }else if(mode.getValString().equalsIgnoreCase("Bhop2")){
+        }else if(mode.getSelected().equalsIgnoreCase("Bhop2")){
 
             switch (stage) {
                 case 1:
@@ -255,7 +252,7 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
             ++stage;
-        } else if(mode.getValString().equalsIgnoreCase("NCP") || mode.getValString().equalsIgnoreCase("BhopDamage")){
+        } else if(mode.getSelected().equalsIgnoreCase("NCP") || mode.getSelected().equalsIgnoreCase("BhopDamage")){
             
             if (MoveUtils.isMoving()) {
                     double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
@@ -295,7 +292,7 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
         }
-        else if(mode.getValString().equalsIgnoreCase("BhopDamage")){
+        else if(mode.getSelected().equalsIgnoreCase("BhopDamage")){
             if(mc.thePlayer.onGround){
                 moveSpeed = 0.635;
                 event.setY(event.getLegitMotion());
@@ -307,7 +304,7 @@ public class Speed extends Mod {
 
 
 
-        }else if(mode.getValString().equalsIgnoreCase("BhopYPort")){
+        }else if(mode.getSelected().equalsIgnoreCase("BhopYPort")){
             if(mc.thePlayer.onGround){
                 moveSpeed = (MoveUtils.getBaseMoveSpeed() * 1.026121442084547811);
                 event.setY(0.28);
@@ -331,7 +328,7 @@ public class Speed extends Mod {
                 TargetStrafe.strafe(event, moveSpeed, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
             }
 
-        }else if(mode.getValString().equalsIgnoreCase("Hypixel")){
+        }else if(mode.getSelected().equalsIgnoreCase("Hypixel")){
         	
         	Entity player = mc.thePlayer;
             BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
@@ -406,8 +403,8 @@ public class Speed extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
         if(event.getState() == Event.State.PRE) {
-            this.setDisplayName("Speed " + ColorUtils.white + "[" + mode.getValString() + "] ");
-            switch (mode.getValString()) {
+            this.setDisplayName("Speed " + ColorUtils.white + "[" + mode.getSelected() + "] ");
+            switch (mode.getSelected()) {
                 /*case "NCP":
                     if(mc.thePlayer.onGround){
                         mc.thePlayer.jump();
@@ -466,7 +463,7 @@ public class Speed extends Mod {
                     }else {
                         mc.thePlayer.motionY = -1;
                     }
-                    MoveUtils.setMotion(MoveUtils.getBaseMoveSpeed() * this.speed.getValDouble());
+                    MoveUtils.setMotion(MoveUtils.getBaseMoveSpeed() * this.speed.getValue());
                     break;
             }
         }
@@ -522,7 +519,7 @@ public class Speed extends Mod {
     public void onUpdate(EventUpdate event){motion = MoveUtils.getSpeed();
         double xDist = mc.thePlayer.posX - mc.thePlayer.prevPosX;
         double zDist = mc.thePlayer.posZ - mc.thePlayer.prevPosZ;
-        if(mode.getValString().equalsIgnoreCase("Gaming2")) {
+        if(mode.getSelected().equalsIgnoreCase("Gaming2")) {
         	if(mc.thePlayer.isMovingOnGround() && mc.thePlayer.moveForward != 0){
                 mc.thePlayer.jump();
             }

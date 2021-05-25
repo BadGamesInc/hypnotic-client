@@ -10,11 +10,12 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import net.minecraft.network.play.server.S02PacketChat;
 
 public class KillSults extends Mod {
 	
-	public Setting messageSpam;
+	public BooleanSetting messageSpam = new BooleanSetting("Message Spam", false);
 	
 	String allowedChars = "会意字會意字也馳驰施弓新隸體新隶体中國必亡漢字不滅天婦羅天麩羅亜米利加隸書隶书";
 	
@@ -24,7 +25,7 @@ public class KillSults extends Mod {
     
 	public KillSults() {
 		super("KillSults", 0, Category.MISC, "Show those noobs why they should download hypnotic");
-		Hypnotic.instance.setmgr.rSetting(messageSpam = new Setting("Message spam", this, false));
+		addSettings(messageSpam);
 	}
 	
 	@EventTarget
@@ -59,7 +60,7 @@ public class KillSults extends Mod {
 		Random random = new Random();
 		
 		randomStuff = " [" + getNextRandomString(allowedChars, random) + "]";
-        if (messageSpam.getValBoolean()) {
+        if (messageSpam.isEnabled()) {
         	if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {
         		mc.thePlayer.sendChatMessage("/tell " + KillAura.target.getName() + " NOOB" + randomStuff);
         		for (int i = 0; i < 1000; i ++) {

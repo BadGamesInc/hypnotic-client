@@ -19,6 +19,7 @@ import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
@@ -39,20 +40,18 @@ public class AntiBot extends Mod {
     private static ArrayList<Suspect> neverRemoveBots = new ArrayList<Suspect>();
     private Map<Integer, Double> distanceMap = new HashMap<>();
     private Set<Integer> swingSet = new HashSet<>();
+    
+    public ModeSetting mode = new ModeSetting("Mode", "Watchdog", "Watchdog", "Mineplex", "Mc-central", "Advanced");
+    
     public AntiBot() {
         super("AntiBot", Keyboard.KEY_NONE, Category.COMBAT, "Removes bot entities from your game");
-        ArrayList<String> options = new ArrayList<>();
-        options.add("Advanced");
-        options.add("Watchdog");
-        options.add("Mineplex");
-        options.add("Mc-central");
-        Hypnotic.instance.setmgr.rSetting(new Setting("AntiBot Mode", this, "Advanced", options));
+        addSettings(mode);
     }
 
 
     @EventTarget
     public void onReceivePacket(EventReceivePacket event) {
-        String mode = Hypnotic.instance.setmgr.getSettingByName("AntiBot Mode").getValString();
+        String mode = this.mode.getSelected();
 
         if (mode.equalsIgnoreCase("Advanced") && event.getPacket() instanceof S0CPacketSpawnPlayer) {
             S0CPacketSpawnPlayer packet = (S0CPacketSpawnPlayer) event.getPacket();
@@ -109,7 +108,7 @@ public class AntiBot extends Mod {
 
     @Override
     public void onUpdate() {
-        String mode = Hypnotic.instance.setmgr.getSettingByName("AntiBot Mode").getValString();
+        String mode = this.mode.getSelected();
 
 
         if(mode.equalsIgnoreCase("Cubecraft")){

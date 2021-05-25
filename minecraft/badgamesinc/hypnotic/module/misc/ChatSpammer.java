@@ -7,12 +7,15 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.TimerUtils;
 
 public class ChatSpammer extends Mod {
 
 	ArrayList<String> messages;
 	public TimerUtils timer = new TimerUtils();
+	
+	public NumberSetting delay = new NumberSetting("Delay", 4, 0, 30, 1);
 	
 	public ChatSpammer() {
 		super("ChatSpammer", 0, Category.MISC, "Spam that chat");
@@ -32,17 +35,12 @@ public class ChatSpammer extends Mod {
 		messages.add("bro its a pc pinger, dont download it");
 	}
 	
-	public void setup()
-	{
-		Hypnotic.instance.setmgr.rSetting(new Setting("Delay", this, 4, 0, 30, false)); 
-	}
-	
 	public double getDelayValue() {
-		return Hypnotic.instance.setmgr.getSettingByName("Delay").getValDouble(); 	
+		return delay.getValue(); 	
 	}
 	
 	public void onUpdate() {
-		/*if(timer.hasTimeElapsed(getDelayValue() * 1000, true)) {
+		if(timer.hasTimeElapsed(getDelayValue() * 1000, true)) {
 			Random r = new Random();
 			int index = r.nextInt(messages.size());
 			String message = messages.get(index);
@@ -50,7 +48,7 @@ public class ChatSpammer extends Mod {
 			mc.thePlayer.sendChatMessage(message);
 			
 			timer.reset();
-		*///}
-		mc.thePlayer.sendChatMessage("/r STAY MAD HYPNOTIC ON TOP");
+		}
+		//mc.thePlayer.sendChatMessage("/r STAY MAD HYPNOTIC ON TOP");
 	}
 }

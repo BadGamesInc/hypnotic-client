@@ -26,6 +26,9 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
@@ -48,43 +51,37 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 
 public class KillAura extends Mod {
+	
+	public ModeSetting mode = new ModeSetting("Rotation Mode", "Silent", "Silent", "Lock View", "None");
+	public NumberSetting apsDelay = new NumberSetting("APS", 10, 0, 20, 1);
+	public NumberSetting range = new NumberSetting("Range", 4.6, 0, 7, 0.1);
+	public NumberSetting crack = new NumberSetting("Crack Size", 0, 0, 15, 1);
+	public NumberSetting existed = new NumberSetting("Ticks Existed", 30, 0, 500, 5);
+	public NumberSetting fov = new NumberSetting("FOV", 360, 0, 360, 5);
+	public BooleanSetting autoBlock = new BooleanSetting("AutoBlock", true);
+	public BooleanSetting invis = new BooleanSetting("Invisibles", false);
+	public BooleanSetting players = new BooleanSetting("Players", true);
+	public BooleanSetting animals = new BooleanSetting("Animals", false);
+	public BooleanSetting monsters = new BooleanSetting("Monsters", false);
+	public BooleanSetting villagers = new BooleanSetting("Villagers", false);
+	public BooleanSetting teams = new BooleanSetting("Teams", false);
+	public BooleanSetting esp = new BooleanSetting("ESP", true);
+	
     public static EntityLivingBase target;
     private long current, last;
-    private double delay = Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble();
+    private double delay = apsDelay.getValue();
     private float yaw, pitch;
     private boolean others;
     public boolean blocking;
-    public Setting ESP;
 
     public KillAura() {
         super("KillAura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
-    }
-
-    @Override
-    public void setup() {
-    	ArrayList<String> options = new ArrayList<String>();
-    	options.add("Silent");
-    	options.add("Lock view");
-    	options.add("None");
-    	Hypnotic.instance.setmgr.rSetting(new Setting("Rotation Mode", this, "Silent", options));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("Range", this, 4.3, 0, 6, false));
-    	Hypnotic.instance.setmgr.rSetting(new Setting("APS", this, 8, 0, 20, false));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Crack Size", this, 0, 0, 15, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Existed", this, 30, 0, 500, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("FOV", this, 360, 0, 360, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("AutoBlock", this, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Invisibles", this, false));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Players", this, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Animals", this, false));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Monsters", this, false));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Villagers", this, false));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Teams", this, false));
-        Hypnotic.instance.setmgr.rSetting(ESP = new Setting("ESP", this, true));
+        addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, invis, players, animals, monsters, villagers, esp);
     }
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("KillAura " + ColorUtils.white + "[R: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble(), 2) + " APS: " + MathUtils.round(Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble(), 2) + "] ");
+    	this.setDisplayName("KillAura " + ColorUtils.white + "[R: " + MathUtils.round(range.getValue(), 2) + " APS: " + MathUtils.round(apsDelay.getValue(), 2) + "] ");
     	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
     		target = null;
     		RenderUtils.resetPlayerPitch();
@@ -103,7 +100,7 @@ public class KillAura extends Mod {
     		return;
     	}
     	if (event.getState() == Event.State.PRE) {
-	        target = getClosest(Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble());
+	        target = getClosest(range.getValue());
 	        if(target == null)
 	            return;
 	        updateTime();
@@ -111,15 +108,15 @@ public class KillAura extends Mod {
 	        yaw = mc.thePlayer.rotationYaw;
 	        pitch = mc.thePlayer.rotationPitch;
 
-	        boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
-	       if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
+	        boolean block = target != null && autoBlock.isEnabled() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
+	       if(mode.getSelected().equalsIgnoreCase("Silent")) {
 	    	    RenderUtils.resetPlayerPitch();
 				RenderUtils.resetPlayerYaw();
-	       } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("None")) {
+	       } else if (mode.getSelected().equalsIgnoreCase("None")) {
 	    	   
 	       } 
 	       
-	        if(current - last > 1000 / Hypnotic.instance.setmgr.getSettingByName("APS").getValDouble()) {
+	        if(current - last > 1000 / apsDelay.getValue()) {
 	        	if (block) {
 	        		mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
 	        	}
@@ -131,7 +128,7 @@ public class KillAura extends Mod {
     		if(target == null)
                 return;
     		
-    		boolean block = target != null && Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
+    		boolean block = target != null && autoBlock.isEnabled() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
 
             if (block) {
                 Wrapper.getPlayer().setItemInUse(Wrapper.getPlayer().getCurrentEquippedItem(), Wrapper.getPlayer().getCurrentEquippedItem().getMaxItemUseDuration());
@@ -145,15 +142,15 @@ public class KillAura extends Mod {
             yaw = RotationUtils.getRotations(target)[0];
             
             
-            if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Silent")) {
+            if (mode.getSelected().equalsIgnoreCase("Silent")) {
     	        RenderUtils.setCustomPitch(pitch);
     	        RenderUtils.setCustomYaw(yaw);
     	        event.setYaw(yaw);
             	event.setPitch(pitch);
-            } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
+            } else if (mode.getSelected().equalsIgnoreCase("Lock view")) {
          	   mc.thePlayer.rotationPitch = pitch;
          	   mc.thePlayer.rotationYaw = yaw;
-            } else if(Hypnotic.instance.setmgr.getSettingByName("Rotation Mode").getValString().equalsIgnoreCase("Lock view")) {
+            } else if(mode.getSelected().equalsIgnoreCase("Lock view")) {
             	event.setYaw(yaw);
             	event.setPitch(pitch);
             }
@@ -166,7 +163,7 @@ public class KillAura extends Mod {
     			unBlock();
     		}
     	}
-        for(int i = 0; i < Hypnotic.instance.setmgr.getSettingByName("Crack Size").getValDouble(); i++)
+        for(int i = 0; i < crack.getValue(); i++)
             mc.thePlayer.onCriticalHit(entity);
 
         mc.thePlayer.swingItem();
@@ -202,22 +199,22 @@ public class KillAura extends Mod {
 
     private boolean canAttack(EntityLivingBase player) {
         if(player instanceof EntityPlayer || player instanceof EntityAnimal || player instanceof EntityMob || player instanceof EntityVillager) {
-            if (player instanceof EntityPlayer && !Hypnotic.instance.setmgr.getSettingByName("Players").getValBoolean())
+            if (player instanceof EntityPlayer && !players.isEnabled())
                 return false;
-            if (player instanceof EntityAnimal && !Hypnotic.instance.setmgr.getSettingByName("Animals").getValBoolean())
+            if (player instanceof EntityAnimal && !animals.isEnabled())
                 return false;
-            if (player instanceof EntityMob && !Hypnotic.instance.setmgr.getSettingByName("Monsters").getValBoolean())
+            if (player instanceof EntityMob && !monsters.isEnabled())
                 return false;
-            if (player instanceof EntityVillager && !Hypnotic.instance.setmgr.getSettingByName("Villagers").getValBoolean())
+            if (player instanceof EntityVillager && !villagers.isEnabled())
                 return false;
         }
-        if(player.isOnSameTeam(mc.thePlayer) && Hypnotic.instance.setmgr.getSettingByName("Teams").getValBoolean())
+        if(player.isOnSameTeam(mc.thePlayer) && !teams.isEnabled())
             return false;
-        if(player.isInvisible() && !Hypnotic.instance.setmgr.getSettingByName("Invisibles").getValBoolean())
+        if(player.isInvisible() && !invis.isEnabled())
             return false;
-        if(!isInFOV(player, Hypnotic.instance.setmgr.getSettingByName("FOV").getValDouble()))
+        if(!isInFOV(player, fov.getValue()))
             return false;
-        return player != mc.thePlayer && player.isEntityAlive() && mc.thePlayer.getDistanceToEntity(player) <= Hypnotic.instance.setmgr.getSettingByName("Range").getValDouble() && player.ticksExisted > Hypnotic.instance.setmgr.getSettingByName("Existed").getValDouble();
+        return player != mc.thePlayer && player.isEntityAlive() && mc.thePlayer.getDistanceToEntity(player) <= range.getValue() && player.ticksExisted > existed.getValue();
     }
 
     private boolean isInFOV(EntityLivingBase entity, double angle) {
@@ -246,7 +243,7 @@ public class KillAura extends Mod {
     
     private void block(EntityLivingBase ent) {
 		blocking = true;		
-		if(Hypnotic.instance.setmgr.getSettingByName("AutoBlock").getValBoolean()){
+		if(autoBlock.isEnabled()){
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(ent, new Vec3((double)randomNumber(-50, 50)/100, (double)randomNumber(0, 200)/100, (double)randomNumber(-50, 50)/100)));
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(ent, Action.INTERACT));
 		}
@@ -266,9 +263,10 @@ public class KillAura extends Mod {
     
     double delay1 = 0;
     boolean step  = false;
+    
     @EventTarget
     public void on3D(Event3D event){
-        if(ESP.getValBoolean()){
+        if(esp.isEnabled()){
             if(target != null){
                     drawCircle(target, event.getPartialTicks(), 0.8, delay1 / 100);
             }

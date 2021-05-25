@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.event.events.EventSendPacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.PlayerUtils;
 import net.minecraft.network.play.client.C02PacketUseEntity;
@@ -15,23 +16,22 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class Criticals extends Mod {
 
+	public ModeSetting mode = new ModeSetting("Mode", "Packet", "Packet", "MiniJump");
+	
 	public Criticals() {
 		super("Criticals", 0, Category.COMBAT, "Preforms critical hits without having to jump");
-		ArrayList<String> options = new ArrayList<>();
-        options.add("Packet");
-        options.add("MiniJump");
-        Hypnotic.instance.setmgr.rSetting(new Setting("Criticals Mode", this, "Packet", options));
+		addSettings(mode);
 	}
 
     @Override
     public void onUpdate() {
-        String mode = "[" + Hypnotic.instance.setmgr.getSettingByName("Criticals Mode").getValString() + "] ";
+        String mode = "[" + this.mode.getSelected() + "] ";
         this.setDisplayName("Criticals " + ColorUtils.white + mode);
     }
 
     @EventTarget
     public void onSendPacket(EventSendPacket event) {
-        String mode = Hypnotic.instance.setmgr.getSettingByName("Criticals Mode").getValString();
+        String mode = this.mode.getSelected();
 
         if(canCrit()) {
             if (event.getPacket() instanceof C02PacketUseEntity) {

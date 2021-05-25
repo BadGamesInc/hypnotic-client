@@ -16,6 +16,7 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.TimeHelper;
@@ -29,8 +30,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
 
 public class Longjump extends Mod {
-    public Setting mode;
-    public Setting speed;
+    public ModeSetting mode = new ModeSetting("Mode", "Long", "Long");
     int stage = 0;
     private double Gaming = 0;
     double dist;
@@ -57,10 +57,7 @@ public class Longjump extends Mod {
     public Longjump(){
         super("LongJump", Keyboard.KEY_V, Category.MOVEMENT, "Move faster");
         ArrayList<String> options = new ArrayList<>();
-        options.add("Redesky  ");
-
-
-        Hypnotic.instance.setmgr.rSetting(mode = new Setting("LongJump Mode", this, "Redesky  ", options));
+        addSettings(mode);
     }
     
     private boolean isBlockUnder() {
@@ -95,7 +92,7 @@ public class Longjump extends Mod {
         }
 
         double slowdown;
-        if(mode.getValString().equalsIgnoreCase("Redesky  ")){
+        if(mode.getSelected().equalsIgnoreCase("Redesky  ")){
 
         	mc.timer.timerSpeed = 0.6f;
             switch (stage) {
@@ -171,7 +168,7 @@ public class Longjump extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event) {
         if(event.getState() == Event.State.PRE) {
-        	String modeString = mode.getValString().replaceAll("  ", "");
+        	String modeString = mode.getSelected().replaceAll("  ", "");
             this.setDisplayName("LongJump " + ColorUtils.white + "[" + modeString + "] ");
             
         if(TargetStrafe.canStrafe()){
@@ -225,7 +222,7 @@ public class Longjump extends Mod {
     public void onUpdate(EventUpdate event){motion = MoveUtils.getSpeed();
         double xDist = mc.thePlayer.posX - mc.thePlayer.prevPosX;
         double zDist = mc.thePlayer.posZ - mc.thePlayer.prevPosZ;
-        if(mode.getValString().equalsIgnoreCase("Gaming2")) {
+        if(mode.getSelected().equalsIgnoreCase("Gaming2")) {
         	if(mc.thePlayer.isMovingOnGround() && mc.thePlayer.moveForward != 0){
                 mc.thePlayer.jump();
             }

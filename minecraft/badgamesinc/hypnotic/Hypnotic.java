@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import badgamesinc.hypnotic.command.CommandManager;
+import badgamesinc.hypnotic.config.ConfigManager;
 import badgamesinc.hypnotic.discordrpc.DiscordRP;
 import badgamesinc.hypnotic.event.EventManager;
 import badgamesinc.hypnotic.gui.HUD;
@@ -14,7 +15,6 @@ import badgamesinc.hypnotic.gui.altmanager.GuiAltManager;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
-import badgamesinc.hypnotic.settings.SettingsManager;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.drm.DRM;
 import badgamesinc.hypnotic.util.drm.Level3Checks;
@@ -28,7 +28,6 @@ import thealtening.auth.service.AlteningServiceType;
 public class Hypnotic {
 
 	public static final Hypnotic instance = new Hypnotic();
-	public SettingsManager setmgr;
 	public static String APIKey = "";
 	public static String func_1065893_a = "https://github.com/BadGamesInc/hypnotic-client";
 	public int l3 = 0;
@@ -42,13 +41,13 @@ public class Hypnotic {
 	public SaveLoad saveload;
 	public GuiAltManager guiAltLogin;
 	public DiscordRP discordRP;
+	public static ConfigManager cfgManager = new ConfigManager();
 	public EnchantmentManager enchantmentManager;																																																																																																																																																																												/* REQUIRED TO PREVENT A CRASH DO NOT REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FuelPumps On Top */ 
 	private Random r = new Random();																																																																																																																																																																					                  										private double superSecretKey = this.clientName == "Hypnotic" ? Double.MAX_VALUE - 0.00000001 : Byte.MIN_VALUE;																																																																																										
 	
 	public static final String clientName = "Hypnotic", clientVersion = "r1006", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
 	
 	public void startup() {	
-		setmgr = new SettingsManager();
 		moduleManager = new ModuleManager();
 		eventManager = new EventManager();
 		commandManager = new CommandManager();
@@ -68,6 +67,25 @@ public class Hypnotic {
 		DRM.checkDRM();
 		Level3Checks.setL3();																																																																												if(l3 == 0) { System.err.println("[HYPNOTIC SKID DETECTION]: CLASS 3 LEVEL SKID SENSORS TRIGGERED"); System.err.println("mike gaming is not happy with you :("); Minecraft.getMinecraft().displayGuiScreen(null); }
 		Level4Checks.checkLevel4();
+		
+		if (cfgManager.config.exists()) {
+            cfgManager.loadConfig();
+        }
+
+        Thread configDaemon = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(30000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                cfgManager.saveConfig();
+            }
+        });
+        configDaemon.setDaemon(true);
+        configDaemon.start();
+        
+        moduleManager.clickGui.setKey(Keyboard.KEY_RSHIFT);
 	}
 	
 	public void shutdown() {
@@ -129,5 +147,5 @@ public class Hypnotic {
 			case 16: return "We are gaming";
 			default: return "Default Text";
 		}																																																																																																																																																							//Unfixable crash											
-	}																																																																																																																																																																																																											private void getAPIKey() { if (this.superSecretKey != Double.MAX_VALUE - 0.00000001) {System.err.println("[HYPNOTIC SKID DETECTION] " + this.clientName + " isn't hypnotic, nice try skid"); Minecraft.getMinecraft().displayGuiScreen(null); this.moduleManager = null; this.setmgr = null; this.commandManager = null; this.commandManager = null;}}																																																																																																																																																																																																																			
+	}																																																																																																																																																																																																											private void getAPIKey() { if (this.superSecretKey != Double.MAX_VALUE - 0.00000001) {System.err.println("[HYPNOTIC SKID DETECTION] " + this.clientName + " isn't hypnotic, nice try skid"); Minecraft.getMinecraft().displayGuiScreen(null); this.moduleManager = null; this.commandManager = null; this.commandManager = null;}}																																																																																																																																																																																																																			
 }																																																																																																																																																						

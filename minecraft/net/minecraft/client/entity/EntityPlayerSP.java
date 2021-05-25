@@ -211,9 +211,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.POST);
                 eventMotionUpdate.call();
                 
-                NoSlow noSlow = new NoSlow();
+                NoSlow noSlow = Hypnotic.instance.moduleManager.noSlow;
                 if (Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled())
-	                if(mc.thePlayer.isUsingItem() && noSlow.mode.getValString().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){
+	                if(mc.thePlayer.isUsingItem() && noSlow.mode.getSelected().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){
 	                    mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, null, 0.0f, 0.0f, 0.0f));
 	                }
             }
@@ -230,7 +230,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
         
         NoSlow noSlow = new NoSlow();
         if (Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled())
-	        if(mc.thePlayer.isUsingItem() && noSlow.mode.getValString().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){ 
+	        if(mc.thePlayer.isUsingItem() && noSlow.mode.getSelected().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){ 
 	        	mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
 	        }
         boolean flag = this.isSprinting();

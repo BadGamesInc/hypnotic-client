@@ -79,7 +79,7 @@ public class GlyphPageFontRenderer {
 
     private GlyphPage regularGlyphPage, boldGlyphPage, italicGlyphPage, boldItalicGlyphPage;
 
-    public GlyphPageFontRenderer(GlyphPage regularGlyphPage, GlyphPage boldGlyphPage, GlyphPage italicGlyphPage, GlyphPage boldItalicGlyphPage) {
+    public GlyphPageFontRenderer (GlyphPage regularGlyphPage, GlyphPage boldGlyphPage, GlyphPage italicGlyphPage, GlyphPage boldItalicGlyphPage) {
         this.regularGlyphPage = regularGlyphPage;
         this.boldGlyphPage = boldGlyphPage;
         this.italicGlyphPage = italicGlyphPage;

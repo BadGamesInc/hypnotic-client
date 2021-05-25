@@ -1,26 +1,19 @@
 package badgamesinc.hypnotic.module.gui;
 
-import java.util.ArrayList;
-
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 
 public class ArrayListModule extends Mod{
 
+	public ModeSetting font = new ModeSetting("Font", "Roboto-Regular", "Roboto-Regular", "Minecraft");
+	public BooleanSetting rainbow = new BooleanSetting("Rainbow", true);
+	
 	public ArrayListModule() {
 		super("Array List", 0, Category.GUI, "Customize the array list");
+		addSettings(font, rainbow);
 		setEnabled(true);
-	}
-	
-	@Override
-	public void setup() {
-		ArrayList<String> options = new ArrayList<>();
-		options.add("Roboto-Regular");
-		options.add("Minecraft");
-		Hypnotic.instance.setmgr.rSetting(new Setting("ArrayList Font", this, "Roboto-Regular", options));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Rainbow", this, true));
 	}
 
 }

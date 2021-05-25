@@ -783,7 +783,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (Hypnotic.instance.moduleManager.getModule(NoRender.class).isEnabled()) {
         	NoRender noRender = new NoRender();
-        	if (!noRender.hurtCam.getValBoolean())
+        	if (!noRender.hurtCam.isEnabled())
         		this.hurtCameraEffect(partialTicks);
         } else 
         	this.hurtCameraEffect(partialTicks);

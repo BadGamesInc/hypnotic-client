@@ -12,6 +12,9 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -19,29 +22,18 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class Flight extends Mod implements UpdateListener{
 	
+	public ModeSetting flyMode = new ModeSetting("Mode", "Velocity", "Velocity", "Vanilla");
+	public NumberSetting flySpeed = new NumberSetting("Speed", 1, 0, 10, 0.1);
+	public BooleanSetting kickBypass = new BooleanSetting("Vanilla kick bypass", false);
+	
 	public Flight() {
 		super("Flight", Keyboard.KEY_G, Category.MOVEMENT, "Fly like a bird");
+		addSettings(flyMode, flySpeed, kickBypass);
 	}
-	
-
-	
+		
 	public float speed = 1F;
 	public double flyHeight;
 	private double startY;
-	
-	@Override
-	public void setup() {
-		ArrayList<String> options = new ArrayList<String>();
-		options.add("Velocity");
-		options.add("Vanilla");
-		options.add("Redesky Fly");
-		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Mode", this, "Vanilla", options));
-		Hypnotic.instance.setmgr.rSetting(new Setting("View Bobbing", this, true));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Flight Speed", this, 1, 0, 10, false));
-		Hypnotic.instance.setmgr.rSetting(new Setting("Vanilla kick bypass", this, false));	
-		
-	}
-
 	
 	public void updateFlyHeight()
 	{
@@ -96,20 +88,16 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onUpdate()
 	{
-		this.setDisplayName("Flight " + ColorUtils.white + "[" + Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString() + "] ");
-		speed = (float) Hypnotic.instance.setmgr.getSettingByName("Flight Speed").getValDouble();
+		this.setDisplayName("Flight " + ColorUtils.white + "[" + this.flyMode.getSelected() + "] ");
+		speed = (float) this.flySpeed.getValue();
 
-		if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla")) {
+		if (this.flyMode.getSelected().equalsIgnoreCase("Vanilla")) {
 			mc.thePlayer.capabilities.isFlying = true;
-        } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
+        } else if (this.flyMode.getSelected().equalsIgnoreCase("Velocity")) {
         	mc.thePlayer.capabilities.isFlying = false;
-        } else if (Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Redesky Fly")) {
-        	//MoveUtils.setMotion((20.635 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
-        	mc.thePlayer.capabilities.isFlying = true;
-			mc.timer.timerSpeed = 0.2f;
         }
 		
-		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Velocity")) {
+		if(this.flyMode.getSelected().equalsIgnoreCase("Velocity")) {
 			updateMS();
 			
 			mc.thePlayer.capabilities.isFlying = false;
@@ -125,7 +113,7 @@ public class Flight extends Mod implements UpdateListener{
 		
 		
 		
-			if(Hypnotic.instance.setmgr.getSettingByName("Vanilla kick bypass").getValBoolean())
+			if(this.kickBypass.isEnabled())
 			{
 				updateFlyHeight();
 				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
@@ -153,7 +141,7 @@ public class Flight extends Mod implements UpdateListener{
 	
 	@Override
 	public void onDisable() {
-		if(Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Vanilla") || Hypnotic.instance.setmgr.getSettingByName("Flight Mode").getValString().equalsIgnoreCase("Redesky Fly")) {
+		if(this.flyMode.getSelected().equalsIgnoreCase("Vanilla")) {
 			mc.timer.timerSpeed = 1f;
 			mc.thePlayer.capabilities.isFlying = false;
 		}

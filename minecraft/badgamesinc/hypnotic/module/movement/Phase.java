@@ -8,6 +8,7 @@ import badgamesinc.hypnotic.event.events.EventCollide;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.PlayerUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
@@ -17,14 +18,11 @@ public class Phase extends Mod {
 	   
 	   TimerUtils timer = new TimerUtils();
 	   
-	   public Setting phaseMode;
+	   public ModeSetting phaseMode = new ModeSetting("Mode", "Vanilla", "Vanilla");
 
 	   public Phase() {
 	      super("Phase", 0, Category.PLAYER, "Phase throught the floor");
-	      ArrayList<String> options = new ArrayList<>();
-	      options.add("Redesky");
-	      options.add("Vanilla Phase");
-	      Hypnotic.instance.setmgr.rSetting(phaseMode = new Setting("Phase Mode", this, "Redesky", options));
+	      addSettings(phaseMode);
 	   }
 	   
 	   private int reset;
@@ -32,14 +30,9 @@ public class Phase extends Mod {
 
 	    @Override
 	    public void onUpdate() {
-	    	this.setDisplayName("Phase " + ColorUtils.white + "[" + phaseMode.getValString() + "] ");
-	    	if (Hypnotic.instance.setmgr.getSettingByName("Phase Mode").getValString().equalsIgnoreCase("Redesky")) {
-			      this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0E-8D, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, false));
-			      this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0D, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, false));
-			      this.toggle();
-			}
+	    	this.setDisplayName("Phase " + ColorUtils.white + "[" + phaseMode.getSelected() + "] ");
 	    	
-	    	if (Hypnotic.instance.setmgr.getSettingByName("Phase Mode").getValString().equalsIgnoreCase("Vanilla Phase")) {
+	    	if (phaseMode.getSelected().equalsIgnoreCase("Vanilla")) {
 		        reset -= 1;
 		        double xOff = 0;
 		        double zOff = 0;

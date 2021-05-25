@@ -97,7 +97,7 @@ public class CategoryButton {
 
     public void mouseClicked(int mouseX, int mouseY){
         if(isHovered(mouseX, mouseY)){
-        	if (Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
+        	if (Hypnotic.instance.moduleManager.clickGui.sound.isEnabled()) {
         		mc.thePlayer.playSound("random.click", 0.5f, 0.5f);
         	}
             parent.currentCategory = this.category;

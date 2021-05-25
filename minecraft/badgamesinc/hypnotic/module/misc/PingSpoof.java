@@ -11,6 +11,7 @@ import badgamesinc.hypnotic.event.events.EventSendPacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.TimeHelper;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 
@@ -18,15 +19,17 @@ public class PingSpoof extends Mod {
 
 	TimeHelper timer = new TimeHelper();
     private List<C00PacketKeepAlive> packetList = new ArrayList<>();
+    
+    public NumberSetting delay = new NumberSetting("Delay", 500, 0 , 3000, 50);
+    
     public PingSpoof(){
         super("PingSpoof", Keyboard.KEY_NONE, Category.MISC, "Alters your ping to appear higher to the server");
-
-        Hypnotic.instance.setmgr.rSetting(new Setting("PingSpoof Delay", this, 500, 0, 3000, true));
+        addSettings(delay);
     }
 
     @EventTarget
     public void onSendPacket(EventSendPacket event){
-        final long delay = (long) Hypnotic.instance.setmgr.getSettingByName("PingSpoof Delay").getValDouble();
+        final long delay = (long) this.delay.getValue();
 
 
 

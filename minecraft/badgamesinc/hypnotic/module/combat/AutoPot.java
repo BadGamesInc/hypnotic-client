@@ -1,13 +1,11 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package badgamesinc.hypnotic.module.combat;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -24,17 +22,17 @@ import net.minecraft.potion.PotionEffect;
 public class AutoPot extends Mod
 {
     public TimerUtils timer;
-    public Setting speedPot;
+    public BooleanSetting speedPot = new BooleanSetting("Speed Pots", true);
+    public NumberSetting health = new NumberSetting("Health", 10, 1, 19, 1);
     
     public AutoPot() {
         super("AutoPot", 0, Category.COMBAT, "Automatically splashes healing pots for you");
         this.timer = new TimerUtils();
-        Hypnotic.instance.setmgr.rSetting(new Setting("Health", this, 10.0, 5.0, 18.0, true));
-        Hypnotic.instance.setmgr.rSetting(speedPot = new Setting("Speed Pots", this, true));
+        addSettings(speedPot, health);
     }
     
     public double getHealthSettingValue() {
-        return Hypnotic.instance.setmgr.getSettingByName("Health").getValDouble();
+        return health.getValue();
     }
     
     @Override
@@ -106,7 +104,7 @@ public class AutoPot extends Mod
     	for (int i = startSlot; i < endSlot; ++i) {
             final ItemStack stack = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
             if (stack != null && stack.getItem() == Items.potionitem && ItemPotion.isSplash(stack.getItemDamage())) {
-            	if (speedPot.getValBoolean()) {
+            	if (speedPot.isEnabled()) {
             		if (mc.thePlayer.isPotionActive(Potion.moveSpeed.id)) {
                 		continue;
                 	}

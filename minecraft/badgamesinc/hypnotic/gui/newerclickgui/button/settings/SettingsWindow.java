@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.KeybindSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -28,8 +32,8 @@ public class SettingsWindow {
         this.parent = parent;
         int count = 1;
         int xCount = 0;
-        if (Hypnotic.instance.setmgr.getSettingsByMod(parent.mod) != null) {
-        	settings = Hypnotic.instance.setmgr.getSettingsByMod(parent.mod);
+        if (parent.mod.getSettings() != null) {
+        	settings = parent.mod.getSettings();
         }
         int guiScaleMultiplier = 22;
         if (Minecraft.getMinecraft().gameSettings.guiScale > 2) {
@@ -43,13 +47,17 @@ public class SettingsWindow {
         if (settings != null) {
 	        for(Setting set : settings){
 	        	
-		            if(set.isCheck()){
+	        	if(set instanceof KeybindSetting){
+	        		//components.add(new Keybind(x + bigFontRenderer.getStringWidth(parent.mod.getDescription() + 50), y + 10, set, this));
+	        		count--;
+	        	}
+		            if(set instanceof BooleanSetting){
 		                this.components.add(new CheckBox(x + 20 + xCount, y + 10 + count * guiScaleMultiplier, set, this));
 		
-		            }else if(set.isCombo()){
+		            }else if(set instanceof ModeSetting){
 		                this.components.add(new ComboBox(x + 20 + xCount, y + 10 + count * guiScaleMultiplier, set, this));
 		
-		            }else if(set.isSlider()){
+		            }else if(set instanceof NumberSetting){
 		                this.components.add(new Slider(x + 20 + xCount, y + 10 + count * guiScaleMultiplier, set, this));
 		
 		            }
@@ -83,6 +91,12 @@ public class SettingsWindow {
         for(Component c : components){
             c.mouseClicked(mouseX, mouseY);
         }
+    }
+    
+    public void keyTyped(char typedChar, int keyCode) {
+    	if (Keybind.listening) {
+    		
+    	}
     }
 
     public void mouseReleased(){

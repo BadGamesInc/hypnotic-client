@@ -34,6 +34,9 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
@@ -74,21 +77,20 @@ public class Scaffold extends Mod {
     private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
     private List<Block> badBlocks = Arrays.asList(Blocks.air, Blocks.water, Blocks.flowing_water, Blocks.lava, Blocks.flowing_lava, Blocks.enchanting_table, Blocks.carpet, Blocks.glass_pane, Blocks.stained_glass_pane, Blocks.iron_bars, Blocks.snow_layer, Blocks.ice, Blocks.packed_ice, Blocks.coal_ore, Blocks.diamond_ore, Blocks.emerald_ore, Blocks.chest, Blocks.trapped_chest, Blocks.torch, Blocks.anvil, Blocks.trapped_chest, Blocks.noteblock, Blocks.jukebox, Blocks.tnt, Blocks.gold_ore, Blocks.iron_ore, Blocks.lapis_ore, Blocks.lit_redstone_ore, Blocks.quartz_ore, Blocks.redstone_ore, Blocks.wooden_pressure_plate, Blocks.stone_pressure_plate, Blocks.light_weighted_pressure_plate, Blocks.heavy_weighted_pressure_plate, Blocks.stone_button, Blocks.wooden_button, Blocks.lever, Blocks.tallgrass, Blocks.tripwire, Blocks.tripwire_hook, Blocks.rail, Blocks.waterlily, Blocks.red_flower, Blocks.red_mushroom, Blocks.brown_mushroom, Blocks.vine, Blocks.trapdoor, Blocks.yellow_flower, Blocks.ladder, Blocks.furnace, Blocks.sand, Blocks.cactus, Blocks.dispenser, Blocks.noteblock, Blocks.dropper, Blocks.crafting_table, Blocks.web, Blocks.pumpkin, Blocks.sapling, Blocks.cobblestone_wall, Blocks.oak_fence);
     private BlockData blockData;
-    public  Setting safewalk;
-    private Setting blockFly;
-    private Setting tower;
+    private BooleanSetting blockFly = new BooleanSetting("Downwards", true);
+    private BooleanSetting tower = new BooleanSetting("Tower", true);
 
-    private Setting keeprots;
-    private Setting towermove;
-    private Setting swing;
-    private Setting keepY;
+    private BooleanSetting keeprots = new BooleanSetting("Keep Rots", true);
+    private BooleanSetting towermove = new BooleanSetting("TowerMove", false);
+    private BooleanSetting swing = new BooleanSetting("Swing", false);
+    private BooleanSetting keepY = new BooleanSetting("Keep Y", false);
     int stage = 0;
 
-    public Setting delay;
-    public Setting keepSprint;
+    public NumberSetting delay = new NumberSetting("Delay", 0, 0, 100, 10);
+    public BooleanSetting keepSprint = new BooleanSetting("Keep Sprint", true);
     public static boolean isPlaceTick = false;
     public static boolean stopWalk = false;
-    public Setting scaffoldMode;
+    public ModeSetting scaffoldMode = new ModeSetting("Mode", "Hypixel", "Hypixel", "AAC");
     private double startY;
     public TimeHelper towerTimer = new TimeHelper();
     private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
@@ -97,10 +99,11 @@ public class Scaffold extends Mod {
     private EnumFacing currentFacing;
     private boolean rotated = false;
     private TimeHelper timer = new TimeHelper();
-    public Setting raycast;
-    public Setting legit;
-    public Setting boost;
-    public Setting redeskyBoost;
+    public BooleanSetting raycast = new BooleanSetting("Raycast", false);
+    public BooleanSetting legit = new BooleanSetting("Legit", true);
+    public BooleanSetting boost = new BooleanSetting("Boost", false);
+    public BooleanSetting redeskyBoost = new BooleanSetting("Timer Boost", false);
+    public BooleanSetting safeWalk = new BooleanSetting("Safewalk", false);
 
     float oldPitch = 0;
     private RotationUtils RayCastUtil;
@@ -108,27 +111,7 @@ public class Scaffold extends Mod {
 
     public Scaffold() {
         super("Scaffold", Keyboard.KEY_R, Category.PLAYER, "Places blocks underneath you");
-        ArrayList<String> options = new ArrayList<>();
-
-        ArrayList<String> options1 = new ArrayList<>();
-        options1.add("Hypixel");
-        options1.add("AAC");
-        Hypnotic.instance.setmgr.rSetting(scaffoldMode = new Setting("Scaffold Mode", this, "Hypixel", options1));
-        
-        Hypnotic.instance.setmgr.rSetting(delay = new Setting("Delay", this, 0, 0, 1000, true));
-        
-        Hypnotic.instance.setmgr.rSetting(keeprots = new Setting("KeepRots", this, true));
-        Hypnotic.instance.setmgr.rSetting(safewalk = new Setting("SafeWalk", this, false));
-        Hypnotic.instance.setmgr.rSetting(blockFly = new Setting("Downwards", this, true));
-        Hypnotic.instance.setmgr.rSetting(boost = new Setting("Boost", this, false));
-        Hypnotic.instance.setmgr.rSetting(redeskyBoost = new Setting("Timer Boost", this, false));
-        Hypnotic.instance.setmgr.rSetting(tower = new Setting("Tower", this, true));
-        Hypnotic.instance.setmgr.rSetting(towermove = new Setting("TowerMove", this, true));
-        Hypnotic.instance.setmgr.rSetting(swing = new Setting("Swing", this, false));
-        Hypnotic.instance.setmgr.rSetting(keepY = new Setting("KeepY", this, false));
-        Hypnotic.instance.setmgr.rSetting(legit = new Setting("Legit", this, true));
-        Hypnotic.instance.setmgr.rSetting(keepSprint = new Setting("KeepSprint", this, true));
-        Hypnotic.instance.setmgr.rSetting(raycast = new Setting("RayCast", this, false));
+        addSettings(scaffoldMode, delay, keeprots, blockFly, boost, redeskyBoost, keepY, raycast, keepSprint, legit, swing, tower, towermove, safeWalk);
     }
 
     float yaw = 0;
@@ -154,7 +137,7 @@ public class Scaffold extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("Scaffold " + ColorUtils.white + "[" + scaffoldMode.getValString() + "] ");
+    	this.setDisplayName("Scaffold " + ColorUtils.white + "[" + scaffoldMode.getSelected() + "] ");
     }
 
     float lastYaw = 0;
@@ -170,22 +153,22 @@ public class Scaffold extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event) {
         if (event.getState() == Event.State.PRE) {
-            if (!this.keepSprint.getValBoolean()) {
+            if (!this.keepSprint.isEnabled()) {
                 mc.thePlayer.setSprinting(false);
                 mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
                 mc.gameSettings.keyBindSprint.pressed = false;
 
             }
-            if (scaffoldMode.getValString().equalsIgnoreCase("Hypixel")) {
+            if (scaffoldMode.getSelected().equalsIgnoreCase("Hypixel")) {
                 int slot = this.getSlot();
-                this.stopWalk = (getBlockCount() == 0 || slot == -1) && safewalk.getValBoolean();
-                this.isPlaceTick = keeprots.getValBoolean() ? blockData != null && slot != -1 : blockData != null && slot != -1 && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer).add(0, -1, 0)).getBlock() == Blocks.air;
+                this.stopWalk = (getBlockCount() == 0 || slot == -1) && safeWalk.isEnabled();
+                this.isPlaceTick = keeprots.isEnabled() ? blockData != null && slot != -1 : blockData != null && slot != -1 && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer).add(0, -1, 0)).getBlock() == Blocks.air;
                 if (slot == -1) {
                     moveBlocksToHotbar();
 
                     return;
                 }
-                if (!keepSprint.getValBoolean()) {
+                if (!keepSprint.isEnabled()) {
                     mc.thePlayer.setSprinting(false);
                     mc.gameSettings.keyBindSprint.pressed = false;
                     mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
@@ -195,7 +178,7 @@ public class Scaffold extends Mod {
                     return;
                 }
 
-                if (mc.gameSettings.keyBindJump.isKeyDown() && tower.getValBoolean() && (this.towermove.getValBoolean() || !MoveUtils.isMoving()) && !mc.thePlayer.isPotionActive(Potion.jump)) {
+                if (mc.gameSettings.keyBindJump.isKeyDown() && tower.isEnabled() && (this.towermove.isEnabled() || !MoveUtils.isMoving()) && !mc.thePlayer.isPotionActive(Potion.jump)) {
 
                         EntityPlayerSP player = mc.thePlayer;
                                 if (!MoveUtils.isOnGround(0.79) || mc.thePlayer.onGround) {
@@ -221,7 +204,7 @@ public class Scaffold extends Mod {
                     event.setPitch(79.44f);
                     RenderUtils.setCustomPitch(event.getPitch());
                     
-                    if (redeskyBoost.getValBoolean())
+                    if (redeskyBoost.isEnabled())
                     	mc.timer.timerSpeed = 11f;
 
                 }
@@ -244,8 +227,8 @@ public class Scaffold extends Mod {
                         rotations[0] = yaw;
                         rotations[1] = pitch;
 
-                        rotated = !raycast.getValBoolean() || rayTrace(yaw, pitch);
-                        if (legit.getValBoolean()) {
+                        rotated = !raycast.isEnabled() || rayTrace(yaw, pitch);
+                        if (legit.isEnabled()) {
                             mc.thePlayer.rotationYaw = rotations[0];
                             mc.thePlayer.rotationPitch = rotations[1];
                         }
@@ -253,8 +236,8 @@ public class Scaffold extends Mod {
                         event.setPitch(pitch);
                     }
                 } else {
-                    if (keeprots.getValBoolean()) {
-                        if (legit.getValBoolean()) {
+                    if (keeprots.isEnabled()) {
+                        if (legit.isEnabled()) {
                             mc.thePlayer.rotationYaw = rotations[0];
                             mc.thePlayer.rotationPitch = rotations[1];
                         }
@@ -269,7 +252,7 @@ public class Scaffold extends Mod {
 
             }
         } else {
-            if (scaffoldMode.getValString().equalsIgnoreCase("Hypixel")) {
+            if (scaffoldMode.getSelected().equalsIgnoreCase("Hypixel")) {
                 int slot = this.getSlot();
                 BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
                 if (slot != -1 && this.blockData != null) {
@@ -277,7 +260,7 @@ public class Scaffold extends Mod {
                     if (pos.getBlock() instanceof BlockAir) {
                         mc.thePlayer.inventory.currentItem = slot;
                         if (this.getPlaceBlock(this.blockData.getPosition(), this.blockData.getFacing())) {
-                            if(boost.getValBoolean()){
+                            if(boost.isEnabled()){
                                 MoveUtils.setMotion((0.635 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
 
                             }
@@ -299,11 +282,11 @@ public class Scaffold extends Mod {
                     }
                 }
                 if (currentPos != null) {
-                    if (timer.hasReached((long) this.delay.getValDouble()) && rotated) {
+                    if (timer.hasReached((long) this.delay.getValue()) && rotated) {
                         if (mc.thePlayer.getCurrentEquippedItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
                             if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX() * 0.5, currentPos.getY() * 0.5, currentPos.getZ() * 0.5))) {
                                 timer.reset();
-                                if (swing.getValBoolean()) {
+                                if (swing.isEnabled()) {
                                     mc.thePlayer.swingItem();
                                 } else {
                                     mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
@@ -321,9 +304,9 @@ public class Scaffold extends Mod {
     private boolean getPlaceBlock(final BlockPos pos, final EnumFacing facing) {
         final Vec3 eyesPos = new Vec3(mc.thePlayer.posX, mc.thePlayer.posY + mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
         Vec3i data = this.blockData.getFacing().getDirectionVec();
-        if (timer.hasReached((long) delay.getValDouble())) {
+        if (timer.hasReached((long) delay.getValue())) {
             if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, facing, getVec3(new BlockData(pos, facing)))) {
-                if (this.swing.getValBoolean()) {
+                if (this.swing.isEnabled()) {
                     mc.thePlayer.swingItem();
                 } else {
                     mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
@@ -678,15 +661,15 @@ public class Scaffold extends Mod {
     public BlockData getBlockData() {
         final EnumFacing[] invert = {EnumFacing.UP, EnumFacing.DOWN, EnumFacing.SOUTH, EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.WEST};
         double yValue = 0;
-        if (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && !mc.gameSettings.keyBindJump.isKeyDown() && blockFly.getValBoolean()) {
+        if (Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && !mc.gameSettings.keyBindJump.isKeyDown() && blockFly.isEnabled()) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), false);
             yValue -= 0.6;
         }
         BlockPos aa = new BlockPos(mc.thePlayer.getPositionVector()).offset(EnumFacing.DOWN).add(0, yValue, 0);
         BlockPos playerpos = aa;
 
-        boolean tower = !this.towermove.getValBoolean() && this.tower.getValBoolean() && !MoveUtils.isMoving();
-        if (!this.blockFly.getValBoolean() && this.keepY.getValBoolean() && !tower) {
+        boolean tower = !this.towermove.isEnabled() && this.tower.isEnabled() && !MoveUtils.isMoving();
+        if (!this.blockFly.isEnabled() && this.keepY.isEnabled() && !tower) {
             playerpos = new BlockPos(new Vec3(mc.thePlayer.getPositionVector().xCoord, this.startY, mc.thePlayer.getPositionVector().zCoord)).offset(EnumFacing.DOWN);
         } else {
             this.startY = mc.thePlayer.posY;

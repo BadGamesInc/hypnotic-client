@@ -20,14 +20,15 @@ public class LayerCape implements LayerRenderer<AbstractClientPlayer>
 
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
     {
-    	String mode = Hypnotic.instance.setmgr.getSettingByName("Cape").getValString();
-    	String cape = "hypnotic/textures/capes/cape.png";
+    	String mode = Hypnotic.instance.moduleManager.cape.cape.getSelected();
+    	String capeLocation = "hypnotic/textures/capes/";
+    	String cape = capeLocation + "cape.png";
     	if(mode.equalsIgnoreCase("FuelPump")) {
-    		cape = "hypnotic/textures/capes/fuelpump.png";
+    		cape = capeLocation + "fuelpump.png";
     	} else if(mode.equalsIgnoreCase("Hypnotic")) {
-    		cape = "hypnotic/textures/capes/hypnotic.png";
-    	} else if(mode.equalsIgnoreCase("hypnotic/textures/capes/hypnotic.png")) {
-    		cape = "hypnotic/textures/capes/cape.png";
+    		cape = capeLocation + "hypnotic.png";
+    	} else if(mode.equalsIgnoreCase("Custom")) {
+    		cape = capeLocation + "cape.png";
     	}
         if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE)) {
 	        	if(entitylivingbaseIn.getName().equals(Minecraft.getMinecraft().getSession().getUsername()) && Hypnotic.instance.moduleManager.getModuleByName("Cape").isEnabled()) {

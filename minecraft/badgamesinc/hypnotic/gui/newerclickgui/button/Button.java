@@ -131,7 +131,7 @@ public class Button {
                     mod.toggle();
                 }
             }else {
-            	if (Hypnotic.instance.setmgr.getSettingByName("Sound").getValBoolean()) {
+            	if (Hypnotic.instance.moduleManager.clickGui.sound.isEnabled()) {
             		mc.thePlayer.playSound("random.click", 0.5f, 0.5f);
             	}
                 settingsWindow = new SettingsWindow(this);

@@ -5,6 +5,7 @@ import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.BlockContainer;
@@ -20,24 +21,18 @@ public class AutoGapple extends Mod implements UpdateListener{
 
 	private int oldSlot;
 	public TimerUtils timerUtils = new TimerUtils();
+	
+	public NumberSetting minHealthVal = new NumberSetting("Min Health", 8, 1, 19, 0.1);
     
     public AutoGapple() {
         super("AutoGapple", 0, Category.COMBAT, "Automatically eats gapps for you when your health is low");
+        addSettings(minHealthVal);
         this.oldSlot = -1;
     }
     
     @Override
-    public void setup() {
-        Hypnotic.instance.setmgr.rSetting(new Setting("MinHealth", this, 13.0, 5.0, 18.0, false));
-    }
-    
-    private double minHealthVal() {
-        return Hypnotic.instance.setmgr.getSettingByName("MinHealth").getValDouble();
-    }
-    
-    @Override
     public void onUpdate() {
-    	this.setDisplayName("AutoGapple " + ColorUtils.white + "[Min: " + minHealthVal() + "] ");
+    	this.setDisplayName("AutoGapple " + ColorUtils.white + "[Min: " + minHealthVal.getValue() + "] ");
     	if (mc.thePlayer.isPotionActive(Potion.regeneration.id)) {
     		return;
     	}
@@ -76,7 +71,7 @@ public class AutoGapple extends Mod implements UpdateListener{
     }
     
     private boolean shouldEatGap() {
-        if (mc.thePlayer.getHealth() > this.minHealthVal()) {
+        if (mc.thePlayer.getHealth() > this.minHealthVal.getValue()) {
             return false;
         }
         if (mc.currentScreen == null && mc.objectMouseOver != null) {

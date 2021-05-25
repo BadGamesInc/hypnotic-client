@@ -7,6 +7,7 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.block.Block;
@@ -26,17 +27,11 @@ public class Nuker extends Mod {
 	private static int radius = 4;
 	public TimerUtils timer = new TimerUtils();
 	
+	public NumberSetting delay = new NumberSetting("Delay", 0, 0, 10, 0.1);
+	
 	public Nuker() {
 		super("Nuker", 0, Category.WORLD, "Destroy lots of blocks");
-	}
-	
-	public void setup()
-	{
-		Hypnotic.instance.setmgr.rSetting(new Setting("Break Delay", this, 2, 0, 10, false)); 
-	}
-	
-	public double getSettingValue() {
-		return Hypnotic.instance.setmgr.getSettingByName("Break Delay").getValDouble(); 	
+		addSettings(delay);
 	}
 	
 	@EventTarget
@@ -60,7 +55,7 @@ public class Nuker extends Mod {
 						if(block.getMaterial() == Material.air)
 							continue;
 						
-						if(timer.hasTimeElapsed((long) (getSettingValue() * 1000), true) && getSettingValue() != 0) {
+						if(timer.hasTimeElapsed((long) (delay.getValue() * 1000), true) && delay.getValue() != 0) {
 							e.setYaw(rots[0]);
 							e.setPitch(rots[1]);
 							RenderUtils.setCustomYaw(rots[0]);
@@ -68,7 +63,7 @@ public class Nuker extends Mod {
 							mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
 							mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
 							mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
-						} else if(getSettingValue() == 0) {
+						} else if (delay.getValue() == 0) {
 							e.setYaw(rots[0]);
 							e.setPitch(rots[1]);
 							RenderUtils.setCustomYaw(rots[0]);

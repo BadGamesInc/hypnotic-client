@@ -268,9 +268,9 @@ public class ItemRenderer
      */
     private void transformFirstPersonItem(float equipProgress, float swingProgress)
     {
-    	float itemSize = (float) ((float) Hypnotic.instance.setmgr.getSettingByName("Item Size").getValDouble() * .01);
-        float xValue = (float) (((float) Hypnotic.instance.setmgr.getSettingByName("Item X").getValDouble()) * .01);
-        float yValue = (float) (((float) Hypnotic.instance.setmgr.getSettingByName("Item Y").getValDouble()) * .01);
+    	float itemSize = (float) ((float) Hypnotic.instance.moduleManager.itemCustom.itemSize.getValue() * .01);
+        float xValue = (float) (((float) Hypnotic.instance.moduleManager.itemCustom.swordXValue.getValue()) * .01);
+        float yValue = (float) (((float) Hypnotic.instance.moduleManager.itemCustom.swordYValue.getValue()) * .01);
         GlStateManager.translate(xValue, -yValue, -0.71999997F);
         GlStateManager.translate(0.0F, equipProgress * -0.6F, 0.0F);
         GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
@@ -322,7 +322,7 @@ public class ItemRenderer
      */
     public void renderItemInFirstPerson(float partialTicks)
     {
-    	String mode = Hypnotic.instance.setmgr.getSettingByName("Block mode").getValString();
+    	String mode = Hypnotic.instance.moduleManager.ba.animations.getSelected();
         float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
         AbstractClientPlayer abstractclientplayer = this.mc.thePlayer;
         float f1 = abstractclientplayer.getSwingProgress(partialTicks);
@@ -412,7 +412,7 @@ public class ItemRenderer
                             random7 = 0;
                             random10 = 3;
                     	} else if(mode.equalsIgnoreCase("Astolfo")) {               	
-	                    	GlStateManager.rotate((float)(System.currentTimeMillis() / Hypnotic.instance.setmgr.getSettingByName("Hand speed").getValDouble() % 360), 0.0f, 0.0f, -0.1f);
+	                    	GlStateManager.rotate((float)(System.currentTimeMillis() / Hypnotic.instance.moduleManager.itemCustom.handspeed.getValue() % 360), 0.0f, 0.0f, -0.1f);
 	                        this.transformFirstPersonItem(f / 1.6f, 0.0f);
 	                        this.func_178103_d();
                     	} else if(mode.equalsIgnoreCase("Slide")) { 

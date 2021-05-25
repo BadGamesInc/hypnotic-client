@@ -66,7 +66,7 @@ public class ClickGUI extends GuiScreen {
         if (Button.settingsWindow == null) {
         this.prepareScissorBox(left, top, right, bottom);
         GL11.glEnable(3089);
-        boolean uglyAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Fade in (ugly)");
+        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.mode.getSelected().equalsIgnoreCase("Fade in (ugly)");
         RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, uglyAnimation ? (int) fadeIn : 255));
         RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60, uglyAnimation ? (int) fadeIn : 255));
         for(CategoryButton button : buttons){
@@ -87,7 +87,7 @@ public class ClickGUI extends GuiScreen {
 	
 	        }
         }
-        if(!Hypnotic.instance.setmgr.getSettingByName("Rainbow GUI").getValBoolean()) 
+        if(!Hypnotic.instance.moduleManager.clickGui.rainbowGUI.isEnabled()) 
         {
         	this.color = ColorUtil.getClickGUIColor().getRGB();
         }
@@ -175,8 +175,8 @@ public class ClickGUI extends GuiScreen {
     public void prepareScissorBox(final float x, final float y, final float x2, final float y2) {
         final ScaledResolution scale = new ScaledResolution(this.mc);
         final int factor = scale.getScaleFactor();
-        boolean uglyAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Fade in (ugly)");
-        boolean slideAnimation = Hypnotic.instance.setmgr.getSettingByName("Animation").getValString().equalsIgnoreCase("Slide");
+        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.mode.getSelected().equalsIgnoreCase("Fade in (ugly)");
+        boolean slideAnimation = Hypnotic.instance.moduleManager.clickGui.mode.getSelected().equalsIgnoreCase("Slide");
         if (uglyAnimation) {
         	if (fadeIn < 255)
 		        fadeIn += 5;

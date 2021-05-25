@@ -26,7 +26,7 @@ public class Save extends Command {
 
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
-			Hypnotic.instance.saveload.save();
+			Hypnotic.instance.cfgManager.saveAll();;
 			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Successfully Saved", (int) 5, NotificationType.INFO));
   	}
 }

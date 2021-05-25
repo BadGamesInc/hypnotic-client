@@ -27,6 +27,8 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.movement.Speed;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.RotationUtils;
 import net.minecraft.client.Minecraft;
@@ -34,12 +36,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
 public class TargetStrafe extends Mod {
-    public static Setting radius;
-    public static Setting spacebar;
+    public static NumberSetting radius = new NumberSetting("Radius", 3, 0.5, 5, 0.1);
+    public static BooleanSetting spacebar = new BooleanSetting("Spacebar", false);
     public TargetStrafe(){
         super("TargetStrafe", Keyboard.KEY_NONE, Category.MOVEMENT, "Strafe around targets");
-        Hypnotic.instance.setmgr.rSetting(radius = new Setting("Radius", this, 3, 0.5, 5, false));
-        Hypnotic.instance.setmgr.rSetting(spacebar = new Setting("SpaceBar", this, false));
+        addSettings(radius, spacebar);
     }
 
     @EventTarget
@@ -48,14 +49,14 @@ public class TargetStrafe extends Mod {
             EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(KillAura.class).target;
             glColor3f(rainbow(100).getRed(), rainbow(100).getGreen(), rainbow(100).getRed());
 
-            drawCircle(target, event.getPartialTicks(), radius.getValDouble(), 0.1);
+            drawCircle(target, event.getPartialTicks(), radius.getValue(), 0.1);
         }
     }
 
     public static void strafe(EventMotion event, double moveSpeed, EntityLivingBase target,  boolean direction) {
         double direction1 = direction ? 1 : -1;
         float[] rotations = RotationUtils.getRotations(target);
-        if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValDouble()) {
+        if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValue()) {
             MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 0.0D);
         } else {
             MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 1.0D);
@@ -66,7 +67,7 @@ public class TargetStrafe extends Mod {
     public static void strafe(EventMotionUpdate event, double moveSpeed, EntityLivingBase target, boolean direction) {
         double direction1 = direction ? 1 : -1;
         float[] rotations = RotationUtils.getRotations(target);
-        if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValDouble()) {
+        if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValue()) {
             MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 0.0D);
         } else {
             MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 1.0D);
@@ -74,7 +75,7 @@ public class TargetStrafe extends Mod {
 
     }
     public static boolean canStrafe(){
-        return spacebar.getValBoolean() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed : Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
+        return spacebar.isEnabled() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed : Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
     }
 
     private void drawCircle(Entity entity, float partialTicks, double rad, double height) {

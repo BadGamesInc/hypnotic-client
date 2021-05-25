@@ -2,6 +2,9 @@ package badgamesinc.hypnotic.gui.newerclickgui.button.settings;
 
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import net.minecraft.client.Minecraft;
 
 public class Component {

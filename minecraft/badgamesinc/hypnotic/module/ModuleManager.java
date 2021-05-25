@@ -37,86 +37,171 @@ public class ModuleManager {
 		return null;
 	}	
 	
-	public ModuleManager() {
-		//ClickGUI
-		modules.add(new ClickGuiMod());
-		
-		//Movement
-		modules.add(new Flight());
-		modules.add(new Sprint());
-		modules.add(new LadderLauncher());
-		modules.add(new Fast());
-		modules.add(new Speed());
-		modules.add(new AirJump());
-		modules.add(new Spider());
-		modules.add(new InventoryMove());
-		modules.add(new Phase());
-		modules.add(new Longjump());
-		modules.add(new Step());
-		
+	//Movement
+	public ClickGuiMod clickGui = new ClickGuiMod();
+	public Flight flight = new Flight();
+	public Sprint sprint = new Sprint();
+	public LadderLauncher ladderLauncher = new LadderLauncher();
+	public Fast fast = new Fast();
+	public Speed speed = new Speed();
+	public AirJump airJump = new AirJump();
+	public Spider spider = new Spider();
+	public InventoryMove invMove = new InventoryMove();
+	public Phase phase = new Phase();
+	public Longjump longjump = new Longjump();
+	public Step step = new Step();
+	public TargetStrafe targetStrafe = new TargetStrafe();
+	
+	//Render
+	public Fullbright fb = new Fullbright();
+	public BlockAnimations ba = new BlockAnimations();
+	public ItemCustomization itemCustom = new ItemCustomization();
+	public TargetHUD targetHud = new TargetHUD();
+	public ESP esp = new ESP();
+	public Cape cape = new Cape();
+	public Chams chams = new Chams();
+	public NameTags nameTags = new NameTags();
+	public ItemPhysics itemPhys = new ItemPhysics();
+	public NoRender noRender = new NoRender();
+	
+	//Player
+	public NoFall noFall = new NoFall();
+	public Jesus jesus = new Jesus();
+	public NoSlow noSlow = new NoSlow();
+	public InventoryManager invManag = new InventoryManager();
+	public AutoArmor autoArmor = new AutoArmor();
+	public SafeWalk safeWalk = new SafeWalk();
+	public Scaffold scaffold = new Scaffold();
+	
+	//Combat
+	public KillAura ka = new KillAura();
+	public Velocity vel = new Velocity();
+	public Reach reach = new Reach();
+	public AutoPot autoPot = new AutoPot();
+	public AutoGapple autoGap = new AutoGapple();
+	public AntiBot antiBot = new AntiBot();
+	public Criticals crits = new Criticals();
+	
+	//Misc
+	public ChatSpammer chatSpammer = new ChatSpammer();
+	public PizzaHutWY phWY = new PizzaHutWY();
+	public RetardDetector retard = new RetardDetector();
+	public Disabler disabler = new Disabler();
+	public PCPinger pcpinger = new PCPinger();
+	public ChestStealer stealer = new ChestStealer();
+	public FastEat fastEat = new FastEat();
+	public AutoL l = new AutoL();
+	public AutoConfig autoCfg = new AutoConfig();
+	public KillSults killSults = new KillSults();
+	public PingSpoof pingSpoof = new PingSpoof();
+	
+	//World
+	public FastBreak klsdfjlsk = new FastBreak();
+	public FastPlace lksf = new FastPlace();
+	public Timer timer = new Timer();
+	public Nuker nuker = new Nuker();
+	public BedNuker bedNuker = new BedNuker();
+	
+	//GUI
+	public ArrayListModule arrayMod = new ArrayListModule();
+	public InfoHud infoHud = new InfoHud();
+	public Logo logo = new Logo();
+	public CustomHotbar custHb = new CustomHotbar();
+	
+	
+ 	private void movement() {
+		modules.add(flight);
+		modules.add(sprint);
+		modules.add(ladderLauncher);
+		modules.add(fast);
+		modules.add(speed);
+		modules.add(airJump);
+		modules.add(spider);
+		modules.add(invMove);
+		modules.add(phase);
+		modules.add(longjump);
+		modules.add(step);
+		modules.add(targetStrafe);
+	}
+	
+	private void render() {
 		//Render
-		modules.add(new Fullbright());
-		modules.add(new BlockAnimations());
-		modules.add(new ItemCustomization());
-		modules.add(new TargetHUD());
-		modules.add(new ESP());
-		modules.add(new Cape());
-		modules.add(new Chams());
-		modules.add(new NameTags());
-		modules.add(new ItemPhysics());
+		modules.add(fb);
+		modules.add(ba);
+		modules.add(itemCustom);
+		modules.add(targetHud);
+		modules.add(esp);
+		modules.add(cape);
+		modules.add(chams);
+		modules.add(nameTags);
+		modules.add(itemPhys);
 		//TODO: Fix these
 		//modules.add(new Tracers());
-		modules.add(new NoRender());
-		
-		//Player
-		modules.add(new NoFall());
-		modules.add(new Jesus());
-		modules.add(new NoSlow());
-		modules.add(new InventoryManager());
-		modules.add(new AutoArmor());
-		modules.add(new SafeWalk());
-		modules.add(new Scaffold());
-		
-		//Combat
-		modules.add(new KillAura());
-		modules.add(new Velocity());
-		modules.add(new Reach());
-		modules.add(new AutoPot());
-		modules.add(new AutoGapple());
-		modules.add(new TargetStrafe());
-		modules.add(new AntiBot());
+		modules.add(noRender);		
+	}
+	
+	private void player() {
+		modules.add(noFall);
+		modules.add(jesus);
+		modules.add(noSlow);
+		modules.add(invManag);
+		modules.add(autoArmor);
+		modules.add(safeWalk);
+		modules.add(scaffold);
+	}
+	
+	private void combat() {
+		modules.add(ka);
+		modules.add(vel);
+		modules.add(reach);
+		modules.add(autoPot);
+		modules.add(autoGap);
+		modules.add(antiBot);
 		//TODO: Fix these
 		//modules.add(new BowAimbot());
-		modules.add(new Criticals());
+		modules.add(crits);
+	}
+	
+	private void misc() {
+		modules.add(chatSpammer);
+		modules.add(phWY);
+		modules.add(retard);
+		modules.add(disabler);
+		modules.add(pcpinger);
+		modules.add(stealer);
+		modules.add(fastEat);
+		modules.add(l);
+		modules.add(autoCfg);
+		modules.add(killSults);
+		modules.add(pingSpoof);
+	}
+	
+	private void world() {
+		modules.add(klsdfjlsk);
+		modules.add(lksf);
+		modules.add(timer);
+		modules.add(nuker);
+		modules.add(bedNuker);
+	}
+	
+	private void gui() {
+		modules.add(arrayMod);
+		modules.add(infoHud);
+		modules.add(logo);
+		modules.add(custHb);
+	}
+	public ModuleManager() {
+		//ClickGUI
+		modules.add(clickGui);
 		
-		//Misc
-		modules.add(new ChatSpammer());
-		modules.add(new PizzaHutWY());
-		modules.add(new RetardDetector());
-		modules.add(new Disabler());
-		modules.add(new PCPinger());
-		modules.add(new ChestStealer());
-		modules.add(new FastEat());
-		modules.add(new AutoL());
-		modules.add(new AutoSave());
-		modules.add(new AutoConfig());
-		modules.add(new KillSults());
-		modules.add(new PingSpoof());
-		modules.add(new AutoCaptcha());
-
-		//World
-		modules.add(new FastBreak());
-		modules.add(new FastPlace());
-		modules.add(new Timer());
-		modules.add(new Nuker());
-		modules.add(new BedNuker());
-		
-		//GUI
-		modules.add(new ArrayListModule());
-		modules.add(new InfoHud());
-		modules.add(new Logo());
-		modules.add(new CustomHotbar());
-		
+		//Other junk
+		movement();
+		render();
+		player();
+		combat();
+		misc();
+		world();
+		gui();
 	}
 	
 	public CopyOnWriteArrayList<Mod> getModules() {

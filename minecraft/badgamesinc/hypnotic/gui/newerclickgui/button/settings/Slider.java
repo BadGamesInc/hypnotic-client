@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -21,31 +22,32 @@ public class Slider extends Component{
 
     @Override
     public void draw(int mouseX, int mouseY) {
+    	NumberSetting numSet = (NumberSetting)set;
         int height = 20;
         int width = 100;
         double progress;
         if (this.isSliding) {
             progress = (double)mouseX;
             double mouseProgress = (progress - (double)this.x) / (double)width;
-            this.set.setValDouble((this.set.getMax() - this.set.getMin()) * mouseProgress);
+            numSet.setValue((numSet.getMax() - numSet.getMin()) * mouseProgress);
         }
 
-        if (this.set.getValDouble() <= this.set.getMin()) {
-            this.set.setValDouble(this.set.getMin());
+        if (numSet.getValue() <= numSet.getMin()) {
+            numSet.setValue(numSet.getMin());
         }
 
-        if (this.set.getValDouble() >= this.set.getMax()) {
-            this.set.setValDouble(this.set.getMax());
+        if (numSet.getValue() >= numSet.getMax()) {
+            numSet.setValue(numSet.getMax());
         }
 
-        progress = this.set.getValDouble() / this.set.getMax();
+        progress = numSet.getValue() / numSet.getMax();
         Gui.drawRect(x, y + height / 2 - 1, x + width, y + height / 2 + 1, new Color(150, 150, 150, 255).getRGB());
         Gui.drawRect(x, y + height / 2 - 1, (this.x + (double)width * progress), y + height / 2 + 1, isWithinComponent(mouseX, mouseY) ? ClickGUI.color : ClickGUI.color);
         RenderUtils.drawFilledCircle((int) (this.x + (double)width * progress)    , y + height / 2, 3, isWithinComponent(mouseX, mouseY) ? ClickGUI.color : ClickGUI.color);
         if (mc.gameSettings.guiScale <= 2)
-        	fontRenderer.drawString(this.set.getName() + " : " + (this.set.onlyInt() ? (double)((int)this.set.getValDouble()) : (double)Math.round(this.set.getValDouble() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
+        	fontRenderer.drawString(numSet.name + " : " + ((double)Math.round(numSet.getValue() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
         else
-        	smallFontRenderer.drawString(this.set.getName() + " : " + (this.set.onlyInt() ? (double)((int)this.set.getValDouble()) : (double)Math.round(this.set.getValDouble() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
+        	smallFontRenderer.drawString(numSet.name + " : " + ((double)Math.round(numSet.getValue() * 1000.0D) / 1000.0D), x + width + 5, y + 1, -1, true);
 
         
         super.draw(mouseX, mouseY);

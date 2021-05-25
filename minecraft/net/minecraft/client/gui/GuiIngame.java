@@ -140,7 +140,7 @@ public class GuiIngame extends Gui
         if (this.mc.gameSettings.thirdPersonView == 0 && itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.pumpkin))
         {
         	if (Hypnotic.instance.moduleManager.getModule(NoRender.class).isEnabled()) {
-        		if (!Hypnotic.instance.setmgr.getSettingByName("No Pumpkin Overlay").getValBoolean()) {
+        		if (!Hypnotic.instance.moduleManager.noRender.noPumpkin.isEnabled()) {
         			this.renderPumpkinOverlay(scaledresolution);
         		}
         	} else

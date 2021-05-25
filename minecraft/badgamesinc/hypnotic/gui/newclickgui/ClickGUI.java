@@ -8,7 +8,6 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newclickgui.button.Button;
 import badgamesinc.hypnotic.gui.newclickgui.settingwindow.SettingsWindow;
 import badgamesinc.hypnotic.module.Category;
-import badgamesinc.hypnotic.settings.SettingsManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -19,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 public class ClickGUI extends GuiScreen {
 
 	public static ClickGUI instance = new ClickGUI();
-	public SettingsManager setmgr;
 	public Button but = null;
 	public SettingsWindow setWin = null;
 	public ArrayList<Frame> frames;
@@ -29,7 +27,6 @@ public class ClickGUI extends GuiScreen {
 	public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 60, false, false, false);
 	
 	public ClickGUI() {
-		setmgr = Hypnotic.instance.setmgr;
 		frames = new ArrayList<>();
 		buttons = new ArrayList<>();
 		this.xWidth = 20;

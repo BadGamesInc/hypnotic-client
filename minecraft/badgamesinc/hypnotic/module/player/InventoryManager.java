@@ -6,6 +6,8 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.TimeHelper;
 import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.block.Block;
@@ -27,23 +29,21 @@ import net.minecraft.util.EnumFacing;
 
 public class InventoryManager extends Mod{
 
-private TimeHelper timer = new TimeHelper();
+	private TimeHelper timer = new TimeHelper();
     
+	public NumberSetting cleanDelay = new NumberSetting("Delay", 20, 0, 1000, 1);
+	public NumberSetting slot = new NumberSetting("Sword Slot", 1, 1, 9, 1);
+	public BooleanSetting cleanItems = new BooleanSetting("Clean", true);
+	public BooleanSetting cleanBad = new BooleanSetting("Clean Bad Items", true);
+	
     public InventoryManager() {
         super("InvManager", 0, Category.PLAYER, "Manage your inventory");
-    }
-    
-    @Override
-    public void setup() {
-        Hypnotic.instance.setmgr.rSetting(new Setting("Delay", this, 200.0, 20.0, 1000.0, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("SwordSlot", this, 1.0, 1.0, 9.0, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("Clean", this, true));
-        Hypnotic.instance.setmgr.rSetting(new Setting("CleanBadItems", this, true));
+        addSettings(cleanDelay, slot, cleanItems, cleanBad);
     }
     
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
-        double delay = Math.max(20, Hypnotic.instance.setmgr.getSettingByName("Delay").getValDouble() + ThreadLocalRandom.current().nextDouble(-20, 20));
+        double delay = Math.max(20, cleanDelay.getValue() + ThreadLocalRandom.current().nextDouble(-20, 20));
         if (mc.currentScreen != null) {
             timer.reset();
             return;
@@ -57,7 +57,7 @@ private TimeHelper timer = new TimeHelper();
             for (int k = 0; k < mc.thePlayer.inventory.mainInventory.length; k++) {
                 ItemStack is = mc.thePlayer.inventory.mainInventory[k];
                 if (is != null && !(is.getItem() instanceof ItemArmor)) {
-                    boolean clean = Hypnotic.instance.setmgr.getSettingByName("Clean").getValBoolean();
+                    boolean clean = cleanItems.isEnabled();
                     if (clean) {
                         if (is.getItem() instanceof ItemSword) {
                             if (bestSword != -1 && bestSword != k) {
@@ -90,7 +90,7 @@ private TimeHelper timer = new TimeHelper();
                             }
                         }
                     }
-                    int swordSlot = (int) (Hypnotic.instance.setmgr.getSettingByName("SwordSlot").getValDouble() - 1);
+                    int swordSlot = (int) slot.getValue() - 1;
                     if (bestSword != -1 && bestSword != swordSlot) {
                         for (int i = 0; i < mc.thePlayer.inventoryContainer.inventorySlots.size(); i++) {
                             Slot s = mc.thePlayer.inventoryContainer.inventorySlots.get(i);
@@ -101,7 +101,7 @@ private TimeHelper timer = new TimeHelper();
                             }
                         }
                     }
-                    if (Hypnotic.instance.setmgr.getSettingByName("CleanBadItems").getValBoolean() && this.isBad(is.getItem())) {
+                    if (cleanBad.isEnabled() && this.isBad(is.getItem())) {
                         this.drop(k, is);
                         timer.reset();
                         return;

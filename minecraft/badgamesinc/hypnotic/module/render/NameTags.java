@@ -9,6 +9,8 @@ import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
+import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -19,16 +21,14 @@ import net.minecraft.item.ItemStack;
 
 public class NameTags extends Mod {
 
-	public Setting scale;
-	public Setting armor;
-	public Setting healthbar;
-	public Setting background;
+	public NumberSetting scale = new NumberSetting("Scale", 15, 3, 15, 0.1);
+	public BooleanSetting armor = new BooleanSetting("Armor", true);
+	public BooleanSetting healthbar = new BooleanSetting("Healthbar", true);
+	public BooleanSetting background = new BooleanSetting("Background", true);
+	
     public NameTags(){
         super("NameTags", Keyboard.KEY_NONE, Category.RENDER, "Renders a custom nametag above players");
-        Hypnotic.instance.setmgr.rSetting(scale = new Setting("Scale", this, 15, 3, 15, false));
-        Hypnotic.instance.setmgr.rSetting(armor = new Setting("Armor", this, true));
-        Hypnotic.instance.setmgr.rSetting(healthbar = new Setting("Healthbar", this, true));
-        Hypnotic.instance.setmgr.rSetting(background = new Setting("Background", this, true));
+        addSettings(scale, armor, healthbar, background);
     }
 
     public static void renderItem(ItemStack stack, int x, int y) {
@@ -40,7 +40,6 @@ public class NameTags extends Mod {
         GlStateManager.scale(1.0f, 1.0f, 0.01f);
         GlStateManager.enableDepth();
         Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(stack, x, y + 8);
-        //mc.getRenderItem().renderItemOverlayIntoGUINameTags(mc.fontRendererObj, stack, x - 1, y + 10, null);
         Minecraft.getMinecraft().getRenderItem().zLevel = 0.0f;
         GlStateManager.scale(1.0f, 1.0f, 1.0f);
         RenderHelper.disableStandardItemLighting();
@@ -50,7 +49,6 @@ public class NameTags extends Mod {
         GlStateManager.disableLighting();
         GlStateManager.scale(0.5, 0.5, 0.5);
         GlStateManager.disableDepth();
-        //NameTags.renderEnchantText(stack, x, y);
         GlStateManager.enableDepth();
         GlStateManager.scale(2.0f, 2.0f, 2.0f);
         GL11.glPopMatrix();
@@ -69,7 +67,6 @@ public class NameTags extends Mod {
             double x = entity1.lastTickPosX + (entity1.posX - entity1.lastTickPosX) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosX;
             double y = entity1.lastTickPosY + (entity1.posY - entity1.lastTickPosY) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosY;
             double z = entity1.lastTickPosZ + (entity1.posZ - entity1.lastTickPosZ) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosZ;
-            //float distance = mc.thePlayer.getDistanceToEntity(entity);
 
 
             GL11.glTranslated(x, y + entity1.getEyeHeight() + 1.7, z);
@@ -89,7 +86,7 @@ public class NameTags extends Mod {
             float scaleFactor = (float) (distance <= maxDist ? maxDist * scaleConst_2 : (double) (distance * scaleConst_2));
             scaleConst_1 *= scaleFactor;
 
-            float scaleBet = (float) (scale.getValDouble() * 15E-3);
+            float scaleBet = (float) (scale.getValue() * 15E-3);
             scaleConst_1 = Math.min(scaleBet, scaleConst_1);
 
 
@@ -114,10 +111,10 @@ public class NameTags extends Mod {
             Gui.drawRect(-namewidth / 2 - 2, 42, namewidth / 2 + 2, 40, 0x90080808);
 
 
-            if (healthbar.getValBoolean())
+            if (healthbar.isEnabled())
                 Gui.drawRect(-namewidth / 2 - 15, 42, namewidth / 2 + 15 - (1 - (entity1.getHealth() / entity1.getMaxHealth())) * (namewidth + 4), 40, colorrectCode);
 
-            if (background.getValBoolean())
+            if (background.isEnabled())
                 Gui.drawRect(-namewidth / 2 - 15, 20, namewidth / 2 + 15, 40, 0x90202020);
             
             fontRenderer.drawString(entity1.getName() + (isDeveloper ? ColorUtils.purple + "  DEV" : ""), -namewidth / 2 - 15 + 4, 23, -1, true);
@@ -141,7 +138,7 @@ public class NameTags extends Mod {
                 movingArmor = 1.1;
             }
 
-            if (armor.getValBoolean()) {
+            if (armor.isEnabled()) {
                 for (int index = 0; index < 5; index++) {
 
                     if (entity1.getEquipmentInSlot(index) == null)

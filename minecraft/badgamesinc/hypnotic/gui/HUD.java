@@ -126,13 +126,13 @@ public class HUD {
 			return;
 		}
 		
-		if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Text")) {
-			if (Hypnotic.instance.setmgr.getSettingByName("Logo Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
+		if (Hypnotic.instance.moduleManager.logo.mode.getSelected().equalsIgnoreCase("Text")) {
+			if (Hypnotic.instance.moduleManager.logo.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
 				fontRenderer3.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
-			} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Font").getValString().equalsIgnoreCase("Minecraft")) {
+			} else if (Hypnotic.instance.moduleManager.logo.font.getSelected().equalsIgnoreCase("Minecraft")) {
 				fr.drawString("H" + ColorUtils.white + "ypnotic-" + Hypnotic.clientVersion + ColorUtils.reset, 4, 4, ColorUtils.rainbow(4.0f, 0.5f, 1f), true);
 			}
-		} else if (Hypnotic.instance.setmgr.getSettingByName("Logo Mode").getValString().equalsIgnoreCase("Image")) {
+		} else if (Hypnotic.instance.moduleManager.logo.mode.getSelected().equalsIgnoreCase("Image")) {
 			mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/white.png"));
 			Gui.drawModalRectWithCustomSizedTexture(4, 4, 60, 15, 60, 15, 60, 15);
 		}
@@ -149,16 +149,14 @@ public class HUD {
 		CopyOnWriteArrayList<Mod> modules = Hypnotic.instance.moduleManager.getEnabledModules();
 
         int count = 0;
-        if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Roboto-Regular")) {
+        if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
         	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
             for (Mod m : modules) {
-            	if(Hypnotic.instance.setmgr != null && Hypnotic.instance.setmgr.getSettingByName("Rainbow") != null) {
-        			if(Hypnotic.instance.setmgr.getSettingByName("Rainbow").getValBoolean()) {
+        			if(Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
         				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
         			} else {
         				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
         			}
-        		}
                 float diff = m.mSize - m.lastSize;
                 m.lastSize += diff / 4;
                 if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
@@ -174,16 +172,14 @@ public class HUD {
                 }
 
             }
-        } else if (Hypnotic.instance.setmgr.getSettingByName("ArrayList Font").getValString().equalsIgnoreCase("Minecraft")) {
+        } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
         	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
         	for (Mod m : modules) {
-            	if(Hypnotic.instance.setmgr != null && Hypnotic.instance.setmgr.getSettingByName("Rainbow") != null) {
-        			if(Hypnotic.instance.setmgr.getSettingByName("Rainbow").getValBoolean()) {
+        			if (Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
         				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
         			} else {
         				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
         			}
-        		}
                 float diff = m.mSize - m.lastSize;
                 m.lastSize += diff / 4;
                 if (m.lastSize != m.fr.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
@@ -210,7 +206,7 @@ public class HUD {
 		
 		
 		if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {		
-			if (Hypnotic.instance.setmgr.getSettingByName("TargetHUD Design").getValString().equalsIgnoreCase("New")) {
+			if (Hypnotic.instance.moduleManager.targetHud.targetHudLook.getSelected().equalsIgnoreCase("New")) {
 				if (Hypnotic.instance.moduleManager.getModule(TargetHUD.class).isEnabled()) {
 		            if (KillAura.target instanceof EntityPlayer || KillAura.target instanceof EntityOtherPlayerMP) {
 		                float width = (float) ((scaledResolution.getScaledWidth() / 2) + 100);
@@ -264,7 +260,7 @@ public class HUD {
 		                drawEntityOnScreen((int) width + 60, (int) height + 80, 20, player.rotationYaw, player.rotationPitch, player);
 		            }
 		        }
-			} else if (Hypnotic.instance.setmgr.getSettingByName("TargetHUD Design").getValString().equalsIgnoreCase("Astolfo")) {
+			} else if (Hypnotic.instance.moduleManager.targetHud.targetHudLook.getSelected().equalsIgnoreCase("Astolfo")) {
 				Color temp = ColorUtil.getClickGUIColor().darker();
 				FontRenderer fr = mc.fontRendererObj;
 				ScaledResolution sr = new ScaledResolution(mc);		
