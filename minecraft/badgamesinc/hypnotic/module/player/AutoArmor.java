@@ -7,28 +7,23 @@ import net.minecraft.item.ItemStack;
 
 public class AutoArmor extends Mod {
 
+	private int[] chestplate;
+	private int[] leggings;
+	private int[] boots;
+	private int[] helmet;
+	private int delay;
+	private boolean best;
+	 
 	public AutoArmor() {
 		super("AutoArmor", 0, Category.PLAYER, "Automatically equips armor for you");
+		this.chestplate = new int[] { 311, 307, 315, 303, 299 };
+        this.leggings = new int[] { 312, 308, 316, 304, 300 };
+        this.boots = new int[] { 313, 309, 317, 305, 301 };
+        this.helmet = new int[] { 310, 306, 314, 302, 298 };
+        this.delay = 0;
+        this.best = true;
 	}
-	
-	 private int[] chestplate;
-	    private int[] leggings;
-	    private int[] boots;
-	    private int[] helmet;
-	    private int delay;
-	    private boolean best;
-	    
-	    
-	    @Override
-	    public void setup() {
-	        this.chestplate = new int[] { 311, 307, 315, 303, 299 };
-	        this.leggings = new int[] { 312, 308, 316, 304, 300 };
-	        this.boots = new int[] { 313, 309, 317, 305, 301 };
-	        this.helmet = new int[] { 310, 306, 314, 302, 298 };
-	        this.delay = 0;
-	        this.best = true;
-	    }
-	    
+	  
 	    public void onUpdate() {
 	        this.autoArmor();
 	        this.betterArmor();

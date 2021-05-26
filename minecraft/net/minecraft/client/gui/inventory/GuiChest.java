@@ -77,24 +77,6 @@ public class GuiChest extends GuiContainer
                 }
             }).start();
         }
-        if (Hypnotic.instance.moduleManager.getModuleByName("AutoCaptcha").isEnabled()) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        for (int i = 0; i < GuiChest.this.inventoryRows * 9; ++i) {
-                            final Slot slot = GuiChest.this.inventorySlots.inventorySlots.get(i);
-                            if (slot.getStack().getDisplayName().contains("Clique aqui")) {
-                                GuiChest.this.handleMouseClick(slot, slot.slotNumber, 0, 1);
-                                GuiChest.this.handleMouseClick(slot, slot.slotNumber, 0, 6);
-                            }
-                        }
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
+
     }
 }

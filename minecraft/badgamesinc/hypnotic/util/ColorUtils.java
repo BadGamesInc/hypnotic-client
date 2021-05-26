@@ -34,14 +34,13 @@ public class ColorUtils {
 		return color;
 	}
 	
-	public static Color fade(int index, int speed, float saturation, float brightness, float opacity) {
-        int angle = (int) ((System.currentTimeMillis() / speed + index) % 360);
-        angle = (angle > 180 ? 360 - angle : angle) + 180;
-        float hue = angle / 360f;
-
-        int color = Color.HSBtoRGB(brightness, saturation, hue);
-        Color obj = new Color(color);
-        return new Color(obj.getRed(), obj.getGreen(), obj.getBlue(), Math.max(0, Math.min(255, (int) (opacity * 255))));
-    }
+	public static Color fade(Color color, int index, int count) {
+	      float[] hsb = new float[3];
+	      Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsb);
+	      float brightness = Math.abs(((float)(System.currentTimeMillis() % 2000L) / 1000.0F + (float)index / (float)count * 2.0F) % 2.0F - 1.0F);
+	      brightness = 0.5F + 0.5F * brightness;
+	      hsb[2] = brightness % 2.0F;
+	      return new Color(Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]));
+	 }
 		
 }

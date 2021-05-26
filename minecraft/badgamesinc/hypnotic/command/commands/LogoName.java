@@ -30,7 +30,7 @@ public class LogoName extends Command {
 			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
 		}
 		
-		String name = Character.toUpperCase(args[0].charAt(0)) + ColorUtils.white + args[0].toLowerCase().substring(1);
+		String name = Character.toString(args[0].charAt(0)) + ColorUtils.white + args[0].substring(1);
 		Hypnotic.instance.hud.logoName = name;
 		
 	}

@@ -171,7 +171,7 @@ public class ModuleManager {
 		modules.add(stealer);
 		modules.add(fastEat);
 		modules.add(l);
-		modules.add(autoCfg);
+		//modules.add(autoCfg);
 		modules.add(killSults);
 		modules.add(pingSpoof);
 	}

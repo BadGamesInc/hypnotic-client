@@ -15,6 +15,7 @@ import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.gui.ArrayListModule;
 import badgamesinc.hypnotic.module.gui.Logo;
 import badgamesinc.hypnotic.module.render.TargetHUD;
 import badgamesinc.hypnotic.util.ColorUtil;
@@ -39,7 +40,7 @@ import net.minecraft.world.WorldProviderHell;
 
 public class HUD {
 
-	public String logoName = Character.toUpperCase(Hypnotic.clientName.toLowerCase().charAt(0)) + ColorUtils.white + Hypnotic.clientName.toLowerCase().substring(1);
+	public String logoName = Character.toString(Hypnotic.clientName.charAt(0)) + ColorUtils.white + Hypnotic.clientName.substring(1);
 	public Minecraft mc = Minecraft.getMinecraft();
 	public FontRenderer fr = mc.fontRendererObj;
 	public ScaledResolution sr = new ScaledResolution(mc);
@@ -159,14 +160,19 @@ public class HUD {
 		CopyOnWriteArrayList<Mod> modules = Hypnotic.instance.moduleManager.getEnabledModules();
 
         int count = 0;
+        if (!Hypnotic.instance.moduleManager.getModule(ArrayListModule.class).isEnabled()) {
+        	return;
+        }
         if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Boxed")) {
 	        if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
 	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
 	            for (Mod m : modules) {
-	        			if(Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+	            	if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
 	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
-	        			} else {
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
 	        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
+	        				color = ColorUtils.fade(new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255), count / 2, 4).getRGB();
 	        			}
 	                float diff = m.mSize - m.lastSize;
 	                m.lastSize += diff / 4;
@@ -186,10 +192,12 @@ public class HUD {
 	        } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
 	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
 	        	for (Mod m : modules) {
-	        			if (Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+	        		if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
 	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
-	        			} else {
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
 	        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
+	        				color = ColorUtils.fade(new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255), count / 2, 4).getRGB();
 	        			}
 	                float diff = m.mSize - m.lastSize;
 	                m.lastSize += diff / 4;
@@ -213,11 +221,13 @@ public class HUD {
         	if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
             	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
                 for (Mod m : modules) {
-            			if(Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+                	if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
             				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
-            			} else {
+            			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
             				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
-            			}
+            			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
+	        				color = ColorUtils.fade(new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255), count / 2, 4).getRGB();
+	        			}
                     float diff = m.mSize - m.lastSize;
                     m.lastSize += diff / 4;
                     if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
@@ -235,11 +245,13 @@ public class HUD {
             } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
             	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
             	for (Mod m : modules) {
-            			if (Hypnotic.instance.moduleManager.arrayMod.rainbow.isEnabled()) {
+            			if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
             				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
-            			} else {
+            			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
             				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
-            			}
+            			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
+	        				color = ColorUtils.fade(new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255), count / 2, 4).getRGB();
+	        			}
                     float diff = m.mSize - m.lastSize;
                     m.lastSize += diff / 4;
                     if (m.lastSize != m.fr.getStringWidth(m.getDisplayName()) || m.isEnabled()) {

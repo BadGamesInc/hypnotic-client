@@ -9,11 +9,11 @@ public class ArrayListModule extends Mod{
 
 	public ModeSetting style = new ModeSetting("Style", "Boxed", "Boxed", "Clean");
 	public ModeSetting font = new ModeSetting("Font", "Roboto-Regular", "Roboto-Regular", "Minecraft");
-	public BooleanSetting rainbow = new BooleanSetting("Rainbow", true);
+	public ModeSetting colorMode = new ModeSetting("Color Mode", "Rainbow", "Rainbow", "Static", "Color Wave");
 	
 	public ArrayListModule() {
 		super("Array List", 0, Category.GUI, "Customize the array list");
-		addSettings(style, font, rainbow);
+		addSettings(style, font, colorMode);
 		setEnabled(true);
 	}
 
