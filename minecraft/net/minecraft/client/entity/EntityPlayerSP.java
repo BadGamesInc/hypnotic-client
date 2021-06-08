@@ -7,7 +7,7 @@ import badgamesinc.hypnotic.event.events.EventLastDistance;
 import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.Killaura;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.player.NoSlow;
 import badgamesinc.hypnotic.util.MoveUtils;
 import net.minecraft.client.Minecraft;
