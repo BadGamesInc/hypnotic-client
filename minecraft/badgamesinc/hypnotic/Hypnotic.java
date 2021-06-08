@@ -113,7 +113,7 @@ public class Hypnotic {
 			String name = resource.getResourcePath();
 			System.out.println("Cached " + name);
 		}
-		//Killaura.target = null;
+		//KillAura.target = null;
 		moduleManager.blink.setEnabled(false);
 	}
 	

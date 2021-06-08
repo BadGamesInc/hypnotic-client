@@ -19,7 +19,7 @@ import badgamesinc.hypnotic.command.commands.LogoName;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.Killaura;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.gui.ArrayListModule;
 import badgamesinc.hypnotic.module.gui.Logo;
 import badgamesinc.hypnotic.module.misc.PCPinger;
@@ -349,14 +349,14 @@ public class HUD {
 		TargetHUD targetHud = new TargetHUD();
 		
 		
-		if (Killaura.target != null && Hypnotic.instance.moduleManager.getModule(Killaura.class).isEnabled()) {		
+		if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {		
 			if (Hypnotic.instance.moduleManager.targetHud.targetHudLook.is("New")) {
 				if (Hypnotic.instance.moduleManager.getModule(TargetHUD.class).isEnabled()) {
-		            if (Killaura.target instanceof EntityPlayer || Killaura.target instanceof EntityOtherPlayerMP) {
+		            if (KillAura.target instanceof EntityPlayer || KillAura.target instanceof EntityOtherPlayerMP) {
 		                float width = (float) ((scaledResolution.getScaledWidth() / 2) + 100);
 		                float height = (float) (scaledResolution.getScaledHeight() / 2);
 		
-		                EntityPlayer player = (EntityPlayer) Killaura.target;
+		                EntityPlayer player = (EntityPlayer) KillAura.target;
 		                Gui.drawRect(width - 70, height + 30, width + 80, height + 105, new Color(0, 0, 0, 180).getRGB());
 		                fontRenderer.drawString(player.getName(), width - 65, height + 35, 0xFFFFFF, true);
 		                fontRenderer2.drawString(player.onGround ? "On Ground" : "Off Ground", width - 65, height + 50, 0xFFFFFF, true);
@@ -408,7 +408,7 @@ public class HUD {
 				Color temp = ColorUtil.getClickGUIColor().darker();
 				FontRenderer fr = mc.fontRendererObj;
 				ScaledResolution sr = new ScaledResolution(mc);		
-				EntityLivingBase target = Killaura.target;
+				EntityLivingBase target = KillAura.target;
 				
 				int healthBarColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 				
@@ -438,8 +438,8 @@ public class HUD {
 					}
 				
 			} else if (Hypnotic.instance.moduleManager.targetHud.targetHudLook.is("Compact")) {
-				if (Killaura.target instanceof EntityPlayer || Killaura.target instanceof EntityOtherPlayerMP) {
-					EntityLivingBase target = Killaura.target;
+				if (KillAura.target instanceof EntityPlayer || KillAura.target instanceof EntityOtherPlayerMP) {
+					EntityLivingBase target = KillAura.target;
 					float width = (float) ((scaledResolution.getScaledWidth() / 2) + 100);
 	                float height = (float) (scaledResolution.getScaledHeight() / 2);
 					RenderUtils.drawRoundedRect(width - 76, height + 29, width + 42.5f, height + 73, 2, new Color(50, 50, 50, 255));
@@ -458,11 +458,11 @@ public class HUD {
 	                Gui.drawRect(width - 34, height + 59, width + 70 * (targetHealthPercentage), height + 65, healthColor.getRGB());
 					Gui.drawRect(width - 34, height + 59, width + 70 * (healthPercentage), height + 65, 0xff00B911);
 					int outlineColor = Hypnotic.instance.moduleManager.arrayMod.colorMode.is("Rainbow") ? ColorUtils.rainbow(6, 0.5f, 0.5f) : ColorUtil.getClickGUIColor().getRGB();
-					if (mc.thePlayer == null || Killaura.target == null || mc.getNetHandler() == null || Killaura.target.getUniqueID() == null || mc.getNetHandler().getPlayerInfo(Killaura.target.getUniqueID()) == null || mc.getNetHandler().getPlayerInfo(Killaura.target.getUniqueID()).getLocationSkin() == null) {
+					if (mc.thePlayer == null || KillAura.target == null || mc.getNetHandler() == null || KillAura.target.getUniqueID() == null || mc.getNetHandler().getPlayerInfo(KillAura.target.getUniqueID()) == null || mc.getNetHandler().getPlayerInfo(KillAura.target.getUniqueID()).getLocationSkin() == null) {
 						
 					} else {
 						Gui.drawRect((int) width - 70 - 1, (int) height + 35 - 1, (int) width - 70 + 33, (int) height + 35 + 33, new Color(outlineColor).getRGB());
-						this.drawHead(Objects.requireNonNull(mc.getNetHandler()).getPlayerInfo(Killaura.target.getUniqueID()).getLocationSkin(), width - 70, height + 35);
+						this.drawHead(Objects.requireNonNull(mc.getNetHandler()).getPlayerInfo(KillAura.target.getUniqueID()).getLocationSkin(), width - 70, height + 35);
 					}
 				}
 			}

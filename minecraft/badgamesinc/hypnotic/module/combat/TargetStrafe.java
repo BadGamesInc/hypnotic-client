@@ -80,7 +80,7 @@ public class TargetStrafe extends Mod {
 
     }
     public static boolean canStrafe() {
-        return spacebar.isEnabled() ? Hypnotic.instance.moduleManager.getModule(Killaura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(Killaura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed : Hypnotic.instance.moduleManager.getModuleByName("Killaura").isEnabled() && Hypnotic.instance.moduleManager.getModule(Killaura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
+        return spacebar.isEnabled() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && Minecraft.getMinecraft().gameSettings.keyBindJump.pressed : Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
     }
 
     private void drawCircle(Entity entity, float partialTicks, double rad, double height) {

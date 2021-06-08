@@ -64,7 +64,7 @@ public class GuiConnecting extends GuiScreen
     	}
     	if (Hypnotic.instance.moduleManager.ka.isEnabled()) {
     		Hypnotic.instance.moduleManager.ka.toggle();
-    		NotificationManager.getNotificationManager().createNotification("Toggle", "Killaura was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
+    		NotificationManager.getNotificationManager().createNotification("Toggle", "KillAura was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
     	}
         logger.info("Connecting to " + ip + ", " + port);
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())

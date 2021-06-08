@@ -14,7 +14,7 @@ public class TargetHUD extends Mod {
 	public ModeSetting targetHudLook = new ModeSetting("Design", "New", "New", "Astolfo", "Compact");
 	
 	public TargetHUD() {
-		super("TargetHUD", 0, Category.RENDER, "Displays information about Killaura targets");
+		super("TargetHUD", 0, Category.RENDER, "Displays information about KillAura targets");
 		addSettings(targetHudLook);
 	}
 	

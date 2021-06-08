@@ -524,8 +524,8 @@ public class Speed extends Mod {
         timer.reset();;
         air = 0;
 
-        //Hypnotic.instance.moduleManager.getModule(Killaura.class).toggle();
-        //Hypnotic.instance.moduleManager.getModule(Killaura.class).toggle();
+        //Hypnotic.instance.moduleManager.getModule(KillAura.class).toggle();
+        //Hypnotic.instance.moduleManager.getModule(KillAura.class).toggle();
     }
     
     public static double motion = 0;

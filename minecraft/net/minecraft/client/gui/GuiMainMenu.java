@@ -354,7 +354,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         ArrayList<String> removals = new ArrayList();
         
         //additions
-        additions.add("Added AutoDisable to Killaura and Speed");
+        additions.add("Added AutoDisable to KillAura and Speed");
         additions.add("Added LowHop mode to speed");
         additions.add("Added NCP mode for step");   
         additions.add("Added 2D mode for ESP");
@@ -365,7 +365,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         additions.add("Added Wings");
         
         //changes
-        changes.add("Fixed Killaura rotations");
+        changes.add("Fixed KillAura rotations");
         changes.add("Fixed alt manager crashes");
         changes.add("Changed button animation");
         changes.add("Improved Notifications");
