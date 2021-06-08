@@ -60,7 +60,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldSettings;
 
-public class Killaura extends Mod {
+public class KillAura extends Mod {
 	
 	public ModeSetting mode = new ModeSetting("Rotation Mode", "Silent", "Silent", "Lock View", "None");
 	public NumberSetting apsDelay = new NumberSetting("APS", 10, 0, 20, 1);
@@ -85,8 +85,8 @@ public class Killaura extends Mod {
     private boolean others;
     public boolean blocking;
 
-    public Killaura() {
-        super("Killaura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
+    public KillAura() {
+        super("KillAura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
         addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, disable, invis, players, animals, monsters, passives, teams, esp);
     }
     
