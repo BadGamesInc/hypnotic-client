@@ -48,12 +48,12 @@ public class TargetStrafe extends Mod {
 
     @EventTarget
     public final void onRender3D(Event3D event) {
-    	if (Killaura.target != null)
-    		this.setDisplayName("TargetStrafe " + ColorUtils.white + "[" + Killaura.target.getName() + "] ");
+    	if (KillAura.target != null)
+    		this.setDisplayName("TargetStrafe " + ColorUtils.white + "[" + KillAura.target.getName() + "] ");
     	else
     		this.setDisplayName("TargetStrafe " + ColorUtils.white + "[None] ");
-        if (Hypnotic.instance.moduleManager.ka.isEnabled() && Killaura.target != null) {
-            EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(Killaura.class).target;
+        if (Hypnotic.instance.moduleManager.ka.isEnabled() && KillAura.target != null) {
+            EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(KillAura.class).target;
             drawCircle(target, event.getPartialTicks(), radius.getValue(), 0.1);
         }
     }

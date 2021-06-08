@@ -77,7 +77,7 @@ public class ModuleManager {
 	public Scaffold scaffold = new Scaffold();
 	
 	//Combat
-	public Killaura ka = new Killaura();
+	public KillAura ka = new KillAura();
 	public Velocity vel = new Velocity();
 	public Reach reach = new Reach();
 	public AutoPot autoPot = new AutoPot();

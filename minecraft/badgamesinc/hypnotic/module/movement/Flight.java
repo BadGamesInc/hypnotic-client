@@ -16,7 +16,7 @@ import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.Killaura;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
@@ -144,7 +144,7 @@ public class Flight extends Mod implements UpdateListener{
 	@EventTarget
 	public void motion(EventMotion event) {
 		if (TargetStrafe.canStrafe()) {
-			TargetStrafe.strafe(event, flyMode.getSelected().equalsIgnoreCase("Velocity") ? flySpeed.getValue() * 0.7 : MoveUtils.getBaseMoveSpeed(), Killaura.target, true);
+			TargetStrafe.strafe(event, flyMode.getSelected().equalsIgnoreCase("Velocity") ? flySpeed.getValue() * 0.7 : MoveUtils.getBaseMoveSpeed(), KillAura.target, true);
 		}
 	}
 	

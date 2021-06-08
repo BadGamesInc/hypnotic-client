@@ -13,7 +13,7 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.Killaura;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
@@ -72,7 +72,7 @@ public class Longjump extends Mod {
     @EventTarget
     public void onMotion(EventMotion event){
     	
-        if(Hypnotic.instance.moduleManager.getModule(Killaura.class).target != null && Hypnotic.instance.moduleManager.getModule(Killaura.class).target.posY - Hypnotic.instance.moduleManager.getModule(Killaura.class).target.prevPosY >=0) {
+        if(Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).target.posY - Hypnotic.instance.moduleManager.getModule(KillAura.class).target.prevPosY >=0) {
             if (!isBlockUnder() || mc.thePlayer.isCollidedHorizontally) {
                 airTicks++;
                 if (airTicks >= 1) {
@@ -169,7 +169,7 @@ public class Longjump extends Mod {
             this.setDisplayName("LongJump " + ColorUtils.white + "[" + modeString + "] ");
             
         if(TargetStrafe.canStrafe()){
-            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(Killaura.class).target, this.direction);
+            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
         }
         motion = MoveUtils.getSpeed();
         }

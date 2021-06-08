@@ -8,7 +8,7 @@ import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.Killaura;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
@@ -31,13 +31,13 @@ public class NoSlow extends Mod {
     public void onMotionUpdate(EventMotionUpdate event) {
         this.setDisplayName("NoSlow §f[" + mode.getSelected() + "] ");
         if (event.getState() == State.PRE) {
-        	if (Killaura.target != null)
+        	if (KillAura.target != null)
         		mc.gameSettings.keyBindUseItem.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-            if (mc.thePlayer.isBlocking() && mode.is("NCP") && Hypnotic.instance.moduleManager.getModule(Killaura.class).target == null) { 
+            if (mc.thePlayer.isBlocking() && mode.is("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null) { 
             	mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
             }
         } else {
-            if (mc.thePlayer.isBlocking() && mode.is("NCP") && Hypnotic.instance.moduleManager.getModule(Killaura.class).target == null){
+            if (mc.thePlayer.isBlocking() && mode.is("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){
                 mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, null, 0.0f, 0.0f, 0.0f));
 
             }

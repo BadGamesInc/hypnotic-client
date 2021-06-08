@@ -25,7 +25,7 @@ import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
-import badgamesinc.hypnotic.module.combat.Killaura;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.drm.DRM;
 import badgamesinc.hypnotic.util.drm.Level3Checks;
