@@ -23,6 +23,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.module.misc.ChestStealer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.client.renderer.GlStateManager;

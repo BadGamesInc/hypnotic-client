@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiButton extends Gui
 {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
-    public GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    public GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 
 
     /** Button width in pixels */
@@ -110,7 +110,7 @@ public class GuiButton extends Gui
                 Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x30f0f0f0);
             }
 
-            fontRenderer.drawCenteredString(this.displayString, this.xPosition + this.width / 2 + 1, this.yPosition + (this.height - 12) / 2, j, true);
+            fontRenderer.drawCenteredString(this.displayString, this.xPosition + this.width / 2 + 2, this.yPosition + (this.height - 12) / 2, j, true);
         }
     }
 

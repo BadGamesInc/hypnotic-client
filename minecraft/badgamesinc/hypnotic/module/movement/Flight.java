@@ -5,17 +5,25 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.Event;
+import badgamesinc.hypnotic.event.Event.State;
+import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventMotion;
+import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.listeners.UpdateListener;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.Killaura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.MoveUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.AxisAlignedBB;
@@ -25,10 +33,13 @@ public class Flight extends Mod implements UpdateListener{
 	public ModeSetting flyMode = new ModeSetting("Mode", "Velocity", "Velocity", "Vanilla");
 	public NumberSetting flySpeed = new NumberSetting("Speed", 1, 0, 10, 0.1);
 	public BooleanSetting kickBypass = new BooleanSetting("Vanilla kick bypass", false);
+	public BooleanSetting viewBobbingSetting = new BooleanSetting("View Bobbing", false);
+	
+	private static transient int viewBobbing = 0;
 	
 	public Flight() {
 		super("Flight", Keyboard.KEY_G, Category.MOVEMENT, "Fly like a bird");
-		addSettings(flyMode, flySpeed, kickBypass);
+		addSettings(flyMode, flySpeed, kickBypass, viewBobbingSetting);
 	}
 		
 	public float speed = 1F;
@@ -96,7 +107,7 @@ public class Flight extends Mod implements UpdateListener{
 		if (this.flyMode.getSelected().equalsIgnoreCase("Vanilla")) {
 			mc.thePlayer.capabilities.isFlying = true;
         } else if (this.flyMode.getSelected().equalsIgnoreCase("Velocity")) {
-        	mc.thePlayer.capabilities.isFlying = false;
+        	mc.thePlayer.capabilities.isFlying = true;
         }
 		
 		if(this.flyMode.getSelected().equalsIgnoreCase("Velocity")) {
@@ -130,22 +141,26 @@ public class Flight extends Mod implements UpdateListener{
 		}
 	}
 	
-	public void onMotion(EventMotion event) {
-		Speed speed = new Speed();
-		if(Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).target.posY - Hypnotic.instance.moduleManager.getModule(KillAura.class).target.prevPosY >=0) {
-			double motion = Math.sqrt(event.getX() * event.getX() + event.getZ() * event.getZ());
-			boolean direction = false;
-			if(TargetStrafe.canStrafe()){
-                TargetStrafe.strafe(event, speed.motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, speed.direction);
-            }
+	@EventTarget
+	public void motion(EventMotion event) {
+		if (TargetStrafe.canStrafe()) {
+			TargetStrafe.strafe(event, flyMode.getSelected().equalsIgnoreCase("Velocity") ? flySpeed.getValue() * 0.7 : MoveUtils.getBaseMoveSpeed(), Killaura.target, true);
+		}
+	}
+	
+	@EventTarget
+	public void preMotion(EventMotionUpdate event) {
+		if (this.isEnabled() && event.getState() == Event.State.PRE && (mc.gameSettings.keyBindForward.isKeyDown() || mc.gameSettings.keyBindBack.isKeyDown() || mc.gameSettings.keyBindLeft.isKeyDown() || mc.gameSettings.keyBindRight.isKeyDown()) && viewBobbingSetting.isEnabled()) {
+			mc.thePlayer.cameraYaw = 0.105F;
 		}
 	}
 	
 	@Override
 	public void onDisable() {
-		if(this.flyMode.getSelected().equalsIgnoreCase("Vanilla")) {
-			mc.timer.timerSpeed = 1f;
-			mc.thePlayer.capabilities.isFlying = false;
-		}
+		double baseMoveSpeed = MoveUtils.getBaseMoveSpeed();
+		MoveUtils.setMotion(0);
+		mc.timer.timerSpeed = 1f;
+		mc.thePlayer.capabilities.isFlying = false;
+		super.onDisable();
 	}
 }

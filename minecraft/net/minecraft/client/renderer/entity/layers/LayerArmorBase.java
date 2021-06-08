@@ -1,9 +1,13 @@
 package net.minecraft.client.renderer.entity.layers;
 
+import java.awt.Color;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.util.ColorUtil;
+import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
@@ -102,6 +106,14 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 
     private void func_177183_a(EntityLivingBase entitylivingbaseIn, T modelbaseIn, float p_177183_3_, float p_177183_4_, float p_177183_5_, float p_177183_6_, float p_177183_7_, float p_177183_8_, float p_177183_9_)
     {
+    	Color glintColor = ColorUtil.getClickGUIColor();
+    	
+    	if (Hypnotic.instance.moduleManager.glint.rainbowGlint.isEnabled()) {
+    		glintColor = new Color(ColorUtils.rainbow(2, 0.5f, 0.5f));
+    	} else if (Hypnotic.instance.moduleManager.glint.clickGuiColor.isEnabled()) {
+    		glintColor = ColorUtil.getClickGUIColor();
+    	}
+    	
         float f = (float)entitylivingbaseIn.ticksExisted + p_177183_5_;
         this.renderer.bindTexture(ENCHANTED_ITEM_GLINT_RES);
         GlStateManager.enableBlend();
@@ -115,7 +127,8 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
             GlStateManager.disableLighting();
             GlStateManager.blendFunc(768, 1);
             float f2 = 0.76F;
-            GlStateManager.color(0.5F * f2, 0.25F * f2, 0.8F * f2, 1.0F);
+            boolean enabled = Hypnotic.instance.moduleManager.glint.isEnabled();
+            GlStateManager.color(enabled ? (glintColor.getRed() * 0.005f) : 0.5f * f2, enabled ? (glintColor.getGreen() * 0.005f) : 0.25f * f2, enabled ? (glintColor.getBlue() * 0.005f) : 0.8f * f2, 1.0F);
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             float f3 = 0.33333334F;

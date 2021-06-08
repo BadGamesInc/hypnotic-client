@@ -23,7 +23,7 @@ public class BedNuker extends Mod {
 	private static int radius = 4;
 	
 	public BedNuker() {
-		super("BedNuker", 0, Category.WORLD, "Fuck up all beds in your way");
+		super("BedNuker", 0, Category.WORLD, "Destroy up all beds in your way");
 	}
 	
 	@EventTarget

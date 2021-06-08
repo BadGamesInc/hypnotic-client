@@ -1,5 +1,11 @@
 package badgamesinc.hypnotic;
 
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
@@ -7,21 +13,28 @@ import org.lwjgl.opengl.Display;
 
 import badgamesinc.hypnotic.command.CommandManager;
 import badgamesinc.hypnotic.config.ConfigManager;
+import badgamesinc.hypnotic.config.SaveLoad;
+import badgamesinc.hypnotic.config.friends.FriendManager;
 import badgamesinc.hypnotic.discordrpc.DiscordRP;
 import badgamesinc.hypnotic.event.EventManager;
 import badgamesinc.hypnotic.gui.HUD;
 import badgamesinc.hypnotic.gui.altmanager.FileManager;
 import badgamesinc.hypnotic.gui.altmanager.GuiAltManager;
+import badgamesinc.hypnotic.gui.notifications.Color;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
+import badgamesinc.hypnotic.module.combat.Killaura;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.drm.DRM;
 import badgamesinc.hypnotic.util.drm.Level3Checks;
 import badgamesinc.hypnotic.util.drm.Level4Checks;
+import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.enchantment.EnchantmentManager;
+import net.minecraft.util.ResourceLocation;
 import thealtening.auth.TheAlteningAuthentication;
 import thealtening.auth.service.AlteningServiceType;
 
@@ -33,24 +46,29 @@ public class Hypnotic {
 	public int l3 = 0;
 	public ModuleManager moduleManager;
 	public EventManager eventManager;
+	public FriendManager friendManager;
 	public HUD hud;
 	public CommandManager commandManager;
 	public static TheAlteningAuthentication auth;
 	public NotificationManager notificationManager;
+	public static HashMap<String, ResourceLocation> cachedImages = new HashMap<>();
 	public FileManager fileManager;
 	public SaveLoad saveload;
 	public GuiAltManager guiAltLogin;
 	public DiscordRP discordRP;
+	public FontManager fm;
 	public static ConfigManager cfgManager = new ConfigManager();
 	public EnchantmentManager enchantmentManager;																																																																																																																																																																												/* REQUIRED TO PREVENT A CRASH DO NOT REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FuelPumps On Top */ 
 	private Random r = new Random();																																																																																																																																																																					                  										private double superSecretKey = this.clientName == "Hypnotic" ? Double.MAX_VALUE - 0.00000001 : Byte.MIN_VALUE;																																																																																										
 	
-	public static final String clientName = "Hypnotic", clientVersion = "r1006", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "r1007", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
 	
 	public void startup() {	
+		fm = new FontManager();
 		moduleManager = new ModuleManager();
 		eventManager = new EventManager();
 		commandManager = new CommandManager();
+		friendManager = new FriendManager();
 		auth = new TheAlteningAuthentication(AlteningServiceType.MOJANG);
 		notificationManager = new NotificationManager();
 		hud = new HUD();
@@ -84,8 +102,19 @@ public class Hypnotic {
         });
         configDaemon.setDaemon(true);
         configDaemon.start();
-        
-        moduleManager.clickGui.setKey(Keyboard.KEY_RSHIFT);
+		
+		for (Type notType : Type.values()) {
+			for (Color notColor : Color.values()) {	
+				cachedImages.put("hypnotic/textures/notifications/" + notType.filePrefix + notColor.fileSuffix + ".png", new ResourceLocation("hypnotic/textures/notifications/" + notType.filePrefix + notColor.fileSuffix + ".png"));	
+			}
+		}
+		
+		for (ResourceLocation resource : cachedImages.values()) {
+			String name = resource.getResourcePath();
+			System.out.println("Cached " + name);
+		}
+		//Killaura.target = null;
+		moduleManager.blink.setEnabled(false);
 	}
 	
 	public void shutdown() {

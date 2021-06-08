@@ -2,10 +2,10 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.enchantment.Enchantment;
 
 public class Enchant extends Command {
@@ -35,7 +35,7 @@ public class Enchant extends Command {
 		{
 			if(args[0] == null) 
 			{
-				Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
+				NotificationManager.getNotificationManager().createNotification("Invalid Usage!", "Usage: " + getSyntax(), true, 2500, Type.WARNING, Color.RED);
 			} 
 			else 
 			{	
@@ -43,19 +43,19 @@ public class Enchant extends Command {
 				{
 					if(e == Enchantment.silkTouch) 
 					{
-						System.out.println("fuck you silk touch");
+						System.out.println("frick you silk touch");
 					}
 					else 
 					{
 						mc.thePlayer.getHeldItem().addEnchantment(e, Integer.valueOf(args[0]));
 					}
 				}
-				Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Successfully enchanted item to level " + args[0], (int) 5, NotificationType.INFO));
+				NotificationManager.getNotificationManager().createNotification(ColorUtils.white + "Successfully enchanted item to level " + args[0], "", true, 1500, Type.INFO, Color.GREEN);
 			}
 		}
 		else 
 		{
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Creative only!", (int) 5, NotificationType.WARNING));
+			NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "Creative only!", "", true, 1500, Type.WARNING, Color.RED);
 			
 		}
 	}

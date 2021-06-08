@@ -8,7 +8,7 @@ import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.Killaura;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import net.minecraft.network.play.server.S02PacketChat;
@@ -61,10 +61,10 @@ public class KillSults extends Mod {
 		
 		randomStuff = " [" + getNextRandomString(allowedChars, random) + "]";
         if (messageSpam.isEnabled()) {
-        	if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {
-        		mc.thePlayer.sendChatMessage("/tell " + KillAura.target.getName() + " NOOB" + randomStuff);
+        	if (Killaura.target != null && Hypnotic.instance.moduleManager.getModule(Killaura.class).isEnabled()) {
+        		mc.thePlayer.sendChatMessage("/tell " + Killaura.target.getName() + " NOOB" + randomStuff);
         		for (int i = 0; i < 1000; i ++) {
-        			mc.thePlayer.sendChatMessage("/r " + KillAura.target.getName() + " NOOB EZ" + randomStuff);
+        			mc.thePlayer.sendChatMessage("/r " + Killaura.target.getName() + " NOOB EZ" + randomStuff);
         		}
         	}
         }

@@ -12,6 +12,7 @@ import badgamesinc.hypnotic.module.misc.*;
 import badgamesinc.hypnotic.module.movement.*;
 import badgamesinc.hypnotic.module.player.*;
 import badgamesinc.hypnotic.module.render.*;
+import badgamesinc.hypnotic.module.render.wings.Wings;
 import badgamesinc.hypnotic.module.world.*;
 
 public class ModuleManager {
@@ -63,6 +64,8 @@ public class ModuleManager {
 	public NameTags nameTags = new NameTags();
 	public ItemPhysics itemPhys = new ItemPhysics();
 	public NoRender noRender = new NoRender();
+	public Glint glint = new Glint();
+	public Wings wings = new Wings();
 	
 	//Player
 	public NoFall noFall = new NoFall();
@@ -74,7 +77,7 @@ public class ModuleManager {
 	public Scaffold scaffold = new Scaffold();
 	
 	//Combat
-	public KillAura ka = new KillAura();
+	public Killaura ka = new Killaura();
 	public Velocity vel = new Velocity();
 	public Reach reach = new Reach();
 	public AutoPot autoPot = new AutoPot();
@@ -94,6 +97,7 @@ public class ModuleManager {
 	public AutoConfig autoCfg = new AutoConfig();
 	public KillSults killSults = new KillSults();
 	public PingSpoof pingSpoof = new PingSpoof();
+	public Blink blink = new Blink();
 	
 	//World
 	public FastBreak klsdfjlsk = new FastBreak();
@@ -107,6 +111,7 @@ public class ModuleManager {
 	public InfoHud infoHud = new InfoHud();
 	public Logo logo = new Logo();
 	public CustomHotbar custHb = new CustomHotbar();
+	public Keystrokes keystrokes = new Keystrokes();
 	
 	
  	private void movement() {
@@ -125,7 +130,6 @@ public class ModuleManager {
 	}
 	
 	private void render() {
-		//Render
 		modules.add(fb);
 		modules.add(ba);
 		modules.add(itemCustom);
@@ -138,6 +142,9 @@ public class ModuleManager {
 		//TODO: Fix these
 		//modules.add(new Tracers());
 		modules.add(noRender);		
+		modules.add(glint);
+		modules.add(wings);
+		modules.add(new BrightPlayer());
 	}
 	
 	private void player() {
@@ -174,6 +181,7 @@ public class ModuleManager {
 		//modules.add(autoCfg);
 		modules.add(killSults);
 		modules.add(pingSpoof);
+		modules.add(blink);
 	}
 	
 	private void world() {
@@ -189,7 +197,9 @@ public class ModuleManager {
 		modules.add(infoHud);
 		modules.add(logo);
 		modules.add(custHb);
+		modules.add(keystrokes);
 	}
+	
 	public ModuleManager() {
 		//ClickGUI
 		modules.add(clickGui);
@@ -220,7 +230,7 @@ public class ModuleManager {
 		    }
 		}
 		return categoryModules;
-    	}
+    }
 	
 	public <T extends Mod> T getModule(Class<T> clazz) {
         	return (T) modules.stream().filter(mod -> mod.getClass() == clazz).findFirst().orElse(null);

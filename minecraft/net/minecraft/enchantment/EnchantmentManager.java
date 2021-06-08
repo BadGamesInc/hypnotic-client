@@ -2,7 +2,7 @@ package net.minecraft.enchantment;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-// this is fucking stupid why did i add this
+// this is fricking stupid why did i add this
 
 public class EnchantmentManager 
 {

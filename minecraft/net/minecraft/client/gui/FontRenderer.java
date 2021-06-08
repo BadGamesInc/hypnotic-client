@@ -15,6 +15,9 @@ import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.ArabicShapingException;
 import com.ibm.icu.text.Bidi;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.command.commands.Nick;
+import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -25,6 +28,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class FontRenderer implements IResourceManagerReloadListener
@@ -391,6 +395,10 @@ public class FontRenderer implements IResourceManagerReloadListener
      */
     private void renderStringAtPos(String p_78255_1_, boolean p_78255_2_)
     {
+    	if (Minecraft.getMinecraft().thePlayer != null && Nick.name != null) {
+    		p_78255_1_ = p_78255_1_.replace(Minecraft.getMinecraft().session.getUsername(), Nick.name);
+    	}	
+    	
         for (int i = 0; i < p_78255_1_.length(); ++i)
         {
             char c0 = p_78255_1_.charAt(i);
@@ -568,6 +576,10 @@ public class FontRenderer implements IResourceManagerReloadListener
      */
     private int renderString(String text, double d, double e, int color, boolean dropShadow)
     {
+    	if (Minecraft.getMinecraft().thePlayer != null && Nick.name != null) {
+    		//if (p_78255_1_.contains(Minecraft.getMinecraft().thePlayer.getName()))
+    			text = text.replace(Minecraft.getMinecraft().session.getUsername(), Nick.name);
+    	}
         if (text == null)
         {
             return 0;

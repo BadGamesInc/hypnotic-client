@@ -2,12 +2,14 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.util.ColorUtils;
 
 public class LogoName extends Command {
 
+	public static String name = "";
 	@Override
 	public String getAlias() {
 		return "logo";
@@ -27,10 +29,19 @@ public class LogoName extends Command {
 	public void onCommand(String command, String[] args) throws Exception {
 		
 		if (args[0] == null) {
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
+			NotificationManager.getNotificationManager().createNotification("Invalid Usage!", "Usage: " + getSyntax(), true, 2500, Type.WARNING, Color.RED);
 		}
+				
+		switch(Hypnotic.instance.moduleManager.logo.textType.getSelected()) {
 		
-		String name = Character.toString(args[0].charAt(0)) + ColorUtils.white + args[0].substring(1);
+			case "Single Letter Color":
+				name = Character.toString(args[0].charAt(0)) + ColorUtils.white + args[0].substring(1);
+				break;
+				
+			case "Full Text Color":
+				name = args[0];
+				break;
+		}
 		Hypnotic.instance.hud.logoName = name;
 		
 	}

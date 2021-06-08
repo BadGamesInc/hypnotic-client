@@ -7,7 +7,7 @@ import badgamesinc.hypnotic.event.events.EventLastDistance;
 import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.Killaura;
 import badgamesinc.hypnotic.module.player.NoSlow;
 import badgamesinc.hypnotic.util.MoveUtils;
 import net.minecraft.client.Minecraft;
@@ -209,13 +209,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             {
                 this.onUpdateWalkingPlayer();
                 EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.POST);
-                eventMotionUpdate.call();
-                
-                NoSlow noSlow = Hypnotic.instance.moduleManager.noSlow;
-                if (Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled())
-	                if(mc.thePlayer.isUsingItem() && noSlow.mode.getSelected().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){
-	                    mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, null, 0.0f, 0.0f, 0.0f));
-	                }
+                eventMotionUpdate.call(); 
             }
         }
     }
@@ -225,24 +219,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdateWalkingPlayer()
     {
-    	EventMotionUpdate eventPre = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.PRE);
-        eventPre.call();
-        
-        NoSlow noSlow = new NoSlow();
-        if (Hypnotic.instance.moduleManager.getModule(NoSlow.class).isEnabled())
-	        if(mc.thePlayer.isUsingItem() && noSlow.mode.getSelected().equalsIgnoreCase("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null){ 
-	        	mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-	        }
+    	EventMotionUpdate event = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.PRE);
+        event.call();
         boolean flag = this.isSprinting();
 
-        if (flag != this.serverSprintState)
-        {
-            if (flag)
-            {
+        if (flag != this.serverSprintState) {
+            if (flag) {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
-            }
-            else
-            {
+            } else {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SPRINTING));
             }
 
@@ -251,69 +235,51 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
         boolean flag1 = this.isSneaking();
 
-        if (flag1 != this.serverSneakState)
-        {
-            if (flag1)
-            {
+        if (flag1 != this.serverSneakState) {
+            if (flag1) {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SNEAKING));
-            }
-            else
-            {
+            } else {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SNEAKING));
             }
 
             this.serverSneakState = flag1;
         }
 
-        if (this.isCurrentViewEntity())
-        {
-            double d0 = eventPre.getX() - this.lastReportedPosX;
-            double d1 = eventPre.getY() - this.lastReportedPosY;
-            double d2 = eventPre.getZ() - this.lastReportedPosZ;
-            double d3 = (double)(eventPre.getYaw() - this.lastReportedYaw);
-            double d4 = (double)(eventPre.getPitch() - this.lastReportedPitch);
+        if (this.isCurrentViewEntity()) {
+            double d0 = event.getX() - this.lastReportedPosX;
+            double d1 = this.getEntityBoundingBox().minY - this.lastReportedPosY;
+            double d2 = event.getZ() - this.lastReportedPosZ;
+            double d3 = (double) (event.getYaw() - this.lastReportedYaw);
+            double d4 = (double) (event.getPitch() - this.lastReportedPitch);
             boolean flag2 = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.positionUpdateTicks >= 20;
             boolean flag3 = d3 != 0.0D || d4 != 0.0D;
-
-            if (this.ridingEntity == null)
-            {
-                if (flag2 && flag3)
-                {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(eventPre.getX(), eventPre.getY(), eventPre.getZ(), eventPre.getYaw(), eventPre.getPitch(), this.onGround));
+            if (this.ridingEntity == null) {
+                if (flag2 && flag3) {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(event.getX(), this.getEntityBoundingBox().minY, event.getZ(), event.getYaw(), event.getPitch(), event.onGround()));
+                } else if (flag2) {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, event.getY(), this.posZ, event.onGround()));
+                } else if (flag3) {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(event.getYaw(), event.getPitch(), event.onGround()));
+                } else {
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer(event.onGround()));
                 }
-                else if (flag2)
-                {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(eventPre.getX(), eventPre.getY(), eventPre.getZ(), this.onGround));
-                }
-                else if (flag3)
-                {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(eventPre.getYaw(), eventPre.getPitch(), this.onGround));
-                }
-                else
-                {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer(this.onGround));
-                }
-            }
-            else
-            {
-                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, eventPre.getYaw(), eventPre.getPitch(), this.onGround));
+            } else {
+                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, event.getYaw(), event.getPitch(), event.onGround()));
                 flag2 = false;
             }
 
             ++this.positionUpdateTicks;
 
-            if (flag2)
-            {
-                this.lastReportedPosX = eventPre.getX();
-                this.lastReportedPosY = eventPre.getY();
-                this.lastReportedPosZ = eventPre.getZ();
-                this.positionUpdateTicks = 0;
+            if (flag2) {
+                this.lastReportedPosX = event.getX();
+                this.lastReportedPosY = this.getEntityBoundingBox().minY;
+                this.lastReportedPosZ = event.getZ();
+                this.positionUpdateTicks = 0;//done
             }
 
-            if (flag3)
-            {
-                this.lastReportedYaw = eventPre.getYaw();
-                this.lastReportedPitch = eventPre.getPitch();
+            if (flag3) {
+                this.lastReportedYaw = event.getYaw();
+                this.lastReportedPitch = event.getPitch();
             }
         }
     }
@@ -365,6 +331,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
     {
         super.swingItem();
         this.sendQueue.addToSendQueue(new C0APacketAnimation());
+    }
+    
+    public void setYaw(float yaw) {
+        this.rotationYaw = yaw;
+    }
+
+    public void setPitch(float pitch) {
+        this.rotationPitch = pitch;
     }
 
     public void respawnPlayer()
@@ -793,7 +767,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
         if (this.inPortal)
         {
-            if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame())
+            if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame() && !Hypnotic.instance.moduleManager.pcpinger.isEnabled())
             {
                 this.mc.displayGuiScreen((GuiScreen)null);
             }

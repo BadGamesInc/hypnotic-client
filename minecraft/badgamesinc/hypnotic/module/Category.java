@@ -3,7 +3,9 @@ package badgamesinc.hypnotic.module;
 import badgamesinc.hypnotic.Hypnotic;
 
 public enum Category {
-	COMBAT, MOVEMENT, PLAYER, RENDER, WORLD, MISC, GUI;
+	COMBAT("Combat"), MOVEMENT("Movement"), PLAYER("Player"), RENDER("Render"), WORLD("World"), MISC("Misc"), GUI("GUI"), HIDDEN("Hidden");
+	
+	protected int categoryCount;
 	
 	public static int size(Category c) {
 		
@@ -143,4 +145,17 @@ public enum Category {
 		
 		return 0;
 	}
+	
+	public String name;
+    public int moduleIndex;
+    public int posX, posY;
+    public boolean expanded;
+
+    Category(String name) {
+        this.name = name;
+        posX = 150 + (categoryCount * 95);
+        posY = 85; //Should be 85.5
+        expanded = true;
+        categoryCount++;
+    }
 }

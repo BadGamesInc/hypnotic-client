@@ -13,7 +13,7 @@ public class Component {
     Setting set;
     SettingsWindow parent;
     Minecraft mc = Minecraft.getMinecraft();
-    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 
     public Component(int x, int y, Setting set, SettingsWindow parent) {
         this.x = x;

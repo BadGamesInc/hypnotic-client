@@ -3,8 +3,9 @@ import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.SoundUtil;
@@ -43,14 +44,14 @@ public class Bind extends Command {
 					if (args[1].length() == 1) {
 						m.setKey(Keyboard.getKeyIndex(keyName.toUpperCase()));
 	
-						Hypnotic.instance.notificationManager.show(new Notification(String.format("Bound %s to %s", ColorUtils.white + m.getName() + ColorUtils.gray, ColorUtils.white + Keyboard.getKeyName(m.getKey())) + "     ", 5, NotificationType.INFO));
+						NotificationManager.getNotificationManager().createNotification(String.format("Bound %s to %s", ColorUtils.white + m.getName() + ColorUtils.gray, ColorUtils.white + Keyboard.getKeyName(m.getKey())) + "     ", "", true, 1500, Type.INFO, Color.GREEN);
 						if (args[1].length() != 1) {
-						Hypnotic.instance.notificationManager.show(new Notification(String.format(args[1]), 5, NotificationType.INFO));
+						NotificationManager.getNotificationManager().createNotification(String.format(args[1]), "", true, 1500, Type.INFO, Color.GREEN);
 						
 						}
 					} else if (args[1].equalsIgnoreCase("none")){
 						m.setKey(Keyboard.KEY_NONE);
-						Hypnotic.instance.notificationManager.show(new Notification("Unbound " + m.getName(), 5, NotificationType.INFO));
+						NotificationManager.getNotificationManager().createNotification("Unbound " + m.getName(), "", true, 1500, Type.INFO, Color.GREEN);
 					}
 				}
 			}

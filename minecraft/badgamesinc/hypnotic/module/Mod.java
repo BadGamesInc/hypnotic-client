@@ -1,16 +1,17 @@
 package badgamesinc.hypnotic.module;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.config.ConfigSetting;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.settings.Setting;
+import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.settings.settingtypes.KeybindSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
@@ -26,6 +27,7 @@ public class Mod {
 	public String displayName;
 	private String description;
 	private Category category;
+	public boolean expanded;
 	private TimeHelper timer = new TimeHelper();
 	public ArrayList<Setting> settings = new ArrayList<>();
 	@Expose
@@ -41,9 +43,11 @@ public class Mod {
     @SerializedName("settings")
     public ConfigSetting[] cfgSettings;
 	private KeybindSetting keyBind = new KeybindSetting("Keybind: ", 0);
+	public boolean wasFlag = false;
+	public BooleanSetting visible = new BooleanSetting("Visible", true);
 
 	
-	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium", 18, false, false, false);
 	public FontRenderer fr = mc.fontRendererObj;
 	
 	private long currentMS = 0L;
@@ -61,6 +65,7 @@ public class Mod {
 		this.description = description;
 		enabled = false;
 		displayName = name;
+		addSetting(visible);
 	}
 	
 	public void addSetting(Setting setting) {
@@ -80,6 +85,14 @@ public class Mod {
 	public String getDescription() {
 		return description;
 	}
+	
+	public boolean isExpanded() {
+		return expanded;
+	}
+	
+	public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -110,7 +123,6 @@ public class Mod {
 	public void onUpdate() {}
 	public void onEnable() {
 		Hypnotic.instance.eventManager.register(this);
-		
 			if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
 				mSize = 0;
 	        	lastSize = fontRenderer.getStringWidth(this.getDisplayName());
@@ -118,22 +130,26 @@ public class Mod {
 				mSize = 0;
 		        lastSize = fr.getStringWidth(this.getDisplayName());
 			}
-		Hypnotic.instance.notificationManager.show(new Notification(this.getName() + ColorUtils.green + " was enabled", (int) 3.5, NotificationType.INFO));
+		NotificationManager.getNotificationManager().createNotification(this.getName(), this.getName() + " was enabled", true, 700, Type.CHECK, Color.GREEN);
 	}
 	public void onDisable() {
 		Hypnotic.instance.eventManager.unregister(this);
 		RenderUtils.resetPlayerPitch();
 		RenderUtils.resetPlayerYaw();
 		
+		if (this.wasFlag) {
+			NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "Flag", this.getName() + " was disabled due to a flag", true, 1000, Type.WARNING, Color.RED);
+		}
 		
 			if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
 				mSize = fontRenderer.getStringWidth(this.getDisplayName());
-		        lastSize =0;
+		        lastSize = 0;
 			} else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
 				mSize = fr.getStringWidth(this.getDisplayName());
-		        lastSize =0;
+		        lastSize = 0;
 			}
-		Hypnotic.instance.notificationManager.show(new Notification(this.getName() + ColorUtils.red + " was disabled", (int) 3.5, NotificationType.INFO));
+			if (wasFlag == false)
+			NotificationManager.getNotificationManager().createNotification(this.getName(), this.getName() + " was disabled", true, 1000, Type.X, Color.RED);
 	}
 	public void setup() {}
 	

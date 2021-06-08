@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.button.Button;
 import badgamesinc.hypnotic.gui.newerclickgui.button.CategoryButton;
+import badgamesinc.hypnotic.gui.newerclickgui.button.ConfigsButton;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtil;
@@ -25,9 +26,10 @@ public class ClickGUI extends GuiScreen {
     public Category currentCategory;
     ArrayList<CategoryButton> buttons = new ArrayList<>();
     ArrayList<Button> mods = new ArrayList<>();
+    ConfigsButton cfgButton = new ConfigsButton();
     public static int color = ColorUtils.rainbow(6, 0.5f, 0.5f);
-    public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 36, false, false, false);
-    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 36, false, false, false);
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
     int offset = 0;
     int lastOffset = 0;
     double divisor = -7;
@@ -72,8 +74,9 @@ public class ClickGUI extends GuiScreen {
         for(CategoryButton button : buttons){
             button.draw(mouseX, mouseY);
         }
-        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 + 5 + 15, color, true);
-        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 + 5 + 35, color, true);
+        //cfgButton.drawButton(width / 6 + 4, height - 100, mouseX, mouseY);
+        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 - 5 + 15, color, true);
+        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 - 5 + 35, color, true);
         if(currentCategory != null){
 	
 	            for(Button b : mods){
@@ -119,7 +122,7 @@ public class ClickGUI extends GuiScreen {
         }
         for(CategoryButton button : buttons){
             button.mouseClicked(mouseX, mouseY);
-            if(button.isHovered(mouseX, mouseY)){
+            if (button.isHovered(mouseX, mouseY)){
                 mods.clear();
                 int count = 0;
                 for(Mod m : Hypnotic.instance.moduleManager.getModulesInCategory(currentCategory)){
@@ -138,6 +141,8 @@ public class ClickGUI extends GuiScreen {
 
             b.mouseClicked(mouseX, mouseY, mouseButton);
         }
+        
+        //cfgButton.mouseClicked(mouseX, mouseY, mouseButton);
 
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -160,13 +165,13 @@ public class ClickGUI extends GuiScreen {
         int left = width / 6;
         int top = height / 7;
         int count = 1;
-        int countMultiplier = 40;
+        int countMultiplier = 35;
         
         if (mc.gameSettings.guiScale > 2) {
-        	countMultiplier = 25;
+        	countMultiplier = 22;
         }
         for (Category category : Category.values()) {
-            buttons.add(new CategoryButton(left + 15, top + 20 + countMultiplier * count, category, this));
+            buttons.add(new CategoryButton(left + 15, top + 10 + countMultiplier * count, category, this));
             count++;
         }
         super.initGui();
@@ -227,6 +232,6 @@ public class ClickGUI extends GuiScreen {
     
     @Override
     public boolean doesGuiPauseGame() {
-    	return true;
+    	return false;
     }
 }

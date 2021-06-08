@@ -8,7 +8,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.AnimatedButton;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.util.ServerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -33,6 +37,7 @@ public class GuiConnecting extends GuiScreen
 
     public GuiConnecting(GuiScreen p_i1181_1_, Minecraft mcIn, ServerData p_i1181_3_)
     {
+    	ServerUtil.lastLogin = p_i1181_3_;
         this.mc = mcIn;
         this.previousGuiScreen = p_i1181_1_;
         ServerAddress serveraddress = ServerAddress.func_78860_a(p_i1181_3_.serverIP);
@@ -52,6 +57,15 @@ public class GuiConnecting extends GuiScreen
     private void connect(final String ip, final int port)
     {
     	ServerUtil.serverData = new ServerData("", ip + ":" + port, false);
+    	
+    	if (Hypnotic.instance.moduleManager.stealer.isEnabled()) {
+    		Hypnotic.instance.moduleManager.stealer.toggle();
+    		NotificationManager.getNotificationManager().createNotification("Toggle", "ChestStealer was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
+    	}
+    	if (Hypnotic.instance.moduleManager.ka.isEnabled()) {
+    		Hypnotic.instance.moduleManager.ka.toggle();
+    		NotificationManager.getNotificationManager().createNotification("Toggle", "Killaura was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
+    	}
         logger.info("Connecting to " + ip + ", " + port);
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
         {

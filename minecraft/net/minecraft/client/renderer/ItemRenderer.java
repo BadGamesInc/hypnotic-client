@@ -472,7 +472,8 @@ public class ItemRenderer
             }
             else
             {
-                this.func_178105_d(f1);
+            	float hitthing = Hypnotic.instance.moduleManager.itemCustom.weirdHit.isEnabled() ? 0 : f1;
+                this.func_178105_d(hitthing);
                 this.transformFirstPersonItem(f, f1);
             }
 
@@ -601,6 +602,9 @@ public class ItemRenderer
      */
     private void renderFireInFirstPerson(float p_78442_1_)
     {
+    	if (Hypnotic.instance.moduleManager.noRender.noFire.isEnabled()) {
+    		return;
+    	}
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 0.9F);

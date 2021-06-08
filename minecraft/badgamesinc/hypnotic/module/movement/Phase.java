@@ -10,6 +10,7 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.MovementUtils;
 import badgamesinc.hypnotic.util.PlayerUtils;
 import badgamesinc.hypnotic.util.TimerUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -39,8 +40,8 @@ public class Phase extends Mod {
 		        double multi = 2.6D;
 		        double mx = Math.cos(Math.toRadians(mc.thePlayer.rotationYaw + 90F));
 		        double mz = Math.sin(Math.toRadians(mc.thePlayer.rotationYaw + 90F));
-		        xOff = mc.thePlayer.moveForward * 2.6D * mx + mc.thePlayer.moveStrafing * 2.6D * mz;
-		        zOff = mc.thePlayer.moveForward * 2.6D * mz + mc.thePlayer.moveStrafing * 2.6D * mx;
+		        xOff = mc.thePlayer.moveForward * 20.6D * mx + mc.thePlayer.moveStrafing * 2.6D * mz;
+		        zOff = mc.thePlayer.moveForward * 20.6D * mz + mc.thePlayer.moveStrafing * 2.6D * mx;
 		        if(PlayerUtils.isInsideBlock() && mc.thePlayer.isSneaking())
 		            reset = 1;
 		        if(reset > 0)
@@ -50,8 +51,12 @@ public class Phase extends Mod {
 
 	    @EventTarget
 	    public boolean onCollision(EventCollide event) {
-	    	if((PlayerUtils.isInsideBlock() && mc.gameSettings.keyBindJump.isKeyDown()) || (!(PlayerUtils.isInsideBlock()) && event.getBoundingBox() != null && event.getBoundingBox().maxY > mc.thePlayer.boundingBox.minY && mc.thePlayer.isSneaking()))
+	    	if((PlayerUtils.isInsideBlock() && mc.gameSettings.keyBindJump.isKeyDown()) || (!(PlayerUtils.isInsideBlock()) && event.getBoundingBox() != null && event.getBoundingBox().maxY > mc.thePlayer.boundingBox.minY && mc.thePlayer.isSneaking())) {
 	            event.setBoundingBox(null);
+	    	}
+	    	if (PlayerUtils.isInsideBlock()) {
+	    		MovementUtils.setMotion(1.5);
+	    	}
 	        return true;
 	    }
 	    

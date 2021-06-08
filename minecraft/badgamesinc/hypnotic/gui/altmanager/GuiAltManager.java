@@ -30,7 +30,7 @@ public class GuiAltManager extends GuiScreen {
     private int offset;
     public Alt selectedAlt;
     private String status;
-    private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 20, false, false, false);
+    private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 20, false, false, false);
 
 
     public GuiAltManager() {
@@ -71,9 +71,11 @@ public class GuiAltManager extends GuiScreen {
             }
             case 5: {
                 final ArrayList<Alt> registry = AltManager.registry;
-                final Random random = new Random();
-                final Alt randomAlt = registry.get(random.nextInt(AltManager.registry.size()));
-                (this.loginThread = new AltLoginThread(randomAlt)).start();
+                if (registry.size() != 0) {
+	                final Random random = new Random();
+	                final Alt randomAlt = registry.get(random.nextInt(AltManager.registry.size()));
+	                (this.loginThread = new AltLoginThread(randomAlt)).start();
+                }
                 break;
             }
             case 6: {

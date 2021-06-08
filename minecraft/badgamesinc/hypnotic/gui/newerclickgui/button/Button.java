@@ -27,7 +27,7 @@ public class Button {
     int slide;
     int lastSlide = 0;
     public static SettingsWindow settingsWindow = null;
-    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 
     public Button(Category category, int x, int y, Mod mod) {
         this.category = category;
@@ -151,8 +151,8 @@ public class Button {
     }
 
     public void drawString(){
-        fontRenderer.drawString(mod.getName(), x + 20, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ClickGUI.color : -1, true);
-        fontRenderer.drawString("+", x + 528, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ClickGUI.color : -1, true);
+        fontRenderer.drawString(mod.getName(), x + 20, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ClickGUI.color : 0xffe0e0e0, true);
+        fontRenderer.drawString("+", x + 528, y + 38 / 2 - fontRenderer.getFontHeight() / 2 - 2, mod.isEnabled() ? ClickGUI.color : 0xffe0e0e0, true);
     }
 
     public Category getCategory() {

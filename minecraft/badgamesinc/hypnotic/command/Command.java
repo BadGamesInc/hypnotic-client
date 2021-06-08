@@ -5,8 +5,8 @@ import net.minecraft.client.Minecraft;
 
 public abstract class Command {
 
-	protected Minecraft mc = Minecraft.getMinecraft();
-	protected ModuleManager mm = new ModuleManager();
+	public Minecraft mc = Minecraft.getMinecraft();
+	public ModuleManager mm = new ModuleManager();
 	public abstract String getAlias();
 	public abstract String getDescription();
 	public abstract String getSyntax();

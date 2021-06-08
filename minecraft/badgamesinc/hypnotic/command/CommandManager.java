@@ -2,12 +2,11 @@ package badgamesinc.hypnotic.command;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.commands.*;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.Wrapper;
 
 public class CommandManager {
 
@@ -31,6 +30,8 @@ public class CommandManager {
 		commands.add(new Panic());
 		commands.add(new ConfigCmd());
 		commands.add(new LogoName());
+		commands.add(new Nick());
+		commands.add(new Friend());
 		//commands.add(new Plugins());
 	}
 	
@@ -53,7 +54,7 @@ public class CommandManager {
 				}
 				catch(Exception e)
 				{
-					Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + c.getSyntax(), (int) 5, NotificationType.WARNING));
+					NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "Usage: " + c.getSyntax(), "", true, 1500, Type.WARNING, Color.RED);
 					e.printStackTrace();
 				}
 				return;

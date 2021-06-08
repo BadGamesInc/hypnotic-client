@@ -16,7 +16,10 @@ public class AnimatedButton extends GuiButton {
     int targetY;
     int lastY2 = yPosition + height;
     int targetY2;
-    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 22, false, false, false);
+    int hoverTicks = 200;
+    int hoverTicks2 = 0;
+    int hoverTicks3 = 0;
+    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 
 
     public AnimatedButton(int buttonId, int x, int y, String buttonText) {
@@ -35,7 +38,7 @@ public class AnimatedButton extends GuiButton {
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
 
             if(this.hovered){
-            	color = 0xffff8ac4;
+            	color = new Color(255, 138, 196, 255).getRGB();
                 targetX = xPosition + width + 5;
                 targetX2 = xPosition;
                 targetY = yPosition + height + 11;
@@ -61,11 +64,28 @@ public class AnimatedButton extends GuiButton {
                     targetY2 = lastY2;
                     lastY2 += diff / 12;
                 }
-
-                Gui.drawRect(xPosition, yPosition + 2, targetX, yPosition, 0xFFFFFFFF);
-                Gui.drawRect(xPosition + width, yPosition + height - 2, targetX2, yPosition + height, 0xFFFFFFFF);
-                Gui.drawRect(xPosition + width - 1, targetY, xPosition + width + 1, yPosition, 0xFFFFFFFF);
-                Gui.drawRect(xPosition + 1, targetY2, xPosition - 1, yPosition + height, 0xFFFFFFFF);
+                if (hoverTicks > 100) {
+                	hoverTicks-=10;
+                }
+                if (hoverTicks2 < this.width / 2 - 25) {
+                	hoverTicks2+=5;
+                }
+                if (hoverTicks2 >= this.width / 2 - 25 && hoverTicks2 < this.width / 2 - 20) {
+                	hoverTicks2+=3;
+                }
+                if (hoverTicks2 >= this.width / 2 - 20 && hoverTicks2 < this.width / 2 - 15) {
+                	hoverTicks2+=2;
+                }
+                if (hoverTicks2 < this.width / 2) {
+                	hoverTicks2+=2;
+                }
+                if (hoverTicks > this.width / 2) {
+                	hoverTicks = this.width / 2;
+                }
+               // Gui.drawRect(xPosition, yPosition + 2, targetX, yPosition, 0xFFFFFFFF);
+               // Gui.drawRect(xPosition + width, yPosition + height - 2, targetX2, yPosition + height, 0xFFFFFFFF);
+                //Gui.drawRect(xPosition + width - 1, targetY, xPosition + width + 1, yPosition, 0xFFFFFFFF);
+                //Gui.drawRect(xPosition + 1, targetY2, xPosition - 1, yPosition + height, 0xFFFFFFFF);
             } else {
                 targetX = xPosition;
                 targetX2 = xPosition + width + 5;
@@ -92,12 +112,26 @@ public class AnimatedButton extends GuiButton {
                     targetY2 = lastY2;
                     lastY2 += diff / 12;
                 }
-                Gui.drawRect(xPosition, yPosition, targetX, yPosition + 1, 0xFFFFFFFF);
-                Gui.drawRect(xPosition  + width, yPosition + height , targetX2, yPosition + height - 1, 0xFFFFFFFF);
-                Gui.drawRect(xPosition + width, targetY, xPosition + width + 1, yPosition, 0xFFFFFFFF);
-                Gui.drawRect(xPosition , targetY2, xPosition - 1, yPosition + height, 0xFFFFFFFF);
+                if (hoverTicks < 220) {
+                	hoverTicks+=10;
+                }
+                if (hoverTicks2 > 0) {
+                	hoverTicks2-=5;
+                }
+                if (hoverTicks2 > 0 && hoverTicks2 < 5) {
+                	hoverTicks2=0;
+                }
+                //Gui.drawRect(xPosition, yPosition, targetX, yPosition + 1, 0xFFFFFFFF);
+                //Gui.drawRect(xPosition  + width, yPosition + height , targetX2, yPosition + height - 1, 0xFFFFFFFF);
+                //Gui.drawRect(xPosition + width, targetY, xPosition + width + 1, yPosition, 0xFFFFFFFF);
+                //Gui.drawRect(xPosition , targetY2, xPosition - 1, yPosition + height, 0xFFFFFFFF);
             }
-            fontRenderer.drawCenteredString(this.displayString, (float) (xPosition + (((xPosition + width) - xPosition - 4) / 2.0D)), (float) (yPosition + (((yPosition + height) - yPosition) / 2.0D) - 7.5), isMouseOver() ? color : -1, true);
+            
+            Gui.drawRect(this.xPosition + 2, this.yPosition + 0, this.xPosition + this.width - 2, this.yPosition + this.height - 0, new Color(20, 20, 20, hoverTicks).getRGB());
+            //Gui.drawRect((this.xPosition + 2), this.yPosition + this.height - 3, this.xPosition + this.width - 2, this.yPosition + this.height - 0, -1);
+            Gui.drawRect((this.xPosition + this.width / 2 + 2) - hoverTicks2, this.yPosition + this.height - 2, (this.xPosition + this.width / 2 + 2), this.yPosition + this.height - 0, -1);
+            Gui.drawRect((this.xPosition + this.width / 2 - 2), this.yPosition + this.height - 2, (this.xPosition + this.width / 2 - 2) + hoverTicks2, this.yPosition + this.height - 0, -1);
+            fontRenderer.drawCenteredString(this.displayString, (float) (xPosition + (((xPosition + width) - xPosition - 2) / 2.0D)), (float) (yPosition + (((yPosition + height) - yPosition) / 2.0D) - 7.5), isMouseOver() ? color : -1, true);
 
 
         }

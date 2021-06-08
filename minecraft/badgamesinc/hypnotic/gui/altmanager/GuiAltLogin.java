@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.util.RenderUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -75,9 +76,9 @@ extends GuiScreen {
     @Override
     public void initGui() {
         final int var3 = this.height / 4 + 24;
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, var3 + 72 + 12, "Login"));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, var3 + 72 + 12 + 24, "Back"));
-        buttonList.add(new GuiButton(2, this.width / 2 - 100, var3 + 72 + 12 + 48, "Import user:pass"));
+        this.buttonList.add(new AnimatedButton(0, this.width / 2 - 100, var3 + 72 + 12, "Login"));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 100, var3 + 72 + 12 + 24, "Back"));
+        buttonList.add(new AnimatedButton(2, this.width / 2 - 100, var3 + 72 + 12 + 48, "Import user:pass"));
         this.username = new GuiTextField(var3, this.mc.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
         this.password = new PasswordField(this.mc.fontRendererObj, this.width / 2 - 100, 100, 200, 20);
         this.username.setFocused(true);

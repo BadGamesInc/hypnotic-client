@@ -15,6 +15,7 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -24,6 +25,9 @@ import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
+import badgamesinc.hypnotic.event.events.EventReceivePacket;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
@@ -37,21 +41,26 @@ import badgamesinc.hypnotic.util.RotationUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityBat;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
+import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.WorldSettings;
 
-public class KillAura extends Mod {
+public class Killaura extends Mod {
 	
 	public ModeSetting mode = new ModeSetting("Rotation Mode", "Silent", "Silent", "Lock View", "None");
 	public NumberSetting apsDelay = new NumberSetting("APS", 10, 0, 20, 1);
@@ -60,11 +69,12 @@ public class KillAura extends Mod {
 	public NumberSetting existed = new NumberSetting("Ticks Existed", 30, 0, 500, 5);
 	public NumberSetting fov = new NumberSetting("FOV", 360, 0, 360, 5);
 	public BooleanSetting autoBlock = new BooleanSetting("AutoBlock", true);
+	public BooleanSetting disable = new BooleanSetting("Disable On Death", true);
 	public BooleanSetting invis = new BooleanSetting("Invisibles", false);
 	public BooleanSetting players = new BooleanSetting("Players", true);
 	public BooleanSetting animals = new BooleanSetting("Animals", false);
 	public BooleanSetting monsters = new BooleanSetting("Monsters", false);
-	public BooleanSetting villagers = new BooleanSetting("Villagers", false);
+	public BooleanSetting passives = new BooleanSetting("Passives", false);
 	public BooleanSetting teams = new BooleanSetting("Teams", false);
 	public BooleanSetting esp = new BooleanSetting("ESP", true);
 	
@@ -75,20 +85,21 @@ public class KillAura extends Mod {
     private boolean others;
     public boolean blocking;
 
-    public KillAura() {
-        super("KillAura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
-        addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, invis, players, animals, monsters, villagers, teams, esp);
+    public Killaura() {
+        super("Killaura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
+        addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, disable, invis, players, animals, monsters, passives, teams, esp);
     }
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("KillAura " + ColorUtils.white + "[R: " + MathUtils.round(range.getValue(), 2) + " APS: " + MathUtils.round(apsDelay.getValue(), 2) + "] ");
+    	this.setDisplayName("Killaura " + ColorUtils.white + "[R: " + MathUtils.round(range.getValue(), 2) + " APS: " + MathUtils.round(apsDelay.getValue(), 2) + "] ");
     	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
     		target = null;
     		RenderUtils.resetPlayerPitch();
             RenderUtils.resetPlayerYaw();
     		return;
     	}
+    	
     	if(target == null) {
      	   RenderUtils.resetPlayerPitch();
            RenderUtils.resetPlayerYaw();
@@ -106,13 +117,15 @@ public class KillAura extends Mod {
 	            return;
 	        updateTime();
 	        
-	        yaw = mc.thePlayer.rotationYaw;
-	        pitch = mc.thePlayer.rotationPitch;
-
+	        pitch = RotationUtils.getRotations(target, 210)[1];
+            yaw = RotationUtils.getRotations(target, 210)[0];
+            
 	        boolean block = target != null && autoBlock.isEnabled() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
-	       if(mode.getSelected().equalsIgnoreCase("Silent")) {
-	    	    RenderUtils.resetPlayerPitch();
-				RenderUtils.resetPlayerYaw();
+	       if(mode.is("Silent")) {
+	    	    RenderUtils.setCustomPitch(pitch);
+		        RenderUtils.setCustomYaw(yaw);
+				event.setYaw(yaw);
+            	event.setPitch(pitch);
 	       } else if (mode.getSelected().equalsIgnoreCase("None")) {
 	    	   
 	       } 
@@ -139,21 +152,14 @@ public class KillAura extends Mod {
                 }
             }
             
-            pitch = RotationUtils.getRotations(target)[1];
-            yaw = RotationUtils.getRotations(target)[0];
+           
             
             
-            if (mode.getSelected().equalsIgnoreCase("Silent")) {
-    	        RenderUtils.setCustomPitch(pitch);
-    	        RenderUtils.setCustomYaw(yaw);
-    	        event.setYaw(yaw);
-            	event.setPitch(pitch);
+            if (mode.is("Silent")) {
+
             } else if (mode.getSelected().equalsIgnoreCase("Lock view")) {
          	   mc.thePlayer.rotationPitch = pitch;
          	   mc.thePlayer.rotationYaw = yaw;
-            } else if(mode.getSelected().equalsIgnoreCase("Lock view")) {
-            	event.setYaw(yaw);
-            	event.setPitch(pitch);
             }
     	}
     }
@@ -199,15 +205,15 @@ public class KillAura extends Mod {
     }
 
     private boolean canAttack(EntityLivingBase player) {
-        if(player instanceof EntityPlayer || player instanceof EntityAnimal || player instanceof EntityMob || player instanceof EntityVillager) {
+        if(player instanceof EntityPlayer || player instanceof EntityAnimal || player instanceof EntityMob || player instanceof EntityArmorStand || player instanceof EntityVillager || player instanceof EntityBat || player instanceof EntitySquid) {
             if (player instanceof EntityPlayer && !players.isEnabled())
                 return false;
             if (player instanceof EntityAnimal && !animals.isEnabled())
                 return false;
             if (player instanceof EntityMob && !monsters.isEnabled())
                 return false;
-            if (player instanceof EntityVillager && !villagers.isEnabled())
-                return false;
+            if ((player instanceof EntityArmorStand || player instanceof EntityVillager || player instanceof EntityBat || player instanceof EntitySquid) && !passives.isEnabled()) 
+            	return false;
         }
         if(player.isOnSameTeam(mc.thePlayer) && !teams.isEnabled())
             return false;
@@ -215,6 +221,8 @@ public class KillAura extends Mod {
             return false;
         if(!isInFOV(player, fov.getValue()))
             return false;
+        if (Hypnotic.instance.friendManager.isFriend(player))
+        	return false;
         return player != mc.thePlayer && player.isEntityAlive() && mc.thePlayer.getDistanceToEntity(player) <= range.getValue() && player.ticksExisted > existed.getValue();
     }
 
@@ -323,6 +331,50 @@ public class KillAura extends Mod {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
         glPopMatrix();
+    }
+    
+    private boolean contains(String content, EventReceivePacket event) {
+    	if (event.getPacket() instanceof S02PacketChat) {
+	    	S02PacketChat packet = (S02PacketChat) event.getPacket();
+	    	String message = packet.getChatComponent().getUnformattedText();
+	    	return message.contains(content);
+    	} else
+    		return false;
+    }
+    
+    private boolean contains(String content, String content2, EventReceivePacket event) {
+    	if (event.getPacket() instanceof S02PacketChat) {
+	    	S02PacketChat packet = (S02PacketChat) event.getPacket();
+	    	String message = packet.getChatComponent().getUnformattedText();
+	    	return message.contains(content) && message.contains(content2);
+    	} else
+    		return false;
+    }
+    
+    @EventTarget
+    public void disable(EventReceivePacket event){
+    	if (!this.isEnabled())
+    		return;
+        if (event.getPacket() instanceof S02PacketChat) {
+            S02PacketChat packet = (S02PacketChat) event.getPacket();
+            String message = packet.getChatComponent().getUnformattedText();
+            boolean contains = message.contains(name);
+            if (disable.isEnabled()) {
+			    if (contains("1st Killer - ", event) || contains(mc.thePlayer.getName(), "died", event) || contains(mc.thePlayer.getName(), "was killed", event) || contains(mc.thePlayer.getName(), "foi morto por", event) || contains(" - Damage Dealt - ", event) || contains(" won ", event) || contains("1st Place: ", event) || contains("Winners - ", event) || contains(mc.thePlayer.getName() + " was", event) || mc.thePlayer.getHealth() == 0 || mc.playerController.isSpectatorMode() || mc.thePlayer.isDead || mc.theWorld == null) {
+			    	this.wasFlag = true;
+			    	this.toggle();
+				}
+            }
+        }
+    }
+    
+    @Override
+    public void onDisable() {
+    	if (this.wasFlag == true)
+    		 NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "Death", "Aura disabled due to death", true, 1500, Type.WARNING, badgamesinc.hypnotic.gui.notifications.Color.RED);
+	    
+    	this.wasFlag = false;
+    	super.onDisable();
     }
     
     public static int randomNumber(int max, int min) {

@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public class CheckBox extends Component{
 	
-	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
-	public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 14, false, false, false);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
+	public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 14, false, false, false);
 	BooleanSetting boolSet = (BooleanSetting)set;
 
     public CheckBox(int x, int y, Setting set, SettingsWindow window){

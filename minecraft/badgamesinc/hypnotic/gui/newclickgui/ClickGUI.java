@@ -24,7 +24,7 @@ public class ClickGUI extends GuiScreen {
 	public ArrayList<Button> buttons;
 	public float offset;
 	public int xWidth, xHeight;
-	public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 60, false, false, false);
+	public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 60, false, false, false);
 	
 	public ClickGUI() {
 		frames = new ArrayList<>();

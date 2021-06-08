@@ -22,7 +22,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 {
     private static final GameSettings.Options[] field_146440_f = new GameSettings.Options[] {GameSettings.Options.FOV};
     private final GuiScreen field_146441_g;
-    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 20, false, false, false);
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 20, false, false, false);
 
     /** Reference to the GameSettings object. */
     private final GameSettings game_settings_1;

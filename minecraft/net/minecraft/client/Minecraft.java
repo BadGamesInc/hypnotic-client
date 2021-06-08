@@ -1172,7 +1172,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.mcProfiler.endSection();
         this.checkGLError("Post render");
         ++this.fpsCounter;
-        this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic();
+        this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic()&& !Hypnotic.instance.moduleManager.pcpinger.isEnabled();
         long k = System.nanoTime();
         this.field_181542_y.func_181747_a(k - this.field_181543_z);
         this.field_181543_z = k;

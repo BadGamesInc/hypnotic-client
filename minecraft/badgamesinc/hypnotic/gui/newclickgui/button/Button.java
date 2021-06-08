@@ -20,7 +20,7 @@ public class Button {
 	public static boolean settingsOpen = false;
 	public boolean canToggle = true;
 	public String name;
-	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 
 	public Button(Mod m, float x, float y, Frame parent) {
 		modules = Hypnotic.instance.moduleManager.modules;

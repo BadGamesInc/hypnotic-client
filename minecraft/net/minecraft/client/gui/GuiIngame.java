@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.event.events.Event2D;
 import badgamesinc.hypnotic.gui.CustomHotbar;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.module.render.NoRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -167,7 +168,7 @@ public class GuiIngame extends Gui
         }
         
         Hypnotic.instance.hud.draw();
-        Hypnotic.instance.notificationManager.render();
+        NotificationManager.getNotificationManager().onRender();
         
         Event2D event2D = new Event2D(scaledresolution.getScaledWidth(), scaledresolution.getScaledWidth());
         event2D.call();

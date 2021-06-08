@@ -5,7 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.StringUtils;
 
 public class FontUtil {
-	private static FontRenderer fontRenderer;
+	private static FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
 
 
 	public static void setupFontUtils() {

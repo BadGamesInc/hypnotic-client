@@ -13,7 +13,7 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.Killaura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
@@ -72,7 +72,7 @@ public class Longjump extends Mod {
     @EventTarget
     public void onMotion(EventMotion event){
     	
-        if(Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).target.posY - Hypnotic.instance.moduleManager.getModule(KillAura.class).target.prevPosY >=0) {
+        if(Hypnotic.instance.moduleManager.getModule(Killaura.class).target != null && Hypnotic.instance.moduleManager.getModule(Killaura.class).target.posY - Hypnotic.instance.moduleManager.getModule(Killaura.class).target.prevPosY >=0) {
             if (!isBlockUnder() || mc.thePlayer.isCollidedHorizontally) {
                 airTicks++;
                 if (airTicks >= 1) {
@@ -92,9 +92,9 @@ public class Longjump extends Mod {
         }
 
         double slowdown;
-        if(mode.getSelected().equalsIgnoreCase("Redesky  ")){
+        if(mode.getSelected().equalsIgnoreCase("Long")){
 
-        	mc.timer.timerSpeed = 0.6f;
+        	//mc.timer.timerSpeed = 0.6f;
             switch (stage) {
                 case 1:
                     moveSpeed = 0.62;
@@ -103,7 +103,7 @@ public class Longjump extends Mod {
                     break;
                 case 2:
                     lastDist = 0.0D;
-                    float motionY = 0.70f;
+                    float motionY = 1.0f;
                     if (mc.thePlayer.onGround && (mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
                         if (mc.thePlayer.isPotionActive(Potion.jump))
                             motionY += ((mc.thePlayer.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.099F);
@@ -111,7 +111,7 @@ public class Longjump extends Mod {
                         moveSpeed = 0.4 * 1.4;
 
                     } else if ((mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
-
+                    					/*THIS IS GAMING*/
                     }
                     break;
                 case 3:
@@ -128,12 +128,9 @@ public class Longjump extends Mod {
                     break;
             }
             moveSpeed = Math.max(moveSpeed, MoveUtils.getBaseMoveSpeed());
-            double amplifier = mc.thePlayer.isPotionActive(Potion.moveSpeed.id) ? 0.1 : 0.277;
+            double amplifier = 3;
             MoveUtils.setMotion(event, moveSpeed + amplifier);
             motion = moveSpeed;
-            if(TargetStrafe.canStrafe()){
-                TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
-            }
             ++stage;
         }
 
@@ -172,7 +169,7 @@ public class Longjump extends Mod {
             this.setDisplayName("LongJump " + ColorUtils.white + "[" + modeString + "] ");
             
         if(TargetStrafe.canStrafe()){
-            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
+            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(Killaura.class).target, this.direction);
         }
         motion = MoveUtils.getSpeed();
         }

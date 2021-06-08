@@ -187,7 +187,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
     private boolean useShader;
     private int frameCount;
     
-    private GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Light", 20, false, false, false);
+    private GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Light.ttf", 20, false, false, false);
 
     public EntityRenderer(Minecraft mcIn, IResourceManager resourceManagerIn)
     {
@@ -791,11 +791,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
         if (this.mc.gameSettings.viewBobbing)
         {
             this.setupViewBobbing(partialTicks);
-        }
-        
-        if (Hypnotic.instance.moduleManager.getModule(Flight.class).isEnabled())
-        {
-        	this.setupViewBobbing(partialTicks);
         }
 
         float f1 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * partialTicks;

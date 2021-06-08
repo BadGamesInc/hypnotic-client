@@ -22,10 +22,10 @@ public class SettingsWindow {
     ArrayList<Component> components = new ArrayList<>();
     ArrayList<Setting> settings;
     int yCount = 0;
-    public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 20, false, false, false);
-    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
-    public static GlyphPageFontRenderer smallBigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 16, false, false, false);
-    public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 14, false, false, false);
+    public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 20, false, false, false);
+    public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
+    public static GlyphPageFontRenderer smallBigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 16, false, false, false);
+    public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 14, false, false, false);
     
     public SettingsWindow(Button parent) {
         yCount = 0;

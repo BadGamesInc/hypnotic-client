@@ -1108,5 +1108,20 @@ public class RenderUtils {
 		        drawHLine(x, y1, x1, y1, (float) lwidth, color);
 		        drawHLine(x, y1, x, y, (float) lwidth, color);
 		    }
+		 
+		 public static void scissor(double x, double y, double width, double height) {
+		        ScaledResolution sr = new ScaledResolution(mc);
+		        final double scale = sr.getScaleFactor();
+
+		        y = sr.getScaledHeight() - y;
+
+		        x *= scale;
+		        y *= scale;
+		        width *= scale;
+		        height *= scale;
+
+		        GL11.glScissor((int) x, (int) (y - height), (int) width, (int) height);
+		    }
+
     
 }

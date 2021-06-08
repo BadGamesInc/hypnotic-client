@@ -6,6 +6,8 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventStep;
+import badgamesinc.hypnotic.event.events.StepPostEvent;
 import badgamesinc.hypnotic.module.player.NoSlow;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
@@ -15,6 +17,7 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
@@ -712,38 +715,38 @@ public abstract class Entity implements ICommandSender
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, 0.0D, z));
+            EventStep eventStep = new EventStep(this.stepHeight);
+            if (this == Minecraft.getMinecraft().thePlayer) {
+                eventStep.call();
+            }
+            if (this.stepHeight > 0.0F && flag1 && (d3 != x || d5 != z)) {
 
-            if (this.stepHeight > 0.0F && flag1 && (d3 != x || d5 != z))
-            {
                 double d11 = x;
                 double d7 = y;
                 double d8 = z;
                 AxisAlignedBB axisalignedbb3 = this.getEntityBoundingBox();
                 this.setEntityBoundingBox(axisalignedbb);
-                y = (double)this.stepHeight;
+                y = (double) eventStep.getStepHeight();
                 List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox().addCoord(d3, y, d5));
                 AxisAlignedBB axisalignedbb4 = this.getEntityBoundingBox();
                 AxisAlignedBB axisalignedbb5 = axisalignedbb4.addCoord(d3, 0.0D, d5);
                 double d9 = y;
 
-                for (AxisAlignedBB axisalignedbb6 : list)
-                {
+                for (AxisAlignedBB axisalignedbb6 : list) {
                     d9 = axisalignedbb6.calculateYOffset(axisalignedbb5, d9);
                 }
 
                 axisalignedbb4 = axisalignedbb4.offset(0.0D, d9, 0.0D);
                 double d15 = d3;
 
-                for (AxisAlignedBB axisalignedbb7 : list)
-                {
+                for (AxisAlignedBB axisalignedbb7 : list) {
                     d15 = axisalignedbb7.calculateXOffset(axisalignedbb4, d15);
                 }
 
                 axisalignedbb4 = axisalignedbb4.offset(d15, 0.0D, 0.0D);
                 double d16 = d5;
 
-                for (AxisAlignedBB axisalignedbb8 : list)
-                {
+                for (AxisAlignedBB axisalignedbb8 : list) {
                     d16 = axisalignedbb8.calculateZOffset(axisalignedbb4, d16);
                 }
 
@@ -751,24 +754,21 @@ public abstract class Entity implements ICommandSender
                 AxisAlignedBB axisalignedbb14 = this.getEntityBoundingBox();
                 double d17 = y;
 
-                for (AxisAlignedBB axisalignedbb9 : list)
-                {
+                for (AxisAlignedBB axisalignedbb9 : list) {
                     d17 = axisalignedbb9.calculateYOffset(axisalignedbb14, d17);
                 }
 
                 axisalignedbb14 = axisalignedbb14.offset(0.0D, d17, 0.0D);
                 double d18 = d3;
 
-                for (AxisAlignedBB axisalignedbb10 : list)
-                {
+                for (AxisAlignedBB axisalignedbb10 : list) {
                     d18 = axisalignedbb10.calculateXOffset(axisalignedbb14, d18);
                 }
 
                 axisalignedbb14 = axisalignedbb14.offset(d18, 0.0D, 0.0D);
                 double d19 = d5;
 
-                for (AxisAlignedBB axisalignedbb11 : list)
-                {
+                for (AxisAlignedBB axisalignedbb11 : list) {
                     d19 = axisalignedbb11.calculateZOffset(axisalignedbb14, d19);
                 }
 
@@ -776,34 +776,33 @@ public abstract class Entity implements ICommandSender
                 double d20 = d15 * d15 + d16 * d16;
                 double d10 = d18 * d18 + d19 * d19;
 
-                if (d20 > d10)
-                {
+                if (d20 > d10) {
                     x = d15;
                     z = d16;
                     y = -d9;
                     this.setEntityBoundingBox(axisalignedbb4);
-                }
-                else
-                {
+                } else {
                     x = d18;
                     z = d19;
                     y = -d17;
                     this.setEntityBoundingBox(axisalignedbb14);
                 }
 
-                for (AxisAlignedBB axisalignedbb12 : list)
-                {
+                for (AxisAlignedBB axisalignedbb12 : list) {
                     y = axisalignedbb12.calculateYOffset(this.getEntityBoundingBox(), y);
                 }
 
                 this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, y, 0.0D));
 
-                if (d11 * d11 + d8 * d8 >= x * x + z * z)
-                {
+                if (d11 * d11 + d8 * d8 >= x * x + z * z) {
                     x = d11;
                     y = d7;
                     z = d8;
                     this.setEntityBoundingBox(axisalignedbb3);
+                } else {
+                    StepPostEvent event = new StepPostEvent();
+                    if (this == Minecraft.getMinecraft().thePlayer)
+                        event.call();
                 }
             }
 

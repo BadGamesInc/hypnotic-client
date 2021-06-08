@@ -7,13 +7,14 @@ import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 
 public class ArrayListModule extends Mod{
 
-	public ModeSetting style = new ModeSetting("Style", "Boxed", "Boxed", "Clean");
+	public ModeSetting style = new ModeSetting("Style", "Clean", "Clean");
 	public ModeSetting font = new ModeSetting("Font", "Roboto-Regular", "Roboto-Regular", "Minecraft");
 	public ModeSetting colorMode = new ModeSetting("Color Mode", "Rainbow", "Rainbow", "Static", "Color Wave");
+	public BooleanSetting showRenderMods = new BooleanSetting("Show Render Modules", true);
 	
 	public ArrayListModule() {
 		super("Array List", 0, Category.GUI, "Customize the array list");
-		addSettings(style, font, colorMode);
+		addSettings(style, font, colorMode, showRenderMods);
 		setEnabled(true);
 	}
 

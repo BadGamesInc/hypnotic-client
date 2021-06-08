@@ -15,8 +15,10 @@ public class ServerUtil {
 
     public ServerUtil() {
     }
+    
     static Minecraft mc = Minecraft.getMinecraft();
     public static ServerData serverData;
+    public static ServerData lastLogin;
 
     public static void connectToLastServer() {
         if(serverData == null)

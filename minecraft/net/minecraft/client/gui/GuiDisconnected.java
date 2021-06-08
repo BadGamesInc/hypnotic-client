@@ -16,6 +16,7 @@ import badgamesinc.hypnotic.gui.altmanager.Alt;
 import badgamesinc.hypnotic.gui.altmanager.AltLoginThread;
 import badgamesinc.hypnotic.gui.altmanager.AltManager;
 import badgamesinc.hypnotic.util.ServerUtil;
+import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.IChatComponent;
@@ -65,7 +66,7 @@ public class GuiDisconnected extends GuiScreen
         this.multilineMessage = this.fontRendererObj.listFormattedStringToWidth(this.message.getFormattedText(), this.width - 50);
         this.field_175353_i = this.multilineMessage.size() * this.fontRendererObj.FONT_HEIGHT;
         this.buttonList.add(new AnimatedButton(0, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT, I18n.format("gui.toMenu", new Object[0])));
-        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 25, I18n.format("Reconnect with random alt", new Object[0])));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 23, I18n.format("Reconnect", new Object[0])));
     }
 
     /**
@@ -77,19 +78,9 @@ public class GuiDisconnected extends GuiScreen
         {
             this.mc.displayGuiScreen(this.parentScreen);
         } 
-        if (button.id == 1)
+        else if (button.id == 1)
         {
-        	if (getAlts().isEmpty()) return;
-
-            Alt minecraftAccount = getAlts().get(new Random().nextInt(getAlts().size()));
-            (this.loginThread = new AltLoginThread(minecraftAccount)).start();
-            final Session auth = this.createSession(minecraftAccount.getUsername(), minecraftAccount.getPassword());
-            if(auth == null){
-                return;
-            }
-            username = minecraftAccount.getUsername();
-            ServerUtil.connectToLastServer();
-            return;
+        	mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(new GuiMainMenu()), mc, ServerUtil.lastLogin));
         }
     }
     

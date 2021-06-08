@@ -7,14 +7,21 @@ import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
+import badgamesinc.hypnotic.util.ColorUtils;
 
 public class TargetHUD extends Mod {
 	
-	public ModeSetting targetHudLook = new ModeSetting("Design", "New", "New", "Astolfo");
+	public ModeSetting targetHudLook = new ModeSetting("Design", "New", "New", "Astolfo", "Compact");
 	
 	public TargetHUD() {
-		super("TargetHUD", 0, Category.RENDER, "Displays information about killaura targets");
+		super("TargetHUD", 0, Category.RENDER, "Displays information about Killaura targets");
 		addSettings(targetHudLook);
+	}
+	
+	@Override
+	public void onUpdate() {
+		this.setDisplayName("TargetHUD " + ColorUtils.white + "[" + targetHudLook.getSelected() + "] ");
+		super.onUpdate();
 	}
 
 }

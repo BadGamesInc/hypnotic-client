@@ -1,28 +1,80 @@
 package badgamesinc.hypnotic.util;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class RotationUtils {
+	
 	static Minecraft mc = Minecraft.getMinecraft();
+	
+	private static MovingObjectPosition tracePath(final World world, final float x, final float y, final float z, final float tx, final float ty, final float tz, final float borderSize, final HashSet<Entity> excluded) {
+        Vec3 startVec = new Vec3(x, y, z);
+        Vec3 endVec = new Vec3(tx, ty, tz);
+        final float minX = (x < tx) ? x : tx;
+        final float minY = (y < ty) ? y : ty;
+        final float minZ = (z < tz) ? z : tz;
+        final float maxX = (x > tx) ? x : tx;
+        final float maxY = (y > ty) ? y : ty;
+        final float maxZ = (z > tz) ? z : tz;
+        final AxisAlignedBB bb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ).expand(borderSize, borderSize, borderSize);
+        final ArrayList<Entity> allEntities = (ArrayList<Entity>) world.getEntitiesWithinAABBExcludingEntity(null, bb);
+        MovingObjectPosition blockHit = world.rayTraceBlocks(startVec, endVec);
+        startVec = new Vec3(x, y, z);
+        endVec = new Vec3(tx, ty, tz);
+        Entity closestHitEntity = null;
+        float closestHit = Float.POSITIVE_INFINITY;
+        float currentHit;
+        for (final Entity ent : allEntities) {
+            if (ent.canBeCollidedWith() && !excluded.contains(ent)) {
+                final float entBorder = ent.getCollisionBorderSize();
+                AxisAlignedBB entityBb = ent.getEntityBoundingBox();
+                if (entityBb == null) {
+                    continue;
+                }
+                entityBb = entityBb.expand(entBorder, entBorder, entBorder);
+                final MovingObjectPosition intercept = entityBb.calculateIntercept(startVec, endVec);
+                if (intercept == null) {
+                    continue;
+                }
+                currentHit = (float) intercept.hitVec.distanceTo(startVec);
+                if (currentHit >= closestHit && currentHit != 0.0f) {
+                    continue;
+                }
+                closestHit = currentHit;
+                closestHitEntity = ent;
+            }
+        }
+        if (closestHitEntity != null) {
+            blockHit = new MovingObjectPosition(closestHitEntity);
+        }
+        return blockHit;
+    }
+	
     public static float[] getRotations(EntityLivingBase ent) {
         double x = ent.posX;
         double z = ent.posZ;
         double y = ent.posY + ent.getEyeHeight() / 2.0F;
         return getRotationFromPosition(x, z, y);
     }
+    
     public static float[] getPredictedRotations(EntityLivingBase ent) {
         double x = ent.posX + (ent.posX - ent.lastTickPosX);
         double z = ent.posZ + (ent.posZ - ent.lastTickPosZ);
         double y = ent.posY + ent.getEyeHeight() / 2.0F;
         return getRotationFromPosition(x, z, y);
     }
+    
     public static float[] getAverageRotations(List<EntityLivingBase> targetList) {
         double posX = 0.0D;
         double posY = 0.0D;
@@ -38,6 +90,7 @@ public class RotationUtils {
 
         return new float[]{getRotationFromPosition(posX, posZ, posY)[0], getRotationFromPosition(posX, posZ, posY)[1]};
     }
+    
     public static float getStraitYaw(){
     	float YAW = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw);
     	if(YAW < 45 && YAW > -45){
@@ -51,6 +104,7 @@ public class RotationUtils {
 		}	 
     	return YAW;
     }
+    
     public static float[] getBowAngles(final Entity entity) {
         final double xDelta = (entity.posX - entity.lastTickPosX) * 0.4;
         final double zDelta = (entity.posZ - entity.lastTickPosZ) * 0.4;
@@ -116,7 +170,39 @@ public class RotationUtils {
         return -MathHelper.wrapAngleTo180_float(pitch - (float) pitchToEntity) - 2.5F;
     }
 
+    public static float[] getRotations(EntityLivingBase entityIn, float speed) {
+        float yaw = updateRotation(mc.thePlayer.rotationYaw,
+                getNeededRotations(entityIn)[0],
+                speed);
+        float pitch = updateRotation(mc.thePlayer.rotationPitch,
+                getNeededRotations(entityIn)[1],
+                speed);
+        return new float[]{yaw, pitch};
+    }
+    
+    public static float[] getNeededRotations(EntityLivingBase entityIn) {
+        double d0 = entityIn.posX - mc.thePlayer.posX;
+        double d1 = entityIn.posZ - mc.thePlayer.posZ;
+        double d2 = entityIn.posY + entityIn.getEyeHeight() - (mc.thePlayer.getEntityBoundingBox().minY + mc.thePlayer.getEyeHeight());
 
+        double d3 = MathHelper.sqrt_double(d0 * d0 + d1 * d1);
+        float f = (float) (MathHelper.func_181159_b(d1, d0) * 180.0D / Math.PI) - 90.0F;
+        float f1 = (float) (-(MathHelper.func_181159_b(d2, d3) * 180.0D / Math.PI));
+        return new float[]{f, f1};
+    }
+    
+    private static float updateRotation(float currentRotation, float intendedRotation, float increment) {
+        float f = MathHelper.wrapAngleTo180_float(intendedRotation - currentRotation);
+
+        if (f > increment)
+            f = increment;
+
+        if (f < -increment)
+            f = -increment;
+
+        return currentRotation + f;
+    }
+    
     public static float getNewAngle(float angle) {
         angle %= 360.0F;
         if (angle >= 180.0F) {
@@ -127,7 +213,17 @@ public class RotationUtils {
         }
         return angle;
     }
+    
+    private static MovingObjectPosition tracePathD(final World w, final double posX, final double posY, final double posZ, final double v, final double v1, final double v2, final float borderSize, final HashSet<Entity> exclude) {
+        return tracePath(w, (float) posX, (float) posY, (float) posZ, (float) v, (float) v1, (float) v2, borderSize, exclude);
+    }
 
+    public static MovingObjectPosition rayCast(final EntityPlayerSP player, final double x, final double y, final double z) {
+        final HashSet<Entity> excluded = new HashSet<>();
+        excluded.add(player);
+        return tracePathD(player.worldObj, player.posX, player.posY + player.getEyeHeight(), player.posZ, x, y, z, 1.0f, excluded);
+    }
+    
     public static boolean canEntityBeSeen(Entity e){
     	Vec3 vec1 = new Vec3(mc.thePlayer.posX, mc.thePlayer.posY + mc.thePlayer.getEyeHeight(),mc.thePlayer.posZ);
 
@@ -182,6 +278,38 @@ public class RotationUtils {
 	
     	return false;
     }
+    
+    public static float getAngleChange(EntityLivingBase entityIn) {
+        float yaw = getNeededRotations(entityIn)[0];
+        float pitch = getNeededRotations(entityIn)[1];
+        float playerYaw = mc.thePlayer.rotationYaw;
+        float playerPitch = mc.thePlayer.rotationPitch;
+        if (playerYaw < 0)
+            playerYaw += 360;
+        if (playerPitch < 0)
+            playerPitch += 360;
+        if (yaw < 0)
+            yaw += 360;
+        if (pitch < 0)
+            pitch += 360;
+        float yawChange = Math.max(playerYaw, yaw) - Math.min(playerYaw, yaw);
+        float pitchChange = Math.max(playerPitch, pitch) - Math.min(playerPitch, pitch);
+        return yawChange + pitchChange;
+    }
+    
+    public static float getDistanceToEntity(EntityLivingBase entityLivingBase) {
+        return mc.thePlayer.getDistanceToEntity(entityLivingBase);
+    }
+
+    public static boolean isOnSameTeam(EntityLivingBase entity) {
+        if (entity.getTeam() != null && mc.thePlayer.getTeam() != null) {
+            char c1 = entity.getDisplayName().getFormattedText().charAt(1);
+            char c2 = mc.thePlayer.getDisplayName().getFormattedText().charAt(1);
+            return c1 == c2;
+        }
+        return false;
+    }
+    
     public static float getDistanceBetweenAngles(float angle1, float angle2) {
         float angle = Math.abs(angle1 - angle2) % 360.0F;
         if (angle > 180.0F) {
@@ -189,6 +317,7 @@ public class RotationUtils {
         }
         return angle;
     }
+    
     public static Vec3 getVectorForRotation(final float[] rotation) {
         float yawCos = MathHelper.cos(-rotation[0] * 0.017453292F - (float) Math.PI);
         float yawSin = MathHelper.sin(-rotation[0] * 0.017453292F - (float) Math.PI);
@@ -196,6 +325,7 @@ public class RotationUtils {
         float pitchSin = MathHelper.sin(-rotation[1] * 0.017453292F);
         return new Vec3(yawSin * pitchCos, pitchSin, yawCos * pitchCos);
     }
+    
     public static Vec3 getVectorForRotation(float pitch, float yaw)
     {
         float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);

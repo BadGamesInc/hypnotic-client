@@ -21,7 +21,7 @@ public class Frame {
 	
 	Category category;
 	Minecraft mc = Minecraft.getMinecraft();
-	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 	
 	public ArrayList<Button> buttons;
 	

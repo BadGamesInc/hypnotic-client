@@ -33,7 +33,7 @@ public class Criticals extends Mod {
     public void onSendPacket(EventSendPacket event) {
         String mode = this.mode.getSelected();
 
-        if(canCrit()) {
+        if(canCrit() && mc.thePlayer != null) {
             if (event.getPacket() instanceof C02PacketUseEntity) {
                 C02PacketUseEntity packet = (C02PacketUseEntity)event.getPacket();
                 if(packet.getAction() == C02PacketUseEntity.Action.ATTACK) {

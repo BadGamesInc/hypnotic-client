@@ -2,12 +2,11 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
-import badgamesinc.hypnotic.util.Wrapper;
-import net.minecraft.enchantment.Enchantment;
 
 public class Panic extends Command {
 
@@ -36,6 +35,6 @@ public class Panic extends Command {
 		{
 			m.setEnabled(false);
 		}
-		Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "PANIC!", (int) 5, NotificationType.INFO));
+		NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "PANIC" + getSyntax(), "", true, 1500, Type.WARNING, Color.RED);
 	}
 }

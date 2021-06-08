@@ -41,8 +41,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final AtomicInteger field_175373_f = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
     private static final Random RANDOM = new Random();
-    private final GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 40, false, false, false);
-    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    private final GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 40, false, false, false);
+    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 
     // Counts the number of screen updates.
     private float updateCounter;
@@ -347,55 +347,55 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         int k = 30;
         Gui.drawRect(0, sr.getScaledHeight() - 55, sr.getScaledWidth(), sr.getScaledHeight() - 58, -1);
         Gui.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - 55, new Color(0, 0, 0, 160).getRGB());
-        // this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
-        // this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
         
         // Changelog
+        ArrayList<String> additions = new ArrayList();
         ArrayList<String> changes = new ArrayList();
+        ArrayList<String> removals = new ArrayList();
         
         //additions
-        //changes.add("§a+§f Addition");
-        changes.add("§a+§f Added NCP bypasses to KillAura AutoBlock, NoSlow, and Speed");
-        changes.add("§a+§f Added AutoConfig as a temp fix to configs being broken :/");
-        changes.add("§a+§f Added Phase");
-        changes.add("§a+§f Added LongJump");
-        changes.add("§a+§f Added AntiBot");
-        changes.add("§a+§f Added .enchant");
-        changes.add("§a+§f Added .help");
-        changes.add("§a+§f Added .about");
-        changes.add("§a+§f Added .help");
-        changes.add("§a+§f Added .modules");
-        changes.add("§a+§f Added .config");
-        changes.add("§a+§f Added .logo");
-        changes.add("§a+§f Added Notifications");																																																																																																																									        
+        additions.add("Added AutoDisable to Killaura and Speed");
+        additions.add("Added LowHop mode to speed");
+        additions.add("Added NCP mode for step");   
+        additions.add("Added 2D mode for ESP");
+        additions.add("Added friend system");
+        additions.add("Added Keystrokes");
+        additions.add("Added Blink");					
+        additions.add("Added Glint");
+        additions.add("Added Wings");
         
         //changes
-        //changes.add("§a+§f Change");
-        changes.add("§e*§f Improved Nametags");
-        changes.add("§e*§f Improved PC Pinger");
-        changes.add("§e*§f Improved TargetHUD");
-        changes.add("§e*§f Fixed KillSults");
-        changes.add("§e*§f Fixed Disabler");
-        changes.add("§e*§f Fixed InfoHUD TPS display");
-        changes.add("§e*§f Fixed Discord RPC");
-        changes.add("§e*§f Changed font renderer because the other one sucked");
-        changes.add("§e*§f Rewrote the ClickGUI");
-        changes.add("§e*§f New Buttons");
-        changes.add("§e*§f Replaced retard talk with retard detector");
-        changes.add("§e*§f Changed Alt login to an actual alt manager");
-        changes.add("§e*§f Many QOL changes and code optimizations");
-        changes.add("§e*§f FINALLY fixed configs (mostly)");
+        changes.add("Fixed Killaura rotations");
+        changes.add("Fixed alt manager crashes");
+        changes.add("Changed button animation");
+        changes.add("Improved Notifications");
+        changes.add("Various GUI improvements");
+        changes.add("Fixed not being able to use items with NoSlow enabled");
         
         // removals
-        //changes.add("§a+§f Removal");
-        changes.add("§c-§f Removed Tracers (temp)");
+        removals.add("Removed boxed mode in the Array List due to bugs");
 
         bigFontRenderer.drawString("Changes", 4, 4, -1, true);
         
-        int count = 32;
-        for (String str : changes) {
-            fontRenderer.drawString(str, 16, count, -1, true);
-            count += 10;
+        int addCount = 32;
+        
+        for (String addtion : additions) {
+            fontRenderer.drawString("§a+§f " + addtion, 16, addCount, -1, true);
+            addCount += 10;
+        }
+        
+        int changeCount = addCount;
+        
+        for (String change : changes) {
+            fontRenderer.drawString("§e*§f " + change, 16, changeCount, -1, true);
+            changeCount += 10;
+        }
+        
+        int removeCount = changeCount;
+        
+        for (String removeal : removals) {
+            fontRenderer.drawString("§c-§f " + removeal, 16, removeCount, -1, true);
+            removeCount += 10;
         }
         
         /*           */

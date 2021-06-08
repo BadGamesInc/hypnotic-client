@@ -7,7 +7,7 @@ public class SettingsWindow {
 	public Button parentMod;
 	public int xWidth, xHeight;
 	public String parentName;
-	public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 45, false, false, false);
+	public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 45, false, false, false);
 	
 	public SettingsWindow(Button parentMod) {
 		this.parentMod = parentMod;

@@ -1,5 +1,7 @@
 package badgamesinc.hypnotic.module.render;
 
+import java.awt.Color;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -27,7 +29,7 @@ public class NameTags extends Mod {
 	public BooleanSetting background = new BooleanSetting("Background", true);
 	
     public NameTags(){
-        super("NameTags", Keyboard.KEY_NONE, Category.RENDER, "Renders a custom nametag above players");
+        super("Nametags", Keyboard.KEY_NONE, Category.RENDER, "Renders a custom nametag above players");
         addSettings(scale, armor, healthbar, background);
     }
 
@@ -115,9 +117,9 @@ public class NameTags extends Mod {
                 Gui.drawRect(-namewidth / 2 - 15, 42, namewidth / 2 + 15 - (1 - (entity1.getHealth() / entity1.getMaxHealth())) * (namewidth + 4), 40, colorrectCode);
 
             if (background.isEnabled())
-                Gui.drawRect(-namewidth / 2 - 15, 20, namewidth / 2 + 15, 40, 0x90202020);
+                Gui.drawRect(-namewidth / 2 - 15, 20, namewidth / 2 + 15, 40, new Color(30, 30, 30, 100).getRGB());
             
-            fontRenderer.drawString(entity1.getName() + (isDeveloper ? ColorUtils.purple + "  DEV" : ""), -namewidth / 2 - 15 + 4, 23, -1, true);
+            fontRenderer.drawString((Hypnotic.instance.friendManager.isFriend(entity1) ? ColorUtils.lightPurple : ColorUtils.white) + entity1.getName() + (isDeveloper ? ColorUtils.purple + "  DEV" : ""), -namewidth / 2 - 15 + 4, 23, -1, true);
             fontRenderer.drawString(colorCode + (int) entity1.getHealth(), namewidth / 2, 23, -1, true);
 
             GlStateManager.disableBlend();

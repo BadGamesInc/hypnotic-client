@@ -15,13 +15,13 @@ public class ClickGuiMod extends Mod {
 	public ModeSetting mode = new ModeSetting("Animation", "Slide", "Slide", "Fade in (ugly)");
 	public BooleanSetting rainbowGUI = new BooleanSetting("Rainbow GUI", true);
 	public BooleanSetting sound = new BooleanSetting("Sound", true);
-	public NumberSetting guiRed = new NumberSetting("GuiRed", 255, 0, 255, 1);
-	public NumberSetting guiGreen = new NumberSetting("GuiGreen", 147, 0, 255, 1);
-	public NumberSetting guiBlue = new NumberSetting("GuiBlue", 255, 0, 255, 1);
+	public NumberSetting red = new NumberSetting("GuiRed", 255, 0, 255, 1);
+	public NumberSetting green = new NumberSetting("GuiGreen", 147, 0, 255, 1);
+	public NumberSetting blue = new NumberSetting("GuiBlue", 255, 0, 255, 1);
 	
 	public ClickGuiMod() {
 		super("ClickGUI", Keyboard.KEY_RSHIFT, Category.GUI, "The ClickGUI (now epic gaming)");
-		addSettings(mode, rainbowGUI, sound, guiRed, guiGreen, guiBlue);
+		addSettings(mode, rainbowGUI, sound, red, green, blue);
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import badgamesinc.hypnotic.event.events.EventRenderPlayer;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
@@ -53,6 +54,9 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
      */
     public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
+    	EventRenderPlayer event = new EventRenderPlayer(entity);
+    	event.call();
+    	
         if (!entity.isUser() || this.renderManager.livingPlayer == entity)
         {
             double d0 = y;

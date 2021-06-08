@@ -8,6 +8,7 @@ import java.net.URL;
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.AnimatedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -112,7 +113,7 @@ public class GuiTheAltening extends GuiScreen {
         this.api.drawTextBox();
         this.token.drawTextBox();
         mc.fontRendererObj.drawString("Alt Login", this.width / 2, 20, -1);
-        mc.fontRendererObj.drawString((this.thread == null) ? "Â§eWaiting..." : this.thread.getStatus(), this.width / 2, 29, -1);
+        mc.fontRendererObj.drawString((this.thread == null) ? "§eWaiting..." : this.thread.getStatus(), this.width / 2, 29, -1);
         if (this.api.getText().isEmpty()) {
             mc.fontRendererObj.drawStringWithShadow("API", (float)(this.width / 2 - 94), 106.0f, -7829368);
         }
@@ -125,21 +126,13 @@ public class GuiTheAltening extends GuiScreen {
     @Override
     public void initGui() {
         final int var3 = this.height / 4 + 24;
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, 125, "Generate"));
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, 175, "Login"));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, 198, "Back"));
+        this.buttonList.add(new AnimatedButton(2, this.width / 2 - 100, 125, "Generate"));
+        this.buttonList.add(new AnimatedButton(0, this.width / 2 - 100, 175, "Login"));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 100, 198, "Back"));
         this.api = new PasswordField(mc.fontRendererObj, this.width / 2 - 98, 100, 195, 20);
         this.token = new GuiTextField(var3, mc.fontRendererObj, this.width / 2 - 98, 150, 195, 20);
         this.api.setFocused(true);
-        Keyboard.enableRepeatEvents(true);
-        //ConfigManager.loadDefault();
-        //if (Northside.INSTANCE.APIKey.equals("")) {
-        //if (Explicit.instance.configManager.getAltening() != null) {
-        //api.setText(Explicit.instance.configManager.getAltening());
-        //}
-        //} else {
-        //api.setText(Explicit.instance.theAltening);
-        //}
+
         if (!Hypnotic.APIKey.equals("")) {
             api.setText(Hypnotic.APIKey);
         }

@@ -1,8 +1,9 @@
-package badgamesinc.hypnotic;
+package badgamesinc.hypnotic.config;
 
 import java.io.*;
 import java.util.ArrayList;
 
+import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,8 @@ public class SaveLoad {
     public File configs;
     public File dataFile;
 
+    //Saves keybinds and friends
+    
     public SaveLoad() {
         dir = new File(Minecraft.getMinecraft().mcDataDir, "Hypnotic");
         if (!dir.exists()) {
@@ -38,6 +41,10 @@ public class SaveLoad {
 
         for (Mod mod : Hypnotic.instance.moduleManager.getModules()) {
             toSave.add("MOD:" + mod.getName() + ":" + mod.isEnabled() + ":" + mod.getKey());
+        }
+        
+        for (String friends : Hypnotic.instance.friendManager.friends) {
+        	toSave.add("FRIEND:" + friends);
         }
 
         try {
@@ -72,33 +79,12 @@ public class SaveLoad {
             if (s.toLowerCase().startsWith("mod:")) {
                 Mod m = Hypnotic.instance.moduleManager.getModuleByName(args[1]);
                 if (m != null) {
-                    //m.setEnabled(Boolean.parseBoolean(args[2]));
                     m.setKey(Integer.parseInt(args[3]));
                 }
                 
-            } /*else if (s.toLowerCase().startsWith("set:")) {
-                Mod m = Hypnotic.instance.moduleManager.getModuleByName(args[2]);
-                if (m != null) {
-                    Setting set = Hypnotic.instance.setmgr.getSettingByName(args[1]);
-                    if (set != null) {
-                        if (set.isCheck()) {
-                            set.setValBoolean(Boolean.parseBoolean(args[3]));
-                        }
-                        if (set.isCombo()) {
-                            set.setValString(args[3]);
-                        }
-                        if (set.isSlider()) {
-                        	
-                            set.setValDouble(Double.valueOf(args[3]));
-                        }
-                    }
-                }
-            }*/
-            
-            //System.out.println(args[1]);
-            //System.out.println(args[2]);
-            //System.out.println(args[3]);
-            
+            } else if (s.toLowerCase().startsWith("friend:")) {
+            	Hypnotic.instance.friendManager.addFriend(args[1]);
+            }
         }
     }
 }

@@ -1,10 +1,9 @@
 package badgamesinc.hypnotic.module.combat;
 
-import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
@@ -29,6 +28,7 @@ public class Velocity extends Mod {
 		this.setDisplayName("Velocity " + ColorUtils.white + "[H: " + MathUtils.round(horizontal, 2) + " V: " + MathUtils.round(vertical, 2) + "] ");
 	}
 	
+	@EventTarget
 	public void eventPacket(EventReceivePacket event) {
 		
 		if (event.getPacket() instanceof S12PacketEntityVelocity) {
@@ -42,9 +42,7 @@ public class Velocity extends Mod {
 			
 			if (horizontal == 0 && vertical == 0) {
 				event.setCancelled(true);
-			}
-			
-			
+			}		
 		}
 		else if (event.getPacket() instanceof S27PacketExplosion) {
 			event.setCancelled(true);

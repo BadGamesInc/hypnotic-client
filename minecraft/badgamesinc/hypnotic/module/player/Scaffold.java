@@ -1,6 +1,6 @@
 package badgamesinc.hypnotic.module.player;
 
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -37,8 +37,10 @@ import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
+import badgamesinc.hypnotic.util.ColorUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
+import badgamesinc.hypnotic.util.MovementUtils;
 import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.Rotation;
 import badgamesinc.hypnotic.util.RotationUtils;
@@ -93,7 +95,7 @@ public class Scaffold extends Mod {
     public ModeSetting scaffoldMode = new ModeSetting("Mode", "Hypixel", "Hypixel", "AAC");
     private double startY;
     public TimeHelper towerTimer = new TimeHelper();
-    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 18, false, false, false);
+    private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
     private int count;
     private BlockPos currentPos;
     private EnumFacing currentFacing;
@@ -104,6 +106,8 @@ public class Scaffold extends Mod {
     public BooleanSetting boost = new BooleanSetting("Boost", false);
     public BooleanSetting redeskyBoost = new BooleanSetting("Timer Boost", false);
     public BooleanSetting safeWalk = new BooleanSetting("Safewalk", false);
+    
+    private BlockPos espPos;
 
     float oldPitch = 0;
     private RotationUtils RayCastUtil;
@@ -119,7 +123,7 @@ public class Scaffold extends Mod {
 
     private boolean isBlockUnder() {
         for (int i = (int) (mc.thePlayer.posY - 1.0); i > 0; --i) {
-            BlockPos pos = new BlockPos(mc.thePlayer.posX, i, mc.thePlayer.posZ);
+            BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
             if (mc.theWorld.getBlockState(pos).getBlock() instanceof BlockAir) continue;
             return true;
         }
@@ -138,6 +142,7 @@ public class Scaffold extends Mod {
     @Override
     public void onUpdate() {
     	this.setDisplayName("Scaffold " + ColorUtils.white + "[" + scaffoldMode.getSelected() + "] ");
+    	 espPos = new BlockPos(mc.thePlayer.posX, keepY.isEnabled() ? this.startY - 1 : mc.thePlayer.posY - ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (mc.thePlayer.onGround || mc.thePlayer.fallDistance > 0.3) && MovementUtils.isMoving() && blockFly.isEnabled()) ? 2 : 1), mc.thePlayer.posZ);
     }
 
     float lastYaw = 0;
@@ -179,10 +184,9 @@ public class Scaffold extends Mod {
                 }
 
                 if (mc.gameSettings.keyBindJump.isKeyDown() && tower.isEnabled() && (this.towermove.isEnabled() || !MoveUtils.isMoving()) && !mc.thePlayer.isPotionActive(Potion.jump)) {
-
                         EntityPlayerSP player = mc.thePlayer;
                                 if (!MoveUtils.isOnGround(0.79) || mc.thePlayer.onGround) {
-                                    player.motionY = 0.41985;
+                                    player.motionY = redeskyBoost.isEnabled() ? 0.6 : 0.41985;
                                     stage = 1;
                                 }
                                 if(towerTimer.hasReached(1500)){
@@ -194,7 +198,7 @@ public class Scaffold extends Mod {
                 } else {
                     towerTimer.reset();
                 }
-
+                
                 if (this.isPlaceTick) {
                     Rotation targetRotation = new Rotation(badgamesinc.hypnotic.util.SetBlockAndFacing.BlockUtil.getDirectionToBlock(blockData.getPosition().getX(), blockData.getPosition().getY(), blockData.getPosition().getZ(), blockData.getFacing())[0], 79.44f);
                     Rotation limitedRotation = SetBlockAndFacing.BlockUtil.limitAngleChange(new Rotation(yaw, event.getPitch()), targetRotation, (float) ThreadLocalRandom.current().nextDouble(20, 30));
@@ -202,10 +206,16 @@ public class Scaffold extends Mod {
                     pitch = limitedRotation.getPitch();
                     event.setYaw(yaw);
                     event.setPitch(79.44f);
-                    RenderUtils.setCustomPitch(event.getPitch());
+                    if (mc.thePlayer.fallDistance > 2) {
+                		RenderUtils.resetPlayerYaw();
+                		RenderUtils.resetPlayerPitch();
+                	} else {
+	                    RenderUtils.setCustomPitch(50);
+	                    RenderUtils.setCustomYaw(event.getYaw());
+                	}
                     
                     if (redeskyBoost.isEnabled())
-                    	mc.timer.timerSpeed = 11f;
+                    	mc.timer.timerSpeed = 1.8f;
 
                 }
             } else {
@@ -245,8 +255,8 @@ public class Scaffold extends Mod {
                         event.setPitch(rotations[1]);
                     }
                 }
-                RenderUtils.setCustomYaw(event.getYaw());
-                RenderUtils.setCustomPitch(event.getPitch());
+                RenderUtils.setCustomYaw(rotations[0]);
+                RenderUtils.setCustomPitch(50);
                 mc.timer.timerSpeed = 1f;
 
 
@@ -371,9 +381,31 @@ public class Scaffold extends Mod {
     }
 
     @EventTarget
-    public void on3D(Event3D event){
-        //drawCircle(mc.thePlayer, event.getPartialTicks(), 0.5);
-        //drawCircle(mc.thePlayer, event.getPartialTicks(), 0.4);
+    public void on3D(Event3D event) {
+    	
+    	Block air = Blocks.air;
+    	if (getBlockCount() > 0 && ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && blockFly.isEnabled() && !Hypnotic.instance.moduleManager.flight.isEnabled()) ? true : isBlockUnder()))
+        for (int i = 0; i < 5; i++) {
+			RenderUtils.drawLine(espPos.getX(), espPos.getY(), espPos.getZ(), espPos.getX() + 1, espPos.getY(), espPos.getZ());
+			RenderUtils.drawLine(espPos.getX(), espPos.getY() + 1, espPos.getZ(), espPos.getX() + 1, espPos.getY() + 1, espPos.getZ());
+			RenderUtils.drawLine(espPos.getX(), espPos.getY(), espPos.getZ(), espPos.getX(), espPos.getY(), espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX(), espPos.getY() + 1, espPos.getZ(), espPos.getX(), espPos.getY() + 1, espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX(), espPos.getY(), espPos.getZ(), espPos.getX(), espPos.getY() + 1, espPos.getZ());
+			RenderUtils.drawLine(espPos.getX(), espPos.getY() + 1, espPos.getZ(), espPos.getX(), espPos.getY() + 1, espPos.getZ());
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY(), espPos.getZ(), espPos.getX() + 1, espPos.getY() + 1, espPos.getZ());
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY() + 1, espPos.getZ(), espPos.getX() + 1, espPos.getY() + 1, espPos.getZ());
+			RenderUtils.drawLine(espPos.getX(), espPos.getY(), espPos.getZ() + 1, espPos.getX(), espPos.getY() + 1, espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX(), espPos.getY() + 1, espPos.getZ() + 1, espPos.getX(), espPos.getY() + 1, espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY(), espPos.getZ() + 1, espPos.getX(), espPos.getY(), espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY() + 1, espPos.getZ() + 1, espPos.getX(), espPos.getY() + 1, espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY(), espPos.getZ() + 1, espPos.getX() + 1, espPos.getY() + 1, espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY() + 1, espPos.getZ(), espPos.getX() + 1, espPos.getY() + 1, espPos.getZ() + 1);
+			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY(), espPos.getZ(), espPos.getX() + 1, espPos.getY(), espPos.getZ() + 1);
+		}
+    	//RenderUtils.blockESPBox(espPos, -1);
+    	//RenderUtils.drawSolidBlockESP(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posX, 255, 255, 255, 255);
+       // drawCircle(mc.thePlayer, event.getPartialTicks(), 0.5);
+       // drawCircle(mc.thePlayer, event.getPartialTicks(), 0.4);
     }
     
     private void drawCircle(Entity entity, float partialTicks, double rad) {
@@ -381,7 +413,7 @@ public class Scaffold extends Mod {
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_DEPTH_TEST);
         glDepthMask(false);
-        glLineWidth(2.0f);
+        glLineWidth(3.0f);
         glBegin(GL_LINE_STRIP);
 
         final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - mc.getRenderManager().viewerPosX;
@@ -651,6 +683,8 @@ public class Scaffold extends Mod {
         super.onDisable();
         this.setSneaking(false);
         mc.timer.timerSpeed = 1f;
+        RenderUtils.resetPlayerYaw();
+        RenderUtils.resetPlayerPitch();
     }
 
     private void setSneaking(boolean b) {
@@ -728,16 +762,7 @@ public class Scaffold extends Mod {
 
     @EventTarget
     public void on2D(Event2D event) {
-        if (this.getSlot() != -1 && mc.gameSettings.thirdPersonView == 0) {
-            ItemStack stack = mc.thePlayer.inventory.getStackInSlot(getSlot());
-            GL11.glPushMatrix();
-            GL11.glColor4f(1, 1, 1, 1);
-            GlStateManager.scale(1.0f, 1.0f, 1.0f);
-            this.renderItem(stack, GuiScreen.width / 2 - 10, GuiScreen.height + 20);
-            GL11.glPopMatrix();
-            Gui.drawRect(GuiScreen.width / 2 + 26 - fontRenderer.getStringWidth(getBlockCount() + " Blocks left"), GuiScreen.height / 2 + 23 + fontRenderer.getFontHeight(), GuiScreen.width / 2 - 28 + fontRenderer.getStringWidth(getBlockCount() + " Blocks left"), GuiScreen.height / 2 + 29 - fontRenderer.getFontHeight(), new Color(0, 0, 0, 190).getRGB());           
-            fontRenderer.drawCenteredString(getBlockCount() + " Blocks left", GuiScreen.width / 2 + 5, GuiScreen.height / 2 + 20, -1, true);
-        }
+    	fontRenderer.drawCenteredString(getBlockCount() + " Blocks left", GuiScreen.width / 2 + 50, GuiScreen.height / 2 - 5, (Hypnotic.instance.moduleManager.arrayMod.colorMode.is("Rainbow") ? ColorUtils.rainbow(4, 0.5f, 0.5f) : ColorUtil.getClickGUIColor().getRGB()), true);
     }
     
     public static void renderItem(ItemStack stack, int x, int y) {

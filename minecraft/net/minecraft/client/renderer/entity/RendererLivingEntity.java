@@ -145,13 +145,15 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
             float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
             //Thank you lavaflowglow https://github.com/NathanKassab/SpicyClient
-            if (RenderUtils.SetCustomPitch && entity == Minecraft.getMinecraft().thePlayer) {
-                f7 = RenderUtils.getCustomPitch();
-            }
-            
-            if (RenderUtils.SetCustomYaw && entity == Minecraft.getMinecraft().thePlayer) {
-                Minecraft.getMinecraft().thePlayer.renderYawOffset = RenderUtils.getCustomYaw();
-                Minecraft.getMinecraft().thePlayer.prevRenderYawOffset = RenderUtils.getCustomYaw();
+            if (entity != null) {
+	            if (entity == Minecraft.getMinecraft().thePlayer && RenderUtils.SetCustomPitch) {
+	                f7 = RenderUtils.getCustomPitch();
+	            }
+	            
+	            if (entity == Minecraft.getMinecraft().thePlayer && RenderUtils.SetCustomYaw) {
+	                Minecraft.getMinecraft().thePlayer.renderYawOffset = RenderUtils.getCustomYaw();
+	                Minecraft.getMinecraft().thePlayer.prevRenderYawOffset = RenderUtils.getCustomYaw();
+	            }
             }
 
             this.renderLivingAt(entity, x, y, z);
@@ -300,7 +302,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 GlStateManager.alphaFunc(516, 0.003921569F);
             }
             
-            if (Hypnotic.instance.moduleManager.getModuleByName("ESP").isEnabled()) {
+            if (Hypnotic.instance.moduleManager.getModuleByName("ESP").isEnabled() && Hypnotic.instance.moduleManager.esp.mode.is("Outline")) {
                 if (entitylivingbaseIn instanceof EntityPlayer && entitylivingbaseIn != Minecraft.getMinecraft().thePlayer) {
                     OutlineUtils.setColor(may);
                     mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);

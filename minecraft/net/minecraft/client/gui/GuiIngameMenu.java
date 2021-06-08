@@ -3,8 +3,10 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 
 import badgamesinc.hypnotic.gui.AnimatedButton;
+import badgamesinc.hypnotic.util.ServerUtil;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
+import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
@@ -29,6 +31,7 @@ public class GuiIngameMenu extends GuiScreen
         if (!this.mc.isIntegratedServerRunning())
         {
             ((GuiButton)this.buttonList.get(0)).displayString = I18n.format("menu.disconnect", new Object[0]);
+            this.buttonList.add(new AnimatedButton(29, this.width / 2 - 100, this.height / 4 + 72 +- 16, I18n.format("Reconnect", new Object[0])));
         }
 
         this.buttonList.add(new AnimatedButton(4, this.width / 2 - 100, this.height / 4 + 24 + i, I18n.format("menu.returnToGame", new Object[0])));
@@ -92,6 +95,12 @@ public class GuiIngameMenu extends GuiScreen
 
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
+                break;
+            case 29:
+            	mc.theWorld.sendQuittingDisconnectingPacket();
+            	mc.loadWorld(null);
+            	mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(new GuiMainMenu()), mc, ServerUtil.lastLogin));
+            	break;
         }
     }
 

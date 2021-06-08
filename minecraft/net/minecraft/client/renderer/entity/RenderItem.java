@@ -1,9 +1,12 @@
 package net.minecraft.client.renderer.entity;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.util.ColorUtil;
+import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -64,7 +67,7 @@ import net.minecraft.util.Vec3i;
 public class RenderItem implements IResourceManagerReloadListener
 {
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-    private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Roboto-Medium", 20, false, false, false);
+    private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 20, false, false, false);
     private boolean field_175058_l = true;
 
     /** Defines the zLevel of rendering of item on GUI. */
@@ -166,6 +169,18 @@ public class RenderItem implements IResourceManagerReloadListener
 
     private void renderEffect(IBakedModel model)
     {
+    	int glintColor = ColorUtil.getClickGUIColor().getRGB();
+    	
+    	if (Hypnotic.instance.moduleManager.glint.isEnabled()) {
+	    	if (Hypnotic.instance.moduleManager.glint.rainbowGlint.isEnabled()) {
+	    		glintColor = ColorUtils.rainbow(2, 0.5f, 0.5f);
+	    	} else if (Hypnotic.instance.moduleManager.glint.clickGuiColor.isEnabled()) {
+	    		glintColor = ColorUtil.getClickGUIColor().getRGB();
+	    	}
+    	} else {
+    		glintColor = -8372020;
+    	}
+    	
         GlStateManager.depthMask(false);
         GlStateManager.depthFunc(514);
         GlStateManager.disableLighting();
@@ -177,14 +192,14 @@ public class RenderItem implements IResourceManagerReloadListener
         float f = (float)(Minecraft.getSystemTime() % 3000L) / 3000.0F / 8.0F;
         GlStateManager.translate(f, 0.0F, 0.0F);
         GlStateManager.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
-        this.renderModel(model, -8372020);
+        this.renderModel(model, glintColor);
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
         GlStateManager.scale(8.0F, 8.0F, 8.0F);
         float f1 = (float)(Minecraft.getSystemTime() % 4873L) / 4873.0F / 8.0F;
         GlStateManager.translate(-f1, 0.0F, 0.0F);
         GlStateManager.rotate(10.0F, 0.0F, 0.0F, 1.0F);
-        this.renderModel(model, -8372020);
+        this.renderModel(model, glintColor);
         GlStateManager.popMatrix();
         GlStateManager.matrixMode(5888);
         GlStateManager.blendFunc(770, 771);

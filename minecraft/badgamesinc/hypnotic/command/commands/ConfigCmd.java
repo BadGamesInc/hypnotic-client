@@ -2,8 +2,9 @@ package badgamesinc.hypnotic.command.commands;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.command.Command;
-import badgamesinc.hypnotic.gui.notifications.Notification;
-import badgamesinc.hypnotic.gui.notifications.NotificationType;
+import badgamesinc.hypnotic.gui.notifications.Color;
+import badgamesinc.hypnotic.gui.notifications.NotificationManager;
+import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 
@@ -32,18 +33,18 @@ public class ConfigCmd extends Command {
 		}
 		
 		if (args[0] == null) {
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.red + "Usage: " + getSyntax(), (int) 5, NotificationType.WARNING));
+			NotificationManager.getNotificationManager().createNotification("Invalid Usage!", "Usage: " + getSyntax(), true, 2500, Type.WARNING, Color.RED);
 		}
 		
 		if (args[0].equalsIgnoreCase("load")) {
 			Hypnotic.cfgManager.load(configName);
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Loaded " + configName, (int) 5, NotificationType.INFO));
+			NotificationManager.getNotificationManager().createNotification(ColorUtils.white + "Loaded " + configName, "", true, 1500, Type.INFO, Color.GREEN);
 		} else if (args[0].equalsIgnoreCase("save")) {
 			Hypnotic.cfgManager.save(configName);
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Current config has been saved as " + configName, (int) 5, NotificationType.INFO));
+			NotificationManager.getNotificationManager().createNotification(ColorUtils.white + "Current config has been saved as " + configName, "", true, 1500, Type.INFO, Color.GREEN);
 		} else if (args[0].equalsIgnoreCase("delete")) {
 			Hypnotic.cfgManager.delete(configName);
-			Hypnotic.instance.notificationManager.show(new Notification(ColorUtils.white + "Deleted " + configName, (int) 5, NotificationType.INFO));
+			NotificationManager.getNotificationManager().createNotification(ColorUtils.white + "Deleted " + configName, "", true, 1500, Type.INFO, Color.GREEN);
 		} else if (args[0].equalsIgnoreCase("list")) {
 			Wrapper.tellPlayer("Configs: ");
 			Hypnotic.cfgManager.list();
