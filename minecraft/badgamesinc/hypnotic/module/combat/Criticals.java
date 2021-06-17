@@ -25,7 +25,7 @@ public class Criticals extends Mod {
 
     @Override
     public void onUpdate() {
-        String mode = "[" + this.mode.getSelected() + "] ";
+        String mode = "[" + this.mode.getSelected() + "]";
         this.setDisplayName("Criticals " + ColorUtils.white + mode);
     }
 
@@ -56,7 +56,7 @@ public class Criticals extends Mod {
     }
 
     private boolean canCrit() {
-        return !PlayerUtils.isInLiquid() && mc.thePlayer.onGround;
+        return !PlayerUtils.isInLiquid() && mc.thePlayer != null && mc.thePlayer.onGround;
     }
 
 }

@@ -33,6 +33,7 @@ import badgamesinc.hypnotic.util.drm.Level4Checks;
 import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.enchantment.EnchantmentManager;
 import net.minecraft.util.ResourceLocation;
 import thealtening.auth.TheAlteningAuthentication;
@@ -61,9 +62,10 @@ public class Hypnotic {
 	public EnchantmentManager enchantmentManager;																																																																																																																																																																												/* REQUIRED TO PREVENT A CRASH DO NOT REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FuelPumps On Top */ 
 	private Random r = new Random();																																																																																																																																																																					                  										private double superSecretKey = this.clientName == "Hypnotic" ? Double.MAX_VALUE - 0.00000001 : Byte.MIN_VALUE;																																																																																										
 	
-	public static final String clientName = "Hypnotic", clientVersion = "r1007", prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "r1007", fullName = clientName + "-" + clientVersion, prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
 	
 	public void startup() {	
+		Display.setTitle(clientName + " " + clientVersion);
 		fm = new FontManager();
 		moduleManager = new ModuleManager();
 		eventManager = new EventManager();
@@ -74,10 +76,9 @@ public class Hypnotic {
 		hud = new HUD();
 		this.fileManager = new FileManager();
 		saveload = new SaveLoad();
-		this.guiAltLogin = new GuiAltManager();
+		this.guiAltLogin = new GuiAltManager(new GuiMainMenu());
 		discordRP = new DiscordRP();
 		enchantmentManager = new EnchantmentManager();
-		Display.setTitle(clientName + " " + clientVersion);
 		eventManager.register(this);
 		discordRP.start();
 		discordRP.title = this.rptitle();

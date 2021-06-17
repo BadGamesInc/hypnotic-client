@@ -16,20 +16,20 @@ public class SetBlockAndFacing {
 
 	private void setBlockAndFacing(BlockPos var1) {
 	        EnumFacing currentFacing;
-			if (mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
-	            this.currentPos = var1.add(0, -1, 0);
+			if (mc.theWorld.getBlockState(WorldUtils.getForwardBlock(1).add(0, -1, 0)).getBlock() != Blocks.air) {
+	            this.currentPos = WorldUtils.getForwardBlock(1).add(0, -1, 0);
 	            currentFacing = EnumFacing.UP;
-	        } else if (mc.theWorld.getBlockState(var1.add(-1, 0, 0)).getBlock() != Blocks.air) {
-	            this.currentPos = var1.add(-1, 0, 0);
+	        } else if (mc.theWorld.getBlockState(WorldUtils.getForwardBlock(1).add(-1, 0, 0)).getBlock() != Blocks.air) {
+	            this.currentPos = WorldUtils.getForwardBlock(1).add(-1, 0, 0);
 	            currentFacing = EnumFacing.EAST;
-	        } else if (mc.theWorld.getBlockState(var1.add(1, 0, 0)).getBlock() != Blocks.air) {
-	            this.currentPos = var1.add(1, 0, 0);
+	        } else if (mc.theWorld.getBlockState(WorldUtils.getForwardBlock(1).add(1, 0, 0)).getBlock() != Blocks.air) {
+	            this.currentPos = WorldUtils.getForwardBlock(1).add(1, 0, 0);
 	            currentFacing = EnumFacing.WEST;
-	        } else if (mc.theWorld.getBlockState(var1.add(0, 0, -1)).getBlock() != Blocks.air) {
-	            this.currentPos = var1.add(0, 0, -1);
+	        } else if (mc.theWorld.getBlockState(WorldUtils.getForwardBlock(1).add(0, 0, -1)).getBlock() != Blocks.air) {
+	            this.currentPos = WorldUtils.getForwardBlock(1).add(0, 0, -1);
 	            currentFacing = EnumFacing.SOUTH;
-	        } else if (mc.theWorld.getBlockState(var1.add(0, 0, 1)).getBlock() != Blocks.air) {
-	            this.currentPos = var1.add(0, 0, 1);
+	        } else if (mc.theWorld.getBlockState(WorldUtils.getForwardBlock(1).add(0, 0, 1)).getBlock() != Blocks.air) {
+	            this.currentPos = WorldUtils.getForwardBlock(1).add(0, 0, 1);
 	            currentFacing = EnumFacing.NORTH;
 	        } else {
 	            currentPos = null;

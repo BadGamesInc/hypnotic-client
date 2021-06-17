@@ -32,7 +32,7 @@ public class AutoGapple extends Mod implements UpdateListener{
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("AutoGapple " + ColorUtils.white + "[Min: " + minHealthVal.getValue() + "] ");
+    	this.setDisplayName("AutoGapple " + ColorUtils.white + "[Min: " + minHealthVal.getValue() + "]");
     	if (mc.thePlayer.isPotionActive(Potion.regeneration.id)) {
     		return;
     	}

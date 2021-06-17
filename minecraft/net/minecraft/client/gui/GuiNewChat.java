@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,6 +32,8 @@ public class GuiNewChat extends Gui
         this.mc = mcIn;
     }
 
+    private float animationTime = 0;
+    
     public void drawChat(int p_146230_1_)
     {
         if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN)
@@ -83,11 +87,14 @@ public class GuiNewChat extends Gui
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
                                 drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                drawRect(0, 0, 0, 0, -1);
                                 String s = chatline.getChatComponent().getFormattedText();
-                                GlStateManager.enableBlend();
-                                this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
+                                
+                                GlStateManager.enableAlpha();
+                                FontManager.roboto2.drawStringWithShadow(s, (float)i2, (float)(j2 - 10), 16777215 + (l1 << 24));
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
+                                
                             }
                         }
                     }
@@ -95,7 +102,7 @@ public class GuiNewChat extends Gui
 
                 if (flag)
                 {
-                    int k2 = this.mc.fontRendererObj.FONT_HEIGHT;
+                    int k2 = FontManager.roboto2.FONT_HEIGHT;
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;
@@ -258,9 +265,9 @@ public class GuiNewChat extends Gui
             {
                 int l = Math.min(this.getLineCount(), this.field_146253_i.size());
 
-                if (j <= MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale()) && k < this.mc.fontRendererObj.FONT_HEIGHT * l + l)
+                if (j <= MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale()) && k < FontManager.roboto2.FONT_HEIGHT * l + l)
                 {
-                    int i1 = k / this.mc.fontRendererObj.FONT_HEIGHT + this.scrollPos;
+                    int i1 = k / FontManager.roboto2.FONT_HEIGHT + this.scrollPos;
 
                     if (i1 >= 0 && i1 < this.field_146253_i.size())
                     {
@@ -271,7 +278,7 @@ public class GuiNewChat extends Gui
                         {
                             if (ichatcomponent instanceof ChatComponentText)
                             {
-                                j1 += this.mc.fontRendererObj.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText)ichatcomponent).getChatComponentText_TextValue(), false));
+                                j1 += FontManager.roboto2.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText)ichatcomponent).getChatComponentText_TextValue(), false));
 
                                 if (j1 > j)
                                 {

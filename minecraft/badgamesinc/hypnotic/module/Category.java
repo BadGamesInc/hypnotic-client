@@ -3,7 +3,7 @@ package badgamesinc.hypnotic.module;
 import badgamesinc.hypnotic.Hypnotic;
 
 public enum Category {
-	COMBAT("Combat"), MOVEMENT("Movement"), PLAYER("Player"), RENDER("Render"), WORLD("World"), MISC("Misc"), GUI("GUI"), HIDDEN("Hidden");
+	COMBAT("Combat"), MOVEMENT("Movement"), PLAYER("Player"), RENDER("Render"), WORLD("World"), MISC("Misc"), GUI("Gui"), HIDDEN("Hidden");
 	
 	protected int categoryCount;
 	

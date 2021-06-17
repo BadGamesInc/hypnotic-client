@@ -21,7 +21,7 @@ public class SettingsWindow {
     Button parent;
     ArrayList<Component> components = new ArrayList<>();
     ArrayList<Setting> settings;
-    int yCount = 0;
+    int yCount;
     public static GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 20, false, false, false);
     public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
     public static GlyphPageFontRenderer smallBigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 16, false, false, false);
@@ -62,7 +62,12 @@ public class SettingsWindow {
 		
 		            }
 	        	
+		            if (count < 14) {
 		            	count++;
+		            } else {
+		            	count = 1;
+		            	xCount+=210;
+		            }
 	
 	        }
         }

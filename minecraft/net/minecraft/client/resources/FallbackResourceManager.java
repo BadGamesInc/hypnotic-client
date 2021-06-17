@@ -137,4 +137,10 @@ public class FallbackResourceManager implements IResourceManager
             return this.field_177330_a.read();
         }
     }
+
+	@Override
+	public IResource getResource(String location) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

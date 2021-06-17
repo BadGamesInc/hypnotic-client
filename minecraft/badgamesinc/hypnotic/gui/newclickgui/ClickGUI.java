@@ -34,6 +34,8 @@ public class ClickGUI extends GuiScreen {
 		
 		offset = 0.1f;
 		for (Category category : Category.values()) {
+			if (category == Category.HIDDEN)
+				continue;
 			frames.add(new Frame(category, 10 + offset, 15));
 			offset += 110;
 		}

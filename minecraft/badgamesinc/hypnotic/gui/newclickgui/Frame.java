@@ -7,6 +7,7 @@ import badgamesinc.hypnotic.gui.newclickgui.button.Button;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -37,7 +38,7 @@ public class Frame {
 	    
 	    int offsetY = (int) (height);
 	    for (Mod m : Hypnotic.instance.moduleManager.getModulesInCategory(category)) {
-	    	buttons.add(new Button(m, x, y + offsetY, this));
+	    	buttons.add(new Button(m, x, y + offsetY, this, height + 3));
 	    	offsetY += height + 3;
 	    }
 	}
@@ -71,8 +72,8 @@ public class Frame {
 			return;	
 
 	    Gui.drawRect(x, y, x + width, y + height, (int) guiColor);
-        fontRenderer.drawString(title, x + 2, y + 2, -1, true);
-        fontRenderer.drawString(extendedText, x + width - 10, y + 2, -1, true);
+	    FontManager.fontRenderer.drawString(title, x + 2, y + 2, -1, true);
+	    FontManager.fontRenderer.drawString(extendedText, x + width - 10, y + 2, -1, true);
         
         for (Button button : buttons) {
         	button.draw(mouseX, mouseY);

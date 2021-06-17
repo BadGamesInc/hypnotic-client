@@ -9,21 +9,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GLContext;
 
 import com.google.common.collect.Lists;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.AnimatedButton;
+import badgamesinc.hypnotic.gui.GLSLSandboxShader;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
+import badgamesinc.hypnotic.module.render.Sigma;
+import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -43,8 +50,22 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final Random RANDOM = new Random();
     private final GlyphPageFontRenderer bigFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 40, false, false, false);
     private final GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
+    public static int menuIndex = 0;
+    public String shaderName = "/mainmenu" + menuIndex + ".fsh";
 
-    // Counts the number of screen updates.
+    public static int getMenuIndex() {
+		return menuIndex;
+	}
+    
+	public String getShaderName() {
+		return shaderName;
+	}
+
+	public void setShaderName(String shaderName) {
+		this.shaderName = shaderName;
+	}
+
+	// Counts the number of screen updates.
     private float updateCounter;
 
     // The splash message.
@@ -149,6 +170,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.openGLWarning2 = I18n.format("title.oldgl2", new Object[0]);
             this.openGLWarningLink = "https://help.mojang.com/customer/portal/articles/325948?ref=game";
         }
+        
+        try {
+        	if (Hypnotic.instance.saveload.dataFile.exists())
+        		this.backgroundShader = new GLSLSandboxShader(shaderName);
+        	else
+        		this.backgroundShader = new GLSLSandboxShader("/mainmenu0.fsh");
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load backgound shader", e);
+        }
     }
 
     // Called from the main game loop to update the screen.
@@ -219,6 +249,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
 
         this.mc.func_181537_a(false);
+        
+        initTime = System.currentTimeMillis();
     }
 
     // Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
@@ -229,6 +261,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new AnimatedButton(1, this.width / 2 - 450 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new AnimatedButton(2, this.width / 2 - 300 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
         this.buttonList.add(new AnimatedButton(14, this.width / 2 - 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, "Alt Manager"));
+        this.buttonList.add(new AnimatedButton(16, this.width - 104, 4, 100, 20, "Cycle BG"));
     }
 
     // Adds Demo buttons on Main Menu for players who are playing Demo.
@@ -276,6 +309,24 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         if (button.id == 4)
         {
             this.mc.shutdown();
+        }
+        
+        if (button.id == 16) {
+        	Hypnotic.instance.saveload.save();
+        	System.out.println("Loaded " + shaderName.replace("/", ""));
+        	try {
+        		if (menuIndex < 6) {
+        			menuIndex++;
+        			shaderName = "/mainmenu" + menuIndex + ".fsh";
+        			this.backgroundShader = new GLSLSandboxShader(shaderName);
+        		} else {
+        			shaderName = "/mainmenu" + 0 + ".fsh";
+        			menuIndex = 0;
+        		}     
+                
+            } catch (IOException e) {
+                throw new IllegalStateException("Failed to load backgound shader", e);
+            }
         }
 
         if (button.id == 11)
@@ -337,14 +388,30 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     {
     	ScaledResolution sr = new ScaledResolution(mc);
     	
-    	mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/MainMenu/MainMenu.jpg"));
-    	Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
     	
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+    	//mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/Background.png"));
+    	//Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+    	GlStateManager.enableAlpha();
+        GlStateManager.disableCull();
         int i = 274;
         int j = this.width / 2 - i / 2;
         int k = 30;
+        
+        this.backgroundShader.useShader(this.width, this.height, mouseX, mouseY, (System.currentTimeMillis() - initTime) / 1000f);
+        
+        GL11.glBegin(GL11.GL_QUADS);
+
+        GL11.glVertex2f(-1f, -1f);
+        GL11.glVertex2f(-1f, 1f);
+        GL11.glVertex2f(1f, 1f);
+        GL11.glVertex2f(1f, -1f);
+
+        GL11.glEnd();
+
+        GL20.glUseProgram(0);
+        
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        
         Gui.drawRect(0, sr.getScaledHeight() - 55, sr.getScaledWidth(), sr.getScaledHeight() - 58, -1);
         Gui.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - 55, new Color(0, 0, 0, 160).getRGB());
         
@@ -357,12 +424,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         additions.add("Added AutoDisable to KillAura and Speed");
         additions.add("Added LowHop mode to speed");
         additions.add("Added NCP mode for step");   
-        additions.add("Added 2D mode for ESP");
+        additions.add("Added 2D mode for ESP");  
         additions.add("Added friend system");
+        additions.add("Added FakePlayer");
         additions.add("Added Keystrokes");
+        additions.add("Added Freecam");
         additions.add("Added Blink");					
         additions.add("Added Glint");
         additions.add("Added Wings");
+        additions.add("Sigma");
         
         //changes
         changes.add("Fixed KillAura rotations");
@@ -397,8 +467,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             fontRenderer.drawString("§c-§f " + removeal, 16, removeCount, -1, true);
             removeCount += 10;
         }
-        
-        /*           */
+        GlStateManager.enableBlend();
+        mc.getTextureManager().bindTexture(new ResourceLocation(Hypnotic.instance.moduleManager.getModule(Sigma.class).isEnabled() ? "hypnotic/textures/sigma/sigma2.png" : "hypnotic/textures/MainMenu/Hypnotic.png"));
+        Gui.drawScaledCustomSizeModalRect(sr.getScaledWidth() / 3, sr.getScaledHeight() / 3, 0, 0, 679, 300, 679 / 2, 300 / 2, 679, 300);
+        //FontManager.hypnoticFontLarge.drawCenteredString("Hypnotic", this.width / 2, this.height / 2, -1);
         String s1 = "Copyright Mojang AB. Do not distribute!";
         //fontRenderer.drawString(s, 2, this.height - 14, -1, true);
         //fontRenderer.drawString(s1, this.width - this.fontRendererObj.getStringWidth(s1) + 16, this.height - 14, -1, true);

@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import java.awt.Color;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,6 +30,17 @@ public class GuiPlayerTabOverlay extends Gui
     private final GuiIngame guiIngame;
     private IChatComponent footer;
     private IChatComponent header;
+    public float animationTime = 0;
+    public float animationTime2 = 0;
+    public float animationTime3 = 0;
+    public float animationTime4 = 0;
+    public float animationTime5 = 0;
+    public float animationTime6 = 0;
+    public float animationTime7 = 0;
+    public float animationTime8 = 0;
+    public float animationTime9 = 0;
+    public float animationTime10 = 0;
+    public float animationTime11 = 0;
 
     /**
      * The last time the playerlist was opened (went from not being renderd, to being rendered)
@@ -146,19 +158,19 @@ public class GuiPlayerTabOverlay extends Gui
 
         if (list1 != null)
         {
-            drawRect(width / 2 - l1 / 2 - 1, k1 - 1, width / 2 + l1 / 2 + 1, k1 + list1.size() * this.mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
+            drawRect(width / 2 - l1 / 2 - 1, k1 - 1 - 200 + this.animationTime, width / 2 + l1 / 2 + 1, k1 + list1.size() * this.mc.fontRendererObj.FONT_HEIGHT - 200 + this.animationTime, new Color(20, 20, 20, 240).getRGB());
 
             for (String s3 : list1)
             {
                 int i2 = this.mc.fontRendererObj.getStringWidth(s3);
-                this.mc.fontRendererObj.drawStringWithShadow(s3, (float)(width / 2 - i2 / 2), (float)k1, -1);
+                this.mc.fontRendererObj.drawStringWithShadow(s3, (float)(width / 2 - i2 / 2), (float)k1 - 200 + this.animationTime, -1);
                 k1 += this.mc.fontRendererObj.FONT_HEIGHT;
             }
 
             ++k1;
         }
-
-        drawRect(width / 2 - l1 / 2 - 1, k1 - 1, width / 2 + l1 / 2 + 1, k1 + i4 * 9, Integer.MIN_VALUE);
+      
+        drawRect(width / 2 - l1 / 2 - 1, k1 - 1 - 200 + this.animationTime, width / 2 + l1 / 2 + 1, k1 + i4 * 9 - 200 + this.animationTime, new Color(10, 10, 10, 210).getRGB());
 
         for (int k4 = 0; k4 < l3; ++k4)
         {
@@ -166,7 +178,7 @@ public class GuiPlayerTabOverlay extends Gui
             int i5 = k4 % i4;
             int j2 = j1 + l4 * i1 + l4 * 5;
             int k2 = k1 + i5 * 9;
-            drawRect(j2, k2, j2 + i1, k2 + 8, 553648127);
+            //drawRect(j2, k2, j2 + i1, k2 + 8, new Color(60, 60, 60, 100).getRGB());
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.enableAlpha();
             GlStateManager.enableBlend();
@@ -185,13 +197,13 @@ public class GuiPlayerTabOverlay extends Gui
                     this.mc.getTextureManager().bindTexture(networkplayerinfo1.getLocationSkin());
                     int l2 = 8 + (flag1 ? 8 : 0);
                     int i3 = 8 * (flag1 ? -1 : 1);
-                    Gui.drawScaledCustomSizeModalRect(j2, k2, 8.0F, (float)l2, 8, i3, 8, 8, 64.0F, 64.0F);
+                    Gui.drawScaledCustomSizeModalRect(j2, k2 - 200 + this.animationTime, 8.0F, (float)l2, 8, i3, 8, 8, 64.0F, 64.0F);
 
                     if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT))
                     {
                         int j3 = 8 + (flag1 ? 8 : 0);
                         int k3 = 8 * (flag1 ? -1 : 1);
-                        Gui.drawScaledCustomSizeModalRect(j2, k2, 40.0F, (float)j3, 8, k3, 8, 8, 64.0F, 64.0F);
+                        Gui.drawScaledCustomSizeModalRect(j2, k2 - 200 + this.animationTime, 40.0F, (float)j3, 8, k3, 8, 8, 64.0F, 64.0F);
                     }
 
                     j2 += 9;
@@ -200,11 +212,11 @@ public class GuiPlayerTabOverlay extends Gui
                 if (networkplayerinfo1.getGameType() == WorldSettings.GameType.SPECTATOR)
                 {
                     s1 = EnumChatFormatting.ITALIC + s1;
-                    this.mc.fontRendererObj.drawStringWithShadow(s1, (float)j2, (float)k2, -1862270977);
+                    this.mc.fontRendererObj.drawStringWithShadow(s1, (float)j2 - 200 + this.animationTime, (float)k2, -1862270977);
                 }
                 else
                 {
-                    this.mc.fontRendererObj.drawStringWithShadow(s1, (float)j2, (float)k2, -1);
+                    this.mc.fontRendererObj.drawStringWithShadow(s1, (float)j2, (float)k2 - 200 + this.animationTime, -1);
                 }
 
                 if (scoreObjectiveIn != null && networkplayerinfo1.getGameType() != WorldSettings.GameType.SPECTATOR)
@@ -214,23 +226,23 @@ public class GuiPlayerTabOverlay extends Gui
 
                     if (l5 - k5 > 5)
                     {
-                        this.drawScoreboardValues(scoreObjectiveIn, k2, gameprofile.getName(), k5, l5, networkplayerinfo1);
+                       // this.drawScoreboardValues(scoreObjectiveIn, (int) (k2 - 200 + this.animationTime), gameprofile.getName(), k5, l5, networkplayerinfo1);
                     }
                 }
 
-                this.drawPing(i1, j2 - (flag ? 9 : 0), k2, networkplayerinfo1);
+                this.drawPing(i1, j2 - (flag ? 9 : 0), (int) (k2  - 200 + this.animationTime), networkplayerinfo1);
             }
         }
 
         if (list2 != null)
         {
             k1 = k1 + i4 * 9 + 1;
-            drawRect(width / 2 - l1 / 2 - 1, k1 - 1, width / 2 + l1 / 2 + 1, k1 + list2.size() * this.mc.fontRendererObj.FONT_HEIGHT, Integer.MIN_VALUE);
+            drawRect(width / 2 - l1 / 2 - 1, k1 - 1 - 200 + this.animationTime, width / 2 + l1 / 2 + 1, k1 + list2.size() * this.mc.fontRendererObj.FONT_HEIGHT - 200 + this.animationTime, new Color(20, 20, 20, 240).getRGB());
 
             for (String s4 : list2)
             {
                 int j5 = this.mc.fontRendererObj.getStringWidth(s4);
-                this.mc.fontRendererObj.drawStringWithShadow(s4, (float)(width / 2 - j5 / 2), (float)k1, -1);
+                this.mc.fontRendererObj.drawStringWithShadow(s4, (float)(width / 2 - j5 / 2), (float)k1 - 200 + this.animationTime, -1);
                 k1 += this.mc.fontRendererObj.FONT_HEIGHT;
             }
         }

@@ -27,6 +27,7 @@ public class AutoArmor extends Mod {
 	    public void onUpdate() {
 	        this.autoArmor();
 	        this.betterArmor();
+	        this.setDisplayName("AutoArmor");
 	    }
 	    
 	    public void autoArmor() {

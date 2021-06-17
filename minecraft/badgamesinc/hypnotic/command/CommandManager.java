@@ -32,6 +32,7 @@ public class CommandManager {
 		commands.add(new LogoName());
 		commands.add(new Nick());
 		commands.add(new Friend());
+		commands.add(new SpammerCmd());
 		//commands.add(new Plugins());
 	}
 	

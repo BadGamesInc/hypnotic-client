@@ -1,6 +1,7 @@
 package badgamesinc.hypnotic.util;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import org.lwjgl.opengl.EXTFramebufferObject;
 import org.lwjgl.opengl.EXTPackedDepthStencil;
@@ -25,6 +26,7 @@ import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
@@ -457,8 +459,15 @@ public class RenderUtils {
 	        GL11.glEnable(GL11.GL_LINE_SMOOTH);
 	        GL11.glDisable(GL11.GL_DEPTH_TEST);
 	        GL11.glDepthMask(false);
-	        GL11.glColor4f(red, green, blue, alpha);
-	        drawBoundingBox(new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D), red, green, blue, alpha);
+	        GL11.glColor4f(red * 0.05f, green * 0.05f, blue * 0.05f, alpha);
+	        drawBoundingBox(new AxisAlignedBB(
+                    x - 1 / 2 + 0.05 - x + (x - mc.getRenderManager().renderPosX),
+                    0.0 + (y - mc.getRenderManager().renderPosY),
+                    z - 1 / 2 + 0.05 - z + (z - mc.getRenderManager().renderPosZ),
+                    x + 1 - 0.05 - x + (x - mc.getRenderManager().renderPosX),
+                    y + 1 - 0.05 - y + (y - mc.getRenderManager().renderPosY),
+                    z + 1 - 0.05 - z + (z - mc.getRenderManager().renderPosZ)
+            ), red, green, blue, alpha);
 	        GL11.glDisable(GL11.GL_LINE_SMOOTH);
 	        GL11.glEnable(GL11.GL_TEXTURE_2D);
 	        GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -1122,6 +1131,43 @@ public class RenderUtils {
 
 		        GL11.glScissor((int) x, (int) (y - height), (int) width, (int) height);
 		    }
+		 
+		 
+		 public static void chestESPBox(TileEntity entity, int mode, Color color) {
+		        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		        GL11.glEnable(GL11.GL_BLEND);
+		        GL11.glLineWidth(2);
+		        GL11.glDisable(GL11.GL_TEXTURE_2D);
+		        GL11.glDisable(GL11.GL_DEPTH_TEST);
+		        GL11.glDepthMask(false);
+
+
+		        double x = entity.getPos().getX();
+		        double y = entity.getPos().getY();
+		        double z = entity.getPos().getZ();
+		        GlStateManager.translate(x - mc.getRenderManager().renderPosX, y - mc.getRenderManager().renderPosY, z - mc.getRenderManager().renderPosZ);
+		        GlStateManager.translate(-(x - mc.getRenderManager().renderPosX), -(y - mc.getRenderManager().renderPosY), -(z - mc.getRenderManager().renderPosZ));
+		        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+
+
+		        GlStateManager.color(Objects.requireNonNull(color).getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
+		        RenderGlobal.func_181561_a(
+		                new AxisAlignedBB(
+		                        x - 1 / 2 + 0.05 - x + (x - mc.getRenderManager().renderPosX),
+		                        0.0 + (y - mc.getRenderManager().renderPosY),
+		                        z - 1 / 2 + 0.05 - z + (z - mc.getRenderManager().renderPosZ),
+		                        x + 1 - 0.05 - x + (x - mc.getRenderManager().renderPosX),
+		                        y + 1 - 0.05 - y + (y - mc.getRenderManager().renderPosY),
+		                        z + 1 - 0.05 - z + (z - mc.getRenderManager().renderPosZ)
+		                ));
+		        GlStateManager.translate(x - mc.getRenderManager().renderPosX, y - mc.getRenderManager().renderPosY, z - mc.getRenderManager().renderPosZ);
+		        GlStateManager.translate(-(x - mc.getRenderManager().renderPosX), -(y - mc.getRenderManager().renderPosY), -(z - mc.getRenderManager().renderPosZ));
+		        GL11.glEnable(GL11.GL_TEXTURE_2D);
+		        GL11.glEnable(GL11.GL_DEPTH_TEST);
+		        GL11.glDepthMask(true);
+		        GL11.glDisable(GL11.GL_BLEND);
+		    }
+
 
     
 }

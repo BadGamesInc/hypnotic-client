@@ -23,7 +23,7 @@ public class NoFall extends Mod {
 	}
 	
 	public void onUpdate() {
-		this.setDisplayName("NoFall " + ColorUtils.white + "[" + noFallMode.getSelected() + "] ");
+		this.setDisplayName("NoFall " + ColorUtils.white + "[" + noFallMode.getSelected() + "]");
 		if (noFallMode.is("Vanilla")) {
 			if(mc.thePlayer.fallDistance > 2)
 				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));

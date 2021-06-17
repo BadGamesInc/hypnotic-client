@@ -1,6 +1,7 @@
 package badgamesinc.hypnotic.module;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -10,6 +11,7 @@ import badgamesinc.hypnotic.config.ConfigSetting;
 import badgamesinc.hypnotic.gui.notifications.Color;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.gui.notifications.Type;
+import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.settings.settingtypes.KeybindSetting;
@@ -45,6 +47,8 @@ public class Mod {
 	private KeybindSetting keyBind = new KeybindSetting("Keybind: ", 0);
 	public boolean wasFlag = false;
 	public BooleanSetting visible = new BooleanSetting("Visible", true);
+	public transient int index;
+	public transient float animation = 0;
 
 	
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium", 18, false, false, false);
@@ -53,8 +57,8 @@ public class Mod {
 	private long currentMS = 0L;
 	protected long lastMS = -1L;
 	
-	public float mSize;
-    public float lastSize;
+	public float mSize = 0;
+    public float lastSize = 0;
     
     public long start = 0;
 	
@@ -65,18 +69,21 @@ public class Mod {
 		this.description = description;
 		enabled = false;
 		displayName = name;
-		addSetting(visible);
+		addSettings(visible);
 	}
 	
 	public void addSetting(Setting setting) {
+		this.settings.sort(Comparator.comparing(s -> s == visible ? 1 : 0));
         getSettings().add(setting);
     }
 	
 	public ArrayList<Setting> getSettings() {
+		this.settings.sort(Comparator.comparing(s -> s == visible ? 1 : 0));
         return settings;
     }
 
     public void addSettings(Setting... settings) {
+    	this.settings.sort(Comparator.comparing(s -> s == visible ? 1 : 0));
         for (Setting setting : settings) {
             addSetting(setting);
         }
@@ -116,11 +123,30 @@ public class Mod {
 			Hypnotic.instance.eventManager.unregister(this);
 		}
 		if (Hypnotic.instance.moduleManager.clickGui.sound.isEnabled()) {
-			SoundUtil.playSound(isEnabled() ? "on.wav" : "off.wav");
+			mc.thePlayer.playSound("random.click", 10, this.isEnabled() ? 0.6f : 0.4f);
+		}
+	}
+	
+	public void toggleSilent() {
+		enabled = !enabled;
+		if(enabled) {
+			onEnableSilent();
+			Hypnotic.instance.eventManager.register(this);
+		} else {
+			onDisableSilent();
+			for (Mod m : Hypnotic.instance.moduleManager.modules) {
+				if (m instanceof KillAura) {
+					RenderUtils.resetPlayerYaw();
+					RenderUtils.resetPlayerPitch();
+					KillAura.target = null;
+				}
+			}
+			Hypnotic.instance.eventManager.unregister(this);
 		}
 	}
 	
 	public void onUpdate() {}
+	
 	public void onEnable() {
 		Hypnotic.instance.eventManager.register(this);
 			if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
@@ -132,14 +158,11 @@ public class Mod {
 			}
 		NotificationManager.getNotificationManager().createNotification(this.getName(), this.getName() + " was enabled", true, 700, Type.CHECK, Color.GREEN);
 	}
+	
 	public void onDisable() {
 		Hypnotic.instance.eventManager.unregister(this);
-		RenderUtils.resetPlayerPitch();
-		RenderUtils.resetPlayerYaw();
-		
-		if (this.wasFlag) {
-			NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "Flag", this.getName() + " was disabled due to a flag", true, 1000, Type.WARNING, Color.RED);
-		}
+		//RenderUtils.resetPlayerPitch();
+		//RenderUtils.resetPlayerYaw();
 		
 			if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
 				mSize = fontRenderer.getStringWidth(this.getDisplayName());
@@ -148,10 +171,39 @@ public class Mod {
 				mSize = fr.getStringWidth(this.getDisplayName());
 		        lastSize = 0;
 			}
-			if (wasFlag == false)
 			NotificationManager.getNotificationManager().createNotification(this.getName(), this.getName() + " was disabled", true, 1000, Type.X, Color.RED);
+			
 	}
-	public void setup() {}
+	
+	public void onEnableSilent() {
+		Hypnotic.instance.eventManager.register(this);
+			if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
+				//mSize = 0;
+	        	//lastSize = fontRenderer.getStringWidth(this.getDisplayName());
+			} else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
+				//mSize = 0;
+		        //lastSize = fr.getStringWidth(this.getDisplayName());
+			}
+	}
+	
+	public void onDisableSilent() {
+		Hypnotic.instance.eventManager.unregister(this);
+		//RenderUtils.resetPlayerPitch();
+		//RenderUtils.resetPlayerYaw();
+		
+			if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
+				mSize = fontRenderer.getStringWidth(this.getDisplayName());
+		        lastSize = 0;
+			} else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
+				mSize = fr.getStringWidth(this.getDisplayName());
+		        lastSize = 0;
+			}
+			
+	}
+	
+	public void onLivingUpdate() {
+		
+	}
 	
 	public int getKey() {
 		return keyCode;
@@ -176,8 +228,8 @@ public class Mod {
 				
 			if (Setting.class != null) {
 				//if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
-					mSize = 0;
-	            	lastSize = fontRenderer.getStringWidth(this.getDisplayName());
+					//mSize = 0;
+	            	//lastSize = fontRenderer.getStringWidth(this.getDisplayName());
 				//} else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
 					//mSize = 0;
 	            	//lastSize = fr.getStringWidth(this.getDisplayName());
@@ -189,8 +241,8 @@ public class Mod {
         	
         	//if (Setting.class != null) {
 	        	//if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
-	        		mSize = fontRenderer.getStringWidth(this.getDisplayName());
-	            	lastSize = 0;
+	        		//mSize = fontRenderer.getStringWidth(this.getDisplayName());
+	            	//lastSize = 0;
 	        	//} else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
 	        		//mSize = fr.getStringWidth(this.getDisplayName());
 	                //lastSize = 0;

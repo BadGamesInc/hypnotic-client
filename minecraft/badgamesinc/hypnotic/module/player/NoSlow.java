@@ -29,10 +29,11 @@ public class NoSlow extends Mod {
 	
 	@EventTarget
     public void onMotionUpdate(EventMotionUpdate event) {
-        this.setDisplayName("NoSlow §f[" + mode.getSelected() + "] ");
+        this.setDisplayName("NoSlow §f[" + mode.getSelected() + "]");
         if (event.getState() == State.PRE) {
         	if (KillAura.target != null)
-        		mc.gameSettings.keyBindUseItem.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
+        		mc.playerController.onStoppedUsingItem(mc.thePlayer);
+        		//mc.gameSettings.keyBindUseItem.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
             if (mc.thePlayer.isBlocking() && mode.is("NCP") && Hypnotic.instance.moduleManager.getModule(KillAura.class).target == null) { 
             	mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
             }

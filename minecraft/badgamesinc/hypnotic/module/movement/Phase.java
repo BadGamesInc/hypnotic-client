@@ -31,7 +31,7 @@ public class Phase extends Mod {
 
 	    @Override
 	    public void onUpdate() {
-	    	this.setDisplayName("Phase " + ColorUtils.white + "[" + phaseMode.getSelected() + "] ");
+	    	this.setDisplayName("Phase " + ColorUtils.white + "[" + phaseMode.getSelected() + "]");
 	    	
 	    	if (phaseMode.getSelected().equalsIgnoreCase("Vanilla")) {
 		        reset -= 1;

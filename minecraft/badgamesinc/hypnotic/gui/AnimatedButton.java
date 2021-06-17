@@ -2,6 +2,8 @@ package badgamesinc.hypnotic.gui;
 
 import java.awt.Color;
 
+import badgamesinc.hypnotic.util.ColorUtil;
+import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -32,11 +34,11 @@ public class AnimatedButton extends GuiButton {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY){
-    	
-    	int color = new Color(255, 255, 255).getRGB();
+    	int color = ColorUtil.getClickGUIColor().getRGB();
         if(this.visible){
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
 
+            
             if(this.hovered){
             	color = new Color(255, 138, 196, 255).getRGB();
                 targetX = xPosition + width + 5;
@@ -65,7 +67,7 @@ public class AnimatedButton extends GuiButton {
                     lastY2 += diff / 12;
                 }
                 if (hoverTicks > 100) {
-                	hoverTicks-=10;
+                	hoverTicks-=15;
                 }
                 if (hoverTicks2 < this.width / 2 - 25) {
                 	hoverTicks2+=5;
@@ -79,14 +81,15 @@ public class AnimatedButton extends GuiButton {
                 if (hoverTicks2 < this.width / 2) {
                 	hoverTicks2+=2;
                 }
-                if (hoverTicks > this.width / 2) {
-                	hoverTicks = this.width / 2;
+                if (hoverTicks2 > this.width / 2) {
+                	hoverTicks2 = this.width / 2;
                 }
                // Gui.drawRect(xPosition, yPosition + 2, targetX, yPosition, 0xFFFFFFFF);
                // Gui.drawRect(xPosition + width, yPosition + height - 2, targetX2, yPosition + height, 0xFFFFFFFF);
                 //Gui.drawRect(xPosition + width - 1, targetY, xPosition + width + 1, yPosition, 0xFFFFFFFF);
                 //Gui.drawRect(xPosition + 1, targetY2, xPosition - 1, yPosition + height, 0xFFFFFFFF);
             } else {
+            	//System.out.println(hoverTicks);
                 targetX = xPosition;
                 targetX2 = xPosition + width + 5;
                 targetY = yPosition;
@@ -131,7 +134,7 @@ public class AnimatedButton extends GuiButton {
             //Gui.drawRect((this.xPosition + 2), this.yPosition + this.height - 3, this.xPosition + this.width - 2, this.yPosition + this.height - 0, -1);
             Gui.drawRect((this.xPosition + this.width / 2 + 2) - hoverTicks2, this.yPosition + this.height - 2, (this.xPosition + this.width / 2 + 2), this.yPosition + this.height - 0, -1);
             Gui.drawRect((this.xPosition + this.width / 2 - 2), this.yPosition + this.height - 2, (this.xPosition + this.width / 2 - 2) + hoverTicks2, this.yPosition + this.height - 0, -1);
-            fontRenderer.drawCenteredString(this.displayString, (float) (xPosition + (((xPosition + width) - xPosition - 2) / 2.0D)), (float) (yPosition + (((yPosition + height) - yPosition) / 2.0D) - 7.5), isMouseOver() ? color : -1, true);
+            FontManager.roboto.drawCenteredString(this.displayString, (float) (xPosition + (((xPosition + width) - xPosition - 2) / 2.0D)), (float) (yPosition + (((yPosition + height) - yPosition) / 2.0D) - 4), isMouseOver() ? ColorUtil.getClickGUIColor().getRGB() : -1);
 
 
         }

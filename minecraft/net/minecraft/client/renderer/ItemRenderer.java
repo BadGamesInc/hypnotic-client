@@ -6,6 +6,7 @@ import static net.minecraft.util.MathHelper.sqrt_float;
 import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.module.render.BlockAnimations;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -26,6 +27,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
@@ -336,7 +338,7 @@ public class ItemRenderer
         float animationVals1;
         float animationVals2;
         
-	        if(Hypnotic.instance.moduleManager.getModuleByName("BlockAnimations").isEnabled() && Hypnotic.instance.moduleManager != null) {
+	        if(Hypnotic.instance.moduleManager.getModule(BlockAnimations.class).isEnabled() && Hypnotic.instance.moduleManager != null) {
 	        	animationVals1 = f - 0.2f;
 	            animationVals2 = f1 -1f;
 	        } else {
@@ -385,18 +387,12 @@ public class ItemRenderer
                     	} else if(mode.equalsIgnoreCase("1.8")) {
                     		this.transformFirstPersonItem(f, 0.0f);
 	                        this.func_178103_d();
-                    	} else if(mode.equalsIgnoreCase("1.7") || mode.equalsIgnoreCase("Stab")) {
-                    		this.transformFirstPersonItem(0.1f, f1);
+                    	} else if(mode.equalsIgnoreCase("1.7") || mode.equalsIgnoreCase("Hypnotic")) {
+                    		this.transformFirstPersonItem(-0.05f, f1);
 	                        this.func_178103_d();
                     	} else if(mode.equalsIgnoreCase("Exhibition")) {
-                    		/*if (itemToRender.getItem() instanceof ItemSword) {
-                    			this.transformFirstPersonItem(f / 2.0F, 0.0F);
-                                GL11.glRotatef(-var9 * 40.0F / 2.0F, var9 / 2.0F, -0.0F, 9.0F);
-                                GL11.glRotatef(-var9 * 30.0F, 1.0F, var9 / 2.0F, -0.0F);
-                                this.func_178103_d();
-                            }*/
                     		
-							GL11.glTranslated(-0.1D, 0.15D, 0.0D);
+							//GL11.glTranslated(-0.1D, 0D, 0D);
 							
 							float var10 = MathHelper.sin(MathHelper.sqrt_float(f1) * 4.5895123F);
 							this.transformFirstPersonItem(f / 2f, 0.0F);
@@ -456,14 +452,14 @@ public class ItemRenderer
                         this.func_178098_a(partialTicks, abstractclientplayer);
                 }
                 
-                if(mode.equalsIgnoreCase("Spin")) {
+                if(mode.equalsIgnoreCase("Spin") && enumaction == EnumAction.BLOCK) {
 	                GlStateManager.translate(random8, 0.0f, -random5 - 1);
 	                GlStateManager.rotate(random4 - 30, random6, random7, random10);
 	                GlStateManager.rotate(-random1 - 10, random2, random3, 0.0F);
 	                GlStateManager.rotate(63.0F, 0.0F, 1.0F, 0.0F);
                 }
                 
-                if(mode.equalsIgnoreCase("Stab")) {
+                if(mode.equalsIgnoreCase("Hypnotic") && enumaction == EnumAction.BLOCK) {
 	                GlStateManager.translate(random8 - 1.3f, 0.0f, -random5 + 1.1f);
 	                GlStateManager.rotate(random4 - 30, random6, random7, random10 + 50);
 	                GlStateManager.rotate(-random1 - 10, random2, random3, 0.0F);

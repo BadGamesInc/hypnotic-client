@@ -25,6 +25,7 @@ import badgamesinc.hypnotic.util.MoveUtils;
 import badgamesinc.hypnotic.util.PlayerUtils;
 import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.TimeHelper;
+import badgamesinc.hypnotic.util.WorldUtils;
 import badgamesinc.hypnotic.util.Wrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -36,6 +37,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -52,7 +54,7 @@ public class Speed extends Mod {
     		"Gaming",
     		"Gaming2",
     		"LowHop");
-    public NumberSetting speed = new NumberSetting("Speed", 1, 0, 10, 0.1);
+    public NumberSetting speed = new NumberSetting("Speed", 1, 0, 10, 0.05);
     public BooleanSetting disable = new BooleanSetting("Disable On Flag", true);
     
     int stage = 0;
@@ -233,7 +235,7 @@ public class Speed extends Mod {
                         moveSpeed = (baseMoveSpeed / (ticksSinceJump <= 2 ? MoveUtils.SPRINTING_MOD : 1.0)) * MoveUtils.MAX_DIST;
                         if (MoveUtils.isOnIce())
                             moveSpeed *= MoveUtils.ICE_MOD;
-                        event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight());
+                        event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - 0.013);
                         ticksSinceJump = 0;
                     } else if (wasOnGround) {
                         double difference = MoveUtils.WATCHDOG_BUNNY_SLOPE * (lastDist - baseMoveSpeed);
@@ -244,7 +246,7 @@ public class Speed extends Mod {
                         moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                     }
 
-                    MoveUtils.setMotion(event, Math.max(moveSpeed, mc.thePlayer.isPotionActive(Potion.moveSpeed) ? baseMoveSpeed + 0.00 : baseMoveSpeed));
+                    MoveUtils.setMotion(event, Math.max(moveSpeed, mc.thePlayer.isPotionActive(Potion.moveSpeed) ? baseMoveSpeed + 0.004 : baseMoveSpeed + 0.003));
 
 
             }
@@ -272,7 +274,8 @@ public class Speed extends Mod {
                         moveSpeed = (baseMoveSpeed / (ticksSinceJump <= 2 ? MoveUtils.SPRINTING_MOD : 1.0)) * MoveUtils.MAX_DIST;
                         if (MoveUtils.isOnIce())
                             moveSpeed *= MoveUtils.ICE_MOD;
-                        event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - (mc.gameSettings.keyBindJump.isKeyDown() ? 0.019 : 0.119));
+                        
+                        event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - (mc.gameSettings.keyBindJump.isKeyDown() || TargetStrafe.canStrafe() || !isAir() ? 0.019 : 0.119));
                         ticksSinceJump = 0;
                     } else if (wasOnGround) {
                         double difference = MoveUtils.WATCHDOG_BUNNY_SLOPE * (lastDist - baseMoveSpeed);
@@ -283,7 +286,7 @@ public class Speed extends Mod {
                         moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                     }
 
-                    MoveUtils.setMotion(event, Math.max(moveSpeed, mc.thePlayer.isPotionActive(Potion.moveSpeed) ? baseMoveSpeed + 0.1 : baseMoveSpeed + 0.15));
+                    MoveUtils.setMotion(event, Math.max(moveSpeed + speed.getValue() * 0.1f, baseMoveSpeed));
 
 
             }
@@ -350,7 +353,7 @@ public class Speed extends Mod {
                     moveSpeed = (baseMoveSpeed / (ticksSinceJump <= 2 ? MoveUtils.SPRINTING_MOD : 1.0)) * MoveUtils.MAX_DIST;
                     if (MoveUtils.isOnIce())
                         moveSpeed *= MoveUtils.ICE_MOD;
-                    event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - 0.01);
+                    event.setY(Wrapper.getPlayer().motionY = MoveUtils.getJumpHeight() - 0.02);
                     ticksSinceJump = 0;
                 } else if (wasOnGround) {
                     double difference = MoveUtils.WATCHDOG_BUNNY_SLOPE * (lastDist - baseMoveSpeed);
@@ -361,14 +364,14 @@ public class Speed extends Mod {
                     moveSpeed = MoveUtils.calculateFriction(moveSpeed, lastDist, baseMoveSpeed);
                 }
 
-                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + 0.01));
+                MoveUtils.setMotion(event, (PlayerUtils.isInLiquid() || (block instanceof BlockSlab || block instanceof BlockStairs || block instanceof BlockCarpet)) ? baseMoveSpeed : Math.max(moveSpeed, baseMoveSpeed + speed.getValue() * 0.01));
 
 
         }
         motion = MoveUtils.getSpeed();
-        if(TargetStrafe.canStrafe()) {
-            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
-        }
+	        if(TargetStrafe.canStrafe()) {
+	            TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);
+	        }
         }
 
 
@@ -377,6 +380,18 @@ public class Speed extends Mod {
 
     }
 
+    public boolean isAir() {
+    	for (float i = 0; i < speed.getValue() + 1; i+=0.0001) {
+    		if (!(WorldUtils.getForwardBlock(i).getBlock() instanceof BlockAir) && !(WorldUtils.getForwardBlock(i).getBlock() instanceof BlockSlab) || mc.thePlayer.isCollidedHorizontally)
+    			return false;
+    	}
+    	for (float i = 0; i < speed.getValue() + 1; i+=0.0001) {
+    		if (!(WorldUtils.getForwardBlock(-i).getBlock() instanceof BlockAir) && !(WorldUtils.getForwardBlock(i).getBlock() instanceof BlockSlab) || mc.thePlayer.isCollidedHorizontally)
+    			return false;
+    	}
+    	return true;
+    }
+    
     @EventTarget
     public void onLastDist(EventLastDistance event){
     }
@@ -402,7 +417,7 @@ public class Speed extends Mod {
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event){
         if(event.getState() == Event.State.PRE) {
-            this.setDisplayName("Speed " + ColorUtils.white + "[" + mode.getSelected() + "] ");
+            this.setDisplayName("Speed " + ColorUtils.white + "[" + mode.getSelected() + "]");
             switch (mode.getSelected()) {
                 /*case "NCP":
                     if(mc.thePlayer.onGround){
@@ -487,17 +502,17 @@ public class Speed extends Mod {
     	if (disable.isEnabled()) {
 	    	if (e.getPacket() instanceof S08PacketPlayerPosLook) {
 	    		Hypnotic.instance.eventManager.unregister(this);
-	    		//this.wasFlag = true;
-	    		this.toggle();
-	    		
+	    		this.wasFlag = true;
+	    		NotificationManager.getNotificationManager().createNotification("Flag", this.getName() + " was disabled due to a flag", true, 1000, Type.WARNING, Color.YELLOW);
+	    		this.toggleSilent();
 	    	}
     	}
     }
 
     @Override
     public void onDisable(){
-    	this.wasFlag = false;
         super.onDisable();
+        this.wasFlag = false;
         mc.timer.timerSpeed = 1f;
         level = 0;
         mc.thePlayer.stepHeight = 0.625f;
@@ -531,7 +546,8 @@ public class Speed extends Mod {
     public static double motion = 0;
     
     @EventTarget
-    public void onUpdate(EventUpdate event){motion = MoveUtils.getSpeed();
+    public void onUpdate(EventUpdate event) {
+    	motion = MoveUtils.getSpeed();
         double xDist = mc.thePlayer.posX - mc.thePlayer.prevPosX;
         double zDist = mc.thePlayer.posZ - mc.thePlayer.prevPosZ;
         if(mode.getSelected().equalsIgnoreCase("Gaming2")) {

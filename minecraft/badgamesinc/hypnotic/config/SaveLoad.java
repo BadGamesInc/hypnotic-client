@@ -4,16 +4,20 @@ import java.io.*;
 import java.util.ArrayList;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.newclickgui.ClickGUI;
+import badgamesinc.hypnotic.gui.newererclickgui.ClickGui;
+import badgamesinc.hypnotic.gui.newererclickgui.component.Frame;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiMainMenu;
 
 public class SaveLoad {
     public File dir;
     public File configs;
     public File dataFile;
 
-    //Saves keybinds and friends
+    //Saves various aspects of the client
     
     public SaveLoad() {
         dir = new File(Minecraft.getMinecraft().mcDataDir, "Hypnotic");
@@ -46,6 +50,16 @@ public class SaveLoad {
         for (String friends : Hypnotic.instance.friendManager.friends) {
         	toSave.add("FRIEND:" + friends);
         }
+        
+        for (String message : Hypnotic.instance.moduleManager.chatSpammer.custom) {
+        	toSave.add("MESSAGE:" + message);
+        }
+        
+        for (Frame frame : ClickGui.instance.frames) {
+        	toSave.add("CLICKGUI:" + frame.category + ":X:" + frame.getX() + ":Y:" + frame.getY() + ":OPEN:" + frame.isOpen());
+        }
+        
+        toSave.add("MAINMENUBG:" + GuiMainMenu.getMenuIndex());
 
         try {
             PrintWriter pw = new PrintWriter(this.dataFile);
@@ -84,7 +98,52 @@ public class SaveLoad {
                 
             } else if (s.toLowerCase().startsWith("friend:")) {
             	Hypnotic.instance.friendManager.addFriend(args[1]);
+            } else if (s.toLowerCase().startsWith("message:")) {
+            	Hypnotic.instance.moduleManager.chatSpammer.custom.add(args[1]);
+            } else if (s.toLowerCase().startsWith("mainmenubg")) {
+            	GuiMainMenu.menuIndex = Integer.parseInt(args[1]);
+            } else if (s.toLowerCase().startsWith("clickgui")) {
+//            	for (Frame frame : ClickGui.instance.frames) {
+//            		if (s.toLowerCase().contains("clickgui:combat") && frame.category.name.equalsIgnoreCase("Comabt")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		} else if (s.toLowerCase().contains("clickgui:movement") && frame.category.name.equalsIgnoreCase("Movement")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		} else if (s.toLowerCase().contains("clickgui:player") && frame.category.name.equalsIgnoreCase("Player")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		} else if (s.toLowerCase().contains("clickgui:render") && frame.category.name.equalsIgnoreCase("Render")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		} else if (s.toLowerCase().contains("clickgui:world") && frame.category.name.equalsIgnoreCase("World")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		} else if (s.toLowerCase().contains("clickgui:misc") && frame.category.name.equalsIgnoreCase("Misc")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		} else if (s.toLowerCase().contains("clickgui:gui") && frame.category.name.equalsIgnoreCase("Gui")) {
+//            			frame.setX(Integer.parseInt(args[3]));
+//            			frame.setX(Integer.parseInt(args[5]));
+//            			frame.setOpen(Boolean.parseBoolean(args[7]));
+//            		}
+//            	}
             }
         }
     }
+    
+    private Frame getFrameByName(String frameName) {
+		for(Frame frame : ClickGui.instance.frames) {
+			if ((frame.category.name.trim().equalsIgnoreCase(frameName)) || (frame.toString().trim().equalsIgnoreCase(frameName.trim()))) {
+				return frame;
+			}
+		}
+		return null;
+	}
 }

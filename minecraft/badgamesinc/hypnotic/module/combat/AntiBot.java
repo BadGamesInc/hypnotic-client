@@ -158,7 +158,7 @@ public class AntiBot extends Mod {
 
             }
         }
-        this.setDisplayName("Antibot " + ColorUtils.white + "[" + mode + "] ");
+        this.setDisplayName("Antibot " + ColorUtils.white + "[" + mode + "]");
         if(mode.equalsIgnoreCase("Watchdog")){
                 if (mc.thePlayer.ticksExisted % 600 == 0) {
                     bots.clear();

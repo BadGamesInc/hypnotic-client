@@ -57,6 +57,7 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventPlayerDeath;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -247,7 +248,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     public EntityRenderer entityRenderer;
 
     /** Mouse left click counter */
-    private int leftClickCounter;
+    public int leftClickCounter;
 
     /** Display width */
     private int tempDisplayWidth;
@@ -982,6 +983,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         else if (guiScreenIn == null && this.thePlayer.getHealth() <= 0.0F)
         {
             guiScreenIn = new GuiGameOver();
+            EventPlayerDeath event = new EventPlayerDeath();
+            event.call();
         }
 
         if (guiScreenIn instanceof GuiMainMenu)
@@ -1413,7 +1416,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 }
                 else
                 {
-                    s1 = s1 + "[" + (k2 + 1) + "] ";
+                    s1 = s1 + "[" + (k2 + 1) + "]";
                 }
 
                 s1 = s1 + profiler$result2.field_76331_c;

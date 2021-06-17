@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.module.world;
 
 import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
+import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
@@ -11,6 +12,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.network.play.client.C0APacketAnimation;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;

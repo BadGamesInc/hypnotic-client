@@ -36,7 +36,7 @@ public class Step extends Mod {
 
 	@EventTarget
     public void onStep(EventMotion event){
-		this.setDisplayName("Step " + ColorUtils.white + "[" + mode.getSelected() + "] ");
+		this.setDisplayName("Step " + ColorUtils.white + "[" + mode.getSelected() + "]");
         if(mode.is("Spider")){
             if(mc.thePlayer.isCollidedHorizontally){
                 if(mc.thePlayer.onGround && shouldStep()){

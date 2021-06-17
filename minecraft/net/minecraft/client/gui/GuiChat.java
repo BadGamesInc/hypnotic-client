@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +12,10 @@ import org.lwjgl.input.Mouse;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.CleanTextField;
+import badgamesinc.hypnotic.module.gui.Keystrokes;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -34,7 +39,7 @@ public class GuiChat extends GuiScreen
     private List<String> foundPlayerNames = Lists.<String>newArrayList();
 
     /** Chat entry field */
-    protected GuiTextField inputField;
+    protected CleanTextField inputField;
 
     /**
      * is the text that appears when you press the chat key and the input box appears pre-filled
@@ -58,7 +63,7 @@ public class GuiChat extends GuiScreen
     {
         Keyboard.enableRepeatEvents(true);
         this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
-        this.inputField = new GuiTextField(0, this.fontRendererObj, 4, this.height - 12, this.width - 4, 12);
+        this.inputField = new CleanTextField(0, this.fontRendererObj, 4, this.height - 12, this.width - 4, 12, 0);
         this.inputField.setMaxStringLength(100);
         this.inputField.setEnableBackgroundDrawing(false);
         this.inputField.setFocused(true);
@@ -301,8 +306,34 @@ public class GuiChat extends GuiScreen
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
+    
+    public static int keyX = Hypnotic.instance.moduleManager.keystrokes.getX();
+    public static int keyY = Hypnotic.instance.moduleManager.keystrokes.getX();
+    
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+    	/*Dragging stuff*/
+    	  
+    	Keystrokes keystrokes = Hypnotic.instance.moduleManager.keystrokes;
+		
+    	if (keystrokes.hovered(mouseX, mouseY)) {
+    		
+    		if (Mouse.isButtonDown(0)) {
+    			keystrokes.setDragging(true);
+    		} else {
+    			keystrokes.setDragging(false);
+    		}
+    	}
+    	
+    	if (keystrokes.hovered(mouseX, mouseY) || keystrokes.isDragging())
+    		drawRect(keystrokes.left, keystrokes.bottom, keystrokes.width, keystrokes.height, new Color(255, 255, 255, 100).getRGB());
+
+    	if (keystrokes.isDragging()) {
+    		keystrokes.setX(mouseX - keystrokes.width1 / 2);//(int) (mouseX - ((keystrokes.x) * keystrokes.size.getValue() * 1)));
+    		keystrokes.setY(mouseY - keystrokes.height1 * 2);//(int) (mouseY - (keystrokes.y + (keystrokes.height * 2) * keystrokes.size.getValue() * 1)));
+    	}
+    	
+    	/****************/
         drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
         IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());

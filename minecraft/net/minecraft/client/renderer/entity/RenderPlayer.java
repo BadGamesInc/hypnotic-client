@@ -1,6 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
 import badgamesinc.hypnotic.event.events.EventRenderPlayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
@@ -52,10 +53,24 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
      * (Render<T extends Entity>) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doe
      */
+    int rotation = 0;
     public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
+    	
+    	GlStateManager.pushMatrix();
+    	
+    	//may make something later
+    	/*if (rotation < 360) {
+    		rotation+=60;
+    	}
+    	if (rotation >= 360) {
+    		rotation = 0;
+    	}
+    	GlStateManager.rotate(rotation, 10, 1, 10);*/
+    	
     	EventRenderPlayer event = new EventRenderPlayer(entity);
     	event.call();
+    	
     	
         if (!entity.isUser() || this.renderManager.livingPlayer == entity)
         {
@@ -69,6 +84,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
             this.setModelVisibilities(entity);
             super.doRender(entity, x, d0, z, entityYaw, partialTicks);
         }
+        GlStateManager.popMatrix();
     }
 
     private void setModelVisibilities(AbstractClientPlayer clientPlayer)

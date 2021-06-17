@@ -1,5 +1,6 @@
 package badgamesinc.hypnotic.util.font;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -12,6 +13,10 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 public class FontManager {
+	
+	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Hahahahahahahahhaahhahaah", 18, false, false, false);
+	public static GlyphPageFontRenderer medium = GlyphPageFontRenderer.create("Hahahahahahahahhaahhahaah", 16, false, false, false);
+	public static GlyphPageFontRenderer small = GlyphPageFontRenderer.create("Hahahahahahahahhaahhahaah", 14, false, false, false);
 
     private ResourceLocation darrow = new ResourceLocation("SF-UI-Display-Regular.otf");
 
@@ -98,4 +103,103 @@ public class FontManager {
             }
         }
     }
+    
+    private static Font getSigmaFont(float size, boolean bold) {
+		Font font = null;
+		try {
+			InputStream is = Minecraft.getMinecraft().getResourceManager()
+					.getResource(new ResourceLocation(bold ? "hypnotic/fonts/jellomedium.ttf" : "hypnotic/fonts/jellolight.ttf")).getInputStream();
+			font = Font.createFont(0, is);
+			font = font.deriveFont(0, size);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Error loading font");
+			font = new Font("default", 0, +10);
+		}
+		return font;
+	}
+    
+    private static Font roboto(float size, boolean bold) {
+		Font font = null;
+		try {
+			InputStream is = Minecraft.getMinecraft().getResourceManager()
+					.getResource(new ResourceLocation(bold ? "hypnotic/fonts/Roboto-Bold.ttf" : "hypnotic/fonts/Roboto-Regular.ttf")).getInputStream();
+			font = Font.createFont(0, is);
+			font = font.deriveFont(0, size);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Error loading font");
+			font = new Font("default", 0, +10);
+		}
+		return font;
+	}
+    
+    private static Font robotoLight(float size, boolean bold) {
+		Font font = null;
+		try {
+			InputStream is = Minecraft.getMinecraft().getResourceManager()
+					.getResource(new ResourceLocation(bold ? "hypnotic/fonts/Roboto-Regular.ttf" : "hypnotic/fonts/Roboto-Light.ttf")).getInputStream();
+			font = Font.createFont(0, is);
+			font = font.deriveFont(0, size);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Error loading font");
+			font = new Font("default", 0, +10);
+		}
+		return font;
+	}
+    
+    public static Font comfortaa(float size, boolean bold) {
+		Font font = null;
+		try {
+			InputStream is = Minecraft.getMinecraft().getResourceManager()
+					.getResource(new ResourceLocation(bold ? "hypnotic/fonts/Comfortaa-Bold.ttf" : "hypnotic/fonts/Comfortaa-Regular.ttf")).getInputStream();
+			font = Font.createFont(0, is);
+			font = font.deriveFont(0, size);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Error loading font");
+			font = new Font("default", 0, +10);
+		}
+		return font;
+	}
+    
+    private static Font hypnotic(float size, boolean bold) {
+		Font font = null;
+		try {
+			InputStream is = Minecraft.getMinecraft().getResourceManager()
+					.getResource(new ResourceLocation("hypnotic/fonts/Magneto-Bold.ttf")).getInputStream();
+			font = Font.createFont(0, is);
+			font = font.deriveFont(0, size);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Error loading font");
+			font = new Font("default", 0, +10);
+		}
+		return font;
+	}
+    
+    private static Font segoeui(float size, boolean bold) {
+		Font font = null;
+		try {
+			InputStream is = Minecraft.getMinecraft().getResourceManager()
+					.getResource(new ResourceLocation("hypnotic/fonts/SEGOEUI.TTF")).getInputStream();
+			font = Font.createFont(0, is);
+			font = font.deriveFont(0, size);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Error loading font");
+			font = new Font("default", 0, +10);
+		}
+		return font;
+	}
+    
+    public static SigmaFontRenderer jelloFont = SigmaFontRenderer.createFontRenderer(getSigmaFont((int)(20), false));
+    public static SigmaFontRenderer bigJello = SigmaFontRenderer.createFontRenderer(getSigmaFont((int)(21), false));
+    public static SigmaFontRenderer roboto = SigmaFontRenderer.createFontRenderer(roboto((int)(22), false));
+    public static SigmaFontRenderer robotoSmall = SigmaFontRenderer.createFontRenderer(roboto((int)(18), false));
+    public static SigmaFontRenderer comfortaa = SigmaFontRenderer.createFontRenderer(comfortaa((int) 20, false));
+    public static SigmaFontRenderer roboto2 = SigmaFontRenderer.createFontRenderer(roboto((int) 20, false));
+    public static SigmaFontRenderer robotoLight = SigmaFontRenderer.createFontRenderer(robotoLight((int) 20, false));
+    public static SigmaFontRenderer hypnoticFontLarge = SigmaFontRenderer.createFontRenderer(hypnotic((int) 50, false));
 }

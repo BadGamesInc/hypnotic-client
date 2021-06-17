@@ -13,6 +13,7 @@ public class Glint extends Mod {
 	public Glint() {
 		super("Glint", 0, Category.RENDER, "Gives your enchanted items a custom glint");
 		addSettings(rainbowGlint, clickGuiColor);
+		
 	}
 
 }

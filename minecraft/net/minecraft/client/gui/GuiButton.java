@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import badgamesinc.hypnotic.util.ColorUtil;
+import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -35,6 +37,9 @@ public class GuiButton extends Gui
     /** Hides the button completely if false. */
     public boolean visible;
     protected boolean hovered;
+    
+    /** 0 = Default, 1 = Comfortaa, 2 = Jello font, 3 = Roboto, 4 = Minecraft **/
+    protected int fontType = 0;
 
     public GuiButton(int buttonId, int x, int y, String buttonText)
     {
@@ -53,6 +58,21 @@ public class GuiButton extends Gui
         this.width = widthIn;
         this.height = heightIn;
         this.displayString = buttonText;
+    }
+    
+    public GuiButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText, int fontType)
+    {
+        this.width = 200;
+        this.height = 20;
+        this.enabled = true;
+        this.visible = true;
+        this.id = buttonId;
+        this.xPosition = x;
+        this.yPosition = y;
+        this.width = widthIn;
+        this.height = heightIn;
+        this.displayString = buttonText;
+        this.fontType = fontType;
     }
 
     /**
@@ -92,25 +112,47 @@ public class GuiButton extends Gui
             GlStateManager.blendFunc(770, 771);
             //this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + i * 20, this.width / 2, this.height);
             //this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-            Gui.drawRect(this.xPosition + 2, this.yPosition, this.xPosition, this.yPosition + this.height, -1);
-            Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width, this.yPosition, -1);
-            Gui.drawRect(this.xPosition + 2, this.yPosition + this.height - 2, this.xPosition + this.width, this.yPosition + this.height, -1);
-            Gui.drawRect(this.xPosition + this.width - 2, this.yPosition + 2, this.xPosition + this.width, this.yPosition + this.height, -1);
-            Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x44000000);
-            this.mouseDragged(mc, mouseX, mouseY);
             int j = -1;
-
             if (!this.enabled)
             {
                 j = 10526880;
             }
             else if (this.hovered)
             {
-                j = 0xffff8ac4;
-                Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x30f0f0f0);
+                j = ColorUtil.getClickGUIColor().getRGB();
             }
+            switch(fontType) {
+        	case 0:
+        		fontRenderer.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 12) / 2, j, true);
+        		break;
+        	case 1:
+        		FontManager.comfortaa.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 4) / 2, j);
+        		break;
+        	case 2:
+        		FontManager.bigJello.drawCenteredString(this.displayString, this.xPosition + this.width / 2 - 4, this.yPosition + (this.height - 7) / 2, j);
+        		break;
+        	case 3:
+        		FontManager.roboto.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 6) / 2, j);
+        		break;
+        	case 4:
+        		Gui.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 12) / 2, j);
+        		break;
+            }
+            if (this.hovered) {
+            	Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x30f0f0f0);
+            }
+            Gui.drawRect(this.xPosition + 2, this.yPosition, this.xPosition, this.yPosition + this.height, -1);
+            Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width, this.yPosition, -1);
+            Gui.drawRect(this.xPosition + 2, this.yPosition + this.height - 2, this.xPosition + this.width, this.yPosition + this.height, -1);
+            Gui.drawRect(this.xPosition + this.width - 2, this.yPosition + 2, this.xPosition + this.width, this.yPosition + this.height, -1);
+            Gui.drawRect(this.xPosition + 2, this.yPosition + 2, this.xPosition + this.width - 2, this.yPosition + this.height - 2, 0x44000000);
+            this.mouseDragged(mc, mouseX, mouseY);
+            
 
-            fontRenderer.drawCenteredString(this.displayString, this.xPosition + this.width / 2 + 2, this.yPosition + (this.height - 12) / 2, j, true);
+            
+            
+
+            
         }
     }
 

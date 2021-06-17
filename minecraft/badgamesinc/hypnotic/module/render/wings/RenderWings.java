@@ -23,21 +23,18 @@ public class RenderWings extends ModelBase {
 		this.mc = Minecraft.getMinecraft();
 		this.location = new ResourceLocation("hypnotic/textures/wings.png");
 		this.playerUsesFullHeight = true;
-
-		// Set texture offsets.
+		
 		setTextureOffset("wing.bone", 0, 0);
 		setTextureOffset("wing.skin", -10, 8);
 		setTextureOffset("wingtip.bone", 0, 5);
 		setTextureOffset("wingtip.skin", -10, 18);
 
-		// Create wing model renderer.
 		wing = new ModelRenderer(this, "wing");
 		wing.setTextureSize(30, 30); // 300px / 10px
 		wing.setRotationPoint(-2F, 0, 0);
 		wing.addBox("bone", -10.0F, -1.0F, -1.0F, 10, 2, 2);
 		wing.addBox("skin", -10.0F, 0.0F, 0.5F, 10, 0, 10);
 
-		// Create wing tip model renderer.
 		wingTip = new ModelRenderer(this, "wingtip");
 		wingTip.setTextureSize(30, 30); // 300px / 10px
 		wingTip.setRotationPoint(-10.0F, 0.0F, 0.0F);
@@ -48,8 +45,7 @@ public class RenderWings extends ModelBase {
 	
 	public void onRenderPlayer(EntityPlayer player, float partialTick) {
 		
-		if (player.equals(mc.thePlayer) && !player.isInvisible()) // Should render wings onto this
-																						// player?
+		if (player.equals(mc.thePlayer) && !player.isInvisible() && !player.isDead)
 		{
 			renderWings(player, partialTick);
 		}
@@ -62,8 +58,8 @@ public class RenderWings extends ModelBase {
 
 		GL11.glPushMatrix();
 		GL11.glScaled(-scale, -scale, scale);
-		GL11.glRotated(180 + rotate, 0, 1, 0); // Rotate the wings to be with the player.
-		GL11.glTranslated(0, -(1.28) / scale, 0); // Move wings correct amount up.
+		GL11.glRotated(180 + rotate, 0, 1, 0);
+		GL11.glTranslated(0, -(1.28) / scale, 0);
 		GL11.glTranslated(0, 0, (mc.thePlayer.getCurrentArmor(2) == null ? 0.1 : 0.17) / scale);
 
 		if (player.isSneaking()) {

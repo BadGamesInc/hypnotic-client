@@ -18,12 +18,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.gui.GLSLSandboxShader;
 import badgamesinc.hypnotic.module.misc.ChestStealer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
@@ -51,6 +54,8 @@ import tv.twitch.chat.ChatUserInfo;
 
 public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 {
+	public GLSLSandboxShader backgroundShader;
+    public long initTime = System.currentTimeMillis();
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Set<String> PROTOCOLS = Sets.newHashSet(new String[] {"http", "https"});
     private static final Splitter NEWLINE_SPLITTER = Splitter.on('\n');
@@ -663,7 +668,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         }
         else
         {
-            this.drawBackground(tint);
+        	drawShader();
         }
     }
 
@@ -685,6 +690,33 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         worldrenderer.pos((double)this.width, 0.0D, 0.0D).tex((double)((float)this.width / 32.0F), (double)tint).color(64, 64, 64, 255).endVertex();
         worldrenderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, (double)tint).color(64, 64, 64, 255).endVertex();
         tessellator.draw();
+    	
+    }
+    
+    public void drawShader() {
+    	try {
+			this.backgroundShader = new GLSLSandboxShader("/mainmenu" + GuiMainMenu.getMenuIndex() + ".fsh");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	GlStateManager.enableAlpha();
+        GlStateManager.disableCull();
+        
+        this.backgroundShader.useShader(this.width, this.height, 0, 0, (System.currentTimeMillis() - initTime) / 1000f);
+        
+        GL11.glBegin(GL11.GL_QUADS);
+
+        GL11.glVertex2f(-1f, -1f);
+        GL11.glVertex2f(-1f, 1f);
+        GL11.glVertex2f(1f, 1f);
+        GL11.glVertex2f(1f, -1f);
+
+        GL11.glEnd();
+
+        GL20.glUseProgram(0);
+        
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     /**

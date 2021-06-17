@@ -1,6 +1,7 @@
 package badgamesinc.hypnotic.gui.altmanager;
 
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class GuiAltManager extends GuiScreen {
     private GuiButton login;
     private GuiButton remove;
     private GuiButton rename;
+    private GuiScreen previousScreen;
     private AltLoginThread loginThread;
     private int offset;
     public Alt selectedAlt;
@@ -33,7 +35,8 @@ public class GuiAltManager extends GuiScreen {
     private static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 20, false, false, false);
 
 
-    public GuiAltManager() {
+    public GuiAltManager(GuiScreen previousScreen) {
+    	this.previousScreen = previousScreen;
         this.selectedAlt = null;
         this.status = EnumChatFormatting.GRAY + "Idle...";
     }
@@ -83,7 +86,7 @@ public class GuiAltManager extends GuiScreen {
                 break;
             }
             case 7: {
-                this.mc.displayGuiScreen(null);
+                this.mc.displayGuiScreen(previousScreen);
                 break;
             }
             case 8: {
@@ -104,8 +107,11 @@ public class GuiAltManager extends GuiScreen {
 
     private ResourceLocation background = new ResourceLocation("hypnotic/textures/Alt.png");
     int lastOffset = 0;
+    
     @Override
     public void drawScreen(final int par1, final int par2, final float par3) {
+    	this.drawDefaultBackground();
+    	Gui.drawRect(this.width, this.height, 0, 0, new Color(0, 0, 0, 200).getRGB());
         if (Mouse.hasWheel()) {
             final int wheel = Mouse.getDWheel();
             if (wheel < 0) {
@@ -129,7 +135,7 @@ public class GuiAltManager extends GuiScreen {
         int w = res.getScaledWidth();
         int h = res.getScaledHeight();
         mc.getTextureManager().bindTexture(background);
-        drawScaledCustomSizeModalRect(0, 0, 0, 0, w + 2, h, w + 2, h, w + 2, h);
+        //drawScaledCustomSizeModalRect(0, 0, 0, 0, w + 2, h, w + 2, h, w + 2, h);
         GlStateManager.bindTexture(0);
         //this.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
 
@@ -141,7 +147,7 @@ public class GuiAltManager extends GuiScreen {
         String altAm = AltManager.registry.size() < 2 ? "alt" : "alts";
         fontRenderer.drawCenteredString( sb.append(AltManager.registry.size()).append(" " + altAm).toString(), this.width / 2, 5, -1, true);
         fontRenderer.drawCenteredString( (this.loginThread == null) ? this.status : this.loginThread.getStatus(), this.width / 2, 15, -1, true);
-        Gui.drawShadowedRect(50.0f, 33.0f, this.width - 50, this.height - 60, Colors.getColor(225, 50));
+        Gui.drawRect(50.0f, 33.0f, this.width - 50, this.height - 60, Colors.getColor(225, 50));
         GL11.glPushMatrix();
         this.prepareScissorBox(0.0f, 33.0f, this.width, this.height - 50);
         GL11.glEnable(3089);
@@ -162,16 +168,16 @@ public class GuiAltManager extends GuiScreen {
                 }
                 if (alt == this.selectedAlt) {
                     if (this.isMouseOverAlt(par1, par2, y - this.offset) && Mouse.isButtonDown(0)) {
-                        Gui.drawShadowedRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
+                        Gui.drawRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
                     } else if (this.isMouseOverAlt(par1, par2, y - this.lastOffset)) {
-                        Gui.drawShadowedRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
+                        Gui.drawRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
                     } else {
-                        Gui.drawShadowedRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
+                        Gui.drawRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
                     }
                 } else if (this.isMouseOverAlt(par1, par2, y - this.offset) && Mouse.isButtonDown(0)) {
-                    Gui.drawShadowedRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20, -Colors.getColor(145, 50) );
+                    Gui.drawRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20, -Colors.getColor(145, 50) );
                 } else if (this.isMouseOverAlt(par1, par2, y - this.lastOffset)) {
-                    Gui.drawShadowedRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
+                    Gui.drawRect(52.0f, y - this.lastOffset - 4, this.width - 52, y - this.lastOffset + 20,  Colors.getColor(145, 50));
                 }
                 fontRenderer.drawCenteredString( name, this.width / 2, y - this.lastOffset, -1, true);
                 fontRenderer.drawCenteredString( pass, this.width / 2, y - this.lastOffset + 10, Colors.getColor(110), true);

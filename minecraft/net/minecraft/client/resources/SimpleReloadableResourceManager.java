@@ -121,4 +121,10 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
             iresourcemanagerreloadlistener.onResourceManagerReload(this);
         }
     }
+
+	@Override
+	public IResource getResource(String location) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

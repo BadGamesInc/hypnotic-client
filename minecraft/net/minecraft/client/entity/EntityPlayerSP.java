@@ -6,6 +6,7 @@ import badgamesinc.hypnotic.event.events.EventChat;
 import badgamesinc.hypnotic.event.events.EventLastDistance;
 import badgamesinc.hypnotic.event.events.EventMotion;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
+import badgamesinc.hypnotic.event.events.EventPlayerDeath;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.player.NoSlow;
@@ -35,6 +36,7 @@ import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -196,6 +198,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     	for(Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {
     		m.onUpdate();
     	}
+    	
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
             super.onUpdate();
@@ -748,6 +751,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onLivingUpdate()
     {
+    	for (Mod m : Hypnotic.instance.moduleManager.getEnabledModules()) {
+    		m.onLivingUpdate();
+    	}
         if (this.sprintingTicksLeft > 0)
         {
             --this.sprintingTicksLeft;

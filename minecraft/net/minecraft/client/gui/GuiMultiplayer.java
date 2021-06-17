@@ -11,6 +11,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 
 import badgamesinc.hypnotic.gui.AnimatedButton;
+import badgamesinc.hypnotic.gui.altmanager.GuiAltManager;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
@@ -102,6 +103,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new AnimatedButton(3, this.width / 2 + 4 + 50, this.height - 52, 100, 20, I18n.format("selectServer.add", new Object[0])));
         this.buttonList.add(new AnimatedButton(8, this.width / 2 + 4, this.height - 28, 70, 20, I18n.format("selectServer.refresh", new Object[0])));
         this.buttonList.add(new AnimatedButton(0, this.width / 2 + 4 + 76, this.height - 28, 75, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(new AnimatedButton(6969, this.width / 2 + 4 + 155, this.height - 28, 75, 20, I18n.format("Alt Manager", new Object[0])));
         this.selectServer(this.serverListSelector.func_148193_k());
     }
 
@@ -191,6 +193,10 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             else if (button.id == 8)
             {
                 this.refreshServerList();
+            }
+            else if (button.id == 6969)
+            {
+            	mc.displayGuiScreen(new GuiAltManager(this));
             }
         }
     }

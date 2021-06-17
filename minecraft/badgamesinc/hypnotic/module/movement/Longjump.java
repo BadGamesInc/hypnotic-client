@@ -166,7 +166,7 @@ public class Longjump extends Mod {
     public void onMotionUpdate(EventMotionUpdate event) {
         if(event.getState() == Event.State.PRE) {
         	String modeString = mode.getSelected().replaceAll("  ", "");
-            this.setDisplayName("LongJump " + ColorUtils.white + "[" + modeString + "] ");
+            this.setDisplayName("LongJump " + ColorUtils.white + "[" + modeString + "]");
             
         if(TargetStrafe.canStrafe()){
             TargetStrafe.strafe(event, motion, Hypnotic.instance.moduleManager.getModule(KillAura.class).target, this.direction);

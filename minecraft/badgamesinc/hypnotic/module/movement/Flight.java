@@ -99,7 +99,7 @@ public class Flight extends Mod implements UpdateListener{
 	@Override
 	public void onUpdate()
 	{
-		this.setDisplayName("Flight " + ColorUtils.white + "[" + this.flyMode.getSelected() + "] ");
+		this.setDisplayName("Flight " + ColorUtils.white + "[" + this.flyMode.getSelected() + "]");
 		Hypnotic.instance.moduleManager.speed.setEnabled(false);
 		
 		speed = (float) this.flySpeed.getValue();

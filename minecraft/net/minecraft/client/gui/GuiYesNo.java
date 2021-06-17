@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.util.FontUtil;
 import net.minecraft.client.resources.I18n;
 
 public class GuiYesNo extends GuiScreen
@@ -76,7 +77,7 @@ public class GuiYesNo extends GuiScreen
 
         for (String s : this.field_175298_s)
         {
-            this.drawCenteredString(this.fontRendererObj, s, this.width / 2, i, 16777215);
+            FontUtil.drawCenteredStringWithShadow(s, this.width / 2, i, 16777215);
             i += this.fontRendererObj.FONT_HEIGHT;
         }
 

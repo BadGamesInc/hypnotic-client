@@ -25,7 +25,7 @@ public class Velocity extends Mod {
 		double horizontal = horizontalV.getValue();
 		double vertical = verticalV.getValue();
 		
-		this.setDisplayName("Velocity " + ColorUtils.white + "[H: " + MathUtils.round(horizontal, 2) + " V: " + MathUtils.round(vertical, 2) + "] ");
+		this.setDisplayName("Velocity " + ColorUtils.white + "[H: " + MathUtils.round(horizontal, 2) + " V: " + MathUtils.round(vertical, 2) + "]");
 	}
 	
 	@EventTarget

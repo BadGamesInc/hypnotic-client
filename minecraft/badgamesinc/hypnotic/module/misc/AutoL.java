@@ -15,18 +15,6 @@ public class AutoL extends Mod {
 		super("AutoL", 0, Category.MISC, "Automatically say L when you win");
 	}
 
-	
-	/*@EventTarget
-	public void eventReceivePacket(EventChat e) {
-		String message = e.getMessage();		
-					
-		if(message.contains("venceu a partida") && message.contains(mc.thePlayer.getName()) || message.contains("You won the fight!") || message.contains("venceu a partida!") && message.contains(mc.thePlayer.getName())) {
-			mc.thePlayer.sendChatMessage("L");
-		}
-			
-		
-	}
-	*/
 	@EventTarget
     public void onReceive(EventReceivePacket event){
         if(event.getPacket() instanceof S02PacketChat){
@@ -35,7 +23,7 @@ public class AutoL extends Mod {
 
             if (message.contains("BAN " + mc.thePlayer.getName())) {
             	Random r = new Random();
-            	String randomUsername = "JustGaming" + r.nextInt(9999);
+            	String randomUsername = "RandomName" + r.nextInt(9999);
             	mc.session = new Session(randomUsername, "", "", "mojang");
             }
             if(message.contains(mc.thePlayer.getName()) && message.contains("venceu a partida") || message.contains("You won the fight!")){

@@ -62,6 +62,10 @@ public class WorldClient extends World
         this.calculateInitialWeather();
     }
 
+    public Block getBlock(double x, double y, double z){
+        return this.getBlockState(new BlockPos(x, y, z)).getBlock();
+    }
+    
     /**
      * Runs a single tick for the world
      */

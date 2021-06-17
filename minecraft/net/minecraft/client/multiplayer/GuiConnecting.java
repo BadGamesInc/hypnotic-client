@@ -59,11 +59,11 @@ public class GuiConnecting extends GuiScreen
     	ServerUtil.serverData = new ServerData("", ip + ":" + port, false);
     	
     	if (Hypnotic.instance.moduleManager.stealer.isEnabled()) {
-    		Hypnotic.instance.moduleManager.stealer.toggle();
+    		Hypnotic.instance.moduleManager.stealer.toggleSilent();
     		NotificationManager.getNotificationManager().createNotification("Toggle", "ChestStealer was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
     	}
     	if (Hypnotic.instance.moduleManager.ka.isEnabled()) {
-    		Hypnotic.instance.moduleManager.ka.toggle();
+    		Hypnotic.instance.moduleManager.ka.toggleSilent();
     		NotificationManager.getNotificationManager().createNotification("Toggle", "KillAura was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
     	}
         logger.info("Connecting to " + ip + ", " + port);

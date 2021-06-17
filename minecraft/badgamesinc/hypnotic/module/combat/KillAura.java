@@ -25,6 +25,7 @@ import badgamesinc.hypnotic.event.Event;
 import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
+import badgamesinc.hypnotic.event.events.EventPlayerDeath;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.gui.notifications.Type;
@@ -86,13 +87,13 @@ public class KillAura extends Mod {
     public boolean blocking;
 
     public KillAura() {
-        super("KillAura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
+        super("Killaura", Keyboard.KEY_K, Category.COMBAT, "Attacks targets withing a specified range (does not work while scaffold is on)");
         addSettings(mode, apsDelay, range, crack, existed, fov, autoBlock, disable, invis, players, animals, monsters, passives, teams, esp);
     }
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("KillAura " + ColorUtils.white + "[R: " + MathUtils.round(range.getValue(), 2) + " APS: " + MathUtils.round(apsDelay.getValue(), 2) + "] ");
+    	this.setDisplayName("Killaura " + ColorUtils.white + "[R: " + MathUtils.round(range.getValue(), 2) + " APS: " + MathUtils.round(apsDelay.getValue(), 2) + "]");
     	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled()) {
     		target = null;
     		RenderUtils.resetPlayerPitch();
@@ -108,7 +109,7 @@ public class KillAura extends Mod {
 
     @EventTarget
     public void onPre(EventMotionUpdate event) {
-    	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled() ) {
+    	if(Hypnotic.instance.moduleManager.getModuleByName("Scaffold").isEnabled() || !this.isEnabled()) {
     		return;
     	}
     	if (event.getState() == Event.State.PRE) {
@@ -120,15 +121,15 @@ public class KillAura extends Mod {
 	        pitch = RotationUtils.getRotations(target, 210)[1];
             yaw = RotationUtils.getRotations(target, 210)[0];
             
-	        boolean block = target != null && autoBlock.isEnabled() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
-	       if(mode.is("Silent")) {
-	    	    RenderUtils.setCustomPitch(pitch);
-		        RenderUtils.setCustomYaw(yaw);
-				event.setYaw(yaw);
-            	event.setPitch(pitch);
-	       } else if (mode.getSelected().equalsIgnoreCase("None")) {
+            boolean block = target != null && autoBlock.isEnabled() && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword;
+	        if(mode.is("Silent")) {
+	    	     RenderUtils.setCustomPitch(pitch);
+		         RenderUtils.setCustomYaw(yaw);
+				 event.setYaw(yaw);
+            	 event.setPitch(pitch);
+	        } else if (mode.getSelected().equalsIgnoreCase("None")) {
 	    	   
-	       } 
+	        } 
 	       
 	        if(current - last > 1000 / apsDelay.getValue()) {
 	        	if (block) {
@@ -352,6 +353,13 @@ public class KillAura extends Mod {
     }
     
     @EventTarget
+    public void onDeath(EventPlayerDeath event) {
+    	RenderUtils.resetPlayerYaw();
+    	RenderUtils.resetPlayerPitch();
+    	this.target = null;
+    }
+    
+    @EventTarget
     public void disable(EventReceivePacket event){
     	if (!this.isEnabled())
     		return;
@@ -360,18 +368,18 @@ public class KillAura extends Mod {
             String message = packet.getChatComponent().getUnformattedText();
             boolean contains = message.contains(name);
             if (disable.isEnabled()) {
-			    if (contains("1st Killer - ", event) || contains(mc.thePlayer.getName(), "died", event) || contains(mc.thePlayer.getName(), "was killed", event) || contains(mc.thePlayer.getName(), "foi morto por", event) || contains(" - Damage Dealt - ", event) || contains(" won ", event) || contains("1st Place: ", event) || contains("Winners - ", event) || contains(mc.thePlayer.getName() + " was", event) || mc.thePlayer.getHealth() == 0 || mc.playerController.isSpectatorMode() || mc.thePlayer.isDead || mc.theWorld == null) {
-			    	this.wasFlag = true;
-			    	this.toggle();
+			    if (contains("1st Killer - ", event) || contains(mc.thePlayer.getName(), "died", event) || contains(mc.thePlayer.getName(), "foi morto por", event) || contains(" - Damage Dealt - ", event) || contains(" won ", event) || contains("1st Place: ", event) || contains("Winners - ", event) || contains(mc.thePlayer.getName() + " was", event) || contains("you earned", event) || mc.thePlayer.getHealth() == 0 || mc.playerController.isSpectatorMode() || mc.thePlayer.isDead || mc.theWorld == null) {
+			    	NotificationManager.getNotificationManager().createNotification("Death", "Killaura disabled due to death", true, 1500, Type.WARNING, badgamesinc.hypnotic.gui.notifications.Color.YELLOW);
+			    	this.toggleSilent();
 				}
             }
         }
     }
-    
+
     @Override
     public void onDisable() {
-    	if (this.wasFlag == true)
-    		 NotificationManager.getNotificationManager().createNotification(ColorUtils.red + "Death", "Aura disabled due to death", true, 1500, Type.WARNING, badgamesinc.hypnotic.gui.notifications.Color.RED);
+    	RenderUtils.resetPlayerYaw();
+    	RenderUtils.resetPlayerPitch();
 	    
     	this.wasFlag = false;
     	super.onDisable();

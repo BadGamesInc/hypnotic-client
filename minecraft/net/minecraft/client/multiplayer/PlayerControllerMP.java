@@ -1,6 +1,7 @@
 package net.minecraft.client.multiplayer;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventBlockDamage;
 import badgamesinc.hypnotic.module.combat.Reach;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -43,7 +44,7 @@ public class PlayerControllerMP
     private ItemStack currentItemHittingBlock;
 
     /** Current block damage (MP) */
-    private float curBlockDamageMP;
+    public float curBlockDamageMP;
 
     /**
      * Tick counter, when it hits 4 it resets back to 0 and plays the step sound
@@ -53,7 +54,7 @@ public class PlayerControllerMP
     /**
      * Delays the first damage on the block after the first click on the block
      */
-    private int blockHitDelay;
+    public int blockHitDelay;
 
     /** Tells if the player is hitting a block */
     private boolean isHittingBlock;
@@ -284,8 +285,12 @@ public class PlayerControllerMP
     public boolean onPlayerDamageBlock(BlockPos posBlock, EnumFacing directionFacing)
     {
         this.syncCurrentPlayItem();
-
-        if (this.blockHitDelay > 0)
+        EventBlockDamage eventDamage = new EventBlockDamage(posBlock);
+        eventDamage.call();
+        
+        if (eventDamage.isCancelled()) {
+        	return false;
+        } else if (this.blockHitDelay > 0)
         {
             --this.blockHitDelay;
             return true;

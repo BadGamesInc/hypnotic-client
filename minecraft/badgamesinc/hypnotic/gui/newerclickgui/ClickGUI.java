@@ -68,7 +68,7 @@ public class ClickGUI extends GuiScreen {
         if (Button.settingsWindow == null) {
         this.prepareScissorBox(left, top, right, bottom);
         GL11.glEnable(3089);
-        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.mode.getSelected().equalsIgnoreCase("Fade in (ugly)");
+        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.animation.getSelected().equalsIgnoreCase("Fade in (ugly)");
         RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, uglyAnimation ? (int) fadeIn : 255));
         RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60, uglyAnimation ? (int) fadeIn : 255));
         for(CategoryButton button : buttons){
@@ -180,8 +180,8 @@ public class ClickGUI extends GuiScreen {
     public void prepareScissorBox(final float x, final float y, final float x2, final float y2) {
         final ScaledResolution scale = new ScaledResolution(this.mc);
         final int factor = scale.getScaleFactor();
-        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.mode.getSelected().equalsIgnoreCase("Fade in (ugly)");
-        boolean slideAnimation = Hypnotic.instance.moduleManager.clickGui.mode.getSelected().equalsIgnoreCase("Slide");
+        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.animation.getSelected().equalsIgnoreCase("Fade in (ugly)");
+        boolean slideAnimation = Hypnotic.instance.moduleManager.clickGui.animation.getSelected().equalsIgnoreCase("Slide");
         if (uglyAnimation) {
         	if (fadeIn < 255)
 		        fadeIn += 5;
@@ -195,11 +195,11 @@ public class ClickGUI extends GuiScreen {
 	    	        	divisor += 0.2;
 	        	}
 	        if (mc.gameSettings.guiScale <= 2) {
-		        if (divisor < 1.9)
-		        	divisor += 0.25;
+		        if (divisor < 2)
+		        	divisor += 0.1;
 	        } else {
 	        	if (divisor < 3)
-	    	        divisor += 0.2;
+	    	        divisor += 0.5;
 	        }
         }
         GL11.glScissor((int) (x * factor), (int) ((scale.getScaledHeight() - y2) * divisor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));

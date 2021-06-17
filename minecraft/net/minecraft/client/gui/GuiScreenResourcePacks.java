@@ -12,6 +12,8 @@ import org.lwjgl.Sys;
 
 import com.google.common.collect.Lists;
 
+import badgamesinc.hypnotic.gui.AnimatedButton;
+import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.ResourcePackListEntry;
 import net.minecraft.client.resources.ResourcePackListEntryDefault;
@@ -44,8 +46,8 @@ public class GuiScreenResourcePacks extends GuiScreen
      */
     public void initGui()
     {
-        this.buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, I18n.format("resourcePack.openFolder", new Object[0])));
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new AnimatedButton(2, this.width / 2 - 154, this.height - 48, 150, 20, I18n.format("resourcePack.openFolder", new Object[0])));
+        this.buttonList.add(new AnimatedButton(1, this.width / 2 + 4, this.height - 48, 150, 20, I18n.format("gui.done", new Object[0])));
 
         if (!this.changed)
         {
@@ -228,11 +230,11 @@ public class GuiScreenResourcePacks extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.drawBackground(0);
+        this.drawDefaultBackground();
         this.availableResourcePacksList.drawScreen(mouseX, mouseY, partialTicks);
         this.selectedResourcePacksList.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.title", new Object[0]), this.width / 2, 16, 16777215);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.folderInfo", new Object[0]), this.width / 2 - 77, this.height - 26, 8421504);
+        FontManager.roboto.drawCenteredString(I18n.format("resourcePack.title", new Object[0]), this.width / 2, 16, 16777215);
+        FontManager.roboto.drawCenteredString(I18n.format("resourcePack.folderInfo", new Object[0]), this.width / 2 - 77, this.height - 26, 8421504);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

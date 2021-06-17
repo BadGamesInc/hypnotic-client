@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.WorldSettings;
 
 public class NameTags extends Mod {
 
@@ -71,7 +72,7 @@ public class NameTags extends Mod {
             double z = entity1.lastTickPosZ + (entity1.posZ - entity1.lastTickPosZ) * mc.timer.renderPartialTicks - mc.getRenderManager().renderPosZ;
 
 
-            GL11.glTranslated(x, y + entity1.getEyeHeight() + 1.7, z);
+            GL11.glTranslated(x, y + entity1.getEyeHeight() + 1, z);
             GL11.glNormal3f(0, 1, 0);
             if (mc.gameSettings.thirdPersonView == 2) {
                 GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0, 1, 0);
@@ -107,20 +108,20 @@ public class NameTags extends Mod {
             String colorCode = entity1.getHealth() > 15 ? "\247a" : entity1.getHealth() > 10 ? "\247e" : entity1.getHealth() > 7 ? "\2476" : "\247c";
             int colorrectCode = entity1.getHealth() > 15 ? 0xff4DF75B : entity1.getHealth() > 10 ? 0xffF1F74D : entity1.getHealth() > 7 ? 0xffF7854D : 0xffF7524D;
             String thing = entity1.getName() + " " + colorCode + (int) entity1.getHealth();
-            float namewidth = (float) fontRenderer.getStringWidth(thing) + fontRenderer.getStringWidth((isDeveloper ? ColorUtils.purple + " DEV" : "")) + 0;
+            float namewidth = (float) fr.getStringWidth(thing) + fr.getStringWidth((isDeveloper ? ColorUtils.purple + " DEV" : "")) + 0;
 
 
-            Gui.drawRect(-namewidth / 2 - 2, 42, namewidth / 2 + 2, 40, 0x90080808);
+            //Gui.drawRect(-namewidth / 2 - 0, 42, namewidth / 2 + 2, 40, 0x90080808);
 
 
-            if (healthbar.isEnabled())
-                Gui.drawRect(-namewidth / 2 - 15, 42, namewidth / 2 + 15 - (1 - (entity1.getHealth() / entity1.getMaxHealth())) * (namewidth + 4), 40, colorrectCode);
+           // if (healthbar.isEnabled())
+              //  Gui.drawRect(-namewidth / 2 - 15, 42, namewidth / 2 + 15 - (1 - (entity1.getHealth() / entity1.getMaxHealth())) * (namewidth + 4), 40, colorrectCode);
 
             if (background.isEnabled())
-                Gui.drawRect(-namewidth / 2 - 15, 20, namewidth / 2 + 15, 40, new Color(30, 30, 30, 100).getRGB());
+                Gui.drawRect(-namewidth / 2 - 15, 22, namewidth / 2 + 15, 38, new Color(0, 0, 0, 180).getRGB());
             
-            fontRenderer.drawString((Hypnotic.instance.friendManager.isFriend(entity1) ? ColorUtils.lightPurple : ColorUtils.white) + entity1.getName() + (isDeveloper ? ColorUtils.purple + "  DEV" : ""), -namewidth / 2 - 15 + 4, 23, -1, true);
-            fontRenderer.drawString(colorCode + (int) entity1.getHealth(), namewidth / 2, 23, -1, true);
+            fr.drawString((entity1.hurtTime > 1.5 ? ColorUtils.red : (Hypnotic.instance.friendManager.isFriend(entity1) ? ColorUtils.lightPurple : ColorUtils.white)) + entity1.getName() + (isDeveloper ? ColorUtils.purple + "  DEV" : ""), -namewidth / 2 - 15 + 4, 26, -1, true);
+            fr.drawString("[" + colorCode + (int) entity1.getHealth() + ColorUtils.white + "]", namewidth / 2 - 8, 26, -1, true);
 
             GlStateManager.disableBlend();
             GlStateManager.depthMask(true);

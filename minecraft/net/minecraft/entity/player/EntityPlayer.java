@@ -8,11 +8,15 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 
+import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.event.events.EventPlayerDeath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -723,11 +727,12 @@ public abstract class EntityPlayer extends EntityLivingBase
     public void onDeath(DamageSource cause)
     {
         super.onDeath(cause);
+        
         this.setSize(0.2F, 0.2F);
         this.setPosition(this.posX, this.posY, this.posZ);
         this.motionY = 0.10000000149011612D;
 
-        if (this.getName().equals("Notch"))
+        if (this.getName().equals("Notch") || this.getName().equals("BadGamesInc"))
         {
             this.dropItem(new ItemStack(Items.apple, 1), true, false);
         }
@@ -1340,7 +1345,7 @@ public abstract class EntityPlayer extends EntityLivingBase
 
                 if (f > 0.0F || f1 > 0.0F)
                 {
-                    boolean flag = this.fallDistance > 0.0F && !this.onGround && !this.isOnLadder() && !this.isInWater() && !this.isPotionActive(Potion.blindness) && this.ridingEntity == null && targetEntity instanceof EntityLivingBase;
+                    boolean flag = (Hypnotic.instance.moduleManager.crits.isEnabled() || (this.fallDistance > 0.0F && !this.onGround && !this.isOnLadder() && !this.isInWater() && !this.isPotionActive(Potion.blindness) && this.ridingEntity == null)) && targetEntity instanceof EntityLivingBase;
 
                     if (flag && f > 0.0F)
                     {

@@ -10,10 +10,10 @@ import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 
 public class BlockAnimations extends Mod {
 
-	public ModeSetting animations = new ModeSetting("Animation", "Slide", "1.8", "1.7", "Slap", "Spin", "Stab", "Slide", "Sigma", "Leaked", "Astolfo", "Exhibition");
+	public ModeSetting animations = new ModeSetting("Animation", "1.8", "1.8", "1.7", "Slap", "Spin", "Hypnotic", "Slide", "Sigma", "Leaked", "Astolfo", "Exhibition");
 	
 	public BlockAnimations() {
-		super("BlockAnimations", 0, Category.RENDER, "Change how it looks when you block hit");
+		super("Animations", 0, Category.RENDER, "Change how it looks when you block hit");
 		addSettings(animations);
 	}
 	

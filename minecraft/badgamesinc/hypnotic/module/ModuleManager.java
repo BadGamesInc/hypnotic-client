@@ -29,6 +29,14 @@ public class ModuleManager {
 		return enabledModules;
 	}
 	
+	public CopyOnWriteArrayList<Mod> getDisplayModules() {
+		CopyOnWriteArrayList<Mod> enabledModules = new CopyOnWriteArrayList<>();
+		for(Mod m : getModules()) {
+			enabledModules.add(m);
+		}
+		return enabledModules;
+	}
+	
 	public static Mod getModuleByName(String moduleName) {
 		for(Mod mod : Hypnotic.instance.moduleManager.getModules()) {
 			if ((mod.getName().trim().equalsIgnoreCase(moduleName)) || (mod.toString().trim().equalsIgnoreCase(moduleName.trim()))) {
@@ -140,11 +148,13 @@ public class ModuleManager {
 		modules.add(nameTags);
 		modules.add(itemPhys);
 		//TODO: Fix these
-		//modules.add(new Tracers());
+		modules.add(new Tracers());
 		modules.add(noRender);		
 		modules.add(glint);
 		modules.add(wings);
 		modules.add(new BrightPlayer());
+		modules.add(new ChestESP());
+		modules.add(new Sigma());
 	}
 	
 	private void player() {
@@ -155,6 +165,7 @@ public class ModuleManager {
 		modules.add(autoArmor);
 		modules.add(safeWalk);
 		modules.add(scaffold);
+		modules.add(new Freecam());
 	}
 	
 	private void combat() {
@@ -167,6 +178,7 @@ public class ModuleManager {
 		//TODO: Fix these
 		//modules.add(new BowAimbot());
 		modules.add(crits);
+		modules.add(new TPAura());
 	}
 	
 	private void misc() {
@@ -182,6 +194,7 @@ public class ModuleManager {
 		modules.add(killSults);
 		modules.add(pingSpoof);
 		modules.add(blink);
+		modules.add(new AntiBan());
 	}
 	
 	private void world() {
@@ -190,6 +203,7 @@ public class ModuleManager {
 		modules.add(timer);
 		modules.add(nuker);
 		modules.add(bedNuker);
+		modules.add(new FakePlayer());
 	}
 	
 	private void gui() {
@@ -198,6 +212,7 @@ public class ModuleManager {
 		modules.add(logo);
 		modules.add(custHb);
 		modules.add(keystrokes);
+		modules.add(new Music());
 	}
 	
 	public ModuleManager() {

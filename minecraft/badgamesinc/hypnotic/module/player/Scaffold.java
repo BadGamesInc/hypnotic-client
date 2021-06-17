@@ -31,6 +31,7 @@ import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.Event2D;
 import badgamesinc.hypnotic.event.events.Event3D;
 import badgamesinc.hypnotic.event.events.EventMotionUpdate;
+import badgamesinc.hypnotic.event.events.EventPlayerDeath;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
@@ -77,7 +78,7 @@ import net.minecraft.util.Vec3i;
 public class Scaffold extends Mod {
     private float[] rotations = new float[2];
     private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
-    private List<Block> badBlocks = Arrays.asList(Blocks.air, Blocks.water, Blocks.flowing_water, Blocks.lava, Blocks.flowing_lava, Blocks.enchanting_table, Blocks.carpet, Blocks.glass_pane, Blocks.stained_glass_pane, Blocks.iron_bars, Blocks.snow_layer, Blocks.ice, Blocks.packed_ice, Blocks.coal_ore, Blocks.diamond_ore, Blocks.emerald_ore, Blocks.chest, Blocks.trapped_chest, Blocks.torch, Blocks.anvil, Blocks.trapped_chest, Blocks.noteblock, Blocks.jukebox, Blocks.tnt, Blocks.gold_ore, Blocks.iron_ore, Blocks.lapis_ore, Blocks.lit_redstone_ore, Blocks.quartz_ore, Blocks.redstone_ore, Blocks.wooden_pressure_plate, Blocks.stone_pressure_plate, Blocks.light_weighted_pressure_plate, Blocks.heavy_weighted_pressure_plate, Blocks.stone_button, Blocks.wooden_button, Blocks.lever, Blocks.tallgrass, Blocks.tripwire, Blocks.tripwire_hook, Blocks.rail, Blocks.waterlily, Blocks.red_flower, Blocks.red_mushroom, Blocks.brown_mushroom, Blocks.vine, Blocks.trapdoor, Blocks.yellow_flower, Blocks.ladder, Blocks.furnace, Blocks.sand, Blocks.cactus, Blocks.dispenser, Blocks.noteblock, Blocks.dropper, Blocks.crafting_table, Blocks.web, Blocks.pumpkin, Blocks.sapling, Blocks.cobblestone_wall, Blocks.oak_fence);
+    private List<Block> badBlocks = Arrays.asList(Blocks.air, Blocks.water, Blocks.flowing_water, Blocks.lava, Blocks.flowing_lava, Blocks.enchanting_table, Blocks.carpet, Blocks.glass_pane, Blocks.stained_glass_pane, Blocks.iron_bars, Blocks.snow_layer, Blocks.ice, Blocks.packed_ice, Blocks.coal_ore, Blocks.diamond_ore, Blocks.emerald_ore, Blocks.chest, Blocks.trapped_chest, Blocks.torch, Blocks.anvil, Blocks.trapped_chest, Blocks.noteblock, Blocks.jukebox, Blocks.tnt, Blocks.gold_ore, Blocks.iron_ore, Blocks.lapis_ore, Blocks.lit_redstone_ore, Blocks.quartz_ore, Blocks.redstone_ore, Blocks.wooden_pressure_plate, Blocks.stone_pressure_plate, Blocks.light_weighted_pressure_plate, Blocks.heavy_weighted_pressure_plate, Blocks.stone_button, Blocks.wooden_button, Blocks.lever, Blocks.tallgrass, Blocks.tripwire, Blocks.tripwire_hook, Blocks.rail, Blocks.waterlily, Blocks.red_flower, Blocks.red_mushroom, Blocks.brown_mushroom, Blocks.vine, Blocks.trapdoor, Blocks.yellow_flower, Blocks.ladder, Blocks.furnace, Blocks.sand, Blocks.cactus, Blocks.dispenser, Blocks.noteblock, Blocks.dropper, Blocks.crafting_table, Blocks.web, Blocks.pumpkin, Blocks.sapling, Blocks.cobblestone_wall, Blocks.oak_fence, Blocks.anvil);
     private BlockData blockData;
     private BooleanSetting blockFly = new BooleanSetting("Downwards", true);
     private BooleanSetting tower = new BooleanSetting("Tower", true);
@@ -114,7 +115,7 @@ public class Scaffold extends Mod {
 
 
     public Scaffold() {
-        super("Scaffold", Keyboard.KEY_R, Category.PLAYER, "Places blocks underneath you");
+        super("Scaffold", Keyboard.KEY_R, Category.PLAYER, "Places blocks underneath you"); 
         addSettings(scaffoldMode, delay, keeprots, blockFly, boost, redeskyBoost, keepY, raycast, keepSprint, legit, swing, tower, towermove, safeWalk);
     }
 
@@ -141,7 +142,7 @@ public class Scaffold extends Mod {
     
     @Override
     public void onUpdate() {
-    	this.setDisplayName("Scaffold " + ColorUtils.white + "[" + scaffoldMode.getSelected() + "] ");
+    	this.setDisplayName("Scaffold " + ColorUtils.white + "[" + scaffoldMode.getSelected() + "]");
     	 espPos = new BlockPos(mc.thePlayer.posX, keepY.isEnabled() ? this.startY - 1 : mc.thePlayer.posY - ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (mc.thePlayer.onGround || mc.thePlayer.fallDistance > 0.3) && MovementUtils.isMoving() && blockFly.isEnabled()) ? 2 : 1), mc.thePlayer.posZ);
     }
 
@@ -270,9 +271,9 @@ public class Scaffold extends Mod {
                     if (pos.getBlock() instanceof BlockAir) {
                         mc.thePlayer.inventory.currentItem = slot;
                         if (this.getPlaceBlock(this.blockData.getPosition(), this.blockData.getFacing())) {
-                            if(boost.isEnabled()){
-                                MoveUtils.setMotion((0.635 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
-
+                            if (boost.isEnabled()) {
+                            	if (MoveUtils.isMoving() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.onGround)
+                            		MoveUtils.setMotion((1.035 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
                             }
                             mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(currentSlot));
                         }
@@ -384,7 +385,7 @@ public class Scaffold extends Mod {
     public void on3D(Event3D event) {
     	
     	Block air = Blocks.air;
-    	if (getBlockCount() > 0 && ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && blockFly.isEnabled() && !Hypnotic.instance.moduleManager.flight.isEnabled()) ? true : isBlockUnder()))
+    	if (getBlockCount() > 0 && ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && blockFly.isEnabled() && !Hypnotic.instance.moduleManager.flight.isEnabled()) ? true : (keepY.isEnabled() ? true : isBlockUnder())))
         for (int i = 0; i < 5; i++) {
 			RenderUtils.drawLine(espPos.getX(), espPos.getY(), espPos.getZ(), espPos.getX() + 1, espPos.getY(), espPos.getZ());
 			RenderUtils.drawLine(espPos.getX(), espPos.getY() + 1, espPos.getZ(), espPos.getX() + 1, espPos.getY() + 1, espPos.getZ());
@@ -406,6 +407,12 @@ public class Scaffold extends Mod {
     	//RenderUtils.drawSolidBlockESP(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posX, 255, 255, 255, 255);
        // drawCircle(mc.thePlayer, event.getPartialTicks(), 0.5);
        // drawCircle(mc.thePlayer, event.getPartialTicks(), 0.4);
+    }
+    
+    @EventTarget
+    public void onDeath(EventPlayerDeath event) {
+    	RenderUtils.resetPlayerYaw();
+    	RenderUtils.resetPlayerPitch();
     }
     
     private void drawCircle(Entity entity, float partialTicks, double rad) {
@@ -762,7 +769,7 @@ public class Scaffold extends Mod {
 
     @EventTarget
     public void on2D(Event2D event) {
-    	fontRenderer.drawCenteredString(getBlockCount() + " Blocks left", GuiScreen.width / 2 + 50, GuiScreen.height / 2 - 5, (Hypnotic.instance.moduleManager.arrayMod.colorMode.is("Rainbow") ? ColorUtils.rainbow(4, 0.5f, 0.5f) : ColorUtil.getClickGUIColor().getRGB()), true);
+    	fontRenderer.drawCenteredString(getBlockCount() + ColorUtils.white + " Blocks left", GuiScreen.width / 2 + 50, GuiScreen.height / 2 - 5, (Hypnotic.instance.moduleManager.arrayMod.colorMode.is("Rainbow") ? ColorUtils.rainbow(4, 0.5f, 0.5f) : ColorUtil.getClickGUIColor().getRGB()), true);
     }
     
     public static void renderItem(ItemStack stack, int x, int y) {

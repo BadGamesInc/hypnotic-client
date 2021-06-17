@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import java.awt.Color;
 
 import badgamesinc.hypnotic.util.RenderUtils;
+import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -90,7 +91,7 @@ public class Gui
      * Draws a rectangle with a vertical gradient between the specified colors (ARGB format). Args : x1, y1, x2, y2,
      * topColor, bottomColor
      */
-    protected void drawGradientRect(float left, float g, float h, float i, int startColor, int endColor)
+    public void drawGradientRect(float left, float g, float h, float i, int startColor, int endColor)
     {
         float f = (float)(startColor >> 24 & 255) / 255.0F;
         float f1 = (float)(startColor >> 16 & 255) / 255.0F;
@@ -132,7 +133,7 @@ public class Gui
      */
     public void drawString(FontRenderer fontRendererIn, String text, int x, int y, int color)
     {
-        fontRendererIn.drawStringWithShadow(text, (float)x, (float)y, color);
+        FontManager.roboto.drawStringWithShadow(text, (float)x, (float)y, color);
     }
 
     /**

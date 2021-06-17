@@ -46,6 +46,10 @@ public class Block
 
     /** the wood sound type */
     public static final Block.SoundType soundTypeWood = new Block.SoundType("wood", 1.0F, 1.0F);
+    
+    public boolean isSolidFullCube() {
+        return blockMaterial.blocksMovement() && isFullCube();
+    }
 
     /** the gravel sound type */
     public static final Block.SoundType soundTypeGravel = new Block.SoundType("gravel", 1.0F, 1.0F);

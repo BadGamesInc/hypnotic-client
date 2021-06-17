@@ -11,6 +11,6 @@ public interface IResourceManager
     Set<String> getResourceDomains();
 
     IResource getResource(ResourceLocation location) throws IOException;
-
+    IResource getResource(String location) throws IOException;
     List<IResource> getAllResources(ResourceLocation location) throws IOException;
 }

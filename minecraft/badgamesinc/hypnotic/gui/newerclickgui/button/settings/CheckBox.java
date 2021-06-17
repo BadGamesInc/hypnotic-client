@@ -7,7 +7,7 @@ import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class CheckBox extends Component{
+public class CheckBox extends Component {
 	
 	public static GlyphPageFontRenderer fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 18, false, false, false);
 	public static GlyphPageFontRenderer smallFontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium.ttf", 14, false, false, false);

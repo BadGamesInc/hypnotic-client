@@ -3,7 +3,9 @@ package badgamesinc.hypnotic.gui.notifications;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
+import badgamesinc.hypnotic.util.font.SigmaFontRenderer;
 import badgamesinc.hypnotic.util.font.theforbidenclass.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -14,12 +16,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class Notification {
 	
-	GlyphPageFontRenderer fontRenderer;
-	GlyphPageFontRenderer small;
+	private SigmaFontRenderer fontRenderer;
+	private SigmaFontRenderer small;
 	
 	public Notification(String title, String text, boolean showTimer, long timeOnScreen, Type type, Color color, int targetX, int targetY, int startingX, int startingY, int speed) {
-		fontRenderer = GlyphPageFontRenderer.create("Comfortaa-Medium", 22, true, false, false);
-		small = GlyphPageFontRenderer.create("Comfortaa-Medium", 18, false, false, false);
+		fontRenderer = FontManager.roboto;
+		small = FontManager.robotoSmall;
+		//small = GlyphPageFontRenderer.create("Joe", 18, false, false, false);
 		this.title = title;
 		this.text = text;
 		this.showTimer = showTimer;
@@ -154,6 +157,7 @@ public class Notification {
 			
 		}
 		
+		
 		long timeVal = ((this.timeOnScreen - System.currentTimeMillis()) / 100);
 		String timeStr = String.valueOf(timeVal);
 		String time = (timeVal > 0 ? (timeStr.length() == 1 ? "0" + addChar(timeStr, '.', 0) : addChar(timeStr, '.', 1)) : "0");
@@ -167,19 +171,20 @@ public class Notification {
 		GlStateManager.translate(4, 4, 0);
 		GlStateManager.scale(1.1, 1.1, 1);
 		GlStateManager.translate(-4, -4, 0);
-		fontRenderer.drawString(title + " " + time + "s" + ColorUtils.reset, (int) ((startingX + 45) / 1.1), (int) ((int) ((startingY + 10 - (fr.FONT_HEIGHT / 2))) / 1.1), -1, true);
+		fontRenderer.drawStringWithShadow(title + " " + time + "s", ((startingX + 45) / 1.1), (int) ((int) ((startingY + 10 - (fr.FONT_HEIGHT / 2))) / 1.1), -1);
 		GlStateManager.popMatrix();
 		
 		GlStateManager.pushMatrix();
 		
 		GlStateManager.scale(0.9, 0.9, 1);
 		GlStateManager.translate(-4, -4, 0);
-		small.drawString(text + ColorUtils.reset, (float) ((startingX + 48.33) / 0.9), (float) ((float) ((startingY + 15 + (fr.FONT_HEIGHT))) / 0.9), -1, true);
+		small.drawStringWithShadow(text, ((startingX + 48.33f) / 0.9f), ((startingY + 17 + (fr.FONT_HEIGHT)) / 0.9f), -1);
 		GlStateManager.popMatrix();
 		
 		mc.getTextureManager().bindTexture(Hypnotic.cachedImages.get("hypnotic/textures/notifications/" + type.filePrefix + color.fileSuffix + ".png"));
 		int size = 30;
 		Gui.drawModalRectWithCustomSizedTexture((int)startingX + 4, (int)startingY + 5, 0, 0, size, size, size, size);
+		
 		
 		if (showTimer && timeOnScreen - System.currentTimeMillis() > 0) {
 			Gui.drawRect(startingX, startingY + 42, startingX + notWidth, startingY + 45, new java.awt.Color(color.color).darker().darker().getRGB());
