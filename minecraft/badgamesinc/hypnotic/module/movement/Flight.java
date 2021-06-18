@@ -24,6 +24,7 @@ import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MoveUtils;
+import badgamesinc.hypnotic.util.PlayerUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.AxisAlignedBB;
@@ -45,6 +46,11 @@ public class Flight extends Mod implements UpdateListener{
 	public float speed = 1F;
 	public double flyHeight;
 	private double startY;
+	
+	@Override
+	public void onEnable() {
+		super.onEnable();
+	}
 	
 	public void updateFlyHeight()
 	{

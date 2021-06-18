@@ -106,6 +106,7 @@ import net.minecraft.network.PacketThreadUtil;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
@@ -2128,5 +2129,10 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public GameProfile getGameProfile()
     {
         return this.profile;
+    }
+
+	public void sendPacketNoEvent(Packet p_147297_1_)
+    {
+        this.netManager.sendPacketNoEvent(p_147297_1_);
     }
 }

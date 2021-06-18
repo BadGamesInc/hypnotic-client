@@ -107,6 +107,7 @@ public class Scaffold extends Mod {
     public BooleanSetting boost = new BooleanSetting("Boost", false);
     public BooleanSetting redeskyBoost = new BooleanSetting("Timer Boost", false);
     public BooleanSetting safeWalk = new BooleanSetting("Safewalk", false);
+    public BooleanSetting eagle = new BooleanSetting("Eagle", false);
     
     private BlockPos espPos;
 
@@ -116,7 +117,7 @@ public class Scaffold extends Mod {
 
     public Scaffold() {
         super("Scaffold", Keyboard.KEY_R, Category.PLAYER, "Places blocks underneath you"); 
-        addSettings(scaffoldMode, delay, keeprots, blockFly, boost, redeskyBoost, keepY, raycast, keepSprint, legit, swing, tower, towermove, safeWalk);
+        addSettings(scaffoldMode, delay, keeprots, blockFly, boost, redeskyBoost, keepY, raycast, keepSprint, legit, swing, tower, towermove, safeWalk, eagle);
     }
 
     float yaw = 0;
@@ -220,7 +221,28 @@ public class Scaffold extends Mod {
 
                 }
             } else {
+            	
+            	if (eagle.isEnabled()) {
+                    BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
+                    boolean air = mc.theWorld.getBlockState(pos).getBlock() instanceof BlockAir;
+                    if (air) {
+                        setSneaking(true);
+                    } else {
+                        setSneaking(false);
+                    }
 
+                } else {
+                	BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
+                    boolean air = mc.theWorld.getBlockState(pos).getBlock() instanceof BlockAir;
+                    if (air) {
+                        event.setSneaking(true);
+                    } else {
+                        event.setSneaking(false);
+                    }
+                }
+            	MovementUtils.setMotion(MovementUtils.getBaseMoveSpeed() - (mc.thePlayer.isPotionActive(Potion.moveSpeed) ? 0.3 : 0.169));
+            	if (mc.thePlayer.isPotionActive(Potion.moveSpeed))
+            		mc.thePlayer.setSprinting(false);
                 rotated = false;
                 currentPos = null;
                 currentFacing = null;

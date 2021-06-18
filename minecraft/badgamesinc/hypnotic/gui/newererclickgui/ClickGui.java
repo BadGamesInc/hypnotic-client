@@ -3,6 +3,8 @@ package badgamesinc.hypnotic.gui.newererclickgui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.lwjgl.opengl.GL11;
+
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newererclickgui.component.Component;
@@ -10,6 +12,7 @@ import badgamesinc.hypnotic.gui.newererclickgui.component.Frame;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.util.ColorUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.RenderUtils;
 import net.minecraft.client.gui.GuiScreen;
 
 public class ClickGui extends GuiScreen {
@@ -54,6 +57,7 @@ public class ClickGui extends GuiScreen {
 				comp.updateComponent(mouseX, mouseY);
 			}
 		}
+		
 	}
 	
 	@Override

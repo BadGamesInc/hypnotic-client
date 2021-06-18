@@ -92,7 +92,7 @@ public class SongButton {
 		MusicUtils music = new MusicUtils();
 		Thread musicThread = new Thread(() -> {
             while (true) {
-                music.playSong(file.toString(), false);
+                music.playSong(file.toString());
             }
         });
 		if (isHoveredSong(mouseX, mouseY) && mouseButton == 0) {
@@ -111,6 +111,7 @@ public class SongButton {
 			musicThread.suspend();
 		}
 		if (isHoveredStop(mouseX, mouseY) && mouseButton == 0 && this.isPlaying()) {
+			music.stopSong(file.toString());
 			musicThread.stop();
 		}
 	}

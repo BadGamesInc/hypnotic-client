@@ -1168,6 +1168,13 @@ public class RenderUtils {
 		        GL11.glDisable(GL11.GL_BLEND);
 		    }
 
-
+		 /*
+		    GL11.glPushMatrix();
+			GL11.glEnable(3089);
+			RenderUtils.scissor(mouseX, mouseY, mouseY, partialTicks);
+			GL11.glDisable(3089);
+			GL11.glPopMatrix();
+		  
+		  */
     
 }

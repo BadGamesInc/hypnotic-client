@@ -12,28 +12,26 @@ public class Toggle extends Command {
 
 	@Override
 	public String getAlias() {
-		// TODO Auto-generated method stub
 		return "t";
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Toggles modules";
 	}
 
 	@Override
 	public String getSyntax() {
-		// TODO Auto-generated method stub
 		return ".t (module)";
 	}
 
 	@Override
 	public void onCommand(String command, String[] args) throws Exception {
-		if(args[0] == null || Hypnotic.instance.moduleManager.getModuleByName(args[0]) == null) {
+		String mod = String.join(" ", args);
+		if(args == null || Hypnotic.instance.moduleManager.getModuleByName(mod) == null) {
 			NotificationManager.getNotificationManager().createNotification("Invalid Usage!", "Usage: " + getSyntax(), true, 2500, Type.WARNING, Color.RED);
 		} else {
-			Mod m = Hypnotic.instance.moduleManager.getModuleByName(args[0]);
+			Mod m = Hypnotic.instance.moduleManager.getModuleByName(mod);
 			m.toggle();
 		}
 		

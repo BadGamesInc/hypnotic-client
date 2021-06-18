@@ -149,11 +149,16 @@ public class GuiMusic extends GuiScreen {
 						musicDir.mkdirs();
 					}	
 					File musicFile = new File(musicDir, fileName.getText() + ".wav");		
-					new Thread(new FileDownloader(urlBox.getText(), musicFile)).start();
-					initGui();
+					new Thread(new FileDownloader(urlBox.getText(), musicFile)).start();	
 				}
 				break;
 		}
 		super.actionPerformed(button);
-	}		
+	}	
+	
+	@Override
+	public void onGuiClosed() {
+		songButtons.clear();
+		super.onGuiClosed();
+	}
 }

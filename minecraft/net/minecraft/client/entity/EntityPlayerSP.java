@@ -211,7 +211,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             else
             {
                 this.onUpdateWalkingPlayer();
-                EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.POST);
+                EventMotionUpdate eventMotionUpdate = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, this.isSneaking(), Event.State.POST);
                 eventMotionUpdate.call(); 
             }
         }
@@ -222,7 +222,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdateWalkingPlayer()
     {
-    	EventMotionUpdate event = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, Event.State.PRE);
+    	EventMotionUpdate event = new EventMotionUpdate(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.onGround, this.isSneaking(), Event.State.PRE);
         event.call();
         boolean flag = this.isSprinting();
 
@@ -236,7 +236,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.serverSprintState = flag;
         }
 
-        boolean flag1 = this.isSneaking();
+        boolean flag1 = event.isSneaking();
 
         if (flag1 != this.serverSneakState) {
             if (flag1) {

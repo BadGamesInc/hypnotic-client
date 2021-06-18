@@ -24,19 +24,26 @@ public class MusicUtils {
 	}
 	
 	
-	public void playSong(String filePath, boolean stopSong) {
+	public void playSong(String filePath) {
 		this.filePath = filePath;
 		try {
 			FileInputStream fileInputStream = new FileInputStream(filePath);
 			Player player = new Player(fileInputStream);
 			this.playTime = player.getPosition();
-			if (!stopSong)
-				player.play();
-			else
-				player.close();
+			player.play();
 		} catch (FileNotFoundException | JavaLayerException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void stopSong(String filePath) {
+		try {
+			FileInputStream fileInputStream = new FileInputStream(filePath);
+			Player player = new Player(fileInputStream);
+			player.close();
+		} catch (FileNotFoundException | JavaLayerException e) {
+			e.printStackTrace();
+		}
 	}
 }

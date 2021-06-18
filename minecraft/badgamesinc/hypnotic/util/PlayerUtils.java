@@ -5,8 +5,12 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -240,5 +244,29 @@ public class PlayerUtils implements MinecraftUtil {
             }
         }
         return false;
+    }
+    
+    public static void damage() {
+        double damageOffset = 0, damageY = 0, damageYTwo = 0;
+        damageOffset = 0.06011F;
+        damageY = 0.000495765F;
+        damageYTwo = 0.0049575F;
+        NetHandlerPlayClient netHandler = mc.getNetHandler();
+        EntityPlayerSP player = mc.thePlayer;
+        double x = player.posX;
+        double y = player.posY;
+        double z = player.posZ;
+        for (int i = 0; i < (getMaxFallDist() / (damageOffset - 0.005F)) + 1; i++) {
+            mc.getNetHandler().sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + damageOffset, z, false));
+            mc.getNetHandler().sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + damageY, z, false));
+            mc.getNetHandler().sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + damageYTwo + damageOffset * 0.000001, z, false));
+        }
+        mc.getNetHandler().sendPacketNoEvent(new C03PacketPlayer(true));
+    }
+
+    public static float getMaxFallDist() {
+        PotionEffect potioneffect = mc.thePlayer.getActivePotionEffect(Potion.jump);
+        int f = potioneffect != null ? (potioneffect.getAmplifier() + 1) : 0;
+        return mc.thePlayer.getMaxFallHeight() + f;
     }
 }

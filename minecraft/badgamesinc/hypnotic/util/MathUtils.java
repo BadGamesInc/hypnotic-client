@@ -2,6 +2,7 @@ package badgamesinc.hypnotic.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Random;
 
 import net.minecraft.util.MathHelper;
 
@@ -105,5 +106,17 @@ public class MathUtils
         BigDecimal bd = new BigDecimal(num);
         bd = bd.setScale((int) increment, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+    
+    public static float range(float min, float max) {
+        return min + (new Random().nextFloat() * (max - min));
+    }
+
+    public static double range(double min, double max) {
+        return min + (new Random().nextDouble() * (max - min));
+    }
+
+    public static int range(int min, int max) {
+        return min + (new Random().nextInt() * (max - min));
     }
 }

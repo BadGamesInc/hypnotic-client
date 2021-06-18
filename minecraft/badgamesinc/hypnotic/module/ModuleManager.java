@@ -155,6 +155,7 @@ public class ModuleManager {
 		modules.add(new BrightPlayer());
 		modules.add(new ChestESP());
 		modules.add(new Sigma());
+		modules.add(new TimeChanger());
 	}
 	
 	private void player() {

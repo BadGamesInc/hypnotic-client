@@ -39,6 +39,7 @@ public class FileDownloader implements Runnable {
 				String percent = String.format("%.4f", percentDownloaded);
 				System.out.println("Downloaded " + percent + "%");
 			}
+			GuiMusic.instance.initGui();
 			bout.close();
 			in.close();
 			System.out.println("Download Complete!");

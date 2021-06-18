@@ -14,6 +14,7 @@ import badgamesinc.hypnotic.gui.newererclickgui.component.components.Button;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.RenderUtils;
 import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -31,6 +32,8 @@ public class Frame {
 	private boolean isDragging;
 	public int dragX;
 	public int dragY;
+	private int openAnimation = 0;
+	private float actualHeight = 0;
 	
 	public Frame(Category cat) {
 		this.components = new ArrayList<Component>();
@@ -75,24 +78,39 @@ public class Frame {
 		this.open = open;
 	}
 	
+	int compSize = 0;
 	public void renderFrame(FontRenderer fontRenderer) {
 		String title = category.name;
-		
+		System.out.println(title + "'s animation is " + this.openAnimation);
 		boolean rainbow = Hypnotic.instance.moduleManager.clickGui.rainbowGUI.isEnabled();
+		//GL11.glPushMatrix();
+		//GL11.glEnable(3089);
+		//RenderUtils.scissor(this.x, this.y, this.x + width, this.y + this.barHeight + actualHeight * compSize - openAnimation);
+		
 		Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.barHeight, new Color(0xFF222222).darker().getRGB());
 		FontManager.robotoSmall.drawStringWithShadow(title, (this.getX() + 3), (this.getY() + 0.5f), 0xFFFFFFFF);
 		FontManager.robotoSmall.drawStringWithShadow((this.open ? "-" : "+"), (this.x + this.width - 16) + 5, (this.y + 0.5f), -1);
-		ClickGui.instance.drawGradientRect(this.x, this.barHeight, this.x + this.width, this.barHeight - 100, -1072689136, -804253680);
+		//ClickGui.instance.drawGradientRect(this.x, this.barHeight, this.x + this.width, this.barHeight - 100, -1072689136, -804253680);
+		
 		if(this.open) {
-			//if (this.open) {
-				
-			//}
+			if (this.openAnimation < actualHeight * 100) {
+				this.openAnimation+=0.1f;
+			}
 			if(!this.components.isEmpty()) {
 				for(Component component : components) {
+					actualHeight = components.size();
+					compSize = components.size();
 					component.renderComponent();
 				}
 			}
+		} else {
+			System.out.println("hello from " + title);
+			if (this.openAnimation > 0) {
+				this.openAnimation-=0.001;
+			}
 		}
+		//GL11.glDisable(3089);
+		//GL11.glPopMatrix();
 	}
 	
 	public void refresh() {

@@ -7,8 +7,8 @@ public class EventMotionUpdate extends Event{
     double x, y, z;
     float yaw, pitch, lastYaw, lastPitch;
     Event.State state;
-    boolean onGround;
-    public EventMotionUpdate(double x, double y, double z, float yaw, float pitch, float lastYaw, float lastPitch, boolean onGround,Event.State state){
+    boolean onGround, sneaking;
+    public EventMotionUpdate(double x, double y, double z, float yaw, float pitch, float lastYaw, float lastPitch, boolean onGround, boolean sneaking, Event.State state){
         this.x = x;
         this.y = y;
         this.z = z;
@@ -18,7 +18,7 @@ public class EventMotionUpdate extends Event{
         this.lastPitch = lastPitch;
         this.state = state;
         this.onGround = onGround;
-
+        this.sneaking = sneaking;
     }
 
     public boolean isPre(){
@@ -63,9 +63,6 @@ public class EventMotionUpdate extends Event{
 
     public void setYaw(float yaw) {
         this.yaw = yaw;
-
-        Minecraft.getMinecraft().thePlayer.rotationYawHead = yaw;
-        Minecraft.getMinecraft().thePlayer.renderYawOffset = yaw;
     }
 
     public float getPitch() {
@@ -74,7 +71,6 @@ public class EventMotionUpdate extends Event{
 
     public void setPitch(float pitch) {
         this.pitch = pitch;
-        //Minecraft.getMinecraft().thePlayer.rotationPitchHead = pitch;
     }
 
     public float getLastYaw() {
@@ -91,9 +87,21 @@ public class EventMotionUpdate extends Event{
 
     public void setLastPitch(float lastPitch) {
         this.lastPitch = lastPitch;
-    }
+    }  
 
-    public Event.State getState() {
+    public boolean isOnGround() {
+		return onGround;
+	}
+    
+	public boolean isSneaking() {
+		return sneaking;
+	}
+
+	public void setSneaking(boolean sneaking) {
+		this.sneaking = sneaking;
+	}
+
+	public Event.State getState() {
         return state;
     }
 

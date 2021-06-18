@@ -382,7 +382,7 @@ public class ItemRenderer
                     	float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                     	
                     	if(mode.equalsIgnoreCase("Slap")) {
-	                    	this.transformFirstPersonItem(f - 0.2f, f1 -1f);
+	                    	this.transformFirstPersonItem(f - 0.05f, f1 -1f);
 	                        this.func_178103_d();
                     	} else if(mode.equalsIgnoreCase("1.8")) {
                     		this.transformFirstPersonItem(f, 0.0f);

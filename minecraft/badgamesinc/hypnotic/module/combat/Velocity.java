@@ -30,19 +30,20 @@ public class Velocity extends Mod {
 	
 	@EventTarget
 	public void eventPacket(EventReceivePacket event) {
-		
 		if (event.getPacket() instanceof S12PacketEntityVelocity) {
 			
 			S12PacketEntityVelocity packet = (S12PacketEntityVelocity) event.getPacket();
 			double horizontal = horizontalV.getValue();
 			double vertical = verticalV.getValue();
-			packet.setMotionX((int) ((packet.getMotionX() / 100) * horizontal));
-			packet.setMotionY((int) ((packet.getMotionY() / 100) * vertical));
-			packet.setMotionZ((int) ((packet.getMotionZ() / 100) * horizontal));
-			
-			if (horizontal == 0 && vertical == 0) {
-				event.setCancelled(true);
-			}		
+			if (mc.thePlayer.hurtTime < 4) {
+				packet.setMotionX((int) ((packet.getMotionX() / 100) * horizontal));
+				packet.setMotionY((int) ((packet.getMotionY() / 100) * vertical));
+				packet.setMotionZ((int) ((packet.getMotionZ() / 100) * horizontal));
+				
+				if (horizontal == 0 && vertical == 0 && mc.thePlayer.hurtTime < 4) {
+					event.setCancelled(true);
+				}		
+			}
 		}
 		else if (event.getPacket() instanceof S27PacketExplosion) {
 			event.setCancelled(true);
