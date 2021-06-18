@@ -6,7 +6,6 @@ import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import badgamesinc.hypnotic.util.font.SigmaFontRenderer;
-import badgamesinc.hypnotic.util.font.theforbidenclass.UnicodeFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
