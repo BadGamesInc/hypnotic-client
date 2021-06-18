@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.gui.newererclickgui.component.components.sub;
+package badgamesinc.hypnotic.gui.newererclickgui.elements.button.settings;
 
 import java.awt.Color;
 import java.math.BigDecimal;
@@ -9,8 +9,8 @@ import org.lwjgl.opengl.GL11;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newererclickgui.ClickGui;
-import badgamesinc.hypnotic.gui.newererclickgui.component.Component;
-import badgamesinc.hypnotic.gui.newererclickgui.component.components.Button;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.Element;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.button.Button;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
@@ -18,7 +18,7 @@ import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
-public class Slider extends Component {
+public class Slider extends Element {
 
 	private boolean hovered;
 	private NumberSetting numSet = (NumberSetting)set;
@@ -40,7 +40,7 @@ public class Slider extends Component {
 	}
 	
 	@Override
-	public void renderComponent() {
+	public void drawButton() {
 		if (numSet == null)
 			return;
 		Gui.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth(), parent.parent.getY() + offset + 12, this.hovered ? 0xFF333333 : 0xFF222222);
@@ -59,7 +59,7 @@ public class Slider extends Component {
 	}
 	
 	@Override
-	public void updateComponent(int mouseX, int mouseY) {
+	public void updateElement(int mouseX, int mouseY) {
 		if (numSet == null)
 			return;
 		this.hovered = isMouseOnButtonD(mouseX, mouseY) || isMouseOnButtonI(mouseX, mouseY);

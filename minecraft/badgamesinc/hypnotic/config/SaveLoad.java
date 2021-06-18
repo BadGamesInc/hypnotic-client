@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newererclickgui.ClickGui;
-import badgamesinc.hypnotic.gui.newererclickgui.component.Frame;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.Frame;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 import net.minecraft.client.Minecraft;

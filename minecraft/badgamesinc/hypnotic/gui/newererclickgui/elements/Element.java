@@ -1,30 +1,30 @@
-package badgamesinc.hypnotic.gui.newererclickgui.component;
+package badgamesinc.hypnotic.gui.newererclickgui.elements;
 
-import badgamesinc.hypnotic.gui.newererclickgui.component.components.Button;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.button.Button;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.settings.Setting;
 
-public class Component {
+public class Element {
 
 	public Setting set;
 	public Button button;
 	public float offset;
 	
-	public Component(Setting set, Button button, int offset) {
+	public Element(Setting set, Button button, int offset) {
 		this.set = set;
 		this.button = button;
 		this.offset = offset;
 	}
 	
-	public Component(Mod mod, Frame parent, int offset) {
+	public Element(Mod mod, Frame parent, int offset) {
 		
 	}
 	
-	public void renderComponent() {
+	public void drawButton() {
 		
 	}
 	
-	public void updateComponent(int mouseX, int mouseY) {
+	public void updateElement(int mouseX, int mouseY) {
 		
 	}
 	

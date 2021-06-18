@@ -7,8 +7,8 @@ import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
-import badgamesinc.hypnotic.gui.newererclickgui.component.Component;
-import badgamesinc.hypnotic.gui.newererclickgui.component.Frame;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.Element;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.Frame;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.util.ColorUtil;
 import badgamesinc.hypnotic.util.ColorUtils;
@@ -53,8 +53,8 @@ public class ClickGui extends GuiScreen {
 		for(Frame frame : frames) {
 			frame.renderFrame(this.fontRendererObj);
 			frame.updatePosition(mouseX, mouseY);
-			for(Component comp : frame.getComponents()) {
-				comp.updateComponent(mouseX, mouseY);
+			for(Element elem : frame.getElements()) {
+				elem.updateElement(mouseX, mouseY);
 			}
 		}
 		
@@ -72,9 +72,9 @@ public class ClickGui extends GuiScreen {
 				frame.setOpen(!frame.isOpen());
 			}
 			if(frame.isOpen()) {
-				if(!frame.getComponents().isEmpty()) {
-					for(Component component : frame.getComponents()) {
-						component.mouseClicked(mouseX, mouseY, mouseButton);
+				if(!frame.getElements().isEmpty()) {
+					for(Element element : frame.getElements()) {
+						element.mouseClicked(mouseX, mouseY, mouseButton);
 					}
 				}
 			}
@@ -85,9 +85,9 @@ public class ClickGui extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) {
 		for(Frame frame : frames) {
 			if(frame.isOpen() && keyCode != 1) {
-				if(!frame.getComponents().isEmpty()) {
-					for(Component component : frame.getComponents()) {
-						component.keyTyped(typedChar, keyCode);
+				if(!frame.getElements().isEmpty()) {
+					for(Element element : frame.getElements()) {
+						element.keyTyped(typedChar, keyCode);
 					}
 				}
 			}
@@ -105,9 +105,9 @@ public class ClickGui extends GuiScreen {
 		}
 		for(Frame frame : frames) {
 			if(frame.isOpen()) {
-				if(!frame.getComponents().isEmpty()) {
-					for(Component component : frame.getComponents()) {
-						component.mouseReleased(mouseX, mouseY, state);
+				if(!frame.getElements().isEmpty()) {
+					for(Element element : frame.getElements()) {
+						element.mouseReleased(mouseX, mouseY, state);
 					}
 				}
 			}

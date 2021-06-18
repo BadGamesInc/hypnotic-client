@@ -1,12 +1,12 @@
-package badgamesinc.hypnotic.gui.newererclickgui.component.components.sub;
+package badgamesinc.hypnotic.gui.newererclickgui.elements.button.settings;
 
 import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newererclickgui.ClickGui;
-import badgamesinc.hypnotic.gui.newererclickgui.component.Component;
-import badgamesinc.hypnotic.gui.newererclickgui.component.components.Button;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.Element;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.button.Button;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
@@ -15,7 +15,7 @@ import badgamesinc.hypnotic.util.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
-public class Checkbox extends Component {
+public class Checkbox extends Element {
 
 	private boolean hovered;
 	private BooleanSetting boolSet = (BooleanSetting)set;
@@ -33,7 +33,7 @@ public class Checkbox extends Component {
 	}
 
 	@Override
-	public void renderComponent() {
+	public void drawButton() {
 		Gui.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset, parent.parent.getX() + (parent.parent.getWidth() * 1), parent.parent.getY() + offset + 12, this.hovered ? 0xFF333333 : 0xFF222222);
 		Gui.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + 2, parent.parent.getY() + offset + 12, 0xFF111111);
 		Gui.drawRect(parent.parent.getX() + parent.parent.getWidth(), parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth() - 2, parent.parent.getY() + offset + 12, 0xFF111111);
@@ -49,7 +49,7 @@ public class Checkbox extends Component {
 	}
 	
 	@Override
-	public void updateComponent(int mouseX, int mouseY) {
+	public void updateElement(int mouseX, int mouseY) {
 		this.hovered = isMouseOnButton(mouseX, mouseY);
 		this.y = parent.parent.getY() + offset;
 		this.x = parent.parent.getX();

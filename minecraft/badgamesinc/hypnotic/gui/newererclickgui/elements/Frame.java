@@ -1,4 +1,4 @@
-package badgamesinc.hypnotic.gui.newererclickgui.component;
+package badgamesinc.hypnotic.gui.newererclickgui.elements;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import com.sun.security.ntlm.Client;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.gui.newererclickgui.ClickGui;
-import badgamesinc.hypnotic.gui.newererclickgui.component.components.Button;
+import badgamesinc.hypnotic.gui.newererclickgui.elements.button.Button;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.util.ColorUtils;
@@ -21,7 +21,7 @@ import net.minecraft.client.gui.Gui;
 
 public class Frame {
 
-	public ArrayList<Component> components;
+	public ArrayList<Element> elements;
 	public Category category;
 	private boolean open;
 	public boolean shouldBeOpen = false;
@@ -36,7 +36,7 @@ public class Frame {
 	private float actualHeight = 0;
 	
 	public Frame(Category cat) {
-		this.components = new ArrayList<Component>();
+		this.elements = new ArrayList<Element>();
 		this.category = cat;
 		this.width = 88;
 		this.x = 5;
@@ -49,13 +49,13 @@ public class Frame {
 		
 		for(Mod mod : Hypnotic.instance.moduleManager.getModulesInCategory(category)) {
 			Button modButton = new Button(mod, this, tY);
-			this.components.add(modButton);
+			this.elements.add(modButton);
 			tY += 12;
 		}
 	}
 	
-	public ArrayList<Component> getComponents() {
-		return components;
+	public ArrayList<Element> getElements() {
+		return elements;
 	}
 	
 	public void setX(int newX) {
@@ -96,11 +96,11 @@ public class Frame {
 			if (this.openAnimation < actualHeight * 100) {
 				this.openAnimation+=0.1f;
 			}
-			if(!this.components.isEmpty()) {
-				for(Component component : components) {
-					actualHeight = components.size();
-					compSize = components.size();
-					component.renderComponent();
+			if(!this.elements.isEmpty()) {
+				for(Element component : elements) {
+					actualHeight = elements.size();
+					compSize = elements.size();
+					component.drawButton();
 				}
 			}
 		} else {
@@ -115,9 +115,9 @@ public class Frame {
 	
 	public void refresh() {
 		int off = this.barHeight;
-		for(Component comp : components) {
-			comp.setOff(off);
-			off += comp.getHeight();
+		for(Element elem : elements) {
+			elem.setOff(off);
+			off += elem.getHeight();
 		}
 	}
 	
