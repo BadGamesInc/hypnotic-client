@@ -1,13 +1,15 @@
 package badgamesinc.hypnotic;
 
-import java.awt.GraphicsEnvironment;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
+import org.apache.commons.io.FileUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
@@ -20,6 +22,7 @@ import badgamesinc.hypnotic.event.EventManager;
 import badgamesinc.hypnotic.gui.HUD;
 import badgamesinc.hypnotic.gui.altmanager.FileManager;
 import badgamesinc.hypnotic.gui.altmanager.GuiAltManager;
+import badgamesinc.hypnotic.gui.music.FileDownloader;
 import badgamesinc.hypnotic.gui.notifications.Color;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.gui.notifications.Type;
@@ -27,6 +30,8 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.ModuleManager;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.util.ColorUtils;
+import badgamesinc.hypnotic.util.Logger;
+import badgamesinc.hypnotic.util.Logger.LogType;
 import badgamesinc.hypnotic.util.drm.DRM;
 import badgamesinc.hypnotic.util.drm.Level3Checks;
 import badgamesinc.hypnotic.util.drm.Level4Checks;
@@ -62,21 +67,33 @@ public class Hypnotic {
 	public EnchantmentManager enchantmentManager;																																																																																																																																																																												/* REQUIRED TO PREVENT A CRASH DO NOT REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FuelPumps On Top */ 
 	private Random r = new Random();																																																																																																																																																																					                  										private double superSecretKey = this.clientName == "Hypnotic" ? Double.MAX_VALUE - 0.00000001 : Byte.MIN_VALUE;																																																																																										
 	
-	public static final String clientName = "Hypnotic", clientVersion = "r1007", fullName = clientName + "-" + clientVersion, prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ";
+	public static final String clientName = "Hypnotic", clientVersion = "r1007", fullName = clientName + "-" + clientVersion, prefix = ColorUtils.purple + Hypnotic.instance.clientName + ColorUtils.white + ": ", hypnoticDir = new File(Minecraft.getMinecraft().mcDataDir, "Hypnotic").toString();
+	public String latestBuild = "", currentBuild = clientVersion;
+	public boolean outdated, finishedInstall;
 	
 	public void startup() {	
+		Logger.log("Setting the title...", "", LogType.INFO);
 		Display.setTitle(clientName + " " + clientVersion);
 		fm = new FontManager();
+		Logger.log("Initializing Modules...", "ModuleManager", LogType.INFO);
 		moduleManager = new ModuleManager();
+		Logger.log("Initializing Events...", "EventManager", LogType.INFO);
 		eventManager = new EventManager();
+		Logger.log("Initializing Commands...", "CommandManager", LogType.INFO);
 		commandManager = new CommandManager();
+		Logger.log("Initializing Friends...", "FriendManager", LogType.INFO);
 		friendManager = new FriendManager();
+		Logger.log("Initializing Altening Service...", "", LogType.INFO);
 		auth = new TheAlteningAuthentication(AlteningServiceType.MOJANG);
+		Logger.log("Initializing Notifications...", "NotificationManager", LogType.INFO);
 		notificationManager = new NotificationManager();
+		Logger.log("Initializing HUD...", "", LogType.INFO);
 		hud = new HUD();
+		Logger.log("Initializing File Systems...", "", LogType.INFO);
 		this.fileManager = new FileManager();
 		saveload = new SaveLoad();
 		this.guiAltLogin = new GuiAltManager(new GuiMainMenu());
+		Logger.log("Initializing Discord Rich Pressence...", "", LogType.INFO);
 		discordRP = new DiscordRP();
 		enchantmentManager = new EnchantmentManager();
 		eventManager.register(this);
@@ -84,13 +101,16 @@ public class Hypnotic {
 		discordRP.title = this.rptitle();
 		getAPIKey();
 		DRM.checkDRM();
+		Logger.log("Checking for any form of skid...", "MikeGaming", LogType.INFO);
 		Level3Checks.setL3();																																																																												if(l3 == 0) { System.err.println("[HYPNOTIC SKID DETECTION]: CLASS 3 LEVEL SKID SENSORS TRIGGERED"); System.err.println("mike gaming is not happy with you :("); Minecraft.getMinecraft().displayGuiScreen(null); }
 		Level4Checks.checkLevel4();
 		
+		Logger.log("Loading configs...", "ConfigManager", LogType.INFO);
 		if (cfgManager.config.exists()) {
             cfgManager.loadConfig();
         }
 
+		Logger.log("Starting Config Daemon...", "ConfigManager", LogType.INFO);
         Thread configDaemon = new Thread(() -> {
             while (true) {
                 try {
@@ -104,6 +124,8 @@ public class Hypnotic {
         configDaemon.setDaemon(true);
         configDaemon.start();
 		
+        Logger.log("Caching Images...", "", LogType.INFO);
+        
 		for (Type notType : Type.values()) {
 			for (Color notColor : Color.values()) {	
 				cachedImages.put("hypnotic/textures/notifications/" + notType.filePrefix + notColor.fileSuffix + ".png", new ResourceLocation("hypnotic/textures/notifications/" + notType.filePrefix + notColor.fileSuffix + ".png"));	
@@ -112,14 +134,54 @@ public class Hypnotic {
 		
 		for (ResourceLocation resource : cachedImages.values()) {
 			String name = resource.getResourcePath();
-			System.out.println("Cached " + name);
 		}
-		//KillAura.target = null;
+		
+		KillAura.target = null;
 		moduleManager.blink.setEnabled(false);
+		
+		checkVersion();
+		Logger.log("Finished Hypnotic initialization!", "", LogType.INFO);
 	}
 	
+	public void checkVersion() {
+		Logger.log("Getting latest build version", "", LogType.INFO);
+		try {
+			URL pasteLink = new URL("https://pastebin.com/raw/1NnsBeaj");
+			BufferedReader br = new BufferedReader(new InputStreamReader(pasteLink.openStream()));
+			this.latestBuild = br.readLine().trim();
+			br.close();
+			Logger.log("Current build is " + this.latestBuild, "", LogType.INFO);
+			if (!this.latestBuild.contains(this.clientVersion)) {
+				this.setOutdated(true);		
+				Logger.log("You are on an outdated build!", "Version Checker", LogType.WARNING);
+				Logger.log("Please download the latest build from www.github.com/badgamesinc/hypnotic-client", "Version Checker", LogType.WARNING);
+				Display.setTitle(this.fullName + " (Outdated)");
+			} else {
+				this.setOutdated(false);
+				Logger.log("Your build is up to date!", "", LogType.INFO);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean isFinishedInstall() {
+		return finishedInstall;
+	}
+
+	public void setFinishedInstall(boolean finishedInstall) {
+		this.finishedInstall = finishedInstall;
+	}
+	
+	public boolean isOutdated() {
+		return outdated;
+	}
+
+	public void setOutdated(boolean outdated) {
+		this.outdated = outdated;
+	}
+
 	public void shutdown() {
-		
 		saveload.save();
 		discordRP.shutdown();
 	}
