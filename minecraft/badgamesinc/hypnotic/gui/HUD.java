@@ -229,14 +229,14 @@ public class HUD {
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 		
 		CopyOnWriteArrayList<Mod> modules = new CopyOnWriteArrayList<Mod>(Hypnotic.instance.moduleManager.modules);
-
+		boolean shouldmove = animationTimer.hasTimeElapsed(1000 / 75, true);
         int count = 0;
         if (!Hypnotic.instance.moduleManager.getModule(ArrayListModule.class).isEnabled()) {
         	return;
         }
-        /*if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Boxed")) {
+        if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Boxed")) {
 	        if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
-	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fontRenderer.getStringWidth(((Mod)m).getDisplayName())).reversed());
+	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> (int) fontRenderer.getStringWidth(((Mod)m).getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray))).reversed());
 	            for (Mod m : modules) {
 	            	if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
 	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
@@ -248,16 +248,30 @@ public class HUD {
 	                float diff = m.mSize - m.lastSize;
 	                m.lastSize += diff / 4;
 	                if (m.lastSize != m.fontRenderer.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
-	                    GlStateManager.enableBlend();
-	                    Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
-	                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, new Color(0, 0, 0, 220).getRGB());
-	                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, (count * (fontRenderer.getFontHeight() + 0)), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 10 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, color);
-	                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 11 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 0, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(m2.getDisplayName()) - 11 + 1, count * (fontRenderer.getFontHeight() + 0) + fontRenderer.getFontHeight() + 1, color);
-	                    fontRenderer.drawString(m.getDisplayName(), sr.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7 + m.lastSize, count * (fontRenderer.getFontHeight() + 0) - 0, color, true);
-	                    count++;
-	
+	                	if (m.animation > 0) {
+		                    GlStateManager.enableBlend();
+		                    String name = m.getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray);
+		                    Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
+		                    String name2 = m2.getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray);
+		                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(name) - 11 + m.lastSize, (count * (fontRenderer.getHeight() + 0)), sr.getScaledWidth() + 10 + m.lastSize, count * (fontRenderer.getHeight() + 0) + fontRenderer.getHeight() + 0, new Color(0, 0, 0, 220).getRGB());
+		                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(name) - 11 + m.lastSize, (count * (fontRenderer.getHeight() + 0)), sr.getScaledWidth() - fontRenderer.getStringWidth(name) - 10 + m.lastSize, count * (fontRenderer.getHeight() + 0) + fontRenderer.getHeight() + 0, color);
+		                    Gui.drawRect(sr.getScaledWidth() - fontRenderer.getStringWidth(name) - 11 + m.lastSize, count * (fontRenderer.getHeight() + 0) + fontRenderer.getHeight() + 0, modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : sr.getScaledWidth() - fontRenderer.getStringWidth(name2) - 11 + 1, count * (fontRenderer.getHeight() + 0) + fontRenderer.getHeight() + 1, color);
+		                    fontRenderer.drawString(name, sr.getScaledWidth() - fontRenderer.getStringWidth(name) - 7 + m.lastSize, count * (fontRenderer.getHeight() + 0) - 0, color);
+		                    count++;
+	                	}
 	
 	                }
+	                if (shouldmove) {
+    					if (m.isEnabled()) {
+    						if (m.animation < 100) {
+    							m.animation += 10;
+    						}
+    					}else {
+    						if (m.animation > 0) {
+    							m.animation -= 10;
+    						}
+    					}
+    				}
 	            }
 	        } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
 	        	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName())).reversed());
@@ -287,9 +301,10 @@ public class HUD {
 	
 	            }
 	        }
-        } else*/ 
-        boolean shouldmove = animationTimer.hasTimeElapsed(1000 / 75, true);
+        } else
+        
         if (!Hypnotic.instance.moduleManager.getModule(Sigma.class).isEnabled()) {
+        	
 	        if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Clean")) {
 	        	if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
 	            	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> (int) fontRenderer.getStringWidth(((Mod)m).getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray))).reversed());
@@ -317,6 +332,8 @@ public class HUD {
 	    					
 	    					if (Hypnotic.instance.moduleManager.arrayMod.background.isEnabled())
 	    						Gui.drawRect(sr.getScaledWidth() - (((length) / 100) * m.animation) - 9 - 0, (count * (fontRenderer.getHeight() + 2) - 0), sr.getScaledWidth() - 4 + 100 - m.animation, count * (fontRenderer.getHeight() + 2) + 2 + fontRenderer.getHeight() + 0, new Color(0, 0, 0, 220).getRGB());
+	    					else
+	    						Gui.drawRect(0, 0, 0, 0, new Color(0, 0, 0, 250).getRGB());
 	    					fontRenderer.drawStringWithShadow(name, sr.getScaledWidth() - (((length) / 100) * m.animation) - (name.contains(ColorUtils.gray) ? 5 : 7) - infoOffset - 0, count * (fontRenderer.getHeight() + 2) - 1, color);
 	    					Gui.drawRect(sr.getScaledWidth() - 4 + 100 - m.animation, (count * (fontRenderer.getHeight() + 2)), sr.getScaledWidth() + 100 - m.animation, count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 2, color);
 	                        count++;
@@ -373,21 +390,93 @@ public class HUD {
 	    						}
 	    					}
 	    				}
-	            			
-		                    /*float diff = m.mSize - m.lastSize;
-		                    m.lastSize += diff / 4;
-		                    if (m.lastSize != m.fr.getStringWidth(m.getDisplayName()) || m.isEnabled()) {
-		                    	boolean hasInfo = m.getDisplayName().contains(ColorUtils.white);
-		                    	int infoOffset = (hasInfo ? 2 : 0);
-		                        GlStateManager.enableBlend();
-		                        Mod m2 = modules.get(modules.indexOf(m) + 1 < modules.size() ? modules.indexOf(m) + 1 : modules.indexOf(m));
-		                        Gui.drawRect(sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 7 + m.lastSize + infoOffset, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() + 10 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, new Color(0, 0, 0, 220).getRGB());
-		                        Gui.drawRect(sr.getScaledWidth() - 3, (count * (fr.FONT_HEIGHT + 1)), sr.getScaledWidth() + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + fr.FONT_HEIGHT + 1, color);
-		                        fr.drawString(m.getDisplayName(), sr.getScaledWidth() - fr.getStringWidth(m.getDisplayName()) - 4 + m.lastSize + infoOffset, count * (fr.FONT_HEIGHT + 1) + 0.5, color);
-		                        count++;
-		                    }*/
 	                }
-	            	//Gui.drawRect(sr.getScaledWidth() - 3, count * (fr.FONT_HEIGHT + 1), sr.getScaledWidth(), count * fr.FONT_HEIGHT - 1000, color);
+	            }
+	        } else if (Hypnotic.instance.moduleManager.arrayMod.style.getSelected().equalsIgnoreCase("Regular")) {
+	        	if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Roboto-Regular")) {
+	            	Hypnotic.instance.moduleManager.modules.sort(Comparator.comparingInt(m -> (int) fontRenderer.getStringWidth(((Mod)m).getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray))).reversed());
+	            	
+	                for (Mod m : modules) {
+	                	boolean hasInfo = m.getDisplayName().contains(ColorUtils.white);
+	                	int infoOffset = (hasInfo ? 2 : 0);
+	                	if (!m.visible.isEnabled()) {
+	            			continue;
+	            		}
+	                	if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
+	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
+	        				color = temp.getRGB();
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
+	        				color = ColorUtils.fade(new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255), count * 2, 20).getRGB();
+	        			}
+	                	
+	                	
+	                	
+	                	if (m.animation > 0) {
+	    					float offset = ((fontRenderer.getHeight() + 1.5f) * count) - 6;
+	    					String name = m.getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray);
+	    					double length = fontRenderer.getStringWidth(name);
+	    					
+	    					if (Hypnotic.instance.moduleManager.arrayMod.background.isEnabled())
+	    						Gui.drawRect(sr.getScaledWidth() - (((length) / 100) * m.animation) - 5 - 0, (count * (fontRenderer.getHeight() + 2) - 0), sr.getScaledWidth() - 0 + 100 - m.animation, count * (fontRenderer.getHeight() + 2) + 2 + fontRenderer.getHeight() + 0, new Color(0, 0, 0, 220).getRGB());
+	    					else
+	    						Gui.drawRect(0, 0, 0, 0, new Color(0, 0, 0, 250).getRGB());
+	    					fontRenderer.drawStringWithShadow(name, sr.getScaledWidth() - (((length) / 100) * m.animation) - (name.contains(ColorUtils.gray) ? 5 : 7) - infoOffset + 4, count * (fontRenderer.getHeight() + 2) - 1, color);
+	                        count++;
+	    				}
+	    				
+	    				if (shouldmove) {
+	    					if (m.isEnabled()) {
+	    						if (m.animation < 100) {
+	    							m.animation += 10;
+	    						}
+	    					}else {
+	    						if (m.animation > 0) {
+	    							m.animation -= 10;
+	    						}
+	    					}
+	    				}
+	    				
+	    				
+	                }
+	                //Gui.drawRect(sr.getScaledWidth() - 3, count * fontRenderer.getFontHeight(), sr.getScaledWidth(), count * fontRenderer.getFontHeight() - 1000, color);
+	            } else if (Hypnotic.instance.moduleManager.arrayMod.font.getSelected().equalsIgnoreCase("Minecraft")) {
+	            	modules.sort(Comparator.comparingInt(m -> fr.getStringWidth(((Mod)m).getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray))).reversed());
+	            	
+	            	for (Mod m : modules) {
+	            		if (!m.visible.isEnabled()) {
+	            			continue;
+	            		}
+	            		if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
+	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
+	        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
+	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
+	        				color = ColorUtils.fade(new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255), count * 2, 20).getRGB();
+	        			}
+	            		String name = m.getDisplayName().replace("[", "").replace("]", "").replace(ColorUtils.white, ColorUtils.gray);
+	            		if (m.animation > 0) {
+	    					float offset = ((fr.FONT_HEIGHT + 1.5f) * count) - 6;
+	    					double length = fr.getStringWidth(name);
+	    					if (Hypnotic.instance.moduleManager.arrayMod.background.isEnabled())
+	    						Gui.drawRect(sr.getScaledWidth() - (((length) / 100) * m.animation) - 13 + 4, (count * (fr.FONT_HEIGHT + 0)), sr.getScaledWidth() + 10 + m.lastSize, count * (fr.FONT_HEIGHT + 0) + fr.FONT_HEIGHT + 0, new Color(0, 0, 0, 220).getRGB());
+	    					fr.drawString(name, sr.getScaledWidth() - (((length) / 100) * m.animation) - 10 + 4, count * (fr.FONT_HEIGHT + 0) - 0, color, true);
+//	    					Gui.drawRect(sr.getScaledWidth() - 4, (count * (fr.FONT_HEIGHT + 0)), sr.getScaledWidth() + 4, count * (fr.FONT_HEIGHT + 0) + fr.FONT_HEIGHT + 0, color);
+	                        count++;
+	    				}
+	    				
+	    				if (shouldmove) {
+	    					if (m.isEnabled()) {
+	    						if (m.animation < 100) {
+	    							m.animation += 10;
+	    						}
+	    					} else {
+	    						if (m.animation > 0) {
+	    							m.animation -= 10;
+	    						}
+	    					}
+	    				}
+	                }
 	            }
 	        }
 		} else {
