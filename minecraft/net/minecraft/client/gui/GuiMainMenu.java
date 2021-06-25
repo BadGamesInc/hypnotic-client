@@ -25,6 +25,7 @@ import com.google.common.collect.Lists;
 import badgamesinc.hypnotic.Hypnotic;
 import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.gui.GLSLSandboxShader;
+import badgamesinc.hypnotic.gui.GuiOutdated;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
 import badgamesinc.hypnotic.module.render.Sigma;
 import badgamesinc.hypnotic.util.font.FontManager;
@@ -230,13 +231,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             this.addSingleplayerMultiplayerButtons(j, 24);
         }
-
-        ScaledResolution sr = new ScaledResolution(mc);
-    	int imToLazyToGoBackAddTheSameNumberToEachThing = -27 + sr.getScaledWidth() / 10;
-        this.buttonList.add(new AnimatedButton(0, this.width / 2 - 0 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new AnimatedButton(4, this.width / 2 + 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.quit", new Object[0])));
         
-
         synchronized (this.threadLock)
         {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
@@ -257,11 +252,54 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
     	ScaledResolution sr = new ScaledResolution(mc);
-    	int imToLazyToGoBackAddTheSameNumberToEachThing = -27 + sr.getScaledWidth() / 10;
-        this.buttonList.add(new AnimatedButton(1, this.width / 2 - 450 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new AnimatedButton(2, this.width / 2 - 300 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new AnimatedButton(14, this.width / 2 - 150 + imToLazyToGoBackAddTheSameNumberToEachThing, sr.getScaledHeight() - 35, 130, 20, "Alt Manager"));
+    	int number = -27 + sr.getScaledWidth() / 10;
+        this.buttonList.add(new AnimatedButton(1, 25, this.height / 2 - 60, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
+        this.buttonList.add(new AnimatedButton(2, 25, this.height / 2 - 30, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
+        this.buttonList.add(new AnimatedButton(14, 25, this.height / 2, 130, 20, "Alt Manager"));
+        this.buttonList.add(new AnimatedButton(0, 25, this.height / 2 + 30, 130, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new AnimatedButton(4, 25, this.height / 2 + 60, 130, 20, I18n.format("menu.quit", new Object[0])));
         this.buttonList.add(new AnimatedButton(16, this.width - 104, 4, 100, 20, "Cycle BG"));
+    }
+    
+    private float singleTicks = 0,
+    		multiTicks = 0,
+    		altTicks = 0,
+    		optTicks = 0,
+    		exitTicks = 0;
+    private void drawMenuButtons(int mouseX, int mouseY) {
+    	String menuDir = "hypnotic/textures/MainMenu/";
+//    	this.mc.displayGuiScreen(new GuiMultiplayer(this));
+    	int x = this.width / 2 - 225, y = this.height / 2 + 50;
+    	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Singleplayer.png"));
+    	this.drawModalRectWithCustomSizedTexture(x + 0, y + singleTicks, 50, 50, 50, 50, 50, 50);
+    	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Multiplayer.png"));
+    	this.drawModalRectWithCustomSizedTexture(x + 100, y + multiTicks, 50, 50, 50, 50, 50, 50);
+    	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Altmanager.png"));
+    	this.drawModalRectWithCustomSizedTexture(x + 200, y + altTicks, 50, 50, 50, 50, 50, 50);
+    	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Options.png"));
+    	this.drawModalRectWithCustomSizedTexture(x + 300, y + optTicks, 50, 50, 50, 50, 50, 50);
+    	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Exit.png"));
+    	this.drawModalRectWithCustomSizedTexture(x + 400, y + exitTicks, 50, 50, 50, 50, 50, 50);
+    }
+    
+    public boolean hoveredSinglePlayer(int mouseX, int mouseY) {
+    	return false;
+    }
+    
+    public boolean hoveredMultiplayer(int mouseX, int mouseY) {
+    	return false;
+    }
+    
+    public boolean hoveredAltManager(int mouseX, int mouseY) {
+    	return false;
+    }
+    
+    public boolean hoveredOptions(int mouseX, int mouseY) {
+    	return false;
+    }
+    
+    public boolean hoveredQuit(int mouseX, int mouseY) {
+    	return false;
     }
 
     // Adds Demo buttons on Main Menu for players who are playing Demo.
@@ -321,10 +359,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         			this.backgroundShader = new GLSLSandboxShader(shaderName);
         		} else {
         			shaderName = "/mainmenu" + 0 + ".fsh";
+        			this.backgroundShader =  new GLSLSandboxShader("/mainmenu0.fsh");
         			menuIndex = 0;
         		}     
                 
-            } catch (IOException e) {
+            } catch (IOException | IllegalStateException e) {
+            	this.backgroundShader = new GLSLSandboxShader("/mainmenu0.fsh");
                 throw new IllegalStateException("Failed to load backgound shader", e);
             }
         }
@@ -389,8 +429,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	ScaledResolution sr = new ScaledResolution(mc);
     	
     	
-    	//mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/Background.png"));
-    	//Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+//    	mc.getTextureManager().bindTexture(new ResourceLocation("hypnotic/textures/Background.png"));
+//    	Gui.drawScaledCustomSizeModalRect(0, 0, 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
     	GlStateManager.enableAlpha();
         GlStateManager.disableCull();
         int i = 274;
@@ -412,8 +452,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         
-        Gui.drawRect(0, sr.getScaledHeight() - 55, sr.getScaledWidth(), sr.getScaledHeight() - 58, -1);
-        Gui.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - 55, new Color(0, 0, 0, 160).getRGB());
+        
+        Gui.drawRect(0, sr.getScaledHeight(), 200, 0, new Color(0, 0, 0, 160).getRGB());
         
         // Changelog
         ArrayList<String> additions = new ArrayList();
@@ -445,31 +485,35 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         // removals
         removals.add("Removed boxed mode in the Array List due to bugs");
 
-        bigFontRenderer.drawString("Changes", 4, 4, -1, true);
+//        bigFontRenderer.drawString("Changes", 4, 4, -1, true);
         
         int addCount = 32;
         
         for (String addtion : additions) {
-            fontRenderer.drawString("§a+§f " + addtion, 16, addCount, -1, true);
+//            fontRenderer.drawString("Â§a+Â§f " + addtion, 16, addCount, -1, true);
             addCount += 10;
         }
         
         int changeCount = addCount;
         
         for (String change : changes) {
-            fontRenderer.drawString("§e*§f " + change, 16, changeCount, -1, true);
+//            fontRenderer.drawString("Â§e*Â§f " + change, 16, changeCount, -1, true);
             changeCount += 10;
         }
         
         int removeCount = changeCount;
         
         for (String removeal : removals) {
-            fontRenderer.drawString("§c-§f " + removeal, 16, removeCount, -1, true);
+//            fontRenderer.drawString("Â§c-Â§f " + removeal, 16, removeCount, -1, true);
             removeCount += 10;
         }
         GlStateManager.enableBlend();
+        GlStateManager.enableAlpha();
+        Gui.drawRect(0, 0, 0, 0, -1);
         mc.getTextureManager().bindTexture(new ResourceLocation(Hypnotic.instance.moduleManager.getModule(Sigma.class).isEnabled() ? "hypnotic/textures/sigma/sigma2.png" : "hypnotic/textures/MainMenu/Hypnotic.png"));
         Gui.drawScaledCustomSizeModalRect(sr.getScaledWidth() / 3, sr.getScaledHeight() / 3, 0, 0, 679, 300, 679 / 2, 300 / 2, 679, 300);
+        
+        this.drawMenuButtons(mouseX, mouseY);
         //FontManager.hypnoticFontLarge.drawCenteredString("Hypnotic", this.width / 2, this.height / 2, -1);
         String s1 = "Copyright Mojang AB. Do not distribute!";
         //fontRenderer.drawString(s, 2, this.height - 14, -1, true);
