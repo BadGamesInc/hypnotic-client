@@ -4,6 +4,7 @@ import badgamesinc.hypnotic.event.EventTarget;
 import badgamesinc.hypnotic.event.events.EventReceivePacket;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
+import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import badgamesinc.hypnotic.util.MathUtils;
@@ -12,12 +13,13 @@ import net.minecraft.network.play.server.S27PacketExplosion;
 
 public class Velocity extends Mod {
 
+	public ModeSetting mode = new ModeSetting("Mode", "Normal", "Normal", "Redesky");
 	public NumberSetting horizontalV = new NumberSetting("Horizontal", 0, 0, 100, 1);
 	public NumberSetting verticalV = new NumberSetting("Vertical", 0, 0, 100, 1);
 	
 	public Velocity() {
 		super("Velocity", 0, Category.COMBAT, "Modify your horizontal and vertical velocity");
-		addSettings(horizontalV, verticalV);
+		addSettings(mode, horizontalV, verticalV);
 	}
 	
 	@Override
@@ -35,14 +37,24 @@ public class Velocity extends Mod {
 			S12PacketEntityVelocity packet = (S12PacketEntityVelocity) event.getPacket();
 			double horizontal = horizontalV.getValue();
 			double vertical = verticalV.getValue();
-			if (mc.thePlayer.hurtTime < 4) {
+			if (mode.is("Redesky")) {
+				if (mc.thePlayer.hurtTime < 4) {
+					packet.setMotionX((int) ((packet.getMotionX() / 100) * horizontal));
+					packet.setMotionY((int) ((packet.getMotionY() / 100) * vertical));
+					packet.setMotionZ((int) ((packet.getMotionZ() / 100) * horizontal));
+					
+					if (horizontal == 0 && vertical == 0 && mc.thePlayer.hurtTime < 4) {
+						event.setCancelled(true);
+					}		
+				}
+			} else if (mode.is("Normal")) {
 				packet.setMotionX((int) ((packet.getMotionX() / 100) * horizontal));
 				packet.setMotionY((int) ((packet.getMotionY() / 100) * vertical));
 				packet.setMotionZ((int) ((packet.getMotionZ() / 100) * horizontal));
 				
 				if (horizontal == 0 && vertical == 0 && mc.thePlayer.hurtTime < 4) {
 					event.setCancelled(true);
-				}		
+				}
 			}
 		}
 		else if (event.getPacket() instanceof S27PacketExplosion) {
