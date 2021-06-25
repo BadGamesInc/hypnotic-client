@@ -105,7 +105,7 @@ public class InventoryManager extends Mod {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public boolean purgeUnusedTools() {
@@ -257,8 +257,9 @@ public class InventoryManager extends Mod {
             if (stack != null && compareStack != stack && stack.getItem() instanceof ItemArmor) {
                 ItemArmor item = (ItemArmor) stack.getItem();
                 ItemArmor compare = (ItemArmor) compareStack.getItem();
+                boolean noArmor = mc.thePlayer.getCurrentArmor(0) == null || mc.thePlayer.getCurrentArmor(1) == null || mc.thePlayer.getCurrentArmor(2) == null || mc.thePlayer.getCurrentArmor(3) == null;
                 if (item.armorType == compare.armorType) {
-                    if (AutoArmor.getProtectionValue(compareStack) <= AutoArmor.getProtectionValue(stack))
+                    if (AutoArmor.getProtectionValue(compareStack) <= AutoArmor.getProtectionValue(stack) && !noArmor)
                         return false;
                 }
             }
