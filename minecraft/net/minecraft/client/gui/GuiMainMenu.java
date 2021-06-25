@@ -27,7 +27,9 @@ import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.gui.GLSLSandboxShader;
 import badgamesinc.hypnotic.gui.GuiOutdated;
 import badgamesinc.hypnotic.gui.login.GuiAltLogin;
+import badgamesinc.hypnotic.gui.newerclickgui.ClickGUI;
 import badgamesinc.hypnotic.module.render.Sigma;
+import badgamesinc.hypnotic.util.ColorUtil;
 import badgamesinc.hypnotic.util.font.FontManager;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -266,40 +268,114 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     		altTicks = 0,
     		optTicks = 0,
     		exitTicks = 0;
+    
+    private void changeImgColor(Color color) {
+    	this.drawRect(0, 0, 0, 0, color.getRGB());
+    }
+    
+    private void resetImgColor() {
+    	this.drawRect(0, 0, 0, 0, -1);
+    }
+    
     private void drawMenuButtons(int mouseX, int mouseY) {
     	String menuDir = "hypnotic/textures/MainMenu/";
 //    	this.mc.displayGuiScreen(new GuiMultiplayer(this));
-    	int x = this.width / 2 - 225, y = this.height / 2 + 50;
+    	int x = this.width / 2 - 175, y = this.height / 2 + 50;
     	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Singleplayer.png"));
-    	this.drawModalRectWithCustomSizedTexture(x + 0, y + singleTicks, 50, 50, 50, 50, 50, 50);
+    	if (hoveredSinglePlayer(mouseX, mouseY)) {
+    		this.changeImgColor(ColorUtil.getClickGUIColor());
+    		if (this.singleTicks < 5) {
+    			this.singleTicks+=1f;
+    		}
+    	} else {
+    		if (this.singleTicks > 0) {
+    			this.singleTicks-=1f;
+    		}
+    	}
+    	this.drawModalRectWithCustomSizedTexture(x + 0, y - singleTicks, 35, 35, 35, 35, 35, 35);
+    	if (hoveredSinglePlayer(mouseX, mouseY))
+    		this.resetImgColor();
     	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Multiplayer.png"));
-    	this.drawModalRectWithCustomSizedTexture(x + 100, y + multiTicks, 50, 50, 50, 50, 50, 50);
+    	if (hoveredMultiplayer(mouseX, mouseY)) {
+    		this.changeImgColor(ColorUtil.getClickGUIColor());
+    		if (this.multiTicks < 5) {
+    			this.multiTicks+=1f;
+    		}
+    	} else {
+    		if (this.multiTicks > 0) {
+    			this.multiTicks-=1f;
+    		}
+    	}
+    	this.drawModalRectWithCustomSizedTexture(x + 75, y - multiTicks, 35, 35, 35, 35, 35, 35);
+    	if (hoveredMultiplayer(mouseX, mouseY))
+    		this.resetImgColor();
     	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Altmanager.png"));
-    	this.drawModalRectWithCustomSizedTexture(x + 200, y + altTicks, 50, 50, 50, 50, 50, 50);
+    	if (hoveredAltManager(mouseX, mouseY)) {
+    		this.changeImgColor(ColorUtil.getClickGUIColor());
+    		if (this.altTicks < 5) {
+    			this.altTicks+=1f;
+    		}
+    	} else {
+    		if (this.altTicks > 0) {
+    			this.altTicks-=1f;
+    		}
+    	}
+    	this.drawModalRectWithCustomSizedTexture(x + 150, y - altTicks, 35, 35, 35, 35, 35, 35);
+    	if (hoveredAltManager(mouseX, mouseY))
+    		this.resetImgColor();
     	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Options.png"));
-    	this.drawModalRectWithCustomSizedTexture(x + 300, y + optTicks, 50, 50, 50, 50, 50, 50);
+    	if (hoveredOptions(mouseX, mouseY)) {
+    		this.changeImgColor(ColorUtil.getClickGUIColor());
+    		if (this.optTicks < 5) {
+    			this.optTicks+=1f;
+    		}
+    	} else {
+    		if (this.optTicks > 0) {
+    			this.optTicks-=1f;
+    		}
+    	}
+    	this.drawModalRectWithCustomSizedTexture(x + 225, y - optTicks, 35, 35, 35, 35, 35, 35);
+    	if (hoveredOptions(mouseX, mouseY))
+    		this.resetImgColor();
     	mc.getTextureManager().bindTexture(new ResourceLocation(menuDir + "Exit.png"));
-    	this.drawModalRectWithCustomSizedTexture(x + 400, y + exitTicks, 50, 50, 50, 50, 50, 50);
+    	if (hoveredQuit(mouseX, mouseY)) {
+    		this.changeImgColor(ColorUtil.getClickGUIColor());
+    		if (this.exitTicks < 5) {
+    			this.exitTicks+=1f;
+    		}
+    	} else {
+    		if (this.exitTicks > 0) {
+    			this.exitTicks-=1f;
+    		}
+    	}
+    	this.drawModalRectWithCustomSizedTexture(x + 300, y - exitTicks, 35, 35, 35, 35, 35, 35);
+    	if (hoveredQuit(mouseX, mouseY))
+    		this.resetImgColor();
     }
     
     public boolean hoveredSinglePlayer(int mouseX, int mouseY) {
-    	return false;
+    	int x = this.width / 2 - 175, y = this.height / 2 + 50, size = 35;
+    	return mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size;
     }
     
     public boolean hoveredMultiplayer(int mouseX, int mouseY) {
-    	return false;
+    	int x = this.width / 2 - 175 + 75, y = this.height / 2 + 50, size = 35;
+    	return mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size;
     }
     
     public boolean hoveredAltManager(int mouseX, int mouseY) {
-    	return false;
+    	int x = this.width / 2 - 175 + 150, y = this.height / 2 + 50, size = 35;
+    	return mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size;
     }
     
     public boolean hoveredOptions(int mouseX, int mouseY) {
-    	return false;
+    	int x = this.width / 2 - 175 + 225, y = this.height / 2 + 50, size = 35;
+    	return mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size;
     }
     
     public boolean hoveredQuit(int mouseX, int mouseY) {
-    	return false;
+    	int x = this.width / 2 - 175 + 300, y = this.height / 2 + 50, size = 35;
+    	return mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size;
     }
 
     // Adds Demo buttons on Main Menu for players who are playing Demo.
