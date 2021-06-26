@@ -608,7 +608,16 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-
+        if (hoveredSinglePlayer(mouseX, mouseY) && mouseButton == 0)
+        	mc.displayGuiScreen(new GuiSelectWorld(this));
+        if (hoveredMultiplayer(mouseX, mouseY) && mouseButton == 0)
+        	mc.displayGuiScreen(new GuiMultiplayer(this));
+        if (hoveredAltManager(mouseX, mouseY) && mouseButton == 0)
+        	mc.displayGuiScreen(Hypnotic.instance.guiAltLogin);
+        if (hoveredOptions(mouseX, mouseY) && mouseButton == 0) 
+        	mc.displayGuiScreen(new GuiOptions(this, mc.gameSettings));
+        if (hoveredQuit(mouseX, mouseY) && mouseButton == 0)
+        	mc.shutdown();
         synchronized (this.threadLock)
         {
             if (this.openGLWarning1.length() > 0 && mouseX >= this.field_92022_t && mouseX <= this.field_92020_v && mouseY >= this.field_92021_u && mouseY <= this.field_92019_w)
