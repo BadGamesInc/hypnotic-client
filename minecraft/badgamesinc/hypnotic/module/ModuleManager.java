@@ -120,6 +120,7 @@ public class ModuleManager {
 	public Logo logo = new Logo();
 	public CustomHotbar custHb = new CustomHotbar();
 	public Keystrokes keystrokes = new Keystrokes();
+	public PureGaming pureGaming = new PureGaming();
 	
 	
  	private void movement() {
@@ -213,6 +214,7 @@ public class ModuleManager {
 		modules.add(logo);
 		modules.add(custHb);
 		modules.add(keystrokes);
+		modules.add(pureGaming);
 		modules.add(new Music());
 	}
 	

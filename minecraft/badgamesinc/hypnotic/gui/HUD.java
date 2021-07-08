@@ -22,6 +22,7 @@ import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
 import badgamesinc.hypnotic.module.gui.ArrayListModule;
 import badgamesinc.hypnotic.module.gui.Logo;
+import badgamesinc.hypnotic.module.gui.PureGaming;
 import badgamesinc.hypnotic.module.misc.PCPinger;
 import badgamesinc.hypnotic.module.render.Sigma;
 import badgamesinc.hypnotic.module.render.TargetHUD;
@@ -92,6 +93,11 @@ public class HUD {
 		if(Hypnotic.instance.moduleManager.getModule(PCPinger.class).isEnabled()) 
 		{
 			fontRenderer4.drawString("PINGING PC " + (ColorUtils.white + MathUtils.round(Hypnotic.instance.moduleManager.pcpinger.time / 20, 0)), scale.getScaledWidth() / 2 - fontRenderer4.getStringWidth("PINGING PC") / 2, scale.getScaledHeight() / 10, ColorUtils.rainbow(4, 0.5f, 0.5f), true);
+        }
+		
+		if(Hypnotic.instance.moduleManager.getModule(PureGaming.class).isEnabled()) 
+		{
+			Gui.drawRect(0, 0, scale.getScaledWidth_double(), scale.getScaledHeight_double(), ColorUtils.rainbow(4.0f, 0.5f, 1f));
         }
 		
 		
