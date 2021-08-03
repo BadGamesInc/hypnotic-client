@@ -2,6 +2,7 @@
 ## gaming awards frame winner 1999/2000/2001  
   
 ## About
+NEW 1.17 VERSION https://github.com/BadGamesInc/Hypnotic-Fabric-1.17  
 "Utility Mod" for Minecraft 1.8.8 (works on 1.8.9 servers too!)  
 Use at your own risk, we are not responsible for any punishments on any server  
   
