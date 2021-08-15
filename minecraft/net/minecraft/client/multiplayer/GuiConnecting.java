@@ -13,6 +13,7 @@ import badgamesinc.hypnotic.gui.AnimatedButton;
 import badgamesinc.hypnotic.gui.notifications.Color;
 import badgamesinc.hypnotic.gui.notifications.NotificationManager;
 import badgamesinc.hypnotic.gui.notifications.Type;
+import badgamesinc.hypnotic.module.combat.OtherAura;
 import badgamesinc.hypnotic.util.ServerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -62,8 +63,8 @@ public class GuiConnecting extends GuiScreen
     		Hypnotic.instance.moduleManager.stealer.toggleSilent();
     		NotificationManager.getNotificationManager().createNotification("Toggle", "ChestStealer was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
     	}
-    	if (Hypnotic.instance.moduleManager.ka.isEnabled()) {
-    		Hypnotic.instance.moduleManager.ka.toggleSilent();
+    	if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).isEnabled()) {
+    		Hypnotic.instance.moduleManager.getModule(OtherAura.class).toggleSilent();
     		NotificationManager.getNotificationManager().createNotification("Toggle", "KillAura was disabled due to a respawn", true, 3000, Type.WARNING, Color.YELLOW);
     	}
         logger.info("Connecting to " + ip + ", " + port);

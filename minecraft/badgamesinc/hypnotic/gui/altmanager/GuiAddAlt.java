@@ -117,7 +117,7 @@ public class GuiAddAlt extends GuiScreen {
         guiAddAlt.status = status;
     }
 
-    private class AddAltThread extends Thread {
+    public class AddAltThread extends Thread {
         private final String password;
         private final String username;
 

@@ -36,13 +36,10 @@ public class KillSults extends Mod {
             String message = packet.getChatComponent().getUnformattedText();
             String[] killsults = 
             {
-            	"You just got killed by Hypnotic ( https://github.com/BadGamesInc/hypnotic-client )", 
-            	"Hypnotic is better than liquidbounce", 
             	"is bad, get good with Hypnotic", 
-            	"Hypnotic is FREE and OPEN SOURCE", 
-            	"Your shitty liquidbounce config cant save you from hypnotic client", 
-            	"FDP? more like FPC",
-            	"Tell me what other killsults I should add :)"
+            	"Tell me what other killsults I should add :)",
+            	"can suck my c׼׼׼oc׼k",
+            	"UwU"
             };
             String[] strings = packet.getChatComponent().getUnformattedText().split(" ");    
             String victim = strings[0];
@@ -50,7 +47,7 @@ public class KillSults extends Mod {
             int randomIndex = ThreadLocalRandom.current().nextInt(0, killsults.length);
 
             if (message.contains("was killed by " + mc.thePlayer.getName()) || message.contains(mc.thePlayer.getName()) && message.contains("foi morto por " + mc.thePlayer.getName())) {
-            	mc.thePlayer.sendChatMessage(victim + " " + killsults[randomIndex] + randomStuff);
+            	mc.thePlayer.sendChatMessage(victim + " " + killsults[randomIndex]);
             }
         }
     }

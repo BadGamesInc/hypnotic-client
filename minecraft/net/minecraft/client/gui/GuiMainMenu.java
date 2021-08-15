@@ -255,11 +255,17 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     {
     	ScaledResolution sr = new ScaledResolution(mc);
     	int number = -27 + sr.getScaledWidth() / 10;
-        this.buttonList.add(new AnimatedButton(1, 25, this.height / 2 - 60, 130, 20, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new AnimatedButton(2, 25, this.height / 2 - 30, 130, 20, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new AnimatedButton(14, 25, this.height / 2, 130, 20, "Alt Manager"));
-        this.buttonList.add(new AnimatedButton(0, 25, this.height / 2 + 30, 130, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new AnimatedButton(4, 25, this.height / 2 + 60, 130, 20, I18n.format("menu.quit", new Object[0])));
+		/*
+		 * this.buttonList.add(new AnimatedButton(1, 25, this.height / 2 - 60, 130, 20,
+		 * I18n.format("menu.singleplayer", new Object[0]))); this.buttonList.add(new
+		 * AnimatedButton(2, 25, this.height / 2 - 30, 130, 20,
+		 * I18n.format("menu.multiplayer", new Object[0]))); this.buttonList.add(new
+		 * AnimatedButton(14, 25, this.height / 2, 130, 20, "Alt Manager"));
+		 * this.buttonList.add(new AnimatedButton(0, 25, this.height / 2 + 30, 130, 20,
+		 * I18n.format("menu.options", new Object[0]))); this.buttonList.add(new
+		 * AnimatedButton(4, 25, this.height / 2 + 60, 130, 20, I18n.format("menu.quit",
+		 * new Object[0])));
+		 */
         this.buttonList.add(new AnimatedButton(16, this.width - 104, 4, 100, 20, "Cycle BG"));
     }
     
@@ -529,7 +535,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         
         
-        Gui.drawRect(0, sr.getScaledHeight(), 200, 0, new Color(0, 0, 0, 160).getRGB());
+//        Gui.drawRect(0, sr.getScaledHeight(), 200, 0, new Color(0, 0, 0, 160).getRGB());
         
         // Changelog
         ArrayList<String> additions = new ArrayList();

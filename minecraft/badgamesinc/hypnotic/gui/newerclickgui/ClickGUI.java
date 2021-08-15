@@ -66,19 +66,19 @@ public class ClickGUI extends GuiScreen {
         int bottom = height - top;
         GlStateManager.pushMatrix();
         if (Button.settingsWindow == null) {
-        this.prepareScissorBox(left, top, right, bottom);
-        GL11.glEnable(3089);
-        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.animation.getSelected().equalsIgnoreCase("Fade in (ugly)");
-        RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, uglyAnimation ? (int) fadeIn : 255));
-        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60, uglyAnimation ? (int) fadeIn : 255));
-        for(CategoryButton button : buttons){
-            button.draw(mouseX, mouseY);
-        }
-        //cfgButton.drawButton(width / 6 + 4, height - 100, mouseX, mouseY);
-        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 - 5 + 15, color, true);
-        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 - 5 + 35, color, true);
-        if(currentCategory != null){
-	
+	        this.prepareScissorBox(left, top, right, bottom);
+	        GL11.glEnable(3089);
+	        boolean uglyAnimation = Hypnotic.instance.moduleManager.clickGui.animation.getSelected().equalsIgnoreCase("Fade in (ugly)");
+	        RenderUtils.drawRoundedRect(left, top, right, bottom, 8, new Color(48, 48, 48, uglyAnimation ? (int) fadeIn : 255));
+	        RenderUtils.drawRoundedRect(left, top, left + 80, bottom, 8, new Color(60, 60, 60, uglyAnimation ? (int) fadeIn : 255));
+	        for(CategoryButton button : buttons){
+	            button.draw(mouseX, mouseY);
+	        }
+	        //cfgButton.drawButton(width / 6 + 4, height - 100, mouseX, mouseY);
+	        bigFontRenderer.drawString(Hypnotic.clientName, width / 6 + 4, height / 7 - 5 + 15, color, true);
+	        fontRenderer.drawString(Hypnotic.clientVersion, width / 6 + 44, height / 7 - 5 + 35, color, true);
+	        if(currentCategory != null){
+		
 	            for(Button b : mods){
 	                b.setY(b.start - lastOffset);
 	                b.draw(mouseX, mouseY);
@@ -87,8 +87,8 @@ public class ClickGUI extends GuiScreen {
 	                b.setY(b.start - lastOffset);
 	                b.drawString();
 	            }
-	
-	        }
+		
+		    }
         }
         if(!Hypnotic.instance.moduleManager.clickGui.rainbowGUI.isEnabled()) 
         {

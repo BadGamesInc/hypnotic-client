@@ -37,7 +37,7 @@ public class Velocity extends Mod {
 			S12PacketEntityVelocity packet = (S12PacketEntityVelocity) event.getPacket();
 			double horizontal = horizontalV.getValue();
 			double vertical = verticalV.getValue();
-			if (mode.is("Redesky")) {
+			if (mode.is("Redesky") && packet.getEntityID() == mc.thePlayer.getEntityId()) {
 				if (mc.thePlayer.hurtTime < 4) {
 					packet.setMotionX((int) ((packet.getMotionX() / 100) * horizontal));
 					packet.setMotionY((int) ((packet.getMotionY() / 100) * vertical));
@@ -47,7 +47,7 @@ public class Velocity extends Mod {
 						event.setCancelled(true);
 					}		
 				}
-			} else if (mode.is("Normal")) {
+			} else if (mode.is("Normal") && packet.getEntityID() == mc.thePlayer.getEntityId()) {
 				packet.setMotionX((int) ((packet.getMotionX() / 100) * horizontal));
 				packet.setMotionY((int) ((packet.getMotionY() / 100) * vertical));
 				packet.setMotionZ((int) ((packet.getMotionZ() / 100) * horizontal));

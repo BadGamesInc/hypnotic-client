@@ -17,6 +17,7 @@ import badgamesinc.hypnotic.gui.notifications.Type;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.OtherAura;
 import badgamesinc.hypnotic.module.combat.TargetStrafe;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
@@ -35,12 +36,13 @@ public class Flight extends Mod implements UpdateListener{
 	public NumberSetting flySpeed = new NumberSetting("Speed", 1, 0, 10, 0.1);
 	public BooleanSetting kickBypass = new BooleanSetting("Vanilla kick bypass", false);
 	public BooleanSetting viewBobbingSetting = new BooleanSetting("View Bobbing", false);
+	public BooleanSetting damage = new BooleanSetting("Damage", false);
 	
 	private static transient int viewBobbing = 0;
 	
 	public Flight() {
 		super("Flight", Keyboard.KEY_G, Category.MOVEMENT, "Fly like a bird");
-		addSettings(flyMode, flySpeed, kickBypass, viewBobbingSetting);
+		addSettings(flyMode, flySpeed, kickBypass, viewBobbingSetting, damage);
 	}
 		
 	public float speed = 1F;
@@ -49,6 +51,8 @@ public class Flight extends Mod implements UpdateListener{
 	
 	@Override
 	public void onEnable() {
+		if (damage.isEnabled())
+			PlayerUtils.damage();
 		super.onEnable();
 	}
 	
@@ -150,7 +154,7 @@ public class Flight extends Mod implements UpdateListener{
 	@EventTarget
 	public void motion(EventMotion event) {
 		if (TargetStrafe.canStrafe()) {
-			TargetStrafe.strafe(event, flyMode.getSelected().equalsIgnoreCase("Velocity") ? flySpeed.getValue() * 0.7 : MoveUtils.getBaseMoveSpeed(), KillAura.target, true);
+			TargetStrafe.strafe(event, flyMode.getSelected().equalsIgnoreCase("Velocity") ? flySpeed.getValue() * 0.7 : MoveUtils.getBaseMoveSpeed(), Hypnotic.instance.moduleManager.getModule(OtherAura.class).target, true);
 		}
 	}
 	

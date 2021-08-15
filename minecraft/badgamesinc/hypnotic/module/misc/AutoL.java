@@ -26,7 +26,7 @@ public class AutoL extends Mod {
             	String randomUsername = "RandomName" + r.nextInt(9999);
             	mc.session = new Session(randomUsername, "", "", "mojang");
             }
-            if(message.contains(mc.thePlayer.getName()) && message.contains("venceu a partida") || message.contains("You won the fight!")){
+            if(message.contains(mc.thePlayer.getName()) && message.contains("venceu a partida") || message.contains("You won the fight!") || message.contains("You won! Want to play again?")){
             	mc.thePlayer.sendChatMessage("L you guys got rekt by Hypnotic");;
             }
         }

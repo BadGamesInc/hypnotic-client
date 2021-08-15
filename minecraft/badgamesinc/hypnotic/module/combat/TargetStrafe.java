@@ -49,17 +49,23 @@ public class TargetStrafe extends Mod {
     
     @Override
     public void onUpdate() {
+    	if (thirdPerson.isEnabled() && Hypnotic.instance.moduleManager.getModule(OtherAura.class).isEnabled()) {
+    		if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).target != null && this.canStrafe() && (Hypnotic.instance.moduleManager.speed.isEnabled() || Hypnotic.instance.moduleManager.flight.isEnabled()))
+    			mc.gameSettings.thirdPersonView = 1;
+    		else
+    			mc.gameSettings.thirdPersonView = 0;
+    	}
     	super.onUpdate();
     }
 
     @EventTarget
     public final void onRender3D(Event3D event) {
-    	if (KillAura.target != null)
-    		this.setDisplayName("TargetStrafe " + ColorUtils.white + "[" + KillAura.target.getName() + "]");
+    	if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).target != null)
+    		this.setDisplayName("TargetStrafe " + ColorUtils.white + "[" + Hypnotic.instance.moduleManager.getModule(OtherAura.class).target.getName() + "]");
     	else
     		this.setDisplayName("TargetStrafe " + ColorUtils.white + "[None]");
-        if (Hypnotic.instance.moduleManager.ka.isEnabled() && KillAura.target != null) {
-            EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(KillAura.class).target;
+        if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(OtherAura.class).target != null) {
+            EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(OtherAura.class).target;
             drawCircle(target, event.getPartialTicks(), radius.getValue(), 0.1);
         }
     }
@@ -67,8 +73,7 @@ public class TargetStrafe extends Mod {
     public static void strafe(EventMotion event, double moveSpeed, EntityLivingBase target,  boolean direction) {
         double direction1 = direction ? 1 : -1;
         float[] rotations = RotationUtils.getRotations(target);
-        if (thirdPerson.isEnabled())
-    		mc.gameSettings.thirdPersonView = 1;
+        
         if ((double) Minecraft.getMinecraft().thePlayer.getDistanceToEntity(target) <= radius.getValue()) {
             MoveUtils.setSpeed(event, moveSpeed, rotations[0], direction1, 0.0D);
         } else {
@@ -88,7 +93,7 @@ public class TargetStrafe extends Mod {
 
     }
     public static boolean canStrafe() {
-        return spacebar.isEnabled() ? Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && (Hypnotic.instance.moduleManager.flight.isEnabled() ? true : Minecraft.getMinecraft().gameSettings.keyBindJump.pressed) : Hypnotic.instance.moduleManager.getModuleByName("KillAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(KillAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
+        return spacebar.isEnabled() ? Hypnotic.instance.moduleManager.getModule(OtherAura.class).isEnabled() && Hypnotic.instance.moduleManager.getModule(OtherAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled() && (Hypnotic.instance.moduleManager.flight.isEnabled() ? true : Minecraft.getMinecraft().gameSettings.keyBindJump.pressed) : Hypnotic.instance.moduleManager.getModuleByName("OtherAura").isEnabled() && Hypnotic.instance.moduleManager.getModule(OtherAura.class).target != null && MoveUtils.isMoving() && Hypnotic.instance.moduleManager.getModule(TargetStrafe.class).isEnabled();
     }
 
     private void drawCircle(Entity entity, float partialTicks, double rad, double height) {

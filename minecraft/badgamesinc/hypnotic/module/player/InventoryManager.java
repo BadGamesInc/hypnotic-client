@@ -1,325 +1,229 @@
 package badgamesinc.hypnotic.module.player;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.*;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C0DPacketCloseWindow;
-import net.minecraft.network.play.client.C16PacketClientStatus;
-import net.minecraft.network.play.client.C16PacketClientStatus.EnumState;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 
 import badgamesinc.hypnotic.event.EventTarget;
-import badgamesinc.hypnotic.event.events.EventReceivePacket;
-import badgamesinc.hypnotic.event.events.EventSendPacket;
+import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
-import badgamesinc.hypnotic.util.TimeHelper;
-import badgamesinc.hypnotic.util.Timer;
-
-import java.util.Arrays;
-import java.util.List;
+import badgamesinc.hypnotic.util.Stopwatch;
+import net.minecraft.block.BlockEnchantmentTable;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemEnderPearl;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import net.minecraft.network.play.client.C0DPacketCloseWindow;
+import net.minecraft.network.play.client.C16PacketClientStatus;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 
 public class InventoryManager extends Mod {
 
-    public BooleanSetting spoof = new BooleanSetting("Spoof Inventory", true);
-    public NumberSetting delay = new NumberSetting("Click Delay", 170, 20, 300, 10);
-    public Timer timer = new Timer();
-    public boolean inventoryOpen;
-    public List<String> junk = Arrays.asList("stick", "egg", "string", "cake", "mushroom", "flint", "dyePowder", "feather", "chest", "snowball", "fish", "enchant", "exp", "shears", "anvil", "torch", "seeds", "leather", "reeds", "skull", "record", "piston", "snow", "poison");
-
+	public static final Stopwatch INV_STOPWATCH = new Stopwatch();
+	private List allSwords = new ArrayList();
+	private List[] allArmors = new List[4];
+    private List trash = new ArrayList();
+	private boolean cleaning;
+	private int[] bestArmorSlot;
+	private int bestSwordSlot;
+	public NumberSetting delay = new NumberSetting("Delay", 100, 0, 1000, 10);
+	public NumberSetting swordSlot = new NumberSetting("Sword Slot", 1, 1, 9, 1);
+	
     public InventoryManager() {
         super("InvManager", Keyboard.KEY_NONE, Category.PLAYER, "Ejects garbage and sorts your inventory");
-        this.addSettings(spoof, delay);
+        this.addSettings(swordSlot, delay);
     }
 
-    public static float getSwordStrength(ItemStack stack) {
-        return (!(stack.getItem() instanceof ItemSword) ? 0.0F : (float) EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack) * 1.25F) + (!(stack.getItem() instanceof ItemSword) ? 0.0F : (float) EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack));
-    }
-    
     @EventTarget
-    public void sendPacket(EventSendPacket event) {
-    	Packet packet = event.getPacket();
-    	if (packet instanceof C16PacketClientStatus) {
-            C16PacketClientStatus open = (C16PacketClientStatus) packet;
-            if (open.getStatus() == EnumState.OPEN_INVENTORY_ACHIEVEMENT)
-                inventoryOpen = true;
-        }
-        if (packet instanceof C0DPacketCloseWindow) {
-            inventoryOpen = false;
-        }
+    public void eventMotion(EventMotionUpdate event) {
+    	if (mc.currentScreen instanceof GuiInventory && event.isPre()) {
+            this.collectItems();
+            this.collectBestArmor();
+            this.collectTrash();
+            int trashSize = this.trash.size();
+            boolean trashPresent = trashSize > 0;
+            EntityPlayerSP player = mc.thePlayer;
+            int windowId = player.openContainer.windowId;
+            int bestSwordSlot = this.bestSwordSlot;
+            if (trashPresent) {
+               if (!this.cleaning) {
+                  this.cleaning = true;
+                  player.sendQueue.addToSendQueueSilent(new C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT));
+               }
+
+               for(int i = 0; i < trashSize; ++i) {
+                  int slot = (Integer)this.trash.get(i);
+                  if (this.checkDelay()) {
+                     break;
+                  }
+
+                  mc.playerController.windowClick(windowId, slot < 9 ? slot + 36 : slot, 1, 4, player);
+                  INV_STOPWATCH.reset();
+               }
+
+               if (this.cleaning) {
+                  player.sendQueue.addToSendQueueSilent(new C0DPacketCloseWindow(windowId));
+                  this.cleaning = false;
+               }
+            }
+
+            if (bestSwordSlot != -1 && !this.checkDelay()) {
+               mc.playerController.windowClick(windowId, bestSwordSlot < 9 ? bestSwordSlot + 36 : bestSwordSlot, ((Double)this.swordSlot.getValue()).intValue() - 1, 2, player);
+               INV_STOPWATCH.reset();
+            }
+         }
     }
     
-    @EventTarget
-    public void receivePacket(EventReceivePacket event) {
-    	Packet packet = event.getPacket();
-    }
+    private boolean checkDelay() {
+        return !INV_STOPWATCH.elapsed(((Double)this.delay.getValue()).longValue());
+     }
+
+     public void collectItems() {
+        this.bestSwordSlot = -1;
+        this.allSwords.clear();
+        float bestSwordDamage = -1.0F;
+
+        for(int i = 0; i < 36; ++i) {
+           ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(i);
+           if (itemStack != null && itemStack.getItem() != null && itemStack.getItem() instanceof ItemSword) {
+              float damageLevel = getDamageLevel(itemStack);
+              this.allSwords.add(i);
+              if (bestSwordDamage < damageLevel) {
+                 bestSwordDamage = damageLevel;
+                 this.bestSwordSlot = i;
+              }
+           }
+        }
+
+     }
     
-    @Override
-    public void onUpdate() {
-    	if ((mc.currentScreen == null || (mc.currentScreen instanceof GuiContainer && ((GuiContainer) mc.currentScreen).inventorySlots == mc.thePlayer.inventoryContainer)) && purgeUnusedArmor() && purgeUnusedTools() && purgeJunk() && manageSword()) {
-            if (hotbarHasSpace())
-                manageHotbar();
+    private void collectBestArmor() {
+        int[] bestArmorDamageReducement = new int[4];
+        this.bestArmorSlot = new int[4];
+        Arrays.fill(bestArmorDamageReducement, -1);
+        Arrays.fill(this.bestArmorSlot, -1);
+
+        int i;
+        ItemStack itemStack;
+        ItemArmor armor;
+        int armorType;
+        for(i = 0; i < this.bestArmorSlot.length; ++i) {
+           itemStack = mc.thePlayer.inventory.armorItemInSlot(i);
+           this.allArmors[i] = new ArrayList();
+           if (itemStack != null && itemStack.getItem() != null && itemStack.getItem() instanceof ItemArmor) {
+              armor = (ItemArmor)itemStack.getItem();
+              armorType = armor.damageReduceAmount + EnchantmentHelper.getEnchantmentModifierDamage(new ItemStack[]{itemStack}, DamageSource.generic);
+              bestArmorDamageReducement[i] = armorType;
+           }
         }
-    	super.onUpdate();
-    }
 
-    private boolean manageSword() {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
+        for(i = 0; i < 36; ++i) {
+           itemStack = mc.thePlayer.inventory.getStackInSlot(i);
+           if (itemStack != null && itemStack.getItem() != null && itemStack.getItem() instanceof ItemArmor) {
+              armor = (ItemArmor)itemStack.getItem();
+              armorType = 3 - armor.armorType;
+              this.allArmors[armorType].add(i);
+              int slotProtectionLevel = armor.damageReduceAmount + EnchantmentHelper.getEnchantmentModifierDamage(new ItemStack[]{itemStack}, DamageSource.generic);
+              if (bestArmorDamageReducement[armorType] < slotProtectionLevel) {
+                 bestArmorDamageReducement[armorType] = slotProtectionLevel;
+                 this.bestArmorSlot[armorType] = i;
+              }
+           }
+        }
 
-            if (stack != null) {
-                Item item = stack.getItem();
-                if (!stack.getDisplayName().toLowerCase().contains("(right click)") && item instanceof ItemSword && timer.hasTimeElapsed((long) delay.getValue(), true)) {
-                    moveToHotbarSlot1(i);
-                    return false;
-                }
+     }
+
+     private void collectTrash() {
+        this.trash.clear();
+
+        int i;
+        for(i = 0; i < 36; ++i) {
+           ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(i);
+           if (itemStack != null && itemStack.getItem() != null && !isValidItem(itemStack)) {
+              this.trash.add(i);
+           }
+        }
+
+        for(i = 0; i < this.allArmors.length; ++i) {
+           List armorItem = this.allArmors[i];
+           if (armorItem != null) {
+              List integers = this.trash;
+              int i1 = 0;
+
+              for(int armorItemSize = armorItem.size(); i1 < armorItemSize; ++i1) {
+                 Integer slot = (Integer)armorItem.get(i1);
+                 if (slot != this.bestArmorSlot[i]) {
+                    integers.add(slot);
+                 }
+              }
+           }
+        }
+
+        List integers = this.trash;
+        int i1 = 0;
+
+        for(int allSwordsSize = this.allSwords.size(); i1 < allSwordsSize; ++i1) {
+           Integer slot = (Integer)this.allSwords.get(i1);
+           if (slot != this.bestSwordSlot) {
+              integers.add(slot);
+           }
+        }
+
+     }
+
+     public boolean isValidItem(ItemStack itemStack) {
+         if (itemStack.getDisplayName().startsWith("§a")) {
+            return true;
+         } else {
+        	Item enchantTable = ItemBlock.getItemFromBlock(Blocks.enchanting_table);
+            return (itemStack.getItem() instanceof ItemEnderPearl || itemStack.getItem() instanceof ItemArmor || itemStack.getItem() instanceof ItemSword || itemStack.getItem() instanceof ItemTool || itemStack.getItem() instanceof ItemFood || itemStack.getItem() instanceof ItemPotion && !isBadPotion(itemStack) || itemStack.getItem() instanceof ItemBlock || itemStack.getDisplayName().contains("Play") || itemStack.getDisplayName().contains("Game") || itemStack.getDisplayName().contains("Right Click")) && itemStack.getItem() != enchantTable;
+         }
+         
+      }
+     
+     public boolean isBadPotion(ItemStack stack) {
+         if (stack != null && stack.getItem() instanceof ItemPotion) {
+            ItemPotion potion = (ItemPotion)stack.getItem();
+            if (ItemPotion.isSplash(stack.getItemDamage())) {
+               Iterator var2 = potion.getEffects(stack).iterator();
+
+               while(var2.hasNext()) {
+                  Object o = var2.next();
+                  PotionEffect effect = (PotionEffect)o;
+                  if (effect.getPotionID() == Potion.poison.getId() || effect.getPotionID() == Potion.harm.getId() || effect.getPotionID() == Potion.moveSlowdown.getId() || effect.getPotionID() == Potion.weakness.getId()) {
+                     return true;
+                  }
+               }
             }
-        }
-        return true;
-    }
+         }
 
-    public boolean purgeUnusedArmor() {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null) {
-                Item item = stack.getItem();
-
-                if (item instanceof ItemArmor) {
-                    if (!isBestArmor(stack) && timer.hasTimeElapsed((long) delay.getValue(), true)) {
-                        purge(i);
-                        return false;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean purgeUnusedTools() {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null) {
-                Item item = stack.getItem();
-
-                if (item instanceof ItemTool) {
-                    if (!stack.getDisplayName().toLowerCase().contains("(right click)") && !isBestTool(stack) && timer.hasTimeElapsed((long) delay.getValue(), true)) {
-                        purge(i);
-                        return false;
-                    }
-                }
-                if (item instanceof ItemSword) {
-                    if (!stack.getDisplayName().toLowerCase().contains("(right click)") && !isBestSword(stack) && timer.hasTimeElapsed((long) delay.getValue(), true)) {
-                        purge(i);
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public boolean purgeJunk() {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null) {
-                Item item = stack.getItem();
-
-                for (String shortName : junk) {
-                    if (!stack.getDisplayName().toLowerCase().contains("(right click)") && item.getUnlocalizedName().contains(shortName) && timer.hasTimeElapsed((long) delay.getValue(), true)) {
-                        purge(i);
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    public void manageHotbar() {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null) {
-                Item item = stack.getItem();
-
-                if (!stack.getDisplayName().toLowerCase().contains("(right click)") &&
-                        ((item instanceof ItemPickaxe && hotbarNeedsItem(ItemPickaxe.class)) || (item instanceof ItemAxe && hotbarNeedsItem(ItemAxe.class)) || (item instanceof ItemSword && hotbarNeedsItem(ItemSword.class)) ||
-                                (item instanceof ItemAppleGold && hotbarNeedsItem(ItemAppleGold.class)) || (item instanceof ItemEnderPearl && hotbarNeedsItem(ItemEnderPearl.class)) || (item instanceof ItemBlock && (((ItemBlock) item).getBlock().isFullCube()) &&
-                                !hotbarHasBlocks())) &&
-                        !hotbar && timer.hasTimeElapsed((long) delay.getValue(), true)) {
-                    moveToHotbar(i);
-                    return;
-                }
-            }
-        }
-    }
-
-    public boolean hotbarHasSpace() {
-        for (int i = 36; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-
-            if (slot.getStack() == null)
-                return true;
-        }
-        return false;
-    }
-
-    public boolean hotbarNeedsItem(Class<?> type) {
-        for (int i = 36; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-
-            if (type.isInstance(slot.getStack()))
-                return false;
-        }
-        return true;
-    }
-
-    public boolean hotbarHasBlocks() {
-        for (int i = 36; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-
-            if (slot.getStack() != null && slot.getStack().getItem() instanceof ItemBlock && ((ItemBlock) slot.getStack().getItem()).getBlock().isFullCube())
-                return true;
-        }
-        return false;
-    }
-
-    public boolean isBestTool(ItemStack compareStack) {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null && compareStack != stack && stack.getItem() instanceof ItemTool) {
-                ItemTool item = (ItemTool) stack.getItem();
-                ItemTool compare = (ItemTool) compareStack.getItem();
-                if (item.getClass() == compare.getClass()) {
-                    if (compare.getStrVsBlock(stack, preferredBlock(item.getClass())) <= item.getStrVsBlock(compareStack, preferredBlock(compare.getClass())))
-                        return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public boolean isBestSword(ItemStack compareStack) {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null && compareStack != stack && stack.getItem() instanceof ItemSword) {
-                ItemSword item = (ItemSword) stack.getItem();
-                ItemSword compare = (ItemSword) compareStack.getItem();
-                if (item.getClass() == compare.getClass()) {
-                    if (compare.attackDamage + getSwordStrength(compareStack) <= item.attackDamage + getSwordStrength(stack))
-                        return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public Block preferredBlock(Class clazz) {
-        return clazz == ItemPickaxe.class ? Blocks.cobblestone : clazz == ItemAxe.class ? Blocks.log : Blocks.dirt;
-    }
-
-    public boolean isBestArmor(ItemStack compareStack) {
-        for (int i = 0; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-            ItemStack stack = slot.getStack();
-            boolean hotbar = i >= 36;
-
-            if (stack != null && compareStack != stack && stack.getItem() instanceof ItemArmor) {
-                ItemArmor item = (ItemArmor) stack.getItem();
-                ItemArmor compare = (ItemArmor) compareStack.getItem();
-                boolean noArmor = mc.thePlayer.getCurrentArmor(0) == null || mc.thePlayer.getCurrentArmor(1) == null || mc.thePlayer.getCurrentArmor(2) == null || mc.thePlayer.getCurrentArmor(3) == null;
-                if (item.armorType == compare.armorType) {
-                    if (AutoArmor.getProtectionValue(compareStack) <= AutoArmor.getProtectionValue(stack) && !noArmor)
-                        return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public boolean has(Item item, int count) {
-        for (int i = 9; i < 45; i++) {
-            Slot slot = mc.thePlayer.inventoryContainer.getSlot(i);
-
-            if (slot.getStack() != null && (slot.getStack().getItem().equals(item)))
-                count -= slot.getStack().stackSize;
-        }
-        return count >= 0;
-    }
-
-    public void moveToHotbar(int slot) {
-        if (spoof.isEnabled())
-            openInvPacket();
-
-        mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, slot, 0, 1, mc.thePlayer);
-
-        if (spoof.isEnabled())
-            closeInvPacket();
-    }
-
-    public void moveToHotbarSlot1(int slot) {
-        if (spoof.isEnabled())
-            openInvPacket();
-
-        mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, slot, 0, 2, mc.thePlayer);
-
-        if (spoof.isEnabled())
-            closeInvPacket();
-    }
-
-    public void purge(int slot) {
-        if (spoof.isEnabled())
-            openInvPacket();
-
-        mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, slot, 1, 4, mc.thePlayer);
-
-        if (spoof.isEnabled())
-            closeInvPacket();
-    }
-
-    public void openInvPacket() {
-        if (!inventoryOpen)
-            mc.thePlayer.sendQueue.addToSendQueue(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
-
-        inventoryOpen = true;
-    }
-
-    public void closeInvPacket() {
-        if (inventoryOpen)
-            mc.thePlayer.sendQueue.addToSendQueue(new C0DPacketCloseWindow(mc.thePlayer.inventoryContainer.windowId));
-
-        inventoryOpen = false;
-    }
-
+         return false;
+      }
+     public static float getDamageLevel(ItemStack stack) {
+         if (stack.getItem() instanceof ItemSword) {
+            ItemSword sword = (ItemSword)stack.getItem();
+            float sharpness = (float)EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack) * 1.25F;
+            float fireAspect = (float)EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack) * 1.5F;
+            return sword.getDamageVsEntity() + sharpness + fireAspect;
+         } else {
+            return 0.0F;
+         }
+      }
 }

@@ -23,6 +23,7 @@ import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,10 +35,10 @@ public class AntiBot extends Mod {
 	private int botsFound = 0;
     public boolean invalid;
     private Object EntityArmorStand;
-    public static List<EntityLivingBase> bots = new ArrayList<>();
-    private static ArrayList<Suspect> invisSus = new ArrayList<Suspect>();
-    private static ArrayList<Suspect> visSus = new ArrayList<Suspect>();
-    private static ArrayList<Suspect> neverRemoveBots = new ArrayList<Suspect>();
+    public List<EntityLivingBase> bots = new ArrayList<>();
+    private ArrayList<Suspect> invisSus = new ArrayList<Suspect>();
+    private ArrayList<Suspect> visSus = new ArrayList<Suspect>();
+    private ArrayList<Suspect> neverRemoveBots = new ArrayList<Suspect>();
     private Map<Integer, Double> distanceMap = new HashMap<>();
     private Set<Integer> swingSet = new HashSet<>();
     
@@ -105,6 +106,17 @@ public class AntiBot extends Mod {
             this.bots.add(ep);
         }
     }
+    
+    public static boolean isBot(EntityPlayer player) {
+        if (!Hypnotic.instance.moduleManager.antiBot.isEnabled()) {
+            return false;
+        }
+        if (player.getGameProfile() == null) {
+            return true;
+        }
+        NetworkPlayerInfo npi = mc.getNetHandler().getPlayerInfo(player.getGameProfile().getId());
+        return (npi == null || npi.getGameProfile() == null || player.ticksExisted < 30 );//|| npi.getResponseTime() != 1);
+    }
 
     @Override
     public void onUpdate() {
@@ -161,7 +173,10 @@ public class AntiBot extends Mod {
         this.setDisplayName("Antibot " + ColorUtils.white + "[" + mode + "]");
         if(mode.equalsIgnoreCase("Watchdog")){
                 if (mc.thePlayer.ticksExisted % 600 == 0) {
-                    bots.clear();
+                    //bots.clear();
+                	for (EntityLivingBase bot : bots) {
+                		mc.theWorld.removeEntity(bot);
+                	}
                 }
 
             for (Entity entity : mc.theWorld.getLoadedEntityList()) {
@@ -182,12 +197,12 @@ public class AntiBot extends Mod {
 
 
 
-    private boolean isEntityBot(Entity entity) {
+    public boolean isEntityBot(Entity entity) {
         if (!distanceMap.containsKey(entity.getEntityId())) return false;
         double distance = distanceMap.get(entity.getEntityId());
         if (mc.getCurrentServerData() == null || !swingSet.contains(entity.getEntityId()) || !(entity instanceof EntityPlayer))
             return false;
-        return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel") && ((distance > 14.5 && distance < 17) || entity.getName().startsWith("\247") || entity.getDisplayName().getFormattedText().startsWith("ยง") || entity.getDisplayName().getFormattedText().toLowerCase().startsWith("npc") || !isOnTab(entity)) && mc.thePlayer.ticksExisted > 100;
+        return (entity.getName().contains(ColorUtils.red)|| entity.getDisplayName().getFormattedText().startsWith("ยง") || entity.getDisplayName().getFormattedText().toLowerCase().startsWith("npc"));
     }
 
     private boolean isOnTab(Entity entity) {
@@ -236,8 +251,8 @@ public class AntiBot extends Mod {
         }
         return list;
     }
-/*	public static List<EntityPlayer> getTabPlayerList() {
-		final NetHandlerPlayClient var4 = Wrapper.mc.thePlayer.sendQueue;
+	public List<EntityPlayer> getTabPlayerList() {
+		final NetHandlerPlayClient var4 = mc.thePlayer.sendQueue;
 		final List<EntityPlayer> list = new ArrayList<>();
 		final List players = GuiPlayerTabOverlay.field_175252_a.sortedCopy(var4.getPlayerInfoMap());
 		for (final Object o : players) {
@@ -245,10 +260,10 @@ public class AntiBot extends Mod {
 			if (info == null) {
 				continue;
 			}
-			list.add(Wrapper.mc.theWorld.getPlayerEntityByName(info.getGameProfile().getName()));
+			list.add(mc.theWorld.getPlayerEntityByName(info.getGameProfile().getName()));
 		}
 		return list;
-	}*/
+	}
 
     @Override
     public void onDisable(){
@@ -257,9 +272,9 @@ public class AntiBot extends Mod {
     }
 
 
-    public static boolean isBot(EntityPlayer ep) {
-        return bots.contains(ep);
-    }
+//    public boolean isBot(EntityPlayer ep) {
+//        return bots.contains(ep);
+//    }
 
     public Suspect getInvisSuspect(EntityPlayer ep) {
         for (int i = 0; i < invisSus.size(); i++) {

@@ -249,7 +249,7 @@ public class HUD {
     	            for (Mod m : modules) {
 //    	            	m.setEnabled(false);
     	            	if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Rainbow")) {
-    	        				color = ColorUtils.rainbow(4.0f, 0.5f, 1f, count * 120);
+    	        				color = ColorUtils.rainbow(4.0f, 0.6f, 1f, count * 160);
     	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Static")) {
     	        				color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
     	        			} else if (Hypnotic.instance.moduleManager.arrayMod.colorMode.getSelected().equalsIgnoreCase("Color Wave")) {
@@ -277,7 +277,7 @@ public class HUD {
 	    					Gui.drawRect(sr.getScaledWidth() - length - 7 + 100 - m.animation, (count * (fontRenderer.getHeight() + 2)), sr.getScaledWidth() - length - 9 + 100 - m.animation, count * (fontRenderer.getHeight() + 2) + 2 + fontRenderer.getHeight() + 2, color);
     						Gui.drawRect(sr.getScaledWidth() - length - 7 + 100 - m.animation, count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 4, sr.getScaledWidth() + 100 - m.animation, count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 2, color);
 //	    					Gui.drawRect(modules.indexOf(m2) == modules.indexOf(m) ? sr.getScaledWidth() : (sr.getScaledWidth() - length2 + length - 7 + 100 - m.animation), count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 4, sr.getScaledWidth() - length - 9 + 100 - m.animation, count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 2, color);
-	    					Gui.drawRect(sr.getScaledWidth() - 2, (count * (fontRenderer.getHeight() + 2)), sr.getScaledWidth(), count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 2, color);
+	    					Gui.drawRect(sr.getScaledWidth() - 3, (count * (fontRenderer.getHeight() + 2)), sr.getScaledWidth(), count * (fontRenderer.getHeight() + 2) - 0 + fontRenderer.getHeight() + 2, color);
 //    						Gui.drawRect(sr.getScaledWidth() - (((length) / 100) * m.animation) - 7 - 0, (modules.size() * (fontRenderer.getHeight() + 2) - 0), sr.getScaledWidth() - 2 + 100 - m.animation, Hypnotic.instance.moduleManager.getEnabledModules().size() * (fontRenderer.getHeight() + 4) + 2 + fontRenderer.getHeight() + 0, color);
 	    					count++;
 	    				}

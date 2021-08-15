@@ -146,10 +146,6 @@ public class TPAura extends Mod {
                 return false;
 
         }
-        if(player instanceof EntityPlayer) {
-            if (AntiBot.isBot((EntityPlayer) player))
-                return false;
-        }
         if (mc.thePlayer.isOnSameTeam(player) && teams.isEnabled())
             return false;
         if (player.isInvisible() && !invis.isEnabled())

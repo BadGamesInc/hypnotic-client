@@ -41,7 +41,6 @@ public class RenderUtils {
 		public static void setCustomYaw(float customYaw) {
 			CustomYaw = customYaw;
 			SetCustomYaw = true;
-			mc.thePlayer.rotationYawHead = customYaw;
 		}
 		
 		public static void resetPlayerYaw() {
@@ -868,7 +867,7 @@ public class RenderUtils {
 	        GL11.glPopMatrix();
 	    }
 		
-		public static void drawAura(Entity entity, float partialTicks, double rad) {
+		public static void drawAura(Entity entity, float partialTicks, double rad, double anim) {
 	        GL11.glPushMatrix();
 	        GL11.glDisable(3553);
 	        GL11.glEnable(2848);
@@ -884,7 +883,7 @@ public class RenderUtils {
 	        GL11.glLineWidth(1.0F);
 	        GL11.glBegin(3);
 	        double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosX;
-	        double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosY;
+	        double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosY + anim;
 	        double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - Minecraft.getMinecraft().getRenderManager().viewerPosZ;
 	        float r = 0.003921569F * Color.WHITE.getRed();
 	        float g = 0.003921569F * Color.WHITE.getGreen();

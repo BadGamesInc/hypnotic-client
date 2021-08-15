@@ -1,6 +1,6 @@
 package badgamesinc.hypnotic.module.player;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -34,7 +34,6 @@ import badgamesinc.hypnotic.event.events.EventMotionUpdate;
 import badgamesinc.hypnotic.event.events.EventPlayerDeath;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
-import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.BooleanSetting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.settings.settingtypes.NumberSetting;
@@ -47,13 +46,14 @@ import badgamesinc.hypnotic.util.Rotation;
 import badgamesinc.hypnotic.util.RotationUtils;
 import badgamesinc.hypnotic.util.SetBlockAndFacing;
 import badgamesinc.hypnotic.util.TimeHelper;
+import badgamesinc.hypnotic.util.Timer;
+import badgamesinc.hypnotic.util.WorldUtils;
 import badgamesinc.hypnotic.util.font.GlyphPageFontRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -108,16 +108,19 @@ public class Scaffold extends Mod {
     public BooleanSetting redeskyBoost = new BooleanSetting("Timer Boost", false);
     public BooleanSetting safeWalk = new BooleanSetting("Safewalk", false);
     public BooleanSetting eagle = new BooleanSetting("Eagle", false);
+    public BooleanSetting hypixelSprintBoost = new BooleanSetting("Hypixel Boost", false);
+    private static Timer sprintTimer = new Timer();
     
     private BlockPos espPos;
 
+    float sprintTicks = 0;
     float oldPitch = 0;
     private RotationUtils RayCastUtil;
-
+    int prevSlot = 0;
 
     public Scaffold() {
         super("Scaffold", Keyboard.KEY_R, Category.PLAYER, "Places blocks underneath you"); 
-        addSettings(scaffoldMode, delay, keeprots, blockFly, boost, redeskyBoost, keepY, raycast, keepSprint, legit, swing, tower, towermove, safeWalk, eagle);
+        addSettings(scaffoldMode, delay, keeprots, blockFly, boost, redeskyBoost, keepY, raycast, keepSprint, legit, swing, tower, towermove, safeWalk, eagle, hypixelSprintBoost);
     }
 
     float yaw = 0;
@@ -139,6 +142,8 @@ public class Scaffold extends Mod {
         slotTimer.reset();
         ticks = 0;
         startY = mc.thePlayer.posY;
+        prevSlot = mc.thePlayer.inventory.currentItem;
+        sprintTicks = 0;
     }
     
     @Override
@@ -168,6 +173,8 @@ public class Scaffold extends Mod {
             }
             if (scaffoldMode.getSelected().equalsIgnoreCase("Hypixel")) {
                 int slot = this.getSlot();
+                //if (mc.thePlayer.onGround)
+                	//MovementUtils.setMotion(0.09);
                 this.stopWalk = (getBlockCount() == 0 || slot == -1) && safeWalk.isEnabled();
                 this.isPlaceTick = keeprots.isEnabled() ? blockData != null && slot != -1 : blockData != null && slot != -1 && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer).add(0, -1, 0)).getBlock() == Blocks.air;
                 if (slot == -1) {
@@ -179,6 +186,19 @@ public class Scaffold extends Mod {
                     mc.thePlayer.setSprinting(false);
                     mc.gameSettings.keyBindSprint.pressed = false;
                     mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                }
+                if (scaffoldMode.is("Hypixel") && hypixelSprintBoost.isEnabled()) {
+                	if (sprintTicks < 30) {
+	                	sprintTicks++;
+	                	if (mc.thePlayer.moveForward != 0 && mc.thePlayer.getFoodStats().getFoodLevel() > 6)
+	                		mc.thePlayer.setSprinting(true);
+                	} else {
+                		mc.thePlayer.setSprinting(false);
+                	}
+                	
+                	/*if (sprintTimer.hasTimeElapsed(10000, true) && sprintTicks >= 150) {
+                		sprintTicks = 0;
+                	}*/
                 }
                 this.blockData = getBlockData();
                 if (this.blockData == null) {
@@ -240,7 +260,6 @@ public class Scaffold extends Mod {
                         event.setSneaking(false);
                     }
                 }
-            	MovementUtils.setMotion(MovementUtils.getBaseMoveSpeed() - (mc.thePlayer.isPotionActive(Potion.moveSpeed) ? 0.3 : 0.169));
             	if (mc.thePlayer.isPotionActive(Potion.moveSpeed))
             		mc.thePlayer.setSprinting(false);
                 rotated = false;
@@ -288,23 +307,28 @@ public class Scaffold extends Mod {
             if (scaffoldMode.getSelected().equalsIgnoreCase("Hypixel")) {
                 int slot = this.getSlot();
                 BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
+                for (int i = 0; i < 9; i++) {
+                    if (mc.thePlayer.inventory.getStackInSlot(i) == null)
+                        continue;
+                    if (mc.thePlayer.inventory.getStackInSlot(i).getItem() instanceof ItemBlock) {
+                        mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem = i));
+                    }
+                }
                 if (slot != -1 && this.blockData != null) {
-                    final int currentSlot = mc.thePlayer.inventory.currentItem;
+                   // final int currentSlot = mc.thePlayer.inventory.currentItem;
                     if (pos.getBlock() instanceof BlockAir) {
-                        mc.thePlayer.inventory.currentItem = slot;
-                        if (this.getPlaceBlock(this.blockData.getPosition(), this.blockData.getFacing())) {
+                        if (this.getPlaceBlock(this.blockData.blockPos, this.blockData.getFacing())) {
                             if (boost.isEnabled()) {
                             	if (MoveUtils.isMoving() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.onGround)
                             		MoveUtils.setMotion((1.035 / 2.5) * (MoveUtils.getSpeedEffect() > 0 ? 1.1 : 1.0));
                             }
-                            mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(currentSlot));
+                           // mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(currentSlot));
                         }
                     }else{
-                        MoveUtils.setMotion(MoveUtils.getSpeed() - MoveUtils.getSpeed() / 50);
                         mc.timer.timerSpeed = 1.0f;
                     }
-
-                    mc.thePlayer.inventory.currentItem = currentSlot;
+                    
+                    //mc.thePlayer.inventory.currentItem = currentSlot;
                 }
             } else {
                 for (int i = 0; i < 9; i++) {
@@ -405,7 +429,7 @@ public class Scaffold extends Mod {
 
     @EventTarget
     public void on3D(Event3D event) {
-    	
+    	/*
     	Block air = Blocks.air;
     	if (getBlockCount() > 0 && ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && blockFly.isEnabled() && !Hypnotic.instance.moduleManager.flight.isEnabled()) ? true : (keepY.isEnabled() ? true : isBlockUnder())))
         for (int i = 0; i < 5; i++) {
@@ -424,7 +448,7 @@ public class Scaffold extends Mod {
 			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY(), espPos.getZ() + 1, espPos.getX() + 1, espPos.getY() + 1, espPos.getZ() + 1);
 			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY() + 1, espPos.getZ(), espPos.getX() + 1, espPos.getY() + 1, espPos.getZ() + 1);
 			RenderUtils.drawLine(espPos.getX() + 1, espPos.getY(), espPos.getZ(), espPos.getX() + 1, espPos.getY(), espPos.getZ() + 1);
-		}
+		}*/
     	//RenderUtils.blockESPBox(espPos, -1);
     	//RenderUtils.drawSolidBlockESP(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posX, 255, 255, 255, 255);
        // drawCircle(mc.thePlayer, event.getPartialTicks(), 0.5);
@@ -714,6 +738,7 @@ public class Scaffold extends Mod {
         mc.timer.timerSpeed = 1f;
         RenderUtils.resetPlayerYaw();
         RenderUtils.resetPlayerPitch();
+        mc.thePlayer.inventory.currentItem = prevSlot;
     }
 
     private void setSneaking(boolean b) {

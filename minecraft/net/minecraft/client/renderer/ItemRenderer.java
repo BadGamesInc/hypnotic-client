@@ -3,9 +3,12 @@ package net.minecraft.client.renderer;
 import static net.minecraft.util.MathHelper.sin;
 import static net.minecraft.util.MathHelper.sqrt_float;
 
+import java.util.Random;
+
 import org.lwjgl.opengl.GL11;
 
 import badgamesinc.hypnotic.Hypnotic;
+import badgamesinc.hypnotic.module.combat.OtherAura;
 import badgamesinc.hypnotic.module.render.BlockAnimations;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,7 +30,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
@@ -319,6 +321,8 @@ public class ItemRenderer
         GlStateManager.rotate(60.0F, 0.0F, 1.0F, 0.0F);
     }
 
+    int animTicks = 0;
+    int animTicks2 = 0;
     /**
      * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
      */
@@ -388,7 +392,7 @@ public class ItemRenderer
                     		this.transformFirstPersonItem(f, 0.0f);
 	                        this.func_178103_d();
                     	} else if(mode.equalsIgnoreCase("1.7") || mode.equalsIgnoreCase("Hypnotic")) {
-                    		this.transformFirstPersonItem(-0.05f, f1);
+                    		this.transformFirstPersonItem(f-0.05f, f1);
 	                        this.func_178103_d();
                     	} else if(mode.equalsIgnoreCase("Exhibition")) {
                     		
@@ -407,6 +411,7 @@ public class ItemRenderer
                             random6 = -1;
                             random7 = 0;
                             random10 = 3;
+                            this.transformFirstPersonItem(f - 0.4f, 1f);
                     	} else if(mode.equalsIgnoreCase("Astolfo")) {               	
 	                    	GlStateManager.rotate((float)(System.currentTimeMillis() / Hypnotic.instance.moduleManager.itemCustom.handspeed.getValue() % 360), 0.0f, 0.0f, -0.1f);
 	                        this.transformFirstPersonItem(f / 1.6f, 0.0f);
@@ -453,7 +458,7 @@ public class ItemRenderer
                 }
                 
                 if(mode.equalsIgnoreCase("Spin") && enumaction == EnumAction.BLOCK) {
-	                GlStateManager.translate(random8, 0.0f, -random5 - 1);
+	                GlStateManager.translate(random8, -0.4f, -random5 + 0.5f);
 	                GlStateManager.rotate(random4 - 30, random6, random7, random10);
 	                GlStateManager.rotate(-random1 - 10, random2, random3, 0.0F);
 	                GlStateManager.rotate(63.0F, 0.0F, 1.0F, 0.0F);

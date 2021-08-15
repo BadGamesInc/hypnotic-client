@@ -101,7 +101,11 @@ public class GuiAltManager extends GuiScreen {
             }
             case 9:{
                 mc.displayGuiScreen(new GuiTheAltening(this));
+                break;
             }
+            case 10:
+                mc.displayGuiScreen(new GuiImportFile());
+                break;
         }
     }
 
@@ -228,6 +232,7 @@ public class GuiAltManager extends GuiScreen {
         this.buttonList.add(new AnimatedButton(8, this.width / 2 - 190, this.height - 48, 60, 20, "Reload"));
 
         this.buttonList.add(new AnimatedButton(9, this.width / 2 + 116, this.height - 24, 70, 20, "Altening"));
+        this.buttonList.add(new AnimatedButton(10, this.width / 2 + 186, this.height - 24, 70, 20, "Import File"));
         this.login.enabled = false;
         this.remove.enabled = false;
         this.rename.enabled = false;

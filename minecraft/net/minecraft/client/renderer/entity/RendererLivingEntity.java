@@ -331,25 +331,40 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             final int lighting = 2896;
             
             if (flag2) {
-                Color chamsColor = Color.WHITE;
+                Color chamsColor = Color.CYAN;
                 
                 GL11.glPushMatrix();
-                GL11. glEnable(polygonOffsetLine);
+                GL11.glEnable(polygonOffsetLine);
                 GL11.glPolygonOffset(1.0F, 1000000.0F);
                 OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
 
-                GL11.glDisable(depth);
-                GL11.glDepthMask(false);
+                	GL11.glEnable(blend);
+                	GL11.glDisable(texture2D);
+                	GL11.glDisable(lighting);
+                	GL11.glBlendFunc(srcAlpha, srcAlphaPlus1);
+                	GL11.glColor4f(chamsColor.getRed() / 255.0F, chamsColor.getGreen() / 255.0F, chamsColor.getBlue() / 255.0F, chamsColor.getAlpha() / 255.0F);
+
+                	GL11.glDisable(depth);
+                	GL11.glDepthMask(false);
             }
 
             this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
             if (flag2) {
-            	GL11.glEnable(depth);
+                GL11.glEnable(depth);
                 GL11.glDepthMask(true);
+                Color color1 = Color.CYAN;
+                
+                GL11.glColor4f(color1.getRed() / 255.0F, color1.getGreen() / 255.0F, color1.getBlue() / 255.0F, color1.getAlpha() / 255.0F);
+                
 
                 this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
-
+                
+                GL11.glEnable(texture2D);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GL11.glDisable(blend);
+                GL11.glEnable(lighting);
+                
                 GL11.glPolygonOffset(1.0f, -1000000.0f);
                 GL11.glDisable(polygonOffsetLine);
                 GL11.glPopMatrix();

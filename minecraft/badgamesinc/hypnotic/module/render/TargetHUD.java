@@ -14,6 +14,7 @@ import badgamesinc.hypnotic.event.events.Event2D;
 import badgamesinc.hypnotic.module.Category;
 import badgamesinc.hypnotic.module.Mod;
 import badgamesinc.hypnotic.module.combat.KillAura;
+import badgamesinc.hypnotic.module.combat.OtherAura;
 import badgamesinc.hypnotic.settings.Setting;
 import badgamesinc.hypnotic.settings.settingtypes.ModeSetting;
 import badgamesinc.hypnotic.util.ColorUtil;
@@ -54,14 +55,14 @@ public class TargetHUD extends Mod {
 		TargetHUD targetHud = new TargetHUD();
 		
 		
-		if (KillAura.target != null && Hypnotic.instance.moduleManager.getModule(KillAura.class).isEnabled()) {		
+		if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).target != null && Hypnotic.instance.moduleManager.getModule(OtherAura.class).isEnabled()) {		
 			if (Hypnotic.instance.moduleManager.targetHud.targetHudLook.is("New")) {
 				if (Hypnotic.instance.moduleManager.getModule(TargetHUD.class).isEnabled()) {
-		            if (KillAura.target instanceof EntityPlayer || KillAura.target instanceof EntityOtherPlayerMP) {
+		            if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).target instanceof EntityPlayer || Hypnotic.instance.moduleManager.getModule(OtherAura.class).target instanceof EntityOtherPlayerMP) {
 		                float width = (float) ((scaledResolution.getScaledWidth() / 2) + 100);
 		                float height = (float) (scaledResolution.getScaledHeight() / 2);
 		
-		                EntityPlayer player = (EntityPlayer) KillAura.target;
+		                EntityPlayer player = (EntityPlayer) Hypnotic.instance.moduleManager.getModule(OtherAura.class).target;
 		                Gui.drawRect(width - 70, height + 30, width + 80, height + 105, new Color(0, 0, 0, 180).getRGB());
 		                fontRenderer.drawString(player.getName(), width - 65, height + 35, 0xFFFFFF, true);
 		                fontRenderer2.drawString(player.onGround ? "On Ground" : "Off Ground", width - 65, height + 50, 0xFFFFFF, true);
@@ -113,7 +114,7 @@ public class TargetHUD extends Mod {
 				Color temp = ColorUtil.getClickGUIColor().darker();
 				FontRenderer fr = mc.fontRendererObj;
 				ScaledResolution sr = new ScaledResolution(mc);		
-				EntityLivingBase target = KillAura.target;
+				EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(OtherAura.class).target;
 				
 				int healthBarColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 255).getRGB();
 				
@@ -143,8 +144,8 @@ public class TargetHUD extends Mod {
 					}
 				
 			} else if (Hypnotic.instance.moduleManager.targetHud.targetHudLook.is("Compact")) {
-				if (KillAura.target instanceof EntityPlayer || KillAura.target instanceof EntityOtherPlayerMP) {
-					EntityLivingBase target = KillAura.target;
+				if (Hypnotic.instance.moduleManager.getModule(OtherAura.class).target instanceof EntityPlayer || Hypnotic.instance.moduleManager.getModule(OtherAura.class).target instanceof EntityOtherPlayerMP) {
+					EntityLivingBase target = Hypnotic.instance.moduleManager.getModule(OtherAura.class).target;
 					float width = (float) ((scaledResolution.getScaledWidth() / 2) + 100);
 	                float height = (float) (scaledResolution.getScaledHeight() / 2);
 					RenderUtils.drawRoundedRect(width - 76, height + 29, width + 42.5f, height + 73, 2, new Color(50, 50, 50, 255));
@@ -164,11 +165,11 @@ public class TargetHUD extends Mod {
 	                Gui.drawRect(width - 34, height + 59, width + 36.5f, height + 65, new Color(50, 50, 50, 255).darker().getRGB());
 	                Gui.drawRect(width - 34, height + 59, width + 70 * (targetHealthPercentage), height + 65, healthColor.getRGB());
 					Gui.drawRect(width - 34, height + 59, width + 70 * (healthPercentage), height + 65, outlineColor);
-					if (mc.thePlayer == null || KillAura.target == null || mc.getNetHandler() == null || KillAura.target.getUniqueID() == null || mc.getNetHandler().getPlayerInfo(KillAura.target.getUniqueID()) == null || mc.getNetHandler().getPlayerInfo(KillAura.target.getUniqueID()).getLocationSkin() == null) {
+					if (mc.thePlayer == null || Hypnotic.instance.moduleManager.getModule(OtherAura.class).target == null || mc.getNetHandler() == null || Hypnotic.instance.moduleManager.getModule(OtherAura.class).target.getUniqueID() == null || mc.getNetHandler().getPlayerInfo(Hypnotic.instance.moduleManager.getModule(OtherAura.class).target.getUniqueID()) == null || mc.getNetHandler().getPlayerInfo(Hypnotic.instance.moduleManager.getModule(OtherAura.class).target.getUniqueID()).getLocationSkin() == null) {
 						
 					} else {
 						Gui.drawRect((int) width - 70 - 1, (int) height + 35 - 1, (int) width - 70 + 33, (int) height + 35 + 33, new Color(outlineColor).getRGB());
-						this.drawHead(Objects.requireNonNull(mc.getNetHandler()).getPlayerInfo(KillAura.target.getUniqueID()).getLocationSkin(), width - 70, height + 35);
+						this.drawHead(Objects.requireNonNull(mc.getNetHandler()).getPlayerInfo(Hypnotic.instance.moduleManager.getModule(OtherAura.class).target.getUniqueID()).getLocationSkin(), width - 70, height + 35);
 					}
 				}
 			}

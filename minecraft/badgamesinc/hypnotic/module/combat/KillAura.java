@@ -224,6 +224,8 @@ public class KillAura extends Mod {
             return false;
         if (Hypnotic.instance.friendManager.isFriend(player))
         	return false;
+        if (!mc.thePlayer.canEntityBeSeen(player))
+        	return false;
         return player != mc.thePlayer && player.isEntityAlive() && mc.thePlayer.getDistanceToEntity(player) <= range.getValue() && player.ticksExisted > existed.getValue();
     }
 
@@ -278,7 +280,8 @@ public class KillAura extends Mod {
     public void on3D(Event3D event){
         if(esp.isEnabled()){
             if(target != null){
-                    drawCircle(target, event.getPartialTicks(), 0.8, delay1 / 100);
+                    //drawCircle(target, event.getPartialTicks(), 0.8, delay1 / 100);
+            	RenderUtils.drawAura(target, event.getPartialTicks(), 0.5, delay1 / 100);
             }
         }
         if(delay1 > 200){

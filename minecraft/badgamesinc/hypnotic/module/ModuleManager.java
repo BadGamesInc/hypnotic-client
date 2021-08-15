@@ -168,6 +168,7 @@ public class ModuleManager {
 		modules.add(safeWalk);
 		modules.add(scaffold);
 		modules.add(new Freecam());
+		modules.add(new AutoTool());
 	}
 	
 	private void combat() {
@@ -181,6 +182,7 @@ public class ModuleManager {
 		//modules.add(new BowAimbot());
 		modules.add(crits);
 		modules.add(new TPAura());
+		modules.add(new OtherAura());
 	}
 	
 	private void misc() {
