@@ -1,4 +1,4 @@
-# HYPNOTIC CLINET  
+# HYPNOTIC CLIENT  
 ## gaming awards frame winner 1999/2000/2001  
   
 ## About
