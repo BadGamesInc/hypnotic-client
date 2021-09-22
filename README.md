@@ -1,4 +1,6 @@
-# HYPNOTIC CLIENT  NEW BETTER 1.17 VERSION https://github.com/BadGamesInc/Hypnotic-Fabric-1.17  
+# BETTER 1.17 VERSION https://github.com/BadGamesInc/Hypnotic-Fabric-1.17  
+
+# Hypnotic Client
 ## gaming awards frame winner 1999/2000/2001  
   
 ## About
