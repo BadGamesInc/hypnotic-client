@@ -1,4 +1,4 @@
-# BETTER 1.17 VERSION https://github.com/Hypnotic-Development/Hypnotic-Client
+# BETTER MAINTAINED VERSION https://github.com/Hypnotic-Development/Hypnotic-Client
 
 # Hypnotic Client
 ## gaming awards frame winner 1999/2000/2001  
